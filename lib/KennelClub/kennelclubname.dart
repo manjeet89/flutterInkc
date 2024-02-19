@@ -70,8 +70,9 @@ class _KennelClubNameState extends State<KennelClubName> {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
+    print(token + "- " + userid);
 
-    final uri = "https://new-demo.inkcdogs.org/api/user/kennel_details";
+    final uri = "https://www.inkc.in/api/user/kennel_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -136,284 +137,304 @@ class _KennelClubNameState extends State<KennelClubName> {
     // print(kennel_status.toString());
     //print("Doremon" + kennel_name.toString());
 
-    return Sizer(builder: (context, orientation, deviceType) {
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon:
-                Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Kennel Name Registration',
-                style: TextStyle(
-                    fontSize: 15.sp,
-                    decorationColor: Colors.red,
-                    color: Color.fromARGB(255, 17, 11, 7),
-                    // color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              // InkWell(
-              //   onTap: () {
-              //     Navigator.of(context, rootNavigator: true).push(
-              //         MaterialPageRoute(builder: (_) => MyKennelNameHistory()));
-              //   },
-              //   child: Icon(
-              //     Icons.holiday_village_outlined,
-              //     color: Color.fromARGB(255, 24, 5, 235),
-              //     size: 20.0.sp,
-              //   ),
-              // ),
-            ],
-          ),
-          centerTitle: true,
-        ),
-        body: Padding(
-          padding:
-              const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 10),
-          child: Column(
-            children: [
-              if (kennel_name.toString() == "null")
-                Center(
-                  child: Text(
-                    "No Kennel Name Available.",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 15.sp),
-                  ),
-                )
-              else
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    // Text(
-                    //   "SN.",
-                    //   style: TextStyle(
-                    //       color: Colors.black,
-                    //       fontWeight: FontWeight.w500,
-                    //       fontSize: 14.sp),
-                    // ),
-                    Text(
-                      "Kennel Name.",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.sp),
-                    ),
-                    Text(
-                      "Action.",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.sp),
-                    ),
-                  ],
+    return WillPopScope(
+      onWillPop: () async {
+        // Handle Android hardware back button press
+        Navigator.pop(context);
+        return false; // Prevent default behavior
+      },
+      child: Sizer(builder: (context, orientation, deviceType) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: Color.fromARGB(255, 223, 39, 39)),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Kennel Name Registration',
+                  style: TextStyle(
+                      fontSize: 15.sp,
+                      decorationColor: Colors.red,
+                      color: Color.fromARGB(255, 17, 11, 7),
+                      // color: Colors.black,
+                      fontWeight: FontWeight.bold),
                 ),
-              if (kennel_name.toString() == "null")
-                Center(
-                  child: Text(" "),
-                )
-              else
-                Card(
-                  // elevation: 5,
-                  // color: Color.fromARGB(255, 255, 255, 255),
-                  margin: EdgeInsets.all(3.sp),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          // Text(
-                          //   kennel_status.toString(),
-                          //   style: TextStyle(
-                          //       color: const Color.fromARGB(255, 94, 18, 18),
-                          //       fontWeight: FontWeight.w600,
-                          //       fontSize: 12.sp),
-                          // ),
-                          Text(
-                            kennel_name.toString(),
-                            style: TextStyle(
-                                color: const Color.fromARGB(255, 95, 14, 14),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12.sp),
-                          ),
-                          Text(
-                            "Certificate",
-                            style: TextStyle(
-                                color: const Color.fromARGB(255, 63, 2, 2),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12.sp),
-                          ),
-                        ],
+                // InkWell(
+                //   onTap: () {
+                //     Navigator.of(context, rootNavigator: true).push(
+                //         MaterialPageRoute(builder: (_) => MyKennelNameHistory()));
+                //   },
+                //   child: Icon(
+                //     Icons.holiday_village_outlined,
+                //     color: Color.fromARGB(255, 24, 5, 235),
+                //     size: 20.0.sp,
+                //   ),
+                // ),
+              ],
+            ),
+            centerTitle: true,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.only(
+                top: 15.0, left: 15, right: 15, bottom: 10),
+            child: Column(
+              children: [
+                if (kennel_name.toString() == "null")
+                  Center(
+                    child: Text(
+                      "No Kennel Name Available.",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15.sp),
+                    ),
+                  )
+                else
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      // Text(
+                      //   "SN.",
+                      //   style: TextStyle(
+                      //       color: Colors.black,
+                      //       fontWeight: FontWeight.w500,
+                      //       fontSize: 14.sp),
+                      // ),
+                      Text(
+                        "Kennel Name.",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.sp),
+                      ),
+                      Text(
+                        "Action.",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.sp),
+                      ),
+                    ],
+                  ),
+                if (kennel_name.toString() == "null")
+                  Center(
+                    child: Text(" "),
+                  )
+                else
+                  Card(
+                    // elevation: 5,
+                    // color: Color.fromARGB(255, 255, 255, 255),
+                    margin: EdgeInsets.all(3.sp),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            // Text(
+                            //   kennel_status.toString(),
+                            //   style: TextStyle(
+                            //       color: const Color.fromARGB(255, 94, 18, 18),
+                            //       fontWeight: FontWeight.w600,
+                            //       fontSize: 12.sp),
+                            // ),
+                            Text(
+                              kennel_name.toString(),
+                              style: TextStyle(
+                                  color: const Color.fromARGB(255, 95, 14, 14),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12.sp),
+                            ),
+                            Text(
+                              "Certificate",
+                              style: TextStyle(
+                                  color: const Color.fromARGB(255, 63, 2, 2),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12.sp),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              if (_last == false)
-                FutureBuilder(
-                    future: FetchData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          addAutomaticKeepAlives: true,
-                          itemCount: secondowner.length,
-                          itemBuilder: (context, position) {
-                            //print(secondowner.length.toString());
-                            i++;
-                            if (secondowner.length == j) {
-                              //setState(() {
-                              //_last = true;
-                              //});
-                            }
+                if (_last == false)
+                  // Padding(
+                  //   padding: const EdgeInsets.only(
+                  //       top: 25.0, left: 5, right: 15, bottom: 10),
+                  //   child: Text(
+                  //     "Second Owner Kennel Name ",
+                  //     style: TextStyle(
+                  //         color: const Color.fromARGB(255, 63, 2, 2),
+                  //         fontWeight: FontWeight.w600,
+                  //         fontSize: 12.sp),
+                  //   ),
+                  // ),
+                  FutureBuilder(
+                      future: FetchData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            addAutomaticKeepAlives: true,
+                            itemCount: secondowner.length,
+                            itemBuilder: (context, position) {
+                              //print(secondowner.length.toString());
+                              i++;
+                              if (secondowner.length == j) {
+                                //setState(() {
+                                //_last = true;
+                                //});
+                              }
 
-                            return Card(
-                              // elevation: 5,
-                              // color: Color.fromARGB(255, 255, 255, 255),
-                              margin: EdgeInsets.all(3.sp),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      // Text(
-                                      //   i.toString(),
-                                      //   style: TextStyle(
-                                      //       color: const Color.fromARGB(
-                                      //           255, 94, 18, 18),
-                                      //       fontWeight: FontWeight.w600,
-                                      //       fontSize: 12.sp),
-                                      // ),
-                                      Text(
-                                        secondowner[position]
-                                            .kennelName
-                                            .toString(),
-                                        style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 95, 14, 14),
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12.sp),
-                                      ),
-                                      Text(
-                                        "Certificate",
-                                        style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 63, 2, 2),
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12.sp),
-                                      ),
-                                    ],
+                              return Card(
+                                // elevation: 5,
+                                // color: Color.fromARGB(255, 255, 255, 255),
+                                margin: EdgeInsets.all(3.sp),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        // Text(
+                                        //   i.toString(),
+                                        //   style: TextStyle(
+                                        //       color: const Color.fromARGB(
+                                        //           255, 94, 18, 18),
+                                        //       fontWeight: FontWeight.w600,
+                                        //       fontSize: 12.sp),
+                                        // ),
+                                        Text(
+                                          secondowner[position]
+                                              .kennelName
+                                              .toString(),
+                                          style: TextStyle(
+                                              color: const Color.fromARGB(
+                                                  255, 95, 14, 14),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12.sp),
+                                        ),
+                                        Text(
+                                          "Certificate",
+                                          style: TextStyle(
+                                              color: const Color.fromARGB(
+                                                  255, 63, 2, 2),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12.sp),
+                                        ),
+                                      ],
+                                    ),
+                                    // constraints: BoxConstraints.tightFor(),
+
+                                    // decoration: BoxDecoration(
+                                    //   boxShadow: [
+                                    //     BoxShadow(
+                                    //       blurRadius: 7,
+                                    //       offset: Offset(
+                                    //         5,
+                                    //         5,
+                                    //       ),
+                                    //     )
+                                    //   ],
+                                    //   border: Border.all(
+                                    //     color: Colors.black,
+                                    //     width: 0.3,
+                                    //   ),
+                                    //   borderRadius: BorderRadius.circular(20),
+                                    //   color: Colors.white,
+                                    // ),
+                                    // margin: EdgeInsets.all(5),
+                                    // child: Text(
+                                    //     history[position].kennelClubName.toString()),
                                   ),
-                                  // constraints: BoxConstraints.tightFor(),
-
-                                  // decoration: BoxDecoration(
-                                  //   boxShadow: [
-                                  //     BoxShadow(
-                                  //       blurRadius: 7,
-                                  //       offset: Offset(
-                                  //         5,
-                                  //         5,
-                                  //       ),
-                                  //     )
-                                  //   ],
-                                  //   border: Border.all(
-                                  //     color: Colors.black,
-                                  //     width: 0.3,
-                                  //   ),
-                                  //   borderRadius: BorderRadius.circular(20),
-                                  //   color: Colors.white,
-                                  // ),
-                                  // margin: EdgeInsets.all(5),
-                                  // child: Text(
-                                  //     history[position].kennelClubName.toString()),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        return Center(
-                          child: Text(""),
-                        );
-                      }
-                    }),
-            ],
+                              );
+                            },
+                          );
+                        } else {
+                          return Center(
+                            child: Text(""),
+                          );
+                        }
+                      }),
+              ],
+            ),
           ),
-        ),
 
-        floatingActionButton: Visibility(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50, right: 8, left: 28),
-                child: DraggableFab(
-                  child: FloatingActionButton.extended(
-                    backgroundColor: Color.fromARGB(255, 21, 49, 29),
-                    foregroundColor: Color.fromARGB(255, 247, 240, 240),
-                    onPressed: () async {
-                      // Navigator.of(context, rootNavigator: true).push(
-                      //     MaterialPageRoute(builder: (_) => AddKennelName()));
-
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const AddKennelName()));
-                    },
-                    label: Text(
-                      'Add Kennel Name',
-                      style: TextStyle(fontSize: 10.sp),
-                    ),
-                    icon: Icon(Icons.add),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: _isSetKennelNameHistory,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 50, right: 8),
+          floatingActionButton: Visibility(
+            child: Row(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 50, right: 8, left: 28),
                   child: DraggableFab(
                     child: FloatingActionButton.extended(
-                      backgroundColor: Color.fromARGB(255, 231, 236, 233),
+                      backgroundColor: Color.fromARGB(255, 21, 49, 29),
                       foregroundColor: Color.fromARGB(255, 247, 240, 240),
                       onPressed: () async {
+                        // Navigator.of(context, rootNavigator: true).push(
+                        //     MaterialPageRoute(builder: (_) => AddKennelName()));
+
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                const KennelNameHistre()));
-                        // Navigator.of(context, rootNavigator: true).push(
-                        //     MaterialPageRoute(
-                        //         builder: (_) => KennelNameHistre()));
+                                const AddKennelName()));
                       },
                       label: Text(
-                        'Kennel History',
-                        style: TextStyle(fontSize: 10.sp, color: Colors.black),
+                        'Add Kennel Name',
+                        style: TextStyle(fontSize: 10.sp),
                       ),
-                      icon: Icon(
-                        Icons.holiday_village_outlined,
-                        color: Color.fromARGB(255, 24, 5, 235),
+                      icon: Icon(Icons.add),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: _isSetKennelNameHistory,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 50, right: 8),
+                    child: DraggableFab(
+                      child: FloatingActionButton.extended(
+                        backgroundColor: Color.fromARGB(255, 231, 236, 233),
+                        foregroundColor: Color.fromARGB(255, 247, 240, 240),
+                        onPressed: () async {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const KennelNameHistre()));
+                          // Navigator.of(context, rootNavigator: true).push(
+                          //     MaterialPageRoute(
+                          //         builder: (_) => KennelNameHistre()));
+                        },
+                        label: Text(
+                          'Kennel History',
+                          style:
+                              TextStyle(fontSize: 10.sp, color: Colors.black),
+                        ),
+                        icon: Icon(
+                          Icons.holiday_village_outlined,
+                          color: Color.fromARGB(255, 24, 5, 235),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     Navigator.of(context, rootNavigator: true)
-        //         .push(MaterialPageRoute(builder: (_) => AddKennelName()));
-        //   },
-        //   child: Icon(Icons.add),
-        // ),
-      );
-    });
+          // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {
+          //     Navigator.of(context, rootNavigator: true)
+          //         .push(MaterialPageRoute(builder: (_) => AddKennelName()));
+          //   },
+          //   child: Icon(Icons.add),
+          // ),
+        );
+      }),
+    );
   }
 }

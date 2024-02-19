@@ -7,6 +7,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/model/notificationmodel.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
@@ -55,12 +57,21 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   Check() async {
+    print("first check data");
+
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
     if (check != null) {
       print("object with not back");
     } else {
       setState(() async {
+        // QuickAlert.show(
+        //   context: context,
+        //   type: QuickAlertType.error,
+        //   title: 'Oops...',
+        //   text: 'Sorry, Please Login First',
+        // );
+
         SharedPreferences preferences = await SharedPreferences.getInstance();
         await preferences.clear();
         Navigator.of(context).push(
@@ -247,14 +258,14 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   Future<List<NotificationModel>> FetchData() async {
-    print("market");
+    // print("market");
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
     print('${userid} / ${token}');
 
-    final uri = "https://new-demo.inkcdogs.org/api/notifications";
+    final uri = "https://www.inkc.in/api/notifications";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',

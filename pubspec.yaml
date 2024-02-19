@@ -87,6 +87,11 @@ dependencies:
   # qrscan: ^0.3.2
   flutter_barcode_scanner: ^2.0.0
 
+  provider: ^5.0.0
+  
+  #time
+  intl: ^0.17.0
+
 
 
 dev_dependencies:

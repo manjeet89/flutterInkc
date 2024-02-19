@@ -59,7 +59,7 @@ class _LitterRegistrationOverView extends State {
                   InAppWebView(
                     initialUrlRequest: URLRequest(
                         url: Uri.parse(
-                            "https://new-demo.inkcdogs.org/assets/newapp/inkc-app/litter-registration.html")),
+                            "https://www.inkc.in/assets/newapp/inkc-app/litter-registration.html")),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
                     },

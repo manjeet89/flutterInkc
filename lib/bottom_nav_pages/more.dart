@@ -99,6 +99,7 @@ class _MorePageState extends State<MorePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(UserprofileImage.toString());
     // SystemChrome.setSystemUIOverlayStyle(
     //   SystemUiOverlayStyle(
     //       statusBarColor: Colors.white, statusBarBrightness: Brightness.dark),
@@ -200,7 +201,7 @@ class _MorePageState extends State<MorePage> {
                             //set border radius to 50% of square height and width
                             image: DecorationImage(
                               image: NetworkImage(
-                                  "https://new-demo.inkcdogs.org/${UserprofileImage}"),
+                                  "https://www.inkc.in/${UserprofileImage}"),
                               fit: BoxFit.cover, //change image fill type
                             ),
                           ),

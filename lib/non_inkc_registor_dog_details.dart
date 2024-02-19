@@ -84,7 +84,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
+  //   final uri = "https://www.inkc.in/api/user/user_profile";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',
@@ -117,7 +117,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
+  //   final uri = "https://www.inkc.in/api/user/user_profile";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',
@@ -217,7 +217,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list";
+    final uri = "https://www.inkc.in/api/dog/dog_color_marking_list";
 
     Map<String, String> requestHeaders = {'Usertoken': token, 'Userid': userid};
 
@@ -256,317 +256,325 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back,
-                  color: Color.fromARGB(255, 223, 39, 39)),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            title: Text(
-              widget.petnames.toString(),
-              style: TextStyle(
-                  shadows: [
-                    Shadow(
-                      blurRadius: 10.0, // shadow blur
-                      color: Color.fromARGB(255, 223, 71, 45), // shadow color
-                      offset: Offset(2.0, 2.0), // how much shadow will be shown
-                    ),
-                  ],
-                  fontSize: 14.sp,
-                  decorationColor: Colors.red,
-                  color: Color.fromARGB(255, 194, 97, 33),
-                  // color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-            centerTitle: true,
-          ),
-          body: Container(
-            margin: EdgeInsets.only(top: 10),
-            padding: EdgeInsets.only(left: 16, top: 25, right: 16),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: ListView(
-                children: [
-                  // Text(
-                  //   "My Profile",
-                  //   style:
-                  //       TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
-                  // ),
-                  // SizedBox(
-                  //   height: 15,
-                  // ),
-                  Center(
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: 130.sp,
-                          height: 130.sp,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 4,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            boxShadow: [
-                              BoxShadow(
-                                  spreadRadius: 2,
-                                  blurRadius: 10,
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(0, 10))
-                            ],
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://new-demo.inkcdogs.org/${widget.image}"),
-                              fit: BoxFit.cover, //change image fill type
-                            ),
-                          ),
-                        ),
-                        // Positioned(
-                        //   bottom: 0.sp,
-                        //   right: 0.sp,
-                        //   child: Container(
-                        //     height: 40.sp,
-                        //     width: 40.sp,
-                        //     decoration: BoxDecoration(
-                        //       shape: BoxShape.circle,
-                        //       border: Border.all(
-                        //         width: 4,
-                        //         color:
-                        //             Theme.of(context).scaffoldBackgroundColor,
-                        //       ),
-                        //       color: Colors.black,
-                        //     ),
-                        //     // child: InkWell(
-                        //     //   onTap: () {
-                        //     //     EditSlide(context);
-                        //     //   },
-                        //     child: Icon(
-                        //       Icons.edit,
-                        //       color: Colors.white,
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ),
-
-                  Container(
-                    margin: EdgeInsets.only(top: 0, right: 8),
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      height: 40.sp,
-                      width: 40.sp,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 4,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                        color: Colors.black,
+    return WillPopScope(
+      onWillPop: () async {
+        // Handle Android hardware back button press
+        Navigator.pop(context);
+        return false; // Prevent default behavior
+      },
+      child: Sizer(
+        builder: (context, orientation, deviceType) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              // leading: IconButton(
+              //   icon: Icon(Icons.arrow_back,
+              //       color: Color.fromARGB(255, 223, 39, 39)),
+              //   onPressed: () => Navigator.of(context).pop(),
+              // ),
+              title: Text(
+                widget.petnames.toString(),
+                style: TextStyle(
+                    shadows: [
+                      Shadow(
+                        blurRadius: 10.0, // shadow blur
+                        color: Color.fromARGB(255, 223, 71, 45), // shadow color
+                        offset:
+                            Offset(2.0, 2.0), // how much shadow will be shown
                       ),
-                      child: InkWell(
-                          onTap: () {
-                            EditSlide(context);
-                          },
-                          child: Image.asset(
-                            'assets/file3.png',
-                            fit: BoxFit.cover,
-                          )),
-                    ),
-                    // Positioned(
-                    //   bottom: 0.sp,
-                    //   right: 0.sp,
-                    //   child: Container(
-                    //     height: 40.sp,
-                    //     width: 40.sp,
-                    //     decoration: BoxDecoration(
-                    //       shape: BoxShape.circle,
-                    //       border: Border.all(
-                    //         width: 4,
-                    //         color: Theme.of(context).scaffoldBackgroundColor,
-                    //       ),
-                    //       color: Colors.black,
-                    //     ),
-                    //     child: InkWell(
-                    //       onTap: () {
-                    //         // EditSlide(context);
-                    //       },
-                    //       child: Icon(
-                    //         Icons.edit,
-                    //         color: Colors.white,
-                    //       ),
-                    //     ),
-                    //   ),
+                    ],
+                    fontSize: 14.sp,
+                    decorationColor: Colors.red,
+                    color: Color.fromARGB(255, 194, 97, 33),
+                    // color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+              centerTitle: true,
+            ),
+            body: Container(
+              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: ListView(
+                  children: [
+                    // Text(
+                    //   "My Profile",
+                    //   style:
+                    //       TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
                     // ),
-                  ),
-
-                  Padding(
-                      padding: EdgeInsets.only(top: 5),
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: TextField(
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                              controller: petname,
-                              enabled: false,
-                              decoration: InputDecoration(
-                                fillColor: Colors.black,
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
-                                ),
-                                labelText: 'Pet Name',
-                                hintText: '',
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    Center(
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 130.sp,
+                            height: 130.sp,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 4,
+                                  color: Theme.of(context)
+                                      .scaffoldBackgroundColor),
+                              boxShadow: [
+                                BoxShadow(
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(0.1),
+                                    offset: Offset(0, 10))
+                              ],
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://www.inkc.in/${widget.image}"),
+                                fit: BoxFit.cover, //change image fill type
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: TextField(
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                              controller: breed,
-                              enabled: false,
-                              // obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
-                                ),
-                                labelText: 'Breed Of Dogs',
-                                hintText: '',
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: TextField(
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                              controller: sex,
-                              enabled: false,
-                              // obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
-                                ),
-                                labelText: 'Sex',
-                                hintText: 'Rajbhar',
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: TextField(
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                              controller: dateofbirth,
-                              enabled: false,
-                              // obscureText: true,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.date_range),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
-                                ),
-                                labelText: 'Date of Birth',
-                                hintText: 'Rajbhar',
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: TextField(
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                              maxLines: null,
-                              controller: registration,
-                              enabled: false,
-                              // obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
-                                ),
-                                labelText: 'Registration Number',
-                                hintText: 'Rajbhar',
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: colorandmaking.text.toString() == null
-                                ? TextField(
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600),
-                                    maxLines: null,
-                                    controller: colorandmaking,
-                                    enabled: false,
-                                    // obscureText: true,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4.sp)),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.green),
-                                      ),
-                                      labelText: 'Color and Making',
-                                      hintText: '-',
-                                    ),
-                                  )
-                                : TextField(
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600),
-                                    maxLines: null,
-                                    controller: colorandmaking,
-                                    enabled: false,
-                                    // obscureText: true,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4.sp)),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.green),
-                                      ),
-                                      labelText: ' - ',
-                                      hintText: '-',
-                                    ),
-                                  ),
-                          ),
+                          // Positioned(
+                          //   bottom: 0.sp,
+                          //   right: 0.sp,
+                          //   child: Container(
+                          //     height: 40.sp,
+                          //     width: 40.sp,
+                          //     decoration: BoxDecoration(
+                          //       shape: BoxShape.circle,
+                          //       border: Border.all(
+                          //         width: 4,
+                          //         color:
+                          //             Theme.of(context).scaffoldBackgroundColor,
+                          //       ),
+                          //       color: Colors.black,
+                          //     ),
+                          //     // child: InkWell(
+                          //     //   onTap: () {
+                          //     //     EditSlide(context);
+                          //     //   },
+                          //     child: Icon(
+                          //       Icons.edit,
+                          //       color: Colors.white,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
-                      ))
-                ],
+                      ),
+                    ),
+
+                    Container(
+                      margin: EdgeInsets.only(top: 0, right: 8),
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        height: 40.sp,
+                        width: 40.sp,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                          ),
+                          color: Colors.black,
+                        ),
+                        child: InkWell(
+                            onTap: () {
+                              EditSlide(context);
+                            },
+                            child: Image.asset(
+                              'assets/file3.png',
+                              fit: BoxFit.cover,
+                            )),
+                      ),
+                      // Positioned(
+                      //   bottom: 0.sp,
+                      //   right: 0.sp,
+                      //   child: Container(
+                      //     height: 40.sp,
+                      //     width: 40.sp,
+                      //     decoration: BoxDecoration(
+                      //       shape: BoxShape.circle,
+                      //       border: Border.all(
+                      //         width: 4,
+                      //         color: Theme.of(context).scaffoldBackgroundColor,
+                      //       ),
+                      //       color: Colors.black,
+                      //     ),
+                      //     child: InkWell(
+                      //       onTap: () {
+                      //         // EditSlide(context);
+                      //       },
+                      //       child: Icon(
+                      //         Icons.edit,
+                      //         color: Colors.white,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                    ),
+
+                    Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                                controller: petname,
+                                enabled: false,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.black,
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
+                                  ),
+                                  labelText: 'Pet Name',
+                                  hintText: '',
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                                controller: breed,
+                                enabled: false,
+                                // obscureText: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
+                                  ),
+                                  labelText: 'Breed Of Dogs',
+                                  hintText: '',
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                                controller: sex,
+                                enabled: false,
+                                // obscureText: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
+                                  ),
+                                  labelText: 'Sex',
+                                  hintText: 'Rajbhar',
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                                controller: dateofbirth,
+                                enabled: false,
+                                // obscureText: true,
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.date_range),
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
+                                  ),
+                                  labelText: 'Date of Birth',
+                                  hintText: 'Rajbhar',
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                                maxLines: null,
+                                controller: registration,
+                                enabled: false,
+                                // obscureText: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
+                                  ),
+                                  labelText: 'Registration Number',
+                                  hintText: 'Rajbhar',
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: colorandmaking.text.toString() == null
+                                  ? TextField(
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                      maxLines: null,
+                                      controller: colorandmaking,
+                                      enabled: false,
+                                      // obscureText: true,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4.sp)),
+                                          borderSide: BorderSide(
+                                              width: 1, color: Colors.green),
+                                        ),
+                                        labelText: 'Color and Making',
+                                        hintText: '-',
+                                      ),
+                                    )
+                                  : TextField(
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                      maxLines: null,
+                                      controller: colorandmaking,
+                                      enabled: false,
+                                      // obscureText: true,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4.sp)),
+                                          borderSide: BorderSide(
+                                              width: 1, color: Colors.green),
+                                        ),
+                                        labelText: ' - ',
+                                        hintText: '-',
+                                      ),
+                                    ),
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -638,14 +646,15 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                             margin: EdgeInsets.only(top: 12),
                             height: 80.0.sp,
                             width: 80.0.sp,
+                            child: Image.asset("assets/vetservices.png"),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.sp),
 
                               //set border radius to 50% of square height and width
-                              image: DecorationImage(
-                                image: AssetImage("assets/chip.jpeg"),
-                                fit: BoxFit.fill, //change image fill type
-                              ),
+                              // image: DecorationImage(
+                              //   image: AssetImage("assets/chip.jpeg"),
+                              //   fit: BoxFit.fill, //change image fill type
+                              // ),
                             ),
                           ),
                         ),
@@ -674,7 +683,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                 //       Color.fromARGB(255, 22, 26, 226),
                                 //     ],
                                 //   ),
-                                fontSize: 13.sp),
+                                fontSize: 11.sp),
                           ),
                         ),
                         // Text(

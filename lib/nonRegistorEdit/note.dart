@@ -50,228 +50,235 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon:
-                Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
-            onPressed: () => Navigator.of(context).pop(),
+    return WillPopScope(
+      onWillPop: () async {
+        // Handle Android hardware back button press
+        Navigator.pop(context);
+        return false; // Prevent default behavior
+      },
+      child: Sizer(builder: (context, orientation, deviceType) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: Color.fromARGB(255, 223, 39, 39)),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            title: Text(
+              'Note',
+              style: TextStyle(
+                  shadows: [
+                    Shadow(
+                      blurRadius: 10.0, // shadow blur
+                      color: Color.fromARGB(255, 223, 71, 45), // shadow color
+                      offset: Offset(2.0, 2.0), // how much shadow will be shown
+                    ),
+                  ],
+                  fontSize: 20.sp,
+                  decorationColor: Colors.red,
+                  color: Color.fromARGB(255, 194, 97, 33),
+                  // color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
           ),
-          title: Text(
-            'Note',
-            style: TextStyle(
-                shadows: [
-                  Shadow(
-                    blurRadius: 10.0, // shadow blur
-                    color: Color.fromARGB(255, 223, 71, 45), // shadow color
-                    offset: Offset(2.0, 2.0), // how much shadow will be shown
-                  ),
-                ],
-                fontSize: 20.sp,
-                decorationColor: Colors.red,
-                color: Color.fromARGB(255, 194, 97, 33),
-                // color: Colors.black,
-                fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-        ),
-        body: Container(
-          margin: EdgeInsets.only(top: 5.sp),
-          child: FutureBuilder(
-              future: FetchData(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  j++;
-                  return ListView.builder(
-                    itemCount: dataload.length,
-                    itemBuilder: (context, position) {
-                      if (dataload[position].noteCreatedOn != null) {
-                        List<String> months = [
-                          'January',
-                          'February',
-                          'March',
-                          'April',
-                          'May',
-                          'June',
-                          'July',
-                          'August',
-                          'September',
-                          'October',
-                          'November',
-                          'December'
-                        ];
+          body: Container(
+            margin: EdgeInsets.only(top: 5.sp),
+            child: FutureBuilder(
+                future: FetchData(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    j++;
+                    return ListView.builder(
+                      itemCount: dataload.length,
+                      itemBuilder: (context, position) {
+                        if (dataload[position].noteCreatedOn != null) {
+                          List<String> months = [
+                            'January',
+                            'February',
+                            'March',
+                            'April',
+                            'May',
+                            'June',
+                            'July',
+                            'August',
+                            'September',
+                            'October',
+                            'November',
+                            'December'
+                          ];
 
-                        List<String> days = [
-                          'Monday',
-                          'Tuseday',
-                          'Wednesday',
-                          'Thursday',
-                          'Friday',
-                          'Saturday',
-                          'Sunday',
-                        ];
+                          List<String> days = [
+                            'Monday',
+                            'Tuseday',
+                            'Wednesday',
+                            'Thursday',
+                            'Friday',
+                            'Saturday',
+                            'Sunday',
+                          ];
 
-                        final dateTimeObj =
-                            DateTime.parse(dataload[position].noteCreatedOn);
+                          final dateTimeObj =
+                              DateTime.parse(dataload[position].noteCreatedOn);
 
-                        // date format
-                        String fdate =
-                            "${days[dateTimeObj.weekday - 1].substring(0, 3)}\n${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
-                        // time format
-                        dateset = fdate;
-                        String time =
-                            "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
-                        // print("$fdate $time");
-                      } else {
-                        navigator?.pop(context);
-                      }
-                      return Card(
-                        elevation: 10,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        margin: EdgeInsets.all(5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(255, 255, 255, 255),
-                                Color.fromARGB(255, 255, 255, 255),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                          // date format
+                          String fdate =
+                              "${days[dateTimeObj.weekday - 1].substring(0, 3)}\n${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
+                          // time format
+                          dateset = fdate;
+                          String time =
+                              "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
+                          // print("$fdate $time");
+                        } else {
+                          navigator?.pop(context);
+                        }
+                        return Card(
+                          elevation: 10,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          margin: EdgeInsets.all(5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 255, 255, 255),
+                                  Color.fromARGB(255, 255, 255, 255),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
                             ),
-                          ),
-                          // decoration: const BoxDecoration(
-                          //   image: DecorationImage(
-                          //       image: NetworkImage(
-                          //           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReL_kSGg4Ux5ZiwK-mIRe6_L-Ft8GxRaaT1Q&usqp=CAU"),
-                          //       fit: BoxFit.cover),
-                          // ),
-                          child: Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              // Padding(
-                              //   padding: const EdgeInsets.all(8.0),
-                              //   child: Text(
-                              //     j.toString(),
-                              //     style: TextStyle(
-                              //       // color: Color.fromARGB(255, 17, 17, 17),
-                              //       fontSize: 12.sp,
-                              //       fontWeight: FontWeight.bold,
-                              //     ),
-                              //   ),
-                              // ),
-                              Container(
-                                // height: 50.sp,
-                                // width: 180.sp,
-                                child: Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      dataload[position].noteMessage,
-                                      style: TextStyle(
-                                        // color: Color.fromARGB(255, 17, 17, 17),
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.bold,
+                            // decoration: const BoxDecoration(
+                            //   image: DecorationImage(
+                            //       image: NetworkImage(
+                            //           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReL_kSGg4Ux5ZiwK-mIRe6_L-Ft8GxRaaT1Q&usqp=CAU"),
+                            //       fit: BoxFit.cover),
+                            // ),
+                            child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     j.toString(),
+                                //     style: TextStyle(
+                                //       // color: Color.fromARGB(255, 17, 17, 17),
+                                //       fontSize: 12.sp,
+                                //       fontWeight: FontWeight.bold,
+                                //     ),
+                                //   ),
+                                // ),
+                                Container(
+                                  // height: 50.sp,
+                                  // width: 180.sp,
+                                  child: Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        dataload[position].noteMessage,
+                                        style: TextStyle(
+                                          // color: Color.fromARGB(255, 17, 17, 17),
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(18),
-                                child: Text(
-                                  dateset,
-                                  style: TextStyle(
-                                    // color: Color.fromARGB(255, 17, 17, 17),
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold,
+                                Container(
+                                  margin: EdgeInsets.all(18),
+                                  child: Text(
+                                    dateset,
+                                    style: TextStyle(
+                                      // color: Color.fromARGB(255, 17, 17, 17),
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
 
-                              // Padding(
-                              //   padding: const EdgeInsets.all(5.0),
-                              //   child: Text(
-                              //     dateset,
-                              //     style: TextStyle(
-                              //       // color: Color.fromARGB(255, 17, 17, 17),
-                              //       fontSize: 12.sp,
-                              //       fontWeight: FontWeight.bold,
-                              //     ),
-                              //   ),
-                              // ),
-                              // Padding(
-                              //   padding: const EdgeInsets.all(5.0),
-                              //   child: Expanded(
-                              //     flex: 1,
-                              //     child: Text(
-                              //         maxLines: null,
-                              //         dataload[position].noteMessage,
-                              //         style: TextStyle(
-                              //             fontSize: 12.sp,
-                              //             fontWeight: FontWeight.bold)),
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                } else if (dataload.length == 0) {
-                  return Center(
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30, left: 20),
-                          height: 170.0.sp,
-                          width: 170.0.sp,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.sp),
-                            //set border radius to 50% of square height and width
-                            image: DecorationImage(
-                              image: AssetImage("assets/dogs.png"),
-                              fit: BoxFit.cover, //change image fill type
+                                // Padding(
+                                //   padding: const EdgeInsets.all(5.0),
+                                //   child: Text(
+                                //     dateset,
+                                //     style: TextStyle(
+                                //       // color: Color.fromARGB(255, 17, 17, 17),
+                                //       fontSize: 12.sp,
+                                //       fontWeight: FontWeight.bold,
+                                //     ),
+                                //   ),
+                                // ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(5.0),
+                                //   child: Expanded(
+                                //     flex: 1,
+                                //     child: Text(
+                                //         maxLines: null,
+                                //         dataload[position].noteMessage,
+                                //         style: TextStyle(
+                                //             fontSize: 12.sp,
+                                //             fontWeight: FontWeight.bold)),
+                                //   ),
+                                // ),
+                              ],
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "Sorry Data is empty",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.bold),
+                        );
+                      },
+                    );
+                  } else if (dataload.length == 0) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 30, left: 20),
+                            height: 170.0.sp,
+                            width: 170.0.sp,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              //set border radius to 50% of square height and width
+                              image: DecorationImage(
+                                image: AssetImage("assets/dogs.png"),
+                                fit: BoxFit.cover, //change image fill type
+                              ),
+                            ),
                           ),
-                        )
-                      ],
-                    ),
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: FloatingActionButton(
-          // isExtended: true,
-          child: Icon(Icons.add),
-          backgroundColor: Colors.green,
-          onPressed: () {
-            setState(() {
-              EditSlide(context);
-            });
-          },
-        ),
-      );
-    });
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              "Sorry Data is empty",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+          floatingActionButton: FloatingActionButton(
+            // isExtended: true,
+            child: Icon(Icons.add),
+            backgroundColor: Colors.green,
+            onPressed: () {
+              setState(() {
+                EditSlide(context);
+              });
+            },
+          ),
+        );
+      }),
+    );
   }
 
   Future<List<NoteList>> FetchData() async {
@@ -281,7 +288,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
     // print(widget.id);
 
-    final uri = "https://new-demo.inkcdogs.org/api/dog/note_list";
+    final uri = "https://www.inkc.in/api/dog/note_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -383,7 +390,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
                           EasyLoading.showToast('Please Wait...');
 
-                          final uri = "https://new-demo.inkcdogs.org/api/dog/add_note";
+                          final uri = "https://www.inkc.in/api/dog/add_note";
 
                           Map<String, String> requestHeaders = {
                             'Accept': 'application/json',

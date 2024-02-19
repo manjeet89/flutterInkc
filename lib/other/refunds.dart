@@ -59,7 +59,7 @@ class _Refunds extends State {
                   InAppWebView(
                     initialUrlRequest: URLRequest(
                         url: Uri.parse(
-                            "https://new-demo.inkcdogs.org/assets/newapp/inkcapp2/refunds.html")),
+                            "https://www.inkc.in/assets/newapp/inkcapp2/refunds.html")),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
                     },

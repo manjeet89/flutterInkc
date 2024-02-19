@@ -89,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     FetchData();
+
     EasyLoading.addStatusCallback((status) {
       print('EasyLoading Status $status');
       if (status == EasyLoadingStatus.dismiss) {
@@ -170,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     print(token);
 
-    final uri = "https://new-demo.inkcdogs.org/api/cart";
+    final uri = "https://www.inkc.in/api/cart";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

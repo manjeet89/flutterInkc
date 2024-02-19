@@ -78,14 +78,64 @@ class _SearchpageState extends State<Searchpage> {
     // TODO: implement initState
     super.initState();
     Check();
+    //RefreshCart();
     //FetchData();
+  }
+
+  RefreshCart() async {
+    print("really work");
+
+    print("babpuji sunne dijiye");
+    dataload.clear();
+    cart_data_product.clear();
+    cart_total_cost.clear();
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    userid = sharedprefrence.getString("Userid")!;
+    token = sharedprefrence.getString("Token")!;
+
+    final uri = "https://www.inkc.in/api/cart/cartready";
+
+    Map<String, String> requestHeaders = {
+      // 'Accept': 'application/json',
+      'Usertoken': token,
+      'Userid': userid
+    };
+
+    final responce = await http.post(
+      Uri.parse(uri),
+      headers: requestHeaders,
+    );
+    var data = json.decode(responce.body);
+    setState(() {
+      // showSpinner = false;
+    });
+
+    print(responce.body + " Refresh");
+    // SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    // userid = sharedprefrence.getString("Userid")!;
+    // token = sharedprefrence.getString("Token")!;
+
+    // final uri = "https://www.inkc.in/api/cart/cartready";
+
+    // Map<String, String> requestHeaders = {
+    //   // 'Accept': 'application/json',
+    //   'Usertoken': token,
+    //   'Userid': userid
+    // };
+
+    // final responce = await http.post(
+    //   Uri.parse(uri),
+    //   headers: requestHeaders,
+    // );
+    // var data = json.decode(responce.body);
+
+    //print(responce.body + " Refresh");
   }
 
   Check() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
     if (check != null) {
-      print("object with not back");
     } else {
       setState(() async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -123,6 +173,7 @@ class _SearchpageState extends State<Searchpage> {
 
   @override
   Widget build(BuildContext context) {
+    //RefreshCart();
     return Sizer(builder: (context, orientation, deviceType) {
       return Scaffold(
         appBar: AppBar(
@@ -138,401 +189,432 @@ class _SearchpageState extends State<Searchpage> {
           ),
           centerTitle: true,
         ),
-        body: Container(
-          margin: EdgeInsets.only(top: 5.sp),
-          child: FutureBuilder(
-              future: FetchData(),
-              builder: (context, snapshot) {
-                if (ifDataisnotavailavle == 'False') {
-                  return Center(
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Cart is empty.",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 177, 43, 10),
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w900),
+        body: RefreshIndicator(
+          onRefresh: () {
+            return Future.delayed(
+              Duration(seconds: 1),
+              () {
+                setState(() {
+                  RefreshCart();
+                });
+              },
+            );
+          },
+          child: Container(
+            margin: EdgeInsets.only(top: 5.sp),
+            child: FutureBuilder(
+                future: FetchData(),
+                builder: (context, snapshot) {
+                  if (ifDataisnotavailavle == 'False') {
+                    return Center(
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Cart is empty.",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 177, 43, 10),
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w900),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => INKCStore()),
-                                    );
-                                  },
-                                  child: Text('Go to INKC Store')),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => INKCStore()),
+                                      );
+                                    },
+                                    child: Text('Go to INKC Store')),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                } else {
-                  if (snapshot.hasData) {
-                    // print(checkpage);
-                    // cart_id = "";
-                    // p_id = "";
-                    // p_name = "";
-                    // p_quantity = "";
-                    // p_charges = "";
-                    // p_is_courier_required = "";
-                    // p_pet_id = "";
-                    // p_pet_birth_age = "";
-                    // p_pet_registered_as = "";
-                    // p_is_microchip_require = "";
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      // print(checkpage);
+                      // cart_id = "";
+                      // p_id = "";
+                      // p_name = "";
+                      // p_quantity = "";
+                      // p_charges = "";
+                      // p_is_courier_required = "";
+                      // p_pet_id = "";
+                      // p_pet_birth_age = "";
+                      // p_pet_registered_as = "";
+                      // p_is_microchip_require = "";
 
-                    // SUBTOTAL = 0;
-                    // DELEVRY = 0;
-                    // CHECKTOTAL = 0;
-                    // chareges_ship = 1;
+                      // SUBTOTAL = 0;
+                      // DELEVRY = 0;
+                      // CHECKTOTAL = 0;
+                      // chareges_ship = 1;
 
-                    // cart_data_product.clear();
-                    // cart_total_cost.clear();
-                    // dataload.clear;
-                    // mainjson = null;
-                    // map = null;
+                      // cart_data_product.clear();
+                      // cart_total_cost.clear();
+                      // dataload.clear;
+                      // mainjson = null;
+                      // map = null;
 
-                    // checkpage = "second time";
+                      // checkpage = "second time";
 
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      addAutomaticKeepAlives: true,
-                      itemCount: dataload.length,
-                      itemBuilder: (context, position) {
-                        if (dataload[position].cartInfo.isNotEmpty) {
-                          String text = dataload[position]
-                              .cartInfo
-                              .toString()
-                              .replaceAll("{", "")
-                              .replaceAll("}", "");
-                          String withoutquotesLine1 = text.replaceAll("\"", "");
-                          String withoutquotesLine2 =
-                              withoutquotesLine1.replaceAll(":", ",");
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        addAutomaticKeepAlives: true,
+                        itemCount: dataload.length,
+                        itemBuilder: (context, position) {
+                          if (dataload[position].cartInfo.isNotEmpty) {
+                            String text = dataload[position]
+                                .cartInfo
+                                .toString()
+                                .replaceAll("{", "")
+                                .replaceAll("}", "")
+                                .replaceAll("\\", "")
+                                .replaceAll("[", "")
+                                .replaceAll("]", "");
+                            String withoutquotesLine1 =
+                                text.replaceAll("\"", "");
+                            String withoutquotesLine2 =
+                                withoutquotesLine1.replaceAll(":", ",");
 
-                          List strArr = withoutquotesLine2.split(",");
+                            List strArr = withoutquotesLine2.split(",");
 
-                          for (int i = 0; i < strArr.length; i++) {
-                            if (strArr[i].toString() == "product_id") {
-                              // print(strArr[i + 1]);
-                              p_id = strArr[i + 1];
+                            for (int i = 0; i < strArr.length; i++) {
+                              if (strArr[i].toString() == "product_id") {
+                                // print(strArr[i + 1]);
+                                p_id = strArr[i + 1];
 
-                              // p_name = strArr[i + 1];
-                              // p_quantity = strArr[i + 1];
-                              // p_charges = strArr[i + 1];
-                              // p_is_courier_required = strArr[i + 1];
-                            }
+                                // p_name = strArr[i + 1];
+                                // p_quantity = strArr[i + 1];
+                                // p_charges = strArr[i + 1];
+                                // p_is_courier_required = strArr[i + 1];
+                              }
 
-                            // if (strArr[i].toString() == "is_microchip_require") {
-                            if (strArr[i].toString() == "product_name") {
-                              p_name = strArr[i + 1];
+                              // if (strArr[i].toString() == "is_microchip_require") {
+                              if (strArr[i].toString() == "product_name") {
+                                if (strArr.length.toString() == "10") {
+                                  p_name = strArr[i + 1];
+                                } else {
+                                  p_name = strArr[i + 1] + strArr[i + 2];
+                                }
+                                // print(p_name
+                                //     .toString()
+                                //     .replaceAll("product_quantity", ""));
+
+                                //   }
+                                // } else {
+                                //   p_name = strArr[i + 1];
+                              }
+
+                              if (strArr[i].toString() == "product_quantity") {
+                                p_quantity = strArr[i + 1];
+                              }
+
+                              if (strArr[i].toString() == "pet_id") {
+                                p_name = strArr[i - 4] + " " + strArr[i - 3];
+                              }
+
+                              if (strArr[i].toString() == "product_charges") {
+                                p_charges = strArr[i + 1];
+                              }
+                              //total = total + total;
+
+                              // if (strArr[i].toString() == "is_courier_required") {
+                              //   p_is_courier_required = strArr[i + 1];
+                              //   if (chareges_ship ==
+                              //       int.parse(p_is_courier_required.toString())) {
+                              //     TOTAL = "50";
+                              //     DELEVRY = 50;
+                              //     CHECKTOTAL = 50;
+                              //     chareges_ship++;
+                              //     //print("CHECKTOTAL");
                               //   }
-                              // } else {
-                              //   p_name = strArr[i + 1];
-                            }
+                              // }
 
-                            if (strArr[i].toString() == "product_quantity") {
-                              p_quantity = strArr[i + 1];
-                            }
+                              if (strArr[i].toString() == "pet_id") {
+                                p_pet_id = strArr[i + 1];
+                                // print(p_pet_id);
+                              }
 
-                            if (strArr[i].toString() == "pet_id") {
-                              p_name = strArr[i - 4] + " " + strArr[i - 3];
-                            }
+                              if (strArr[i].toString() == "pet_birth_age") {
+                                p_pet_birth_age = strArr[i + 1];
+                              }
 
-                            if (strArr[i].toString() == "product_charges") {
-                              p_charges = strArr[i + 1];
+                              if (strArr[i].toString() == "pet_registered_as") {
+                                p_pet_registered_as = strArr[i + 1];
+                              }
+                              if (strArr[i].toString() ==
+                                  "is_microchip_require") {
+                                p_is_microchip_require = strArr[i + 1];
+                              }
                             }
-                            //total = total + total;
+                            // SUBTOTAL = SUBTOTAL + int.parse(p_charges);
 
-                            // if (strArr[i].toString() == "is_courier_required") {
-                            //   p_is_courier_required = strArr[i + 1];
-                            //   if (chareges_ship ==
-                            //       int.parse(p_is_courier_required.toString())) {
-                            //     TOTAL = "50";
-                            //     DELEVRY = 50;
-                            //     CHECKTOTAL = 50;
-                            //     chareges_ship++;
-                            //     //print("CHECKTOTAL");
-                            //   }
+                            // if (CHECKTOTAL == 50) {
+                            //   cart_total = {
+                            //     "sub_total_cost": SUBTOTAL.toString(),
+                            //     "product_id": p_id,
+                            //     "product_name": "Courier / Registered / Speed Post",
+                            //     "product_charges": 50,
+                            //     "total_cost": SUBTOTAL + 50,
+                            //   };
+                            // } else {
+                            //   cart_total = {
+                            //     "sub_total_cost": SUBTOTAL.toString(),
+                            //     "total_cost": SUBTOTAL + 50,
+                            //   };
                             // }
 
-                            if (strArr[i].toString() == "pet_id") {
-                              p_pet_id = strArr[i + 1];
-                              // print(p_pet_id);
-                            }
-
-                            if (strArr[i].toString() == "pet_birth_age") {
-                              p_pet_birth_age = strArr[i + 1];
-                            }
-
-                            if (strArr[i].toString() == "pet_registered_as") {
-                              p_pet_registered_as = strArr[i + 1];
-                            }
-                            if (strArr[i].toString() ==
-                                "is_microchip_require") {
-                              p_is_microchip_require = strArr[i + 1];
-                            }
+                            // if (p_pet_id.isEmpty) {
+                            //   map = {
+                            //     "cart_id": dataload[position].cartId,
+                            //     "product_id": p_id,
+                            //     "product_name": p_name,
+                            //     "product_quantity": p_quantity,
+                            //     "product_charges": p_charges
+                            //   };
+                            // } else {
+                            //   map = {
+                            //     "cart_id": dataload[position].cartId,
+                            //     "product_id": p_id,
+                            //     "product_name": p_name,
+                            //     "p_pet_id": p_pet_id,
+                            //     "pet_birth_age": p_pet_birth_age,
+                            //     "pet_registered_as": p_pet_registered_as,
+                            //     "is_microchip_require": p_is_microchip_require,
+                            //     "product_quantity": p_quantity,
+                            //     "product_charges": p_charges,
+                            //   };
+                            //   // print("object check is run");
+                            // }
+                          } else {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    INKCStore()));
                           }
-                          // SUBTOTAL = SUBTOTAL + int.parse(p_charges);
+                          // cart_data_product.add(map);
+                          // print(map);
 
-                          // if (CHECKTOTAL == 50) {
-                          //   cart_total = {
-                          //     "sub_total_cost": SUBTOTAL.toString(),
-                          //     "product_id": p_id,
-                          //     "product_name": "Courier / Registered / Speed Post",
-                          //     "product_charges": 50,
-                          //     "total_cost": SUBTOTAL + 50,
-                          //   };
-                          // } else {
-                          //   cart_total = {
-                          //     "sub_total_cost": SUBTOTAL.toString(),
-                          //     "total_cost": SUBTOTAL + 50,
-                          //   };
-                          // }
-
-                          // if (p_pet_id.isEmpty) {
-                          //   map = {
-                          //     "cart_id": dataload[position].cartId,
-                          //     "product_id": p_id,
-                          //     "product_name": p_name,
-                          //     "product_quantity": p_quantity,
-                          //     "product_charges": p_charges
-                          //   };
-                          // } else {
-                          //   map = {
-                          //     "cart_id": dataload[position].cartId,
-                          //     "product_id": p_id,
-                          //     "product_name": p_name,
-                          //     "p_pet_id": p_pet_id,
-                          //     "pet_birth_age": p_pet_birth_age,
-                          //     "pet_registered_as": p_pet_registered_as,
-                          //     "is_microchip_require": p_is_microchip_require,
-                          //     "product_quantity": p_quantity,
-                          //     "product_charges": p_charges,
-                          //   };
-                          //   // print("object check is run");
-                          // }
-                        } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) => INKCStore()));
-                        }
-                        // cart_data_product.add(map);
-                        // print(map);
-
-                        return Card(
-                          elevation: 5,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          margin: EdgeInsets.all(5),
-                          child: Container(
-                            // height: 140.sp,
-                            constraints: BoxConstraints.tightFor(),
-
-                            // width: double.infinity,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                    5,
-                                    5,
-                                  ),
-                                )
-                              ],
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 0.3,
-                              ),
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
-                            ),
+                          return Card(
+                            elevation: 5,
+                            color: Color.fromARGB(255, 255, 255, 255),
                             margin: EdgeInsets.all(5),
-                            child: Row(
-                              // crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  // onTap: () {
-                                  //   Navigator.of(context).push(MaterialPageRoute(
-                                  //       builder: (BuildContext context) =>
-                                  //           INKCDogRegistration()));
-                                  // },
-                                  child: Container(
-                                    constraints: BoxConstraints.tightFor(),
-                                    child: Image.asset('assets/INKCLogo.png'),
-                                    margin: EdgeInsets.only(
-                                        top: 12, left: 12, bottom: 12),
-                                    height: 100.0.sp,
-                                    width: 90.0.sp,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(15.sp),
+                            child: Container(
+                              // height: 140.sp,
+                              constraints: BoxConstraints.tightFor(),
 
-                                      //set border radius to 50% of square height and width
+                              // width: double.infinity,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                      5,
+                                      5,
+                                    ),
+                                  )
+                                ],
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 0.3,
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                              ),
+                              margin: EdgeInsets.all(5),
+                              child: Row(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    // onTap: () {
+                                    //   Navigator.of(context).push(MaterialPageRoute(
+                                    //       builder: (BuildContext context) =>
+                                    //           INKCDogRegistration()));
+                                    // },
+                                    child: Container(
+                                      constraints: BoxConstraints.tightFor(),
+                                      child: Image.asset('assets/INKCLogo.png'),
+                                      margin: EdgeInsets.only(
+                                          top: 12, left: 12, bottom: 12),
+                                      height: 100.0.sp,
+                                      width: 90.0.sp,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.sp),
 
-                                      // image: DecorationImage(
-                                      //   image: Image.asset(
-                                      //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMq7svXemr7fVP-3Z5Qvb-TFj5LW4zscRvEGgZnVuXe0N9J6Y7iWm6adhgcxmQJPdyqpw&usqp=CAU"),
-                                      // fit: BoxFit.fill, //change image fill type
+                                        //set border radius to 50% of square height and width
+
+                                        // image: DecorationImage(
+                                        //   image: Image.asset(
+                                        //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMq7svXemr7fVP-3Z5Qvb-TFj5LW4zscRvEGgZnVuXe0N9J6Y7iWm6adhgcxmQJPdyqpw&usqp=CAU"),
+                                        // fit: BoxFit.fill, //change image fill type
+                                      ),
                                     ),
                                   ),
-                                ),
-                                // ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 30.0, left: 15, right: 20),
-                                      child: Container(
-                                        width: 150.sp,
-                                        child: Text(
-                                          '${p_name}',
-                                          maxLines: 5,
-                                          style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 19, 11, 10),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12.sp),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 15.0, left: 15, right: 20),
-                                      child: Text(
-                                        ' Quantity : ${p_quantity}',
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromARGB(255, 53, 52, 52),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12.sp),
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 15.0,
-                                              left: 15,
-                                              right: 20,
-                                              bottom: 20),
+                                  // ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 30.0, left: 15, right: 20),
+                                        child: Container(
+                                          width: 150.sp,
                                           child: Text(
-                                            '₹  ${p_charges}',
+                                            '${p_name.toString().replaceAll("<br>", " ")}',
+                                            maxLines: 5,
                                             style: TextStyle(
-                                                shadows: [
-                                                  Shadow(
-                                                    blurRadius:
-                                                        10.0, // shadow blur
-                                                    color: Color.fromARGB(
-                                                        255,
-                                                        223,
-                                                        71,
-                                                        45), // shadow color
-                                                    offset: Offset(2.0,
-                                                        2.0), // how much shadow will be shown
-                                                  ),
-                                                ],
                                                 color: Color.fromARGB(
-                                                    255, 223, 71, 45),
+                                                    255, 19, 11, 10),
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12.sp),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 15.0,
-                                              left: 15,
-                                              right: 20,
-                                              bottom: 20),
-                                          child: ElevatedButton(
-                                            child: Text('Delete',
-                                                style: TextStyle(
-                                                    color: Colors.white)),
-                                            onPressed: () async {
-                                              // print(dataload[position].cartId);
-                                              Map<String, String>
-                                                  requestHeaders = {
-                                                'Accept': 'application/json',
-                                                'Usertoken': token,
-                                                'Userid': userid
-                                              };
-
-                                              final uri =
-                                                  "https://new-demo.inkcdogs.org/api/cart/remove_cart_item";
-
-                                              final responce = await http.post(
-                                                  Uri.parse(uri),
-                                                  body: {
-                                                    "cart_id":
-                                                        dataload[position]
-                                                            .cartId
-                                                            .toString(),
-                                                  },
-                                                  headers: requestHeaders);
-
-                                              var data =
-                                                  json.decode(responce.body);
-                                              if (data['code'] == 200) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(const SnackBar(
-                                                        content: Text(
-                                                            'Succesfully Deleted')));
-
-                                                setState(() {});
-                                              }
-
-                                              // Navigator.pushReplacement(
-                                              //     context;
-                                              //     PageRouteBuilder(
-                                              //         pageBuilder: (a; b; c) =>
-                                              //             Search()));
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                                primary: Color.fromARGB(
-                                                    255, 231, 25, 25),
-                                                textStyle: TextStyle(
-                                                    fontSize: 10.sp,
-                                                    color: const Color.fromARGB(
-                                                        255, 241, 236, 236),
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15.0, left: 15, right: 20),
+                                        child: Text(
+                                          ' Quantity : ${p_quantity}',
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 53, 52, 52),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12.sp),
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                // Text(
-                                //   "Show All Dogs",
-                                //   style: TextStyle(color: Colors.black),
-                                // )
-                              ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 15.0,
+                                                left: 15,
+                                                right: 20,
+                                                bottom: 20),
+                                            child: Text(
+                                              '₹  ${p_charges}',
+                                              style: TextStyle(
+                                                  shadows: [
+                                                    Shadow(
+                                                      blurRadius:
+                                                          10.0, // shadow blur
+                                                      color: Color.fromARGB(
+                                                          255,
+                                                          223,
+                                                          71,
+                                                          45), // shadow color
+                                                      offset: Offset(2.0,
+                                                          2.0), // how much shadow will be shown
+                                                    ),
+                                                  ],
+                                                  color: Color.fromARGB(
+                                                      255, 223, 71, 45),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12.sp),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 15.0,
+                                                left: 15,
+                                                right: 20,
+                                                bottom: 20),
+                                            child: ElevatedButton(
+                                              child: Text('Delete',
+                                                  style: TextStyle(
+                                                      color: Colors.white)),
+                                              onPressed: () async {
+                                                // print(dataload[position].cartId);
+                                                Map<String, String>
+                                                    requestHeaders = {
+                                                  'Accept': 'application/json',
+                                                  'Usertoken': token,
+                                                  'Userid': userid
+                                                };
+
+                                                final uri =
+                                                    "https://www.inkc.in/api/cart/remove_cart_item";
+
+                                                final responce = await http
+                                                    .post(Uri.parse(uri),
+                                                        body: {
+                                                          "cart_id":
+                                                              dataload[position]
+                                                                  .cartId
+                                                                  .toString(),
+                                                        },
+                                                        headers:
+                                                            requestHeaders);
+
+                                                var data =
+                                                    json.decode(responce.body);
+                                                if (data['code'] == 200) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(const SnackBar(
+                                                          content: Text(
+                                                              'Succesfully Deleted')));
+
+                                                  setState(() {});
+                                                }
+
+                                                // Navigator.pushReplacement(
+                                                //     context;
+                                                //     PageRouteBuilder(
+                                                //         pageBuilder: (a; b; c) =>
+                                                //             Search()));
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Color.fromARGB(
+                                                      255, 231, 25, 25),
+                                                  textStyle: TextStyle(
+                                                      fontSize: 10.sp,
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              241,
+                                                              236,
+                                                              236),
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  // Text(
+                                  //   "Show All Dogs",
+                                  //   style: TextStyle(color: Colors.black),
+                                  // )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    SUBTOTAL = 0;
-                    DELEVRY = 0;
-                    CHECKTOTAL = 0;
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
+                          );
+                        },
+                      );
+                    } else {
+                      SUBTOTAL = 0;
+                      DELEVRY = 0;
+                      CHECKTOTAL = 0;
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
                   }
-                }
-              }),
+                }),
+          ),
         ),
         floatingActionButton: Visibility(
           visible: _isShow,
@@ -773,7 +855,7 @@ class _SearchpageState extends State<Searchpage> {
   }
 
   Future<List<CartList>> FetchData() async {
-    print("abhi thik  kr ke deta hu");
+    //print("abhi thik  kr ke deta hu");
 
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     userid = sharedprefrence.getString("Userid")!;
@@ -803,7 +885,7 @@ class _SearchpageState extends State<Searchpage> {
 
     // print(token);
 
-    final uri = "https://new-demo.inkcdogs.org/api/cart";
+    final uri = "https://www.inkc.in/api/cart";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

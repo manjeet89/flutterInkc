@@ -96,8 +96,10 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
                           color: Colors.black,
                           width: 0.5,
                         ),
-                        borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
+
+                        borderRadius: BorderRadius.circular(20),
+                        // color: ui.Color.fromARGB(136, 172, 220, 255),
                       ),
                       margin: EdgeInsets.all(15),
                       child: Column(
@@ -122,19 +124,21 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
                               }
                             },
                             child: Container(
+                              child: Image.asset('assets/mydogs.png'),
                               margin: EdgeInsets.only(top: 12),
                               height: 100.0.sp,
                               width: 105.0.sp,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.sp),
+                              //decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(20.sp),
+                              //color: ui.Color.fromARGB(136, 172, 220, 255),
 
-                                //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2FihNWtx6Ymf7RSAX_mD1nzIzib37pSKYcw&usqp=CAU"),
-                                  fit: BoxFit.fill, //change image fill type
-                                ),
-                              ),
+                              //set border radius to 50% of square height and width
+                              // image: DecorationImage(
+                              //   image: NetworkImage(
+                              //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2FihNWtx6Ymf7RSAX_mD1nzIzib37pSKYcw&usqp=CAU"),
+                              //   fit: BoxFit.fill, //change image fill type
+                              // ),
+                              //  ),
                             ),
                           ),
                           Padding(
@@ -218,16 +222,17 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
                               margin: EdgeInsets.only(top: 12),
                               height: 100.0.sp,
                               width: 105.0.sp,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.sp),
+                              child: Image.asset('assets/adddogs.png'),
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(15.sp),
 
-                                //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQytMzUqacbpPtcpXLSMunUbVk3WHWwHmTEl5sk2hMjLamiws8FBrKgcX3_COxEUU9qwxA&usqp=CAU"),
-                                  fit: BoxFit.fill, //change image fill type
-                                ),
-                              ),
+                              //   //set border radius to 50% of square height and width
+                              //   image: DecorationImage(
+                              //     image: NetworkImage(
+                              //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQytMzUqacbpPtcpXLSMunUbVk3WHWwHmTEl5sk2hMjLamiws8FBrKgcX3_COxEUU9qwxA&usqp=CAU"),
+                              //     fit: BoxFit.fill, //change image fill type
+                              //   ),
+                              // ),
                             ),
                           ),
                           Padding(
@@ -300,16 +305,18 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
                               margin: EdgeInsets.only(top: 12),
                               height: 100.0.sp,
                               width: 105.0.sp,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.sp),
+                              child:
+                                  Image.asset('assets/litterregistration.png'),
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(15.sp),
 
-                                //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWtDCjZPdjxQFPy2fbtFWeOy_NhhFL_abZAmOaJUpZbZF_1_QTewBvSEWl_2lyiRFqBSM&usqp=CAU"),
-                                  fit: BoxFit.fill, //change image fill type
-                                ),
-                              ),
+                              //   //set border radius to 50% of square height and width
+                              //   image: DecorationImage(
+                              //     image: NetworkImage(
+                              //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWtDCjZPdjxQFPy2fbtFWeOy_NhhFL_abZAmOaJUpZbZF_1_QTewBvSEWl_2lyiRFqBSM&usqp=CAU"),
+                              //     fit: BoxFit.fill, //change image fill type
+                              //   ),
+                              // ),
                             ),
                           ),
                           Padding(
@@ -377,16 +384,18 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
                               margin: EdgeInsets.only(top: 12),
                               height: 100.0.sp,
                               width: 105.0.sp,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.sp),
+                              child: Image.asset(
+                                  "assets/kennelnameregistration.png"),
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(15.sp),
 
-                                //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROTaejmQIPYD0y3QTuGvruNZrJvj0R2tk6rw&usqp=CAU"),
-                                  fit: BoxFit.fill, //change image fill type
-                                ),
-                              ),
+                              //   //set border radius to 50% of square height and width
+                              //   image: DecorationImage(
+                              //     image: NetworkImage(
+                              //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROTaejmQIPYD0y3QTuGvruNZrJvj0R2tk6rw&usqp=CAU"),
+                              //     fit: BoxFit.fill, //change image fill type
+                              //   ),
+                              // ),
                             ),
                           ),
                           Padding(
@@ -463,16 +472,17 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
                               margin: EdgeInsets.only(top: 12),
                               height: 100.0.sp,
                               width: 105.0.sp,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.sp),
+                              child: Image.asset("assets/inkcstore.png"),
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(15.sp),
 
-                                //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDjYq9BVfv-KOMjn7620qMLjlqNhnUxz2RTA&usqp=CAU"),
-                                  fit: BoxFit.fill, //change image fill type
-                                ),
-                              ),
+                              //   //set border radius to 50% of square height and width
+                              //   image: DecorationImage(
+                              //     image: NetworkImage(
+                              //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDjYq9BVfv-KOMjn7620qMLjlqNhnUxz2RTA&usqp=CAU"),
+                              //     fit: BoxFit.fill, //change image fill type
+                              //   ),
+                              // ),
                             ),
                           ),
                           Padding(
@@ -543,16 +553,17 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
                               margin: EdgeInsets.only(top: 12),
                               height: 100.0.sp,
                               width: 105.0.sp,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.sp),
+                              child: Image.asset("assets/events.png"),
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(15.sp),
 
-                                //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPCGEQZMM6D-fzxpK_MsKCBNnXQf5V59RcFQ&usqp=CAU"),
-                                  fit: BoxFit.fill, //change image fill type
-                                ),
-                              ),
+                              //   //set border radius to 50% of square height and width
+                              //   image: DecorationImage(
+                              //     image: NetworkImage(
+                              //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPCGEQZMM6D-fzxpK_MsKCBNnXQf5V59RcFQ&usqp=CAU"),
+                              //     fit: BoxFit.fill, //change image fill type
+                              //   ),
+                              // ),
                             ),
                           ),
                           Padding(

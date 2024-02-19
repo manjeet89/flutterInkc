@@ -59,7 +59,7 @@ class _AssosicateMemberOverView extends State {
                   InAppWebView(
                     initialUrlRequest: URLRequest(
                         url: Uri.parse(
-                            "https://new-demo.inkcdogs.org/assets/newapp/inkc-app/associate-membership.html")),
+                            "https://www.inkc.in/assets/newapp/inkc-app/associate-membership.html")),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
                     },

@@ -115,7 +115,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
+  //   final uri = "https://www.inkc.in/api/user/user_profile";
 
   XFile? pickerFiles;
   final _firstpicker = ImagePicker();
@@ -139,15 +139,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
               filename: now.second.toString() + ".jpg"),
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/user/update_profile_image',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://www.inkc.in/api/user/update_profile_image',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -212,7 +212,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     // print('${userid} / ${token}');
 
-    final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
+    final uri = "https://www.inkc.in/api/user/user_profile";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -261,6 +261,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         personalid.value = TextEditingValue(text: jsondata['user_id']);
 
         image = jsondata['user_profile_image'];
+        SharedPreferences UserProfileImage =
+            await SharedPreferences.getInstance();
+        await UserProfileImage.setString("UserProfileImage", image);
         print(image);
       }
     } else {
@@ -300,335 +303,350 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return ModalProgressHUD(
-          inAsyncCall: showSpinner,
-          child: Scaffold(
-            // body:
-            // FutureBuilder<List<ProfileModel>>(
-            //   builder: (context, snapshot) {
-            //     if (snapshot.data == null)
-            //       return const Center(
-            //         child: Text("null value print "),
-            //       );
-            //     else {}
-            //     return Center(
-            //       child: Text(snapshot.data!.length.toString()),
-            //     );
-            //   },
-            // ),
+    return WillPopScope(
+      onWillPop: () async {
+        // Handle Android hardware back button press
+        Navigator.pop(context);
+        return false; // Prevent default behavior
+      },
+      child: Sizer(
+        builder: (context, orientation, deviceType) {
+          return ModalProgressHUD(
+            inAsyncCall: showSpinner,
+            child: Scaffold(
+              // body:
+              // FutureBuilder<List<ProfileModel>>(
+              //   builder: (context, snapshot) {
+              //     if (snapshot.data == null)
+              //       return const Center(
+              //         child: Text("null value print "),
+              //       );
+              //     else {}
+              //     return Center(
+              //       child: Text(snapshot.data!.length.toString()),
+              //     );
+              //   },
+              // ),
 
-            body: Container(
-              margin: EdgeInsets.only(top: 10),
-              padding: EdgeInsets.only(left: 16, top: 25, right: 16),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                },
-                child: ListView(
-                  children: [
-                    Text(
-                      "My Profile",
-                      style: TextStyle(
-                          fontSize: 25.sp, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    if (address.text.toString() == "null")
-                      Container(
-                        margin: EdgeInsets.only(top: 10, left: 20),
-                        height: 100.0.sp,
-                        width: 100.0.sp,
-                        child: Icon(
-                          Icons.person,
-                          size: 45.0.sp,
-                          color: ui.Color.fromARGB(255, 141, 35, 35),
-                        ),
-                      )
-                    else
-                      Center(
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: 130.sp,
-                              height: 130.sp,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 4,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor),
-                                boxShadow: [
-                                  BoxShadow(
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: Offset(0, 10))
-                                ],
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://new-demo.inkcdogs.org/${image}"),
-                                  fit: BoxFit.cover, //change image fill type
+              body: Container(
+                margin: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                  child: ListView(
+                    children: [
+                      Text(
+                        "My Profile",
+                        style: TextStyle(
+                            fontSize: 25.sp, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      if (address.text.toString() == "null")
+                        Container(
+                          margin: EdgeInsets.only(top: 10, left: 20),
+                          height: 100.0.sp,
+                          width: 100.0.sp,
+                          child: Icon(
+                            Icons.person,
+                            size: 45.0.sp,
+                            color: ui.Color.fromARGB(255, 141, 35, 35),
+                          ),
+                        )
+                      else
+                        Center(
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 130.sp,
+                                height: 130.sp,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 4,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        spreadRadius: 2,
+                                        blurRadius: 10,
+                                        color: Colors.black.withOpacity(0.1),
+                                        offset: Offset(0, 10))
+                                  ],
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        "https://www.inkc.in/${image}"),
+                                    fit: BoxFit.cover, //change image fill type
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                                bottom: 0.sp,
-                                right: 0.sp,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    // getImage();
-                                    getImagedata();
-                                  },
-                                  child: Container(
-                                    height: 40.sp,
-                                    width: 40.sp,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        width: 4,
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
+                              Positioned(
+                                  bottom: 0.sp,
+                                  right: 0.sp,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // getImage();
+                                      getImagedata();
+                                    },
+                                    child: Container(
+                                      height: 40.sp,
+                                      width: 40.sp,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          width: 4,
+                                          color: Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                        ),
+                                        color: Colors.black,
                                       ),
-                                      color: Colors.black,
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                )),
-                          ],
+                                  )),
+                            ],
+                          ),
                         ),
-                      ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Personal",
-                          style: TextStyle(
-                              fontSize: 20.sp, fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 18.0),
-                          child: Container(
-                            height: 40.sp,
-                            width: 40.sp,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                width: 4,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Personal",
+                            style: TextStyle(
+                                fontSize: 20.sp, fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 18.0),
+                            child: Container(
+                              height: 40.sp,
+                              width: 40.sp,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: 4,
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                ),
+                                color: const Color.fromARGB(255, 148, 145, 145),
                               ),
-                              color: const Color.fromARGB(255, 148, 145, 145),
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        ProfileUpdate(
-                                          name: First.text.toString(),
-                                          lastname:
-                                              MyController.text.toString(),
-                                          gender: gender,
-                                          dob: DOB,
-                                          phone: phonenumber.text,
-                                          email: email.text,
-                                          address: address.text,
-                                        )));
-                              },
-                              child: Icon(
-                                Icons.edit,
-                                color: Colors.white,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          ProfileUpdate(
+                                            name: First.text.toString(),
+                                            lastname:
+                                                MyController.text.toString(),
+                                            gender: gender,
+                                            dob: DOB,
+                                            phone: phonenumber.text,
+                                            email: email.text,
+                                            address: address.text,
+                                          )));
+                                },
+                                child: Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    // ElevatedButton(
-                    //     onPressed: () {
-                    //       Navigator.of(context).push(MaterialPageRoute(
-                    //           builder: (BuildContext context) => ProfileUpdate(
-                    //                 phone: phonenumber.text,
-                    //                 email: email.text,
-                    //                 address: address.text,
-                    //               )));
-                    //     },
-                    //     child: Text('Profile')),
-                    SizedBox(
-                      height: 5.sp,
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(top: 15),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: TextField(
-                                style: TextStyle(
-                                    color: const Color.fromARGB(255, 41, 2, 2),
-                                    fontWeight: FontWeight.w600),
-                                controller: First,
-                                enabled: false,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
-                                  ),
-                                  labelText: 'First Name',
-                                  hintText: 'Manjeet',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: TextField(
-                                style: TextStyle(
-                                    color: const Color.fromARGB(255, 41, 2, 2),
-                                    fontWeight: FontWeight.w600),
-                                controller: MyController,
-                                enabled: false,
-                                // obscureText: true,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
-                                  ),
-                                  labelText: 'Last Name',
-                                  hintText: 'Rajbhar',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: IntlPhoneField(
-                                enabled: false,
-                                controller: phonenumber,
-                                focusNode: focusNode,
-                                decoration: InputDecoration(
-                                  labelText: 'Phone Number',
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(),
+                        ],
+                      ),
+                      // ElevatedButton(
+                      //     onPressed: () {
+                      //       Navigator.of(context).push(MaterialPageRoute(
+                      //           builder: (BuildContext context) => ProfileUpdate(
+                      //                 phone: phonenumber.text,
+                      //                 email: email.text,
+                      //                 address: address.text,
+                      //               )));
+                      //     },
+                      //     child: Text('Profile')),
+                      SizedBox(
+                        height: 5.sp,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(
+                                  style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 41, 2, 2),
+                                      fontWeight: FontWeight.w600),
+                                  controller: First,
+                                  enabled: false,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'First Name',
+                                    hintText: 'Manjeet',
                                   ),
                                 ),
-                                style: TextStyle(
-                                    color: const Color.fromARGB(255, 41, 2, 2),
-                                    fontWeight: FontWeight.w600),
-                                initialCountryCode: 'IN',
-                                onChanged: (phone) {
-                                  print(
-                                    phone.completeNumber,
-                                  );
-                                },
-                                onCountryChanged: (country) {
-                                  print('Country changed to: ' + country.name);
-                                },
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: TextField(
-                                style: TextStyle(
-                                    color: const Color.fromARGB(255, 41, 2, 2),
-                                    fontWeight: FontWeight.w600),
-                                controller: email,
-                                enabled: false,
-                                // obscureText: true,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
+                              Padding(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(
+                                  style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 41, 2, 2),
+                                      fontWeight: FontWeight.w600),
+                                  controller: MyController,
+                                  enabled: false,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Last Name',
+                                    hintText: 'Rajbhar',
                                   ),
-                                  labelText: 'Email Address',
-                                  hintText: 'Rajbhar',
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: TextField(
-                                style: TextStyle(
-                                    color: const Color.fromARGB(255, 41, 2, 2),
-                                    fontWeight: FontWeight.w600),
-                                controller: dateofbirth,
-                                enabled: false,
-                                // obscureText: true,
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.date_range),
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
+                              Padding(
+                                padding: EdgeInsets.all(10),
+                                child: IntlPhoneField(
+                                  enabled: false,
+                                  controller: phonenumber,
+                                  focusNode: focusNode,
+                                  decoration: InputDecoration(
+                                    labelText: 'Phone Number',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(),
+                                    ),
                                   ),
-                                  labelText: 'Date of Birth',
-                                  hintText: 'Rajbhar',
+                                  style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 41, 2, 2),
+                                      fontWeight: FontWeight.w600),
+                                  initialCountryCode: 'IN',
+                                  onChanged: (phone) {
+                                    print(
+                                      phone.completeNumber,
+                                    );
+                                  },
+                                  onCountryChanged: (country) {
+                                    print(
+                                        'Country changed to: ' + country.name);
+                                  },
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: TextField(
-                                style: TextStyle(
-                                    color: const Color.fromARGB(255, 41, 2, 2),
-                                    fontWeight: FontWeight.w600),
-                                maxLines: null,
-                                controller: address,
-                                enabled: false,
-                                // obscureText: true,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
+                              Padding(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(
+                                  style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 41, 2, 2),
+                                      fontWeight: FontWeight.w600),
+                                  controller: email,
+                                  enabled: false,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Email Address',
+                                    hintText: 'Rajbhar',
                                   ),
-                                  labelText: 'Address',
-                                  hintText: 'Rajbhar',
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: TextField(
-                                style: TextStyle(
-                                    color: const Color.fromARGB(255, 41, 2, 2),
-                                    fontWeight: FontWeight.w600),
-                                maxLines: null,
-                                controller: personalid,
-                                enabled: false,
-                                // obscureText: true,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
+                              Padding(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(
+                                  style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 41, 2, 2),
+                                      fontWeight: FontWeight.w600),
+                                  controller: dateofbirth,
+                                  enabled: false,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.date_range),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Date of Birth',
+                                    hintText: 'Rajbhar',
                                   ),
-                                  labelText: 'Personal ID',
-                                  hintText: 'Rajbhar',
                                 ),
                               ),
-                            ),
-                          ],
-                        ))
-                  ],
+                              Padding(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(
+                                  style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 41, 2, 2),
+                                      fontWeight: FontWeight.w600),
+                                  maxLines: null,
+                                  controller: address,
+                                  enabled: false,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Address',
+                                    hintText: 'Rajbhar',
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(
+                                  style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 41, 2, 2),
+                                      fontWeight: FontWeight.w600),
+                                  maxLines: null,
+                                  controller: personalid,
+                                  enabled: false,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Personal ID',
+                                    hintText: 'Rajbhar',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

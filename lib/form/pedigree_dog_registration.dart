@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inkc/adddoginfo.dart';
 import 'package:inkc/dropdownmodel/drop_down_breed_list.dart';
 import 'package:inkc/dropdownmodel/drop_down_color_and_making_list.dart';
 import 'package:inkc/dropdownmodel/drop_down_model_kennel_name.dart';
@@ -10,6 +11,8 @@ import 'package:inkc/model/profilemodel.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -111,7 +114,7 @@ class __PedigreeDogRegistrationFormState
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://www.inkc.in/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -148,15 +151,20 @@ class __PedigreeDogRegistrationFormState
   bool breedvalidate = false;
   bool gendervalidator = false;
 
+  bool sirevalide = false;
+  String? sireString;
+  bool damvalide = false;
+  String? DamString;
+
   uploadData() async {
     setState(() {
       showSpinner = true;
     });
 
-    String SIRE = sire.text;
-    String DAM = dam.text;
-    String DogName = Dogname.text;
-    String DOB = dateofbirth.text;
+    String SIRE = sire.text.toString();
+    String DAM = dam.text.toString();
+    String DogName = Dogname.text.toString();
+    String DOB = dateofbirth.text.toString();
     String Gender = gender.toString();
     String AddCoowner = AddCoOwner.toString();
     String MICRO = MicroRequired.toString();
@@ -180,6 +188,7 @@ class __PedigreeDogRegistrationFormState
         'color_marking': selectcolormakingid,
         'dam_reg_number': DAM,
         'sire_reg_number': SIRE,
+        'breded_country': counrty.text.toString(),
       });
       print(Gender +
           "-" +
@@ -211,9 +220,17 @@ class __PedigreeDogRegistrationFormState
 
       if (response.statusCode == 200) {
         print(response.toString());
+        print(response.toString());
         setState(() {
+          RefreshCart();
           showSpinner = false;
         });
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          title: 'Success...',
+          text: 'SuccessFully Registered',
+        );
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('SuccessFully Registered')));
       } else {
@@ -308,774 +325,1120 @@ class __PedigreeDogRegistrationFormState
     // }
   }
 
+  // Country
+  TextEditingController counrty = new TextEditingController();
+  bool countryvalidate = false;
+
+  //RefreshCart
+  RefreshCart() async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    String userid = sharedprefrence.getString("Userid")!;
+    String token = sharedprefrence.getString("Token")!;
+
+    final uri = "https://www.inkc.in/api/cart/cartready";
+
+    Map<String, String> requestHeaders = {
+      // 'Accept': 'application/json',
+      'Usertoken': token,
+      'Userid': userid
+    };
+
+    final responce = await http.post(
+      Uri.parse(uri),
+      headers: requestHeaders,
+    );
+    var data = json.decode(responce.body);
+    // setState(() {
+    //   showSpinner = false;
+    // });
+
+    print(responce.body + " Refresh");
+  }
+
+  GetAllDam(String text) async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    String userid = sharedprefrence.getString("Userid")!;
+    String token = sharedprefrence.getString("Token")!;
+
+    final uri = "https://www.inkc.in/api/dog/get_dam_details";
+
+    Map<String, String> requestHeaders = {
+      'Accept': 'application/json',
+      'Usertoken': token,
+      'Userid': userid
+    };
+
+    final responce = await http.post(
+      Uri.parse(uri),
+      headers: requestHeaders,
+      body: {
+        "dam_reg_number": text.toString(),
+      },
+    );
+    var data = json.decode(responce.body);
+    setState(() {
+      DamString = data['data'];
+      damvalide = true;
+      // sire.value = TextEditingValue(text: data['data']);
+    });
+  }
+
+  GetAllSire(String text) async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    String userid = sharedprefrence.getString("Userid")!;
+    String token = sharedprefrence.getString("Token")!;
+
+    final uri = "https://www.inkc.in/api/dog/get_sire_details";
+
+    Map<String, String> requestHeaders = {
+      'Accept': 'application/json',
+      'Usertoken': token,
+      'Userid': userid
+    };
+
+    final responce = await http.post(
+      Uri.parse(uri),
+      headers: requestHeaders,
+      body: {
+        "sire_reg_number": text.toString(),
+      },
+    );
+    var data = json.decode(responce.body);
+    setState(() {
+      sireString = data['data'];
+      sirevalide = true;
+      // sire.value = TextEditingValue(text: data['data']);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(
-      inAsyncCall: showSpinner,
-      child: Sizer(
-        builder: (context, orientation, deviceType) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back,
-                    color: Color.fromARGB(255, 223, 39, 39)),
-                onPressed: () => Navigator.of(context).pop(),
+    return WillPopScope(
+      onWillPop: () async {
+        // Handle Android hardware back button press
+        Navigator.pop(context);
+        return false; // Prevent default behavior
+      },
+      child: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Sizer(
+          builder: (context, orientation, deviceType) {
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                // leading: IconButton(
+                //   icon: Icon(Icons.arrow_back,
+                //       color: Color.fromARGB(255, 223, 39, 39)),
+                //   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                //       builder: (BuildContext context) => AddDogInfo())),
+                // ),
+                title: Text(
+                  'Pedigree Dog Registration',
+                  style: TextStyle(
+                      fontSize: 20,
+                      decorationColor: Color.fromARGB(255, 66, 47, 45),
+                      color: Color.fromARGB(255, 48, 40, 35),
+                      // color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+                centerTitle: true,
               ),
-              title: Text(
-                'Pedigree Dog Registration',
-                style: TextStyle(
-                    fontSize: 20,
-                    decorationColor: Color.fromARGB(255, 66, 47, 45),
-                    color: Color.fromARGB(255, 48, 40, 35),
-                    // color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              centerTitle: true,
-            ),
-            body: Container(
-              margin: EdgeInsets.only(top: 10),
-              padding: EdgeInsets.only(left: 16, top: 5, right: 16),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                },
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0, left: 12),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Sire's INKC Registration Number ",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 22, 21, 21),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.sp),
-                          ),
-                          Text(
-                            "*",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 231, 11, 11),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.sp),
-                          ),
-                        ],
+              body: Container(
+                margin: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(left: 16, top: 5, right: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                  child: ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0, left: 12),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Sire's INKC Registration Number ",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 22, 21, 21),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.sp),
+                            ),
+                            Text(
+                              "*",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 231, 11, 11),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                              child: TextField(
-                                controller: sire,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
+                      Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: TextField(
+                                  onChanged: (value) {
+                                    GetAllSire(sire.text.toString());
+                                  },
+                                  controller: sire,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText:
+                                        "Sire's INKC Registration Number",
+                                    hintText: "Sire's INKC Registration Number",
+                                    errorText: regisvalidate
+                                        ? "Value Can't Be Empty"
+                                        : null,
                                   ),
-                                  labelText: "Sire's INKC Registration Number",
-                                  hintText: "Sire's INKC Registration Number",
-                                  errorText: regisvalidate
-                                      ? "Value Can't Be Empty"
-                                      : null,
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Dam's INKC Registration Number ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
+                              Visibility(
+                                visible: sirevalide,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Text(
+                                    sireString.toString(),
+                                    style: TextStyle(color: Colors.deepOrange),
                                   ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                              child: TextField(
-                                controller: dam,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
-                                  ),
-                                  labelText: "Sire's INKC Registration Number",
-                                  hintText: "Sire's INKC Registration Number",
-                                  errorText: regisvalidate
-                                      ? "Value Can't Be Empty"
-                                      : null,
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Add Co Owner ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5),
-                              // decoration: BoxDecoration(
-                              //   boxShadow: [],
-                              //   border: Border.all(
-                              //     color: Colors.black,
-                              //     width: 0.5,
-                              //   ),
-                              //   borderRadius: BorderRadius.circular(4.sp),
-                              //   color: Colors.white,
-                              // ),
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Column(
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: "0",
-                                              groupValue: AddCoOwner,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _isShowOff = false;
-                                                  AddCoOwner = value.toString();
-                                                });
-                                              },
-                                            ),
-                                            Text(
-                                              'No',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 11.sp),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: "1",
-                                              groupValue: AddCoOwner,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _isShowOff = true;
-                                                  AddCoOwner = value.toString();
-                                                });
-                                              },
-                                            ),
-                                            Text(
-                                              'Yes',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 11.sp),
-                                            )
-                                          ],
-                                        ),
-                                      ],
+                                    Text(
+                                      "Dam's INKC Registration Number ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                            Visibility(
-                                visible: _isShowOff,
-                                child: Column(
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: TextField(
+                                  onChanged: (value) {
+                                    GetAllDam(dam.text.toString());
+                                  },
+                                  controller: dam,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: "Dam's INKC Registration Number",
+                                    hintText: "Dam's INKC Registration Number",
+                                    errorText: regisvalidate
+                                        ? "Value Can't Be Empty"
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+                                visible: damvalide,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Text(
+                                    DamString.toString(),
+                                    style: TextStyle(color: Colors.deepOrange),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 20.0, left: 12),
-                                      child: Row(
+                                    Text(
+                                      "Add Co Owner ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 5),
+                                // decoration: BoxDecoration(
+                                //   boxShadow: [],
+                                //   border: Border.all(
+                                //     color: Colors.black,
+                                //     width: 0.5,
+                                //   ),
+                                //   borderRadius: BorderRadius.circular(4.sp),
+                                //   color: Colors.white,
+                                // ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 5),
+                                  child: Column(
+                                    children: [
+                                      Row(
                                         children: [
-                                          Text(
-                                            "Co Owner ID ",
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 22, 21, 21),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12.sp),
+                                          Row(
+                                            children: [
+                                              Radio(
+                                                value: "0",
+                                                groupValue: AddCoOwner,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _isShowOff = false;
+                                                    AddCoOwner =
+                                                        value.toString();
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'No',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 11.sp),
+                                              )
+                                            ],
                                           ),
-                                          Text(
-                                            "*",
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 231, 11, 11),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15.sp),
+                                          Row(
+                                            children: [
+                                              Radio(
+                                                value: "1",
+                                                groupValue: AddCoOwner,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _isShowOff = true;
+                                                    AddCoOwner =
+                                                        value.toString();
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'Yes',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 11.sp),
+                                              )
+                                            ],
                                           ),
                                         ],
                                       ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+                                  visible: _isShowOff,
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 20.0, left: 12),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "Co Owner ID ",
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 22, 21, 21),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12.sp),
+                                            ),
+                                            Text(
+                                              "*",
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 231, 11, 11),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15.sp),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: TextField(
+                                          controller: cowner,
+                                          // obscureText: true,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4.sp)),
+                                              borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: Colors.green),
+                                            ),
+                                            labelText: 'Co Owner ID',
+                                            hintText: 'Co Owner ID',
+                                            errorText: dogvalidate
+                                                ? "Value Can't Be Empty"
+                                                : null,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Name of the dog ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.all(8),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: TextField(
+                                  controller: Dogname,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Name of the dog',
+                                    hintText: 'Eg.Bruno',
+                                    errorText: dogvalidate
+                                        ? "Value Can't Be Empty"
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Date of Birth ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.all(8),
+                                      width: 160.sp,
                                       child: TextField(
-                                        controller: cowner,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                        onTap: () {},
+                                        controller: dateofbirth,
+                                        enabled: false,
                                         // obscureText: true,
                                         decoration: InputDecoration(
+                                          // suffixIcon: IconButton(
+                                          //   icon: Icon(Icons.date_range),
+                                          //   onPressed: () {
+                                          //     setState(
+                                          //       () {},
+                                          //     );
+                                          //   },
+                                          // ),
+                                          prefixIcon: Icon(Icons.date_range),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.sp)),
                                             borderSide: BorderSide(
                                                 width: 1, color: Colors.green),
                                           ),
-                                          labelText: 'Co Owner ID',
-                                          hintText: 'Co Owner ID',
-                                          errorText: dogvalidate
+                                          labelText: 'Date of Birth',
+                                          errorText: datevalidate
                                               ? "Value Can't Be Empty"
                                               : null,
                                         ),
                                       ),
                                     ),
-                                  ],
-                                )),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Name of the dog ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                              child: TextField(
-                                controller: Dogname,
-                                // obscureText: true,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
-                                  ),
-                                  labelText: 'Name of the dog',
-                                  hintText: 'Eg.Bruno',
-                                  errorText: dogvalidate
-                                      ? "Value Can't Be Empty"
-                                      : null,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Date of Birth ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.all(8),
-                                    width: 160.sp,
-                                    child: TextField(
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
-                                      onTap: () {},
-                                      controller: dateofbirth,
-                                      enabled: false,
-                                      // obscureText: true,
-                                      decoration: InputDecoration(
-                                        // suffixIcon: IconButton(
-                                        //   icon: Icon(Icons.date_range),
-                                        //   onPressed: () {
-                                        //     setState(
-                                        //       () {},
-                                        //     );
-                                        //   },
-                                        // ),
-                                        prefixIcon: Icon(Icons.date_range),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4.sp)),
-                                          borderSide: BorderSide(
-                                              width: 1, color: Colors.green),
-                                        ),
-                                        labelText: 'Date of Birth',
-                                        errorText: datevalidate
-                                            ? "Value Can't Be Empty"
-                                            : null,
-                                      ),
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromARGB(255, 231, 25, 25),
-                                          textStyle: TextStyle(
-                                              fontSize: 10.sp,
-                                              color: const Color.fromARGB(
-                                                  255, 241, 236, 236),
-                                              fontWeight: FontWeight.bold)),
-                                      onPressed: () {
-                                        selectDatePicker();
-                                      },
-                                      child: Text(
-                                        'Pick date',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Color and Marking ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            FutureBuilder<List<ColorAndMaking>>(
-                                future: getColorAndMaking(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: DropdownButtonFormField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.only(
-                                                    left: 30, right: 10),
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
-                                          hint: Text('Select value'),
-                                          isExpanded: true,
-                                          value: selectcolormarkingvalue,
-                                          items: snapshot.data!.map((e) {
-                                            return DropdownMenuItem(
-                                                value: e.colourId.toString(),
-                                                child: Text(
-                                                  e.colourName.toString(),
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 95, 46, 46),
-                                                      fontSize: 11.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ));
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            selectcolormarkingvalue = value;
-                                            selectcolormakingid = value;
-                                            setState(() {});
-                                          }),
-                                    );
-                                  } else {
-                                    return CircularProgressIndicator();
-                                  }
-                                }),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Gender ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                boxShadow: [],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 0.5,
-                                ),
-                                borderRadius: BorderRadius.circular(4.sp),
-                                color: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: "1",
-                                              groupValue: gender,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  gender = value.toString();
-                                                });
-                                              },
-                                            ),
-                                            Text(
-                                              'Male',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 11.sp),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: "0",
-                                              groupValue: gender,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  gender = value.toString();
-                                                });
-                                              },
-                                            ),
-                                            Text(
-                                              'Female',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 11.sp),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Your dog’s photograph ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: firstImage == null
-                                  ? Container(
-                                      margin: EdgeInsets.only(
-                                          left: 60.sp, right: 60.sp),
-                                      child: ElevatedButton(
+                                    ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromARGB(255, 182, 6, 6),
-                                        ),
-                                        onPressed: () async {
-                                          getfirstImage();
+                                            primary: Color.fromARGB(
+                                                255, 231, 25, 25),
+                                            textStyle: TextStyle(
+                                                fontSize: 10.sp,
+                                                color: const Color.fromARGB(
+                                                    255, 241, 236, 236),
+                                                fontWeight: FontWeight.bold)),
+                                        onPressed: () {
+                                          selectDatePicker();
                                         },
                                         child: Text(
-                                          'Pick Image',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    )
-                                  : GestureDetector(
-                                      onTap: () {
-                                        getfirstImage();
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 130.sp,
-                                            height: 130.sp,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 4,
-                                                    color: Theme.of(context)
-                                                        .scaffoldBackgroundColor),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      spreadRadius: 2,
-                                                      blurRadius: 10,
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      offset: Offset(0, 10))
-                                                ],
-                                                shape: BoxShape.circle,
-                                                image: new DecorationImage(
-                                                  image: FileImage(
-                                                      File(firstImage!.path)
-                                                          .absolute),
-                                                  fit: BoxFit.cover,
-                                                )
-                                                // image: DecorationImage(
-                                                //   image: NetworkImage(
-                                                //       "https://new-demo.inkcdogs.org/${image}"),
-                                                //   fit: BoxFit.cover, //change image fill type
-                                                // ),
-                                                ),
+                                          'Pick date',
+                                          style: TextStyle(
+                                            color: Colors.white,
                                           ),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Color.fromARGB(
-                                                  255, 196, 3, 3),
-                                            ),
-                                            onPressed: () async {
-                                              getfirstImage();
-                                            },
-                                            child: Text(
-                                              'Change Image',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Microchip required ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 13.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                boxShadow: [],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 0.5,
+                                        ))
+                                  ],
                                 ),
-                                borderRadius: BorderRadius.circular(4.sp),
-                                color: Colors.white,
                               ),
-                              child: Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Column(
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
                                   children: [
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: "1",
-                                              groupValue: MicroRequired,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  MicroRequired =
-                                                      value.toString();
-                                                });
-                                              },
-                                            ),
-                                            Text(
-                                              'Yes, I require a microchip for my dog',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 10.sp),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: "0",
-                                              groupValue: MicroRequired,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  MicroRequired =
-                                                      value.toString();
-                                                });
-                                              },
-                                            ),
-                                            Text(
-                                              'No, I don’t require a microchip for my dog',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 10.sp),
-                                            )
-                                          ],
-                                        ),
-                                      ],
+                                    Text(
+                                      "Color and Marking ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Color.fromARGB(255, 23, 4, 190),
-                                      textStyle: TextStyle(
-                                          fontSize: 10.sp,
-                                          color: const Color.fromARGB(
-                                              255, 241, 236, 236),
-                                          fontWeight: FontWeight.bold)),
-                                  onPressed: () {
-                                    // if (dog.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     dogvalidate = Dogname.text.isEmpty;
-                                    //   });
-                                    // } else if (registernum.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     regisvalidate =
-                                    //         Registornumber.text.isEmpty;
-                                    //   });
-                                    // } else if (kenel.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     kennelvalidate = selectedid.text.isEmpty;
-                                    //   });
-                                    // } else if (breed.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     breedvalidate =
-                                    //         selectedbreedid.text.isEmpty;
-                                    //   });
-                                    // } else if (date.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     datevalidate = dateofbirth.text.isEmpty;
-                                    //   });
-                                    // } else if (genders.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     gendervalidator =
-                                    //         gender.toString().isEmpty;
-                                    //   });
-                                    // } else {}
-                                    // String kennelname = selectedid;
-                                    // String dogid = selectedbreedid;
-                                    print(gender.toString());
-
-                                    uploadData();
-                                  },
-                                  child: Text(
-                                    'Submit',
-                                    style: TextStyle(
-                                      color: Colors.white,
+                              FutureBuilder<List<ColorAndMaking>>(
+                                  future: getColorAndMaking(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.blueGrey),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: DropdownButtonHideUnderline(
+                                            child: DropdownButton<String>(
+                                              isExpanded: true,
+                                              value: selectcolormarkingvalue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectcolormarkingvalue =
+                                                      value;
+                                                  selectcolormakingid = value;
+                                                });
+                                              },
+                                              hint: Text('Select value'),
+                                              items: snapshot.data!.map((e) {
+                                                return DropdownMenuItem<String>(
+                                                  value: e.colourId.toString(),
+                                                  child: Container(
+                                                    width: double
+                                                        .infinity, // Auto size based on content
+                                                    child: Text(
+                                                      e.colourName.toString(),
+                                                      style: TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 95, 46, 46),
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                        // DropdownButtonFormField(
+                                        //     decoration: InputDecoration(
+                                        //       contentPadding:
+                                        //           const EdgeInsets.only(
+                                        //               left: 30, right: 10),
+                                        //       border: OutlineInputBorder(
+                                        //           borderRadius: BorderRadius.all(
+                                        //               Radius.circular(10))),
+                                        //     ),
+                                        //     hint: Text('Select value'),
+                                        //     isExpanded: true,
+                                        //     value: selectcolormarkingvalue,
+                                        //     items: snapshot.data!.map((e) {
+                                        //       return DropdownMenuItem(
+                                        //           value: e.colourId.toString(),
+                                        //           child: Text(
+                                        //             e.colourName.toString(),
+                                        //             style: TextStyle(
+                                        //                 color: Color.fromARGB(
+                                        //                     255, 95, 46, 46),
+                                        //                 fontSize: 11.sp,
+                                        //                 fontWeight:
+                                        //                     FontWeight.bold),
+                                        //           ));
+                                        //     }).toList(),
+                                        //     onChanged: (value) {
+                                        //       selectcolormarkingvalue = value;
+                                        //       selectcolormakingid = value;
+                                        //       setState(() {});
+                                        //     }),
+                                      );
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+                                  }),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Sex of the dog ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
                                     ),
-                                  )),
-                            )
-                          ],
-                        ))
-                  ],
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  boxShadow: [],
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(4.sp),
+                                  color: Colors.white,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Radio(
+                                                value: "1",
+                                                groupValue: gender,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    gender = value.toString();
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'Male',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 11.sp),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Radio(
+                                                value: "0",
+                                                groupValue: gender,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    gender = value.toString();
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'Female',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 11.sp),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Country Bred In ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: TextField(
+                                  controller: counrty,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Country Bred in',
+                                    hintText: 'Eg.India',
+                                    errorText: countryvalidate
+                                        ? "Value Can't Be Empty"
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Your dog’s photograph ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: firstImage == null
+                                    ? Container(
+                                        margin: EdgeInsets.only(
+                                            left: 60.sp, right: 60.sp),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary:
+                                                Color.fromARGB(255, 182, 6, 6),
+                                          ),
+                                          onPressed: () async {
+                                            getfirstImage();
+                                          },
+                                          child: Text(
+                                            'Pick Image',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
+                                          getfirstImage();
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 130.sp,
+                                              height: 130.sp,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 4,
+                                                      color: Theme.of(context)
+                                                          .scaffoldBackgroundColor),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        spreadRadius: 2,
+                                                        blurRadius: 10,
+                                                        color: Colors.black
+                                                            .withOpacity(0.1),
+                                                        offset: Offset(0, 10))
+                                                  ],
+                                                  shape: BoxShape.circle,
+                                                  image: new DecorationImage(
+                                                    image: FileImage(
+                                                        File(firstImage!.path)
+                                                            .absolute),
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                  // image: DecorationImage(
+                                                  //   image: NetworkImage(
+                                                  //       "https://www.inkc.in/${image}"),
+                                                  //   fit: BoxFit.cover, //change image fill type
+                                                  // ),
+                                                  ),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Color.fromARGB(
+                                                    255, 196, 3, 3),
+                                              ),
+                                              onPressed: () async {
+                                                getfirstImage();
+                                              },
+                                              child: Text(
+                                                'Change Image',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Microchip required ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  boxShadow: [],
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(4.sp),
+                                  color: Colors.white,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Radio(
+                                                value: "1",
+                                                groupValue: MicroRequired,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    MicroRequired =
+                                                        value.toString();
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'Yes, I require a microchip for my dog',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 10.sp),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Radio(
+                                                value: "0",
+                                                groupValue: MicroRequired,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    MicroRequired =
+                                                        value.toString();
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'No, I don’t require a microchip for my dog',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 10.sp),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary:
+                                            Color.fromARGB(255, 23, 4, 190),
+                                        textStyle: TextStyle(
+                                            fontSize: 10.sp,
+                                            color: const Color.fromARGB(
+                                                255, 241, 236, 236),
+                                            fontWeight: FontWeight.bold)),
+                                    onPressed: () {
+                                      String SIRE = sire.text.toString();
+                                      String DAM = dam.text.toString();
+                                      String DogName = Dogname.text.toString();
+                                      String DOB = dateofbirth.text.toString();
+                                      String Gender = gender.toString();
+                                      String AddCoowner = AddCoOwner.toString();
+                                      String MICRO = MicroRequired.toString();
+                                      print(SIRE +
+                                          " - " +
+                                          DAM +
+                                          " - " +
+                                          DogName +
+                                          " - " +
+                                          DOB +
+                                          " - " +
+                                          Gender +
+                                          " - " +
+                                          AddCoowner +
+                                          " - " +
+                                          MICRO);
+
+                                      if (SIRE == "") {
+                                        QuickAlert.show(
+                                          context: context,
+                                          type: QuickAlertType.error,
+                                          title: 'Oops...',
+                                          text:
+                                              'Please Enter SIRE Registration Number',
+                                        );
+                                      } else {
+                                        if (DAM == "") {
+                                          QuickAlert.show(
+                                            context: context,
+                                            type: QuickAlertType.error,
+                                            title: 'Oops...',
+                                            text:
+                                                'Please Enter DAM Registration Number',
+                                          );
+                                        } else {
+                                          if (DogName == "") {
+                                            QuickAlert.show(
+                                              context: context,
+                                              type: QuickAlertType.error,
+                                              title: 'Oops...',
+                                              text: 'Please Enter Dog Name',
+                                            );
+                                          } else {
+                                            if (DOB == "") {
+                                              QuickAlert.show(
+                                                context: context,
+                                                type: QuickAlertType.error,
+                                                title: 'Oops...',
+                                                text:
+                                                    'Please Select Date of birth',
+                                              );
+                                            } else {
+                                              if (counrty.text.toString() ==
+                                                  "") {
+                                                QuickAlert.show(
+                                                  context: context,
+                                                  type: QuickAlertType.error,
+                                                  title: 'Oops...',
+                                                  text: 'Please Enter Country',
+                                                );
+                                              } else {
+                                                if (firstImage.toString() ==
+                                                    "null") {
+                                                  QuickAlert.show(
+                                                    context: context,
+                                                    type: QuickAlertType.error,
+                                                    title: 'Oops...',
+                                                    text: 'Please Select Image',
+                                                  );
+                                                } else {
+                                                  if (AddCoowner == "0") {
+                                                    uploadData();
+                                                    // print(SIRE +
+                                                    //     " - " +
+                                                    //     DAM +
+                                                    //     " - " +
+                                                    //     DogName +
+                                                    //     " - " +
+                                                    //     DOB +
+                                                    //     " - " +
+                                                    //     Gender +
+                                                    //     " - " +
+                                                    //     AddCoowner +
+                                                    //     " - " +
+                                                    //     MICRO);
+                                                  } else {
+                                                    if (cowner.text
+                                                            .toString() ==
+                                                        "") {
+                                                      QuickAlert.show(
+                                                        context: context,
+                                                        type: QuickAlertType
+                                                            .error,
+                                                        title: 'Oops...',
+                                                        text:
+                                                            'Please Enter Cower Id',
+                                                      );
+                                                    } else {
+                                                      uploadData();
+                                                      // print(SIRE +
+                                                      //     " - " +
+                                                      //     DAM +
+                                                      //     " - " +
+                                                      //     DogName +
+                                                      //     " - " +
+                                                      //     DOB +
+                                                      //     " - " +
+                                                      //     Gender +
+                                                      //     " - " +
+                                                      //     AddCoowner +
+                                                      //     " - " +
+                                                      //     MICRO +
+                                                      //     " - " +
+                                                      //     "lundo dnace");
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+
+                                      // if (dog.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     dogvalidate = Dogname.text.isEmpty;
+                                      //   });
+                                      // } else if (registernum.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     regisvalidate =
+                                      //         Registornumber.text.isEmpty;
+                                      //   });
+                                      // } else if (kenel.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     kennelvalidate = selectedid.text.isEmpty;
+                                      //   });
+                                      // } else if (breed.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     breedvalidate =
+                                      //         selectedbreedid.text.isEmpty;
+                                      //   });
+                                      // } else if (date.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     datevalidate = dateofbirth.text.isEmpty;
+                                      //   });
+                                      // } else if (genders.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     gendervalidator =
+                                      //         gender.toString().isEmpty;
+                                      //   });
+                                      // } else {}
+                                      // String kennelname = selectedid;
+                                      // String dogid = selectedbreedid;
+                                      print(gender.toString());
+
+                                      // uploadData();
+                                    },
+                                    child: Text(
+                                      'Submit',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    )),
+                              )
+                            ],
+                          ))
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

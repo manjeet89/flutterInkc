@@ -60,7 +60,7 @@ class _KennelNameRegistrationOverView extends State {
                   InAppWebView(
                     initialUrlRequest: URLRequest(
                         url: Uri.parse(
-                            "https://new-demo.inkcdogs.org/assets/newapp/inkc-app/kennel-name-registration.html")),
+                            "https://www.inkc.in/assets/newapp/inkc-app/kennel-name-registration.html")),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
                     },

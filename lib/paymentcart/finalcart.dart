@@ -37,7 +37,8 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
 
   create_order_id() async {
     String keyId = "rzp_live_nU6fTpMrFHPTY1";
-    String keySecreste = "RZDbsZE5vKJT24W1Get8qHZ1";
+    String keySecreste =
+        "RZDbsZE5vKJT24W1Get8qHZ1"; //"RZDbsZE5vKJT24W1Get8qHZ1";  //543LAwFTauwRyw0Tw2PPBbG5
     String basicAuth =
         'Basic ${base64Encode(utf8.encode('$keyId:$keySecreste'))}';
 
@@ -66,7 +67,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
   RazorpayRun(String orderid) async {
     var options = {
       'key':
-          'rzp_live_nU6fTpMrFHPTY1', //rzp_live_nU6fTpMrFHPTY1  rzp_test_yqIMKp1erQi7OL
+          'rzp_live_nU6fTpMrFHPTY1', //rzp_live_nU6fTpMrFHPTY1  // rzp_test_tk6cduSzgywMwB
       'amount': (int.parse(widget.TOTAL) * 100)
           .toString(), //in the smallest currency sub-unit.
       'name': 'DoggyLocker',
@@ -76,7 +77,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
       'timeout': 300, // in seconds
       'prefill': {
         'contact': FontPhoneNumber.toString(),
-        'email': email.toString()
+        'email': email.text.toString()
       }
     };
     _razorpay.open(options);
@@ -123,7 +124,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
       'Userid': userid
     };
 
-    final uri = "https://new-demo.inkcdogs.org/api/store/success_fullpayment";
+    final uri = "https://www.inkc.in/api/store/success_fullpayment";
 
     final responce = await http.post(Uri.parse(uri),
         body: {
@@ -167,191 +168,202 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            'Billing Details',
-            style: TextStyle(
-              fontSize: 20,
-              decorationColor: Colors.red,
-              color: Color.fromARGB(255, 22, 22, 21),
-              // color: Colors.black,
-              fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        // Handle Android hardware back button press
+        Navigator.pop(context);
+        return false; // Prevent default behavior
+      },
+      child: Sizer(builder: (context, orientation, deviceType) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            title: Text(
+              'Billing Details',
+              style: TextStyle(
+                fontSize: 20,
+                decorationColor: Colors.red,
+                color: Color.fromARGB(255, 22, 22, 21),
+                // color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
             ),
+            centerTitle: true,
           ),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: 450.sp,
-            child: Container(
-              margin: EdgeInsets.only(left: 10.sp, top: 20.sp, right: 10.sp),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: TextField(
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13.sp),
-                      controller: email,
+          body: SingleChildScrollView(
+            child: SizedBox(
+              height: 450.sp,
+              child: Container(
+                margin: EdgeInsets.only(left: 10.sp, top: 20.sp, right: 10.sp),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: TextField(
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.sp),
+                        controller: email,
 
-                      // obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4.sp)),
-                          borderSide: BorderSide(width: 1, color: Colors.green),
+                        // obscureText: true,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.sp)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.green),
+                          ),
+                          labelText: 'Email Address',
+                          hintText: 'Rajbhar',
                         ),
-                        labelText: 'Email Address',
-                        hintText: 'Rajbhar',
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: TextField(
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13.sp),
-                      controller: address,
-                      enabled: false,
-                      maxLines: 4,
-                      // obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4.sp)),
-                          borderSide: BorderSide(width: 1, color: Colors.green),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: TextField(
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.sp),
+                        controller: address,
+                        enabled: false,
+                        maxLines: 4,
+                        // obscureText: true,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.sp)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.green),
+                          ),
+                          labelText: ' Address',
+                          hintText: 'Rajbhar',
                         ),
-                        labelText: ' Address',
-                        hintText: 'Rajbhar',
                       ),
                     ),
-                  ),
-                  Center(
-                    child: Text(
-                      'CART TOTAL',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 8, 83, 1),
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w900),
+                    Center(
+                      child: Text(
+                        'CART TOTAL',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 8, 83, 1),
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w900),
+                      ),
                     ),
-                  ),
-                  Divider(),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 28.0, right: 48, top: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "SubTotal",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 153, 4, 4),
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        Text(
-                          '₹ ' + widget.SUBTOTAL,
-                          style: TextStyle(
-                              color: const Color.fromARGB(255, 153, 4, 4),
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ],
+                    Divider(),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 28.0, right: 48, top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "SubTotal",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 153, 4, 4),
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w900),
+                          ),
+                          Text(
+                            '₹ ' + widget.SUBTOTAL,
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 153, 4, 4),
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.sp,
-                  ),
-                  Divider(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 28.0, top: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Shipping",
-                          style: TextStyle(
-                              color: const Color.fromARGB(255, 153, 4, 4),
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        Text(
-                          'Courier ₹ ' + widget.DELEVRY.toString(),
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 153, 4, 4),
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ],
+                    SizedBox(
+                      height: 10.sp,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.sp,
-                  ),
-                  Divider(),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 28.0, top: 5, right: 48),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Total",
-                          style: TextStyle(
-                              color: const Color.fromARGB(255, 153, 4, 4),
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        Text(
-                          '₹ ' + widget.TOTAL.toString(),
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 153, 4, 4),
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ],
+                    Divider(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 28.0, top: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Shipping",
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 153, 4, 4),
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w900),
+                          ),
+                          Text(
+                            'Courier ₹ ' + widget.DELEVRY.toString(),
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 153, 4, 4),
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.sp,
-                  ),
-                  Divider(),
-                  Center(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: const Color.fromARGB(
-                              255, 8, 83, 1), // Background color
-                        ),
-                        onPressed: () {
-                          create_order_id();
-                        },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'PROCEED TO CHECKOUT      ',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Icon(Icons.arrow_forward, color: Colors.white)
-                          ],
-                        )),
-                  )
-                ],
+                    SizedBox(
+                      height: 10.sp,
+                    ),
+                    Divider(),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 28.0, top: 5, right: 48),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Total",
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 153, 4, 4),
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w900),
+                          ),
+                          Text(
+                            '₹ ' + widget.TOTAL.toString(),
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 153, 4, 4),
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.sp,
+                    ),
+                    Divider(),
+                    Center(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: const Color.fromARGB(
+                                255, 8, 83, 1), // Background color
+                          ),
+                          onPressed: () {
+                            create_order_id();
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'PROCEED TO CHECKOUT      ',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Icon(Icons.arrow_forward, color: Colors.white)
+                            ],
+                          )),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 
   @override

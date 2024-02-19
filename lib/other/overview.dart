@@ -59,7 +59,7 @@ class _OverView extends State {
                   InAppWebView(
                     initialUrlRequest: URLRequest(
                         url: Uri.parse(
-                            "https://new-demo.inkcdogs.org/assets/newapp/inkcapp2/an-overview.html")),
+                            "https://www.inkc.in/assets/newapp/inkcapp2/an-overview.html")),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
                     },

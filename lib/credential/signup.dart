@@ -74,392 +74,401 @@ class _SignUpHereState extends State<SignUpHere> {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return Scaffold(
-          body: Container(
-            margin: EdgeInsets.only(top: 10),
-            padding: EdgeInsets.only(left: 16, top: 25, right: 16),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: ListView(
-                children: [
-                  Center(
-                    // child: ClipRRect(
-                    //   child: Container(
-                    //     color: Colors.black,
-                    //     child: ClipRRect(
-                    //       borderRadius: BorderRadius.circular(24),
-                    //       child: SizedBox.fromSize(
-                    //         size: const Size.fromRadius(144),
-                    //         child: Image.asset(
-                    //           'assets/doggylocker.png',
-                    //           fit: BoxFit.cover,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+    return WillPopScope(
+      onWillPop: () async {
+        // Handle Android hardware back button press
+        Navigator.pop(context);
+        return false; // Prevent default behavior
+      },
+      child: Sizer(
+        builder: (context, orientation, deviceType) {
+          return Scaffold(
+            body: Container(
+              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: ListView(
+                  children: [
+                    Center(
+                      // child: ClipRRect(
+                      //   child: Container(
+                      //     color: Colors.black,
+                      //     child: ClipRRect(
+                      //       borderRadius: BorderRadius.circular(24),
+                      //       child: SizedBox.fromSize(
+                      //         size: const Size.fromRadius(144),
+                      //         child: Image.asset(
+                      //           'assets/doggylocker.png',
+                      //           fit: BoxFit.cover,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
 
-                    // child: CurvedContainer(
-                    //   defaultMargin: false,
-                    //   containerHeight: 100.sp,
-                    //   curvedRadius: 2.sp,
-                    //   color: Colors.yellow,
-                    // ),
+                      // child: CurvedContainer(
+                      //   defaultMargin: false,
+                      //   containerHeight: 100.sp,
+                      //   curvedRadius: 2.sp,
+                      //   color: Colors.yellow,
+                      // ),
 
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 8, 8, 8),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      // color: Colors.black,
-                      height: 110.sp,
-                      width: 110.sp,
-                      child: Image.asset('assets/doggylocker.png'),
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                            fontSize: 20.sp, fontWeight: FontWeight.bold),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 8, 8, 8),
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        // color: Colors.black,
+                        height: 110.sp,
+                        width: 110.sp,
+                        child: Image.asset('assets/doggylocker.png'),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 5.sp,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(top: 15),
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: TextField(
-                              controller: First,
-                              enabled: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(
+                              fontSize: 20.sp, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.sp,
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(top: 15),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                controller: First,
+                                enabled: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
+                                  ),
+                                  labelText: 'First Name',
+                                  hintText: '',
                                 ),
-                                labelText: 'First Name',
-                                hintText: '',
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: TextField(
-                              controller: lastname,
-                              enabled: true,
-                              // obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(6.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
+                            Padding(
+                              padding: EdgeInsets.all(5),
+                              child: TextField(
+                                controller: lastname,
+                                enabled: true,
+                                // obscureText: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(6.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
+                                  ),
+                                  labelText: 'Last Name',
+                                  hintText: '',
                                 ),
-                                labelText: 'Last Name',
-                                hintText: '',
                               ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              boxShadow: [],
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 0.5,
+                            Container(
+                              margin: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                boxShadow: [],
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 0.5,
+                                ),
+                                borderRadius: BorderRadius.circular(4.sp),
+                                color: Colors.white,
                               ),
-                              borderRadius: BorderRadius.circular(4.sp),
-                              color: Colors.white,
+                              child: Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                        child: Text(
+                                          'Gender',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontSize: 12.sp),
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Radio(
+                                              value: "1",
+                                              groupValue: gender,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  gender = value.toString();
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              'Male',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                  fontSize: 11.sp),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Radio(
+                                              value: "0",
+                                              groupValue: gender,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  gender = value.toString();
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              'Female',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                  fontSize: 11.sp),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Column(
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: IntlPhoneField(
+                                enabled: true,
+                                controller: phonenumber,
+                                focusNode: focusNode,
+                                decoration: InputDecoration(
+                                  labelText: 'Phone Number',
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(),
+                                  ),
+                                ),
+                                initialCountryCode: 'IN',
+                                onChanged: (phone) {
+                                  print(phone.completeNumber);
+                                },
+                                onCountryChanged: (country) {
+                                  print('Country changed to: ' + country.name);
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                controller: email,
+                                enabled: true,
+                                // obscureText: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
+                                  ),
+                                  labelText: 'Email Address',
+                                  hintText: 'example@gmail.com',
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      child: Text(
-                                        'Gender',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontSize: 12.sp),
+                                  Container(
+                                    width: 150.sp,
+                                    child: TextField(
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w700),
+                                      onTap: () {},
+                                      controller: dateofbirth,
+                                      enabled: false,
+                                      // obscureText: true,
+                                      decoration: InputDecoration(
+                                        // suffixIcon: IconButton(
+                                        //   icon: Icon(Icons.date_range),
+                                        //   onPressed: () {
+                                        //     setState(
+                                        //       () {},
+                                        //     );
+                                        //   },
+                                        // ),
+                                        prefixIcon: Icon(Icons.date_range),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4.sp)),
+                                          borderSide: BorderSide(
+                                              width: 1, color: Colors.green),
+                                        ),
+                                        labelText: 'Date of Birth',
+                                        hintText: '1-1-2000',
                                       ),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Radio(
-                                            value: "1",
-                                            groupValue: gender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                gender = value.toString();
-                                              });
-                                            },
-                                          ),
-                                          Text(
-                                            'Male',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                                fontSize: 11.sp),
-                                          )
-                                        ],
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        selectDatePicker();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.blue,
                                       ),
-                                      Row(
-                                        children: [
-                                          Radio(
-                                            value: "0",
-                                            groupValue: gender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                gender = value.toString();
-                                              });
-                                            },
-                                          ),
-                                          Text(
-                                            'Female',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                                fontSize: 11.sp),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                      child: Text(
+                                        'Pick date',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ))
                                 ],
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: IntlPhoneField(
-                              enabled: true,
-                              controller: phonenumber,
-                              focusNode: focusNode,
-                              decoration: InputDecoration(
-                                labelText: 'Phone Number',
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(),
-                                ),
-                              ),
-                              initialCountryCode: 'IN',
-                              onChanged: (phone) {
-                                print(phone.completeNumber);
-                              },
-                              onCountryChanged: (country) {
-                                print('Country changed to: ' + country.name);
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: TextField(
-                              controller: email,
-                              enabled: true,
-                              // obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
-                                ),
-                                labelText: 'Email Address',
-                                hintText: 'example@gmail.com',
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  width: 150.sp,
-                                  child: TextField(
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w700),
-                                    onTap: () {},
-                                    controller: dateofbirth,
-                                    enabled: false,
-                                    // obscureText: true,
-                                    decoration: InputDecoration(
-                                      // suffixIcon: IconButton(
-                                      //   icon: Icon(Icons.date_range),
-                                      //   onPressed: () {
-                                      //     setState(
-                                      //       () {},
-                                      //     );
-                                      //   },
-                                      // ),
-                                      prefixIcon: Icon(Icons.date_range),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4.sp)),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.green),
-                                      ),
-                                      labelText: 'Date of Birth',
-                                      hintText: '1-1-2000',
-                                    ),
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              child: TextField(
+                                controller: password,
+                                obscureText: passwordVisible,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.green),
                                   ),
-                                ),
-                                ElevatedButton(
+                                  hintText: "Password",
+                                  labelText: "Password",
+                                  helperText:
+                                      "Password must contain special character",
+                                  helperStyle: TextStyle(color: Colors.green),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off),
                                     onPressed: () {
-                                      selectDatePicker();
+                                      setState(
+                                        () {
+                                          passwordVisible = !passwordVisible;
+                                        },
+                                      );
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue,
-                                    ),
-                                    child: Text(
-                                      'Pick date',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ))
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(10.0),
-                            child: TextField(
-                              controller: password,
-                              obscureText: passwordVisible,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
+                                  ),
+                                  alignLabelWithHint: false,
+                                  // filled: true,
                                 ),
-                                hintText: "Password",
-                                labelText: "Password",
-                                helperText:
-                                    "Password must contain special character",
-                                helperStyle: TextStyle(color: Colors.green),
-                                suffixIcon: IconButton(
-                                  icon: Icon(passwordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onPressed: () {
-                                    setState(
-                                      () {
-                                        passwordVisible = !passwordVisible;
-                                      },
-                                    );
-                                  },
+                                keyboardType: TextInputType.visiblePassword,
+                                textInputAction: TextInputAction.done,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(bottom: 50.sp),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color.fromARGB(255, 63, 23, 23),
+                                  minimumSize: const Size.fromHeight(40), // NEW
                                 ),
-                                alignLabelWithHint: false,
-                                // filled: true,
-                              ),
-                              keyboardType: TextInputType.visiblePassword,
-                              textInputAction: TextInputAction.done,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 50.sp),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 63, 23, 23),
-                                minimumSize: const Size.fromHeight(40), // NEW
-                              ),
-                              onPressed: () async {
-                                // print(First.text);
-                                // print(lastname.text);
-                                // print(gender);
-                                // print(phonenumber.text);
-                                // print(email.text);
-                                // print(dateofbirth.text);
-                                // print(password.text);
+                                onPressed: () async {
+                                  // print(First.text);
+                                  // print(lastname.text);
+                                  // print(gender);
+                                  // print(phonenumber.text);
+                                  // print(email.text);
+                                  // print(dateofbirth.text);
+                                  // print(password.text);
 
-                                EasyLoading.showToast('Please Wait...');
+                                  EasyLoading.showToast('Please Wait...');
 
-                                final uri =
-                                    "https://new-demo.inkcdogs.org/api/login/signup";
+                                  final uri =
+                                      "https://www.inkc.in/api/login/signup";
 
-                                final responce = await http.post(
-                                  Uri.parse(uri),
-                                  body: {
-                                    "user_password": password.text,
-                                    "first_name": First.text,
-                                    "user_phone_number": phonenumber.text,
-                                    "last_name": lastname.text,
-                                    "user_birth_date": dateofbirth.text,
-                                    "gender": gender,
-                                    "user_email_id": email.text
-                                  },
-                                );
-                                var data = json.decode(responce.body);
-                                print(data);
+                                  final responce = await http.post(
+                                    Uri.parse(uri),
+                                    body: {
+                                      "user_password": password.text,
+                                      "first_name": First.text,
+                                      "user_phone_number": phonenumber.text,
+                                      "last_name": lastname.text,
+                                      "user_birth_date": dateofbirth.text,
+                                      "gender": gender,
+                                      "user_email_id": email.text
+                                    },
+                                  );
+                                  var data = json.decode(responce.body);
+                                  print(data);
 
-                                if (data['code'] == 200) {
-                                  print(data['message']);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Please verify user')));
-                                  // print(data['data']['user_id']);
+                                  if (data['code'] == 200) {
+                                    print(data['message']);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content:
+                                                Text('Please verify user')));
+                                    // print(data['data']['user_id']);
 
-                                  EasyLoading.dismiss();
+                                    EasyLoading.dismiss();
 
-                                  // Get.to(MyApp());
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => VerificationOtp(
-                                  //               data['data']['user_id'],
-                                  //               data['data']
-                                  //                   ['user_phone_number:'],
-                                  //             )));
+                                    // Get.to(MyApp());
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => VerificationOtp(
+                                    //               data['data']['user_id'],
+                                    //               data['data']
+                                    //                   ['user_phone_number:'],
+                                    //             )));
 
-                                  Navigator.of(context, rootNavigator: true)
-                                      .push(MaterialPageRoute(
-                                          builder: (_) => VerificationOtp(
-                                              userid: data['data']['user_id'],
-                                              number: data['data']
-                                                  ['user_phone_number'])));
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(MaterialPageRoute(
+                                            builder: (_) => VerificationOtp(
+                                                userid: data['data']['user_id'],
+                                                number: data['data']
+                                                    ['user_phone_number'])));
 
-                                  // Navigator.of(context, rootNavigator: true).push(
-                                  //     MaterialPageRoute(builder: (_) => MyApp()));
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content:
-                                              Text('Something went wrong')));
-                                }
-                              },
-                              child: Text(
-                                'Submit',
-                                style: TextStyle(color: Colors.white),
+                                    // Navigator.of(context, rootNavigator: true).push(
+                                    //     MaterialPageRoute(builder: (_) => MyApp()));
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content:
+                                                Text('Something went wrong')));
+                                  }
+                                },
+                                child: Text(
+                                  'Submit',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ))
-                ],
+                          ],
+                        ))
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

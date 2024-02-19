@@ -14,9 +14,12 @@ import 'package:inkc/KennelClub/kennelclubname.dart';
 import 'package:inkc/Staticpages/doglittertransferoverview.dart';
 import 'package:inkc/Staticpages/puppiesavailable.dart';
 import 'package:inkc/Staticpages/studsavailable.dart';
+import 'package:inkc/Staticpages/verservices.dart';
+import 'package:inkc/Staticpages/wallet.dart';
 import 'package:inkc/adddoginfo.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/events/events.dart';
+import 'package:inkc/events/participate.dart';
 import 'package:inkc/inkcstore.dart';
 import 'package:inkc/KennelClub/kennelnamehistory.dart';
 import 'package:inkc/litternumber.dart';
@@ -97,17 +100,17 @@ class Home extends StatefulWidget {
 }
 
 final List<String> imgList = [
-  'https://new-demo.inkcdogs.org/assets/front/img/inkc/puli.jpg',
-  'https://new-demo.inkcdogs.org/assets/front/img/inkc/bi.jpg',
-  'https://new-demo.inkcdogs.org/assets/front/img/inkc/52.webp',
-  'https://new-demo.inkcdogs.org/assets/front/img/inkc/53.webp',
+  'https://www.inkc.in/assets/front/img/inkc/puli.jpg',
+  'https://www.inkc.in/assets/front/img/inkc/bi.jpg',
+  'https://www.inkc.in/assets/front/img/inkc/52.webp',
+  'https://www.inkc.in/assets/front/img/inkc/53.webp',
 ];
 
 final myItems = [
-  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/puli.jpg'),
-  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/bi.jpg'),
-  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/52.webp'),
-  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/53.webp'),
+  Image.network('https://www.inkc.in/assets/front/img/inkc/puli.jpg'),
+  Image.network('https://www.inkc.in/assets/front/img/inkc/bi.jpg'),
+  Image.network('https://www.inkc.in/assets/front/img/inkc/52.webp'),
+  Image.network('https://www.inkc.in/assets/front/img/inkc/53.webp'),
 ];
 
 List mydogname = [
@@ -146,14 +149,14 @@ class _HomeState extends State<Home> {
 
   // EventsCheck() async {
   //   if (istrue == false) {
-  //     final uri = "https://new-demo.inkcdogs.org/api/home/event";
+  //     final uri = "https://www.inkc.in/api/home/event";
   //     final responce = await http.post(Uri.parse(uri));
   //     var data = json.decode(responce.body);
   //     List dataarray = data['data'];
   //     for (int i = 0; i < dataarray.length; i++) {
   //       // print(data['data'][i]['event_image'].toString());
   //       toona.add(
-  //           "https://new-demo.inkcdogs.org/" + data['data'][i]['event_image'].toString());
+  //           "https://www.inkc.in/" + data['data'][i]['event_image'].toString());
   //     }
   //     setState(() {
   //       cup = toona;
@@ -351,8 +354,8 @@ class _HomeState extends State<Home> {
                         children: [
                           InkWell(
                             onTap: () async {
-                              var url =
-                                  Uri.parse("https://new-demo.inkcdogs.org/studs-available");
+                              var url = Uri.parse(
+                                  "https://www.inkc.in/studs-available");
                               if (await canLaunchUrl(url)) {
                                 await launchUrl(url);
                               } else {
@@ -362,10 +365,12 @@ class _HomeState extends State<Home> {
                             child: Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
+                              child: Image.asset("assets/studsavailable.png"),
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 119, 116, 148),
+                                    color:
+                                        ui.Color.fromARGB(255, 195, 192, 226),
                                     blurRadius: 10,
                                     offset: Offset(
                                       5,
@@ -376,11 +381,11 @@ class _HomeState extends State<Home> {
                                 borderRadius: BorderRadius.circular(50.sp),
                                 //set border radius to 50% of square height and width
 
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTPuz23RJGE-AprZF_jjZ1ZvaGWG2CfZ_taA&usqp=CAU"),
-                                  fit: BoxFit.cover, //change image fill type
-                                ),
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTPuz23RJGE-AprZF_jjZ1ZvaGWG2CfZ_taA&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
                               ),
                             ),
                           ),
@@ -433,10 +438,13 @@ class _HomeState extends State<Home> {
                             child: Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
+                              child: Image.asset(
+                                  "assets/singledogregistration.png"),
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 119, 116, 148),
+                                    color:
+                                        ui.Color.fromARGB(255, 186, 183, 214),
                                     blurRadius: 10,
                                     offset: Offset(
                                       5,
@@ -447,11 +455,11 @@ class _HomeState extends State<Home> {
                                 borderRadius: BorderRadius.circular(50.sp),
                                 //set border radius to 50% of square height and width
 
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpIfFGWNdC-ppcDZx596eACoVokhVJZ4qKeg&usqp=CAU"),
-                                  fit: BoxFit.cover, //change image fill type
-                                ),
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpIfFGWNdC-ppcDZx596eACoVokhVJZ4qKeg&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
                               ),
                             ),
                           ),
@@ -504,10 +512,13 @@ class _HomeState extends State<Home> {
                             child: Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
+                              child: Image.asset(
+                                  "assets/unknownpedigreeregistration.png"),
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 119, 116, 148),
+                                    color:
+                                        ui.Color.fromARGB(255, 202, 200, 221),
                                     blurRadius: 10,
                                     offset: Offset(
                                       5,
@@ -518,11 +529,11 @@ class _HomeState extends State<Home> {
                                 borderRadius: BorderRadius.circular(50.sp),
                                 //set border radius to 50% of square height and width
 
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzQn73-KfRwCaN-NWF_5zNqeM2DiQ9S0LsMA&usqp=CAU"),
-                                  fit: BoxFit.cover, //change image fill type
-                                ),
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzQn73-KfRwCaN-NWF_5zNqeM2DiQ9S0LsMA&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
                               ),
                             ),
                           ),
@@ -631,7 +642,7 @@ class _HomeState extends State<Home> {
                     // ),
 
                     Container(
-                      margin: EdgeInsets.all(8.sp),
+                      margin: EdgeInsets.all(5.sp),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -647,10 +658,13 @@ class _HomeState extends State<Home> {
                               margin: EdgeInsets.all(5.sp),
                               height: 45.0.sp,
                               width: 45.0.sp,
+                              child: Image.asset(
+                                  "assets/litterregistrationservices.png"),
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 178, 177, 189),
+                                    color:
+                                        ui.Color.fromARGB(255, 208, 207, 226),
                                     blurRadius: 5,
                                     offset: Offset(
                                       5,
@@ -660,11 +674,11 @@ class _HomeState extends State<Home> {
                                 ],
                                 borderRadius: BorderRadius.circular(50.sp),
                                 //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMdsRMuWI4GKCuT9mie5lCabZIAxZfCoQiDQ&usqp=CAU"),
-                                  fit: BoxFit.cover, //change image fill type
-                                ),
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMdsRMuWI4GKCuT9mie5lCabZIAxZfCoQiDQ&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
                               ),
                             ),
                           ),
@@ -700,6 +714,77 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
+                    Container(
+                      margin: EdgeInsets.all(5.sp),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: true).push(
+                                  MaterialPageRoute(
+                                      builder: (_) => Vetservices()));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(5.sp),
+                              height: 45.0.sp,
+                              width: 45.0.sp,
+                              child: Image.asset("assets/vetservices.png"),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        ui.Color.fromARGB(255, 208, 207, 226),
+                                    blurRadius: 5,
+                                    offset: Offset(
+                                      5,
+                                      5,
+                                    ),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(50.sp),
+                                //set border radius to 50% of square height and width
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMdsRMuWI4GKCuT9mie5lCabZIAxZfCoQiDQ&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 120,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, left: 35, right: 5, bottom: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Vet Services',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      // foreground: Paint()
+                                      //   ..shader = ui.Gradient.linear(
+                                      //     const Offset(135, 60),
+                                      //     const Offset(160, 20),
+                                      //     <Color>[
+                                      //       Color.fromARGB(255, 235, 15, 15),
+                                      //       Color.fromARGB(255, 22, 26, 226),
+                                      //     ],
+                                      //   ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -709,81 +794,78 @@ class _HomeState extends State<Home> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      child: InkWell(
-                        onTap: () async {
-                          var url =
-                              Uri.parse("https://new-demo.inkcdogs.org/puppies-available");
-                          if (await canLaunchUrl(url)) {
-                            await launchUrl(url);
-                          } else {
-                            throw 'Could not launch $url';
-                          }
-                        },
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 45.0.sp,
-                                width: 45.0.sp,
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromARGB(255, 178, 177, 189),
-                                      blurRadius: 5,
-                                      offset: Offset(
-                                        5,
-                                        5,
+                    InkWell(
+                      onTap: () async {
+                        var url =
+                            Uri.parse("https://www.inkc.in/puppies-available");
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.all(5.sp),
+                              height: 45.0.sp,
+                              width: 45.0.sp,
+                              child: Image.asset("assets/puppiesavailable.png"),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        ui.Color.fromARGB(255, 224, 222, 241),
+                                    blurRadius: 5,
+                                    offset: Offset(
+                                      5,
+                                      5,
+                                    ),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(50.sp),
+                                //set border radius to 50% of square height and width
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAg5Gmh4HAK04kKkgFRE4-oCfHiGBJoKU4iw&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
+                              ),
+                            ),
+                            Container(
+                              width: 120,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, left: 35, right: 5, bottom: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      maxLines: null,
+                                      'Puppies Available',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        // foreground: Paint()
+                                        //   ..shader = ui.Gradient.linear(
+                                        //     const Offset(0, 20),
+                                        //     const Offset(150, 20),
+                                        //     <Color>[
+                                        //       Color.fromARGB(255, 235, 15, 15),
+                                        //       Color.fromARGB(255, 22, 26, 226),
+                                        //     ],
+                                        //   ),
                                       ),
-                                    )
+                                    ),
                                   ],
-                                  borderRadius: BorderRadius.circular(50.sp),
-                                  //set border radius to 50% of square height and width
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAg5Gmh4HAK04kKkgFRE4-oCfHiGBJoKU4iw&usqp=CAU"),
-                                    fit: BoxFit.cover, //change image fill type
-                                  ),
                                 ),
                               ),
-                              Container(
-                                width: 120,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10.0,
-                                      left: 35,
-                                      right: 5,
-                                      bottom: 10),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        maxLines: null,
-                                        'Puppies Available',
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.bold,
-                                          // foreground: Paint()
-                                          //   ..shader = ui.Gradient.linear(
-                                          //     const Offset(0, 20),
-                                          //     const Offset(150, 20),
-                                          //     <Color>[
-                                          //       Color.fromARGB(255, 235, 15, 15),
-                                          //       Color.fromARGB(255, 22, 26, 226),
-                                          //     ],
-                                          //   ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -798,12 +880,16 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: [
                             Container(
+                              margin: EdgeInsets.all(5.sp),
                               height: 45.0.sp,
                               width: 45.0.sp,
+                              child: Image.asset(
+                                  "assets/kennelnameregistrationservices.png"),
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 178, 177, 189),
+                                    color:
+                                        ui.Color.fromARGB(255, 226, 225, 243),
                                     blurRadius: 5,
                                     offset: Offset(
                                       5,
@@ -813,11 +899,11 @@ class _HomeState extends State<Home> {
                                 ],
                                 borderRadius: BorderRadius.circular(50.sp),
                                 //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpIfFGWNdC-ppcDZx596eACoVokhVJZ4qKeg&usqp=CAU"),
-                                  fit: BoxFit.cover, //change image fill type
-                                ),
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpIfFGWNdC-ppcDZx596eACoVokhVJZ4qKeg&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
                               ),
                             ),
                             Container(
@@ -869,10 +955,13 @@ class _HomeState extends State<Home> {
                             Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
+                              child:
+                                  Image.asset("assets/doglittertransfer.png"),
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 178, 177, 189),
+                                    color:
+                                        ui.Color.fromARGB(255, 222, 221, 238),
                                     blurRadius: 5,
                                     offset: Offset(
                                       5,
@@ -882,11 +971,11 @@ class _HomeState extends State<Home> {
                                 ],
                                 borderRadius: BorderRadius.circular(50.sp),
                                 //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgd2T4zsOQWKcxaEITpq7tO6YxFs6T00SOb2RXxThGzf9vcBWFUZLYg7CKFPF9egr1XQ&usqp=CAU"),
-                                  fit: BoxFit.cover, //change image fill type
-                                ),
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgd2T4zsOQWKcxaEITpq7tO6YxFs6T00SOb2RXxThGzf9vcBWFUZLYg7CKFPF9egr1XQ&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
                               ),
                             ),
                             Container(
@@ -938,6 +1027,8 @@ class _HomeState extends State<Home> {
                             Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
+                              child:
+                                  Image.asset("assets/associatemembership.png"),
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
@@ -951,11 +1042,11 @@ class _HomeState extends State<Home> {
                                 ],
                                 borderRadius: BorderRadius.circular(50.sp),
                                 //set border radius to 50% of square height and width
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKolzJBzeQCAWG2sfK7vee-Eb_93Okhdt5B2h3OKGHwymwbUFqhYoNYzgSqpYr7HjANPs&usqp=CAU"),
-                                  fit: BoxFit.cover, //change image fill type
-                                ),
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKolzJBzeQCAWG2sfK7vee-Eb_93Okhdt5B2h3OKGHwymwbUFqhYoNYzgSqpYr7HjANPs&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
                               ),
                             ),
                             Container(
@@ -969,6 +1060,74 @@ class _HomeState extends State<Home> {
                                   children: [
                                     Text(
                                       'Associate Membership',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        // foreground: Paint()
+                                        //   ..shader = ui.Gradient.linear(
+                                        //     const Offset(140, 60),
+                                        //     const Offset(160, 20),
+                                        //     <Color>[
+                                        //       Color.fromARGB(255, 235, 15, 15),
+                                        //       Color.fromARGB(255, 22, 26, 226),
+                                        //     ],
+                                        //   ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true)
+                            .push(MaterialPageRoute(builder: (_) => Wallet()));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(5.sp),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 45.0.sp,
+                              width: 45.0.sp,
+                              child: Image.asset("assets/wallet.png"),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 178, 177, 189),
+                                    blurRadius: 5,
+                                    offset: Offset(
+                                      5,
+                                      5,
+                                    ),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(50.sp),
+                                //set border radius to 50% of square height and width
+                                // image: DecorationImage(
+                                //   image: NetworkImage(
+                                //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKolzJBzeQCAWG2sfK7vee-Eb_93Okhdt5B2h3OKGHwymwbUFqhYoNYzgSqpYr7HjANPs&usqp=CAU"),
+                                //   fit: BoxFit.cover, //change image fill type
+                                // ),
+                              ),
+                            ),
+                            Container(
+                              width: 120,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, left: 25, right: 5, bottom: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Wallet',
                                       style: TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold,
@@ -1073,72 +1232,72 @@ class _HomeState extends State<Home> {
                               },
                             ),
                           ),
-                          CarouselSlider(
-                            items: [
-                              Container(
-                                margin: EdgeInsets.all(6.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Text("Ch. Puli",
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w700)),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(6.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Text(
-                                    "Ch. Bianca Casa Frizzled Life X-Cell",
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w700)),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(6.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Text("Ch. Mother Touch Yashkiran Ozone",
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w700)),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(6.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Text(
-                                  "Ch. Westernberg’s Alex Shot",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                            ],
-                            options: CarouselOptions(
-                              autoPlay: true,
-                              height: 40.sp,
-                              autoPlayCurve: Curves.fastOutSlowIn,
-                              autoPlayAnimationDuration:
-                                  Duration(milliseconds: 1000),
-                              autoPlayInterval: Duration(seconds: 2),
-                              enlargeCenterPage: true,
-                              aspectRatio: 3.0,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  mycurrentindex = index;
-                                });
-                              },
-                            ),
-                          ),
+                          // CarouselSlider(
+                          //   items: [
+                          //     Container(
+                          //       margin: EdgeInsets.all(6.0),
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(8.0),
+                          //       ),
+                          //       child: Text("Ch. Puli",
+                          //           style: TextStyle(
+                          //               color: Colors.red,
+                          //               fontSize: 13.sp,
+                          //               fontWeight: FontWeight.w700)),
+                          //     ),
+                          //     Container(
+                          //       margin: EdgeInsets.all(6.0),
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(8.0),
+                          //       ),
+                          //       child: Text(
+                          //           "Ch. Bianca Casa Frizzled Life X-Cell",
+                          //           style: TextStyle(
+                          //               color: Colors.red,
+                          //               fontSize: 13.sp,
+                          //               fontWeight: FontWeight.w700)),
+                          //     ),
+                          //     Container(
+                          //       margin: EdgeInsets.all(6.0),
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(8.0),
+                          //       ),
+                          //       child: Text("Ch. Mother Touch Yashkiran Ozone",
+                          //           style: TextStyle(
+                          //               color: Colors.red,
+                          //               fontSize: 13.sp,
+                          //               fontWeight: FontWeight.w700)),
+                          //     ),
+                          //     Container(
+                          //       margin: EdgeInsets.all(6.0),
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(8.0),
+                          //       ),
+                          //       child: Text(
+                          //         "Ch. Westernberg’s Alex Shot",
+                          //         style: TextStyle(
+                          //             color: Colors.red,
+                          //             fontSize: 13.sp,
+                          //             fontWeight: FontWeight.w700),
+                          //       ),
+                          //     ),
+                          //   ],
+                          //   options: CarouselOptions(
+                          //     autoPlay: true,
+                          //     height: 40.sp,
+                          //     autoPlayCurve: Curves.fastOutSlowIn,
+                          //     autoPlayAnimationDuration:
+                          //         Duration(milliseconds: 1000),
+                          //     autoPlayInterval: Duration(seconds: 2),
+                          //     enlargeCenterPage: true,
+                          //     aspectRatio: 3.0,
+                          //     onPageChanged: (index, reason) {
+                          //       setState(() {
+                          //         mycurrentindex = index;
+                          //       });
+                          //     },
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -1261,19 +1420,20 @@ class _HomeState extends State<Home> {
                                         INKCStore()));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(top: 12),
+                                margin: EdgeInsets.all(12),
                                 height: 110.0.sp,
                                 width: 110.0.sp,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.sp),
+                                child: Image.asset("assets/inkcstore.png"),
+                                // decoration: BoxDecoration(
+                                //   borderRadius: BorderRadius.circular(15.sp),
 
-                                  //set border radius to 50% of square height and width
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDjYq9BVfv-KOMjn7620qMLjlqNhnUxz2RTA&usqp=CAU"),
-                                    fit: BoxFit.fill, //change image fill type
-                                  ),
-                                ),
+                                //   //set border radius to 50% of square height and width
+                                //   image: DecorationImage(
+                                //     image: NetworkImage(
+                                //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDjYq9BVfv-KOMjn7620qMLjlqNhnUxz2RTA&usqp=CAU"),
+                                //     fit: BoxFit.fill, //change image fill type
+                                //   ),
+                                // ),
                               ),
                             ),
                             Padding(
@@ -1347,19 +1507,20 @@ class _HomeState extends State<Home> {
                                         Events()));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(top: 12),
+                                margin: EdgeInsets.all(12),
                                 height: 110.0.sp,
                                 width: 110.0.sp,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.sp),
+                                child: Image.asset("assets/events.png"),
+                                // decoration: BoxDecoration(
+                                //   borderRadius: BorderRadius.circular(15.sp),
 
-                                  //set border radius to 50% of square height and width
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPCGEQZMM6D-fzxpK_MsKCBNnXQf5V59RcFQ&usqp=CAU"),
-                                    fit: BoxFit.fill, //change image fill type
-                                  ),
-                                ),
+                                //   //set border radius to 50% of square height and width
+                                //   image: DecorationImage(
+                                //     image: NetworkImage(
+                                //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPCGEQZMM6D-fzxpK_MsKCBNnXQf5V59RcFQ&usqp=CAU"),
+                                //     fit: BoxFit.fill, //change image fill type
+                                //   ),
+                                // ),
                               ),
                             ),
                             Padding(
@@ -1837,19 +1998,20 @@ class _HomeState extends State<Home> {
                                         INKCStore()));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(top: 12),
+                                margin: EdgeInsets.all(12),
                                 height: 110.0.sp,
                                 width: 110.0.sp,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.sp),
+                                child: Image.asset("assets/inkcstore.png"),
+                                // decoration: BoxDecoration(
+                                //   borderRadius: BorderRadius.circular(15.sp),
 
-                                  //set border radius to 50% of square height and width
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDjYq9BVfv-KOMjn7620qMLjlqNhnUxz2RTA&usqp=CAU"),
-                                    fit: BoxFit.fill, //change image fill type
-                                  ),
-                                ),
+                                //   //set border radius to 50% of square height and width
+                                //   image: DecorationImage(
+                                //     image: NetworkImage(
+                                //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDjYq9BVfv-KOMjn7620qMLjlqNhnUxz2RTA&usqp=CAU"),
+                                //     fit: BoxFit.fill, //change image fill type
+                                //   ),
+                                // ),
                               ),
                             ),
                             Padding(
@@ -1985,24 +2147,29 @@ class _HomeState extends State<Home> {
                           children: [
                             InkWell(
                               onTap: () {
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (BuildContext context) =>
+                                //         Events()));
+
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         Events()));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(top: 12),
+                                margin: EdgeInsets.all(12),
                                 height: 110.0.sp,
                                 width: 110.0.sp,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.sp),
+                                child: Image.asset("assets/events.png"),
+                                // decoration: BoxDecoration(
+                                //   borderRadius: BorderRadius.circular(15.sp),
 
-                                  //set border radius to 50% of square height and width
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPCGEQZMM6D-fzxpK_MsKCBNnXQf5V59RcFQ&usqp=CAU"),
-                                    fit: BoxFit.fill, //change image fill type
-                                  ),
-                                ),
+                                //   //set border radius to 50% of square height and width
+                                //   image: DecorationImage(
+                                //     image: NetworkImage(
+                                //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPCGEQZMM6D-fzxpK_MsKCBNnXQf5V59RcFQ&usqp=CAU"),
+                                //     fit: BoxFit.fill, //change image fill type
+                                //   ),
+                                // ),
                               ),
                             ),
                             Padding(

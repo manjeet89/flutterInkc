@@ -10,33 +10,46 @@ import 'package:inkc/model/profilemodel.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
-class IDontHaveCertificate extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "profile UI",
-      home: _IDontHaveCertificate(),
-    );
-  }
-}
+// class IDontHaveCertificate extends StatelessWidget {
+//   String eventid, eventname, eventtype, eventstal;
+//   IDontHaveCertificate(
+//       {required this.eventid,
+//       required this.eventname,
+//       required this.eventtype,
+//       required this.eventstal});
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: "profile UI",
+//       home: IDontHaveCertificate(),
+//     );
+//   }
+// }
 
 String userid = "";
 String token = "";
 String image = "";
 
-class _IDontHaveCertificate extends StatefulWidget {
+class IDontHaveCertificate extends StatefulWidget {
+  String eventid, eventname, eventtype, eventstal;
+  IDontHaveCertificate(
+      {required this.eventid,
+      required this.eventname,
+      required this.eventtype,
+      required this.eventstal});
   @override
-  __IDontHaveCertificateState createState() => __IDontHaveCertificateState();
+  _IDontHaveCertificateState createState() => _IDontHaveCertificateState();
 }
 
-class __IDontHaveCertificateState extends State<_IDontHaveCertificate> {
+class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
   TextEditingController Dogname = new TextEditingController();
   TextEditingController dateofbirth = new TextEditingController();
   TextEditingController cowner = new TextEditingController();
@@ -145,7 +158,7 @@ class __IDontHaveCertificateState extends State<_IDontHaveCertificate> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+          Uri.parse("https://www.inkc.in/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -193,7 +206,7 @@ class __IDontHaveCertificateState extends State<_IDontHaveCertificate> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://www.inkc.in/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -236,6 +249,38 @@ class __IDontHaveCertificateState extends State<_IDontHaveCertificate> {
       showSpinner = true;
     });
 
+    String Day = "1";
+    String Type = "0";
+    obidient.clear();
+
+    if (prebigner == true) {
+      obidient.add("1");
+    }
+    if (bigner == true) {
+      obidient.add("2");
+    }
+    if (novic == true) {
+      obidient.add("3");
+    }
+    if (Texta == true) {
+      obidient.add("4");
+    }
+    if (Textb == true) {
+      obidient.add("5");
+    }
+    if (Textc == true) {
+      obidient.add("6");
+    }
+
+    if (stallReq == "0") {
+      //  print("sukriya");
+      Day = "";
+      Type = "";
+    } else {
+      Day = StallDay;
+      Type = StallType;
+    }
+
     String DogName = Dogname.text;
     String DOB = dateofbirth.text;
     String Gender = gender.toString();
@@ -256,24 +301,30 @@ class __IDontHaveCertificateState extends State<_IDontHaveCertificate> {
             filename: now.second.toString() + ".jpg"),
         'pet_side_image': await MultipartFile.fromFile(thiredImage!.path,
             filename: now.second.toString() + ".jpg"),
+        'event_id': widget.eventid.toString(),
         'pet_name': DogName,
         'birth_date': DOB,
         'pet_sub_category_id': breed.toString(),
         'color_marking': selectcolormakingid,
         'pet_gender': Gender,
         'breded_country': counrty.text.toString(),
+        "class_and_price[]": obidient.toString(),
+        "is_stall_required": stallReq,
+        "event_stall_day": Day,
+        "event_stall_type": Type,
+        "register_with_event": "1"
       });
-      print(Gender +
-          "-" +
-          DOB +
-          "-" +
-          DogName +
-          "-" +
-          breed.toString() +
-          "-" +
-          color +
-          "-" +
-          counrty.text.toString());
+      // print(Gender +
+      //     "-" +
+      //     DOB +
+      //     "-" +
+      //     DogName +
+      //     "-" +
+      //     breed.toString() +
+      //     "-" +
+      //     color +
+      //     "-" +
+      //     counrty.text.toString());
 
       Response response = await dio.post(
           'https://www.inkc.in/api/event/unknown_pedigree_participants',
@@ -287,9 +338,17 @@ class __IDontHaveCertificateState extends State<_IDontHaveCertificate> {
 
       if (response.statusCode == 200) {
         print(response.toString());
+        print(response.toString());
         setState(() {
+          RefreshCart();
           showSpinner = false;
         });
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          title: 'Success...',
+          text: 'Please Check your cart',
+        );
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('SuccessFully Registered')));
       } else {
@@ -303,8 +362,59 @@ class __IDontHaveCertificateState extends State<_IDontHaveCertificate> {
 
       // images = File(pickedFile.path);
     } catch (e) {
+      setState(() {
+        showSpinner = false;
+      });
       print('no image  selected false');
     }
+  }
+
+  // Event Details
+  bool prebigner = false;
+  bool bigner = false;
+  bool novic = false;
+  bool Texta = false;
+  bool Textb = false;
+  bool Textc = false;
+
+  List obidient = [];
+
+  bool checkvisible = true;
+  String? stallReq = "0";
+  bool stall_day_type = false;
+  String StallDay = "1";
+  String StallType = "0";
+
+  List<Map<String, String>> keyValueList = [];
+
+  List products = [];
+
+  String? selectedValue; // Initial selected value
+
+  //RefreshCart
+  RefreshCart() async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    userid = sharedprefrence.getString("Userid")!;
+    token = sharedprefrence.getString("Token")!;
+
+    final uri = "https://www.inkc.in/api/cart/cartready";
+
+    Map<String, String> requestHeaders = {
+      // 'Accept': 'application/json',
+      'Usertoken': token,
+      'Userid': userid
+    };
+
+    final responce = await http.post(
+      Uri.parse(uri),
+      headers: requestHeaders,
+    );
+    var data = json.decode(responce.body);
+    // setState(() {
+    //   showSpinner = false;
+    // });
+
+    print(responce.body + " Refresh");
   }
 
   @override
@@ -313,760 +423,1584 @@ class __IDontHaveCertificateState extends State<_IDontHaveCertificate> {
       inAsyncCall: showSpinner,
       child: Sizer(
         builder: (context, orientation, deviceType) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back,
-                    color: Color.fromARGB(255, 223, 39, 39)),
-                onPressed: () => Navigator.of(context).pop(),
+          return WillPopScope(
+            onWillPop: () async {
+              // Handle Android hardware back button press
+              Navigator.pop(context);
+              return false; // Prevent default behavior
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                // leading: IconButton(
+                //   icon: Icon(Icons.arrow_back,
+                //       color: Color.fromARGB(255, 223, 39, 39)),
+                //   onPressed: () => Navigator.of(context).pop(),
+                // ),
+                title: Text(
+                  'Participate',
+                  style: TextStyle(
+                      fontSize: 17,
+                      decorationColor: Color.fromARGB(255, 66, 47, 45),
+                      color: Color.fromARGB(255, 48, 40, 35),
+                      // color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+                centerTitle: true,
               ),
-              title: Text(
-                'Participate',
-                style: TextStyle(
-                    fontSize: 17,
-                    decorationColor: Color.fromARGB(255, 66, 47, 45),
-                    color: Color.fromARGB(255, 48, 40, 35),
-                    // color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              centerTitle: true,
-            ),
-            body: Container(
-              margin: EdgeInsets.only(top: 10),
-              padding: EdgeInsets.only(left: 16, top: 5, right: 16),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                },
-                child: ListView(
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Name of the dog ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                              child: TextField(
-                                controller: Dogname,
-                                // obscureText: true,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
-                                  ),
-                                  labelText: 'Name of the dog',
-                                  hintText: 'Eg.Bruno',
-                                  errorText: dogvalidate
-                                      ? "Value Can't Be Empty"
-                                      : null,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Date of Birth ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.all(8),
-                                    width: 160.sp,
-                                    child: TextField(
-                                      onTap: () {},
-                                      controller: dateofbirth,
-                                      enabled: false,
-                                      // obscureText: true,
-                                      decoration: InputDecoration(
-                                        // suffixIcon: IconButton(
-                                        //   icon: Icon(Icons.date_range),
-                                        //   onPressed: () {
-                                        //     setState(
-                                        //       () {},
-                                        //     );
-                                        //   },
-                                        // ),
-                                        prefixIcon: Icon(Icons.date_range),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4.sp)),
-                                          borderSide: BorderSide(
-                                              width: 1, color: Colors.green),
-                                        ),
-                                        labelText: 'Date of Birth',
-                                        errorText: datevalidate
-                                            ? "Value Can't Be Empty"
-                                            : null,
-                                      ),
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromARGB(255, 231, 25, 25),
-                                          textStyle: TextStyle(
-                                              fontSize: 10.sp,
-                                              color: const Color.fromARGB(
-                                                  255, 241, 236, 236),
-                                              fontWeight: FontWeight.bold)),
-                                      onPressed: () {
-                                        selectDatePicker();
-                                      },
-                                      child: Text(
-                                        'Pick date',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            ),
-
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Breed ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 13.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // Padding(
-                            //   padding: EdgeInsets.all(8),
-                            //   child: TextField(
-                            //     maxLines: null,
-                            //     controller: address,
-                            //     // obscureText: true,
-                            //     decoration: InputDecoration(
-                            //       border: OutlineInputBorder(
-                            //         borderRadius:
-                            //             BorderRadius.all(Radius.circular(4.sp)),
-                            //         borderSide:
-                            //             BorderSide(width: 1, color: Colors.green),
-                            //       ),
-                            //       labelText: 'Breed',
-                            //     ),
-                            //   ),
-                            // ),
-
-                            FutureBuilder<List<DogBreedList>>(
-                                future: getbreedlist(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: DropdownButtonFormField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
-                                          hint: Text('Select value'),
-                                          isExpanded: true,
-                                          value: selectebreedvalue,
-                                          items: snapshot.data!.map((e) {
-                                            return DropdownMenuItem(
-                                                value: e.subCatId.toString(),
-                                                child: Text(
-                                                  e.subCategoryName.toString(),
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 95, 46, 46),
-                                                      fontSize: 12.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ));
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            selectebreedvalue = value;
-                                            selectedbreedid = value;
-                                            setState(() {});
-                                          }),
-                                    );
-                                  } else {
-                                    return CircularProgressIndicator();
-                                  }
-                                }),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Color and Marking ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            FutureBuilder<List<ColorAndMaking>>(
-                                future: getColorAndMaking(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: DropdownButtonFormField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.only(
-                                                    left: 30, right: 10),
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
-                                          hint: Text('Select value'),
-                                          isExpanded: true,
-                                          value: selectcolormarkingvalue,
-                                          items: snapshot.data!.map((e) {
-                                            return DropdownMenuItem(
-                                                value: e.colourId.toString(),
-                                                child: Text(
-                                                  e.colourName.toString(),
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 95, 46, 46),
-                                                      fontSize: 11.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ));
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            selectcolormarkingvalue = value;
-                                            selectcolormakingid = value;
-                                            setState(() {});
-                                          }),
-                                    );
-                                  } else {
-                                    return CircularProgressIndicator();
-                                  }
-                                }),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Sex of the dog ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                boxShadow: [],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 0.5,
-                                ),
-                                borderRadius: BorderRadius.circular(4.sp),
-                                color: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Column(
+              body: Container(
+                margin: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(left: 16, top: 5, right: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                  child: ListView(
+                    children: [
+                      Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: "1",
-                                              groupValue: gender,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  gender = value.toString();
-                                                });
-                                              },
-                                            ),
-                                            Text(
-                                              'Male',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 11.sp),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: "0",
-                                              groupValue: gender,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  gender = value.toString();
-                                                });
-                                              },
-                                            ),
-                                            Text(
-                                              'Female',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 11.sp),
-                                            )
-                                          ],
-                                        ),
-                                      ],
+                                    Text(
+                                      "Name of the dog ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Country Bred In ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 13.sp),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: TextField(
+                                  controller: Dogname,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Name of the dog',
+                                    hintText: 'Eg.Bruno',
+                                    errorText: dogvalidate
+                                        ? "Value Can't Be Empty"
+                                        : null,
                                   ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                              child: TextField(
-                                controller: counrty,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.green),
-                                  ),
-                                  labelText: 'Country Bred in',
-                                  hintText: 'Eg.India',
-                                  errorText: countryvalidate
-                                      ? "Value Can't Be Empty"
-                                      : null,
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Upload your dog’s best photograph ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Date of Birth ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              child: firstImage == null
-                                  ? Container(
-                                      margin: EdgeInsets.only(
-                                          left: 60.sp, right: 60.sp),
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromARGB(255, 199, 5, 5),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.all(8),
+                                      width: 160.sp,
+                                      child: TextField(
+                                        onTap: () {},
+                                        controller: dateofbirth,
+                                        enabled: false,
+                                        // obscureText: true,
+                                        decoration: InputDecoration(
+                                          // suffixIcon: IconButton(
+                                          //   icon: Icon(Icons.date_range),
+                                          //   onPressed: () {
+                                          //     setState(
+                                          //       () {},
+                                          //     );
+                                          //   },
+                                          // ),
+                                          prefixIcon: Icon(Icons.date_range),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(4.sp)),
+                                            borderSide: BorderSide(
+                                                width: 1, color: Colors.green),
+                                          ),
+                                          labelText: 'Date of Birth',
+                                          errorText: datevalidate
+                                              ? "Value Can't Be Empty"
+                                              : null,
                                         ),
-                                        onPressed: () async {
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Color.fromARGB(
+                                                255, 231, 25, 25),
+                                            textStyle: TextStyle(
+                                                fontSize: 10.sp,
+                                                color: const Color.fromARGB(
+                                                    255, 241, 236, 236),
+                                                fontWeight: FontWeight.bold)),
+                                        onPressed: () {
+                                          selectDatePicker();
+                                        },
+                                        child: Text(
+                                          'Pick date',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ))
+                                  ],
+                                ),
+                              ),
+
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Breed ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Padding(
+                              //   padding: EdgeInsets.all(8),
+                              //   child: TextField(
+                              //     maxLines: null,
+                              //     controller: address,
+                              //     // obscureText: true,
+                              //     decoration: InputDecoration(
+                              //       border: OutlineInputBorder(
+                              //         borderRadius:
+                              //             BorderRadius.all(Radius.circular(4.sp)),
+                              //         borderSide:
+                              //             BorderSide(width: 1, color: Colors.green),
+                              //       ),
+                              //       labelText: 'Breed',
+                              //     ),
+                              //   ),
+                              // ),
+
+                              FutureBuilder<List<DogBreedList>>(
+                                  future: getbreedlist(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.blueGrey),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: DropdownButtonHideUnderline(
+                                            child: DropdownButton<String>(
+                                              isExpanded: true,
+                                              value: selectebreedvalue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectebreedvalue = value;
+                                                  selectedbreedid = value;
+                                                });
+                                              },
+                                              items: snapshot.data!.map((e) {
+                                                return DropdownMenuItem<String>(
+                                                  value: e.subCatId.toString(),
+                                                  child: Container(
+                                                    width: double
+                                                        .infinity, // Auto size based on content
+                                                    child: Text(
+                                                      e.subCategoryName
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 95, 46, 46),
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                        // DropdownButtonFormField(
+                                        //     decoration: InputDecoration(
+                                        //       contentPadding:
+                                        //           const EdgeInsets.only(
+                                        //               left: 10, right: 10),
+                                        //       border: OutlineInputBorder(
+                                        //           borderRadius: BorderRadius.all(
+                                        //               Radius.circular(10))),
+                                        //     ),
+                                        //     hint: Text('Select value'),
+                                        //     isExpanded: true,
+                                        //     value: selectebreedvalue,
+                                        //     items: snapshot.data!.map((e) {
+                                        //       return DropdownMenuItem(
+                                        //           value: e.subCatId.toString(),
+                                        //           child: Text(
+                                        //             e.subCategoryName.toString(),
+                                        //             style: TextStyle(
+                                        //                 color: Color.fromARGB(
+                                        //                     255, 95, 46, 46),
+                                        //                 fontSize: 12.sp,
+                                        //                 fontWeight:
+                                        //                     FontWeight.bold),
+                                        //           ));
+                                        //     }).toList(),
+                                        //     onChanged: (value) {
+                                        //       selectebreedvalue = value;
+                                        //       selectedbreedid = value;
+                                        //       setState(() {});
+                                        //     }),
+                                      );
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+                                  }),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Color and Marking ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              FutureBuilder<List<ColorAndMaking>>(
+                                  future: getColorAndMaking(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.blueGrey),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: DropdownButtonHideUnderline(
+                                            child: DropdownButton<String>(
+                                              isExpanded: true,
+                                              value: selectcolormarkingvalue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectcolormarkingvalue =
+                                                      value;
+                                                  selectcolormakingid = value;
+                                                });
+                                              },
+                                              items: snapshot.data!.map((e) {
+                                                return DropdownMenuItem<String>(
+                                                  value: e.colourId.toString(),
+                                                  child: Container(
+                                                    width: double
+                                                        .infinity, // Auto size based on content
+                                                    child: Text(
+                                                      e.colourName.toString(),
+                                                      style: TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 95, 46, 46),
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                        // DropdownButtonFormField(
+                                        //     decoration: InputDecoration(
+                                        //       contentPadding:
+                                        //           const EdgeInsets.only(
+                                        //               left: 30, right: 10),
+                                        //       border: OutlineInputBorder(
+                                        //           borderRadius: BorderRadius.all(
+                                        //               Radius.circular(10))),
+                                        //     ),
+                                        //     hint: Text('Select value'),
+                                        //     isExpanded: true,
+                                        //     value: selectcolormarkingvalue,
+                                        //     items: snapshot.data!.map((e) {
+                                        //       return DropdownMenuItem(
+                                        //           value: e.colourId.toString(),
+                                        //           child: Text(
+                                        //             e.colourName.toString(),
+                                        //             style: TextStyle(
+                                        //                 color: Color.fromARGB(
+                                        //                     255, 95, 46, 46),
+                                        //                 fontSize: 11.sp,
+                                        //                 fontWeight:
+                                        //                     FontWeight.bold),
+                                        //           ));
+                                        //     }).toList(),
+                                        //     onChanged: (value) {
+                                        //       selectcolormarkingvalue = value;
+                                        //       selectcolormakingid = value;
+                                        //       setState(() {});
+                                        //     }),
+                                      );
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+                                  }),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Sex of the dog ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  boxShadow: [],
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(4.sp),
+                                  color: Colors.white,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Radio(
+                                                value: "1",
+                                                groupValue: gender,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    gender = value.toString();
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'Male',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 11.sp),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Radio(
+                                                value: "0",
+                                                groupValue: gender,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    gender = value.toString();
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'Female',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 11.sp),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Country Bred In ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: TextField(
+                                  controller: counrty,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Country Bred in',
+                                    hintText: 'Eg.India',
+                                    errorText: countryvalidate
+                                        ? "Value Can't Be Empty"
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Upload your dog’s best photograph ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: firstImage == null
+                                    ? Container(
+                                        margin: EdgeInsets.only(
+                                            left: 60.sp, right: 60.sp),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary:
+                                                Color.fromARGB(255, 199, 5, 5),
+                                          ),
+                                          onPressed: () async {
+                                            getfirstImage();
+                                          },
+                                          child: Text(
+                                            'Pick Image',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
                                           getfirstImage();
                                         },
-                                        child: Text(
-                                          'Pick Image',
-                                          style: TextStyle(color: Colors.white),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 130.sp,
+                                              height: 130.sp,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 4,
+                                                      color: Theme.of(context)
+                                                          .scaffoldBackgroundColor),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        spreadRadius: 2,
+                                                        blurRadius: 10,
+                                                        color: Colors.black
+                                                            .withOpacity(0.1),
+                                                        offset: Offset(0, 10))
+                                                  ],
+                                                  shape: BoxShape.circle,
+                                                  image: new DecorationImage(
+                                                    image: FileImage(
+                                                        File(firstImage!.path)
+                                                            .absolute),
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                  // image: DecorationImage(
+                                                  //   image: NetworkImage(
+                                                  //       "https://www.inkc.in/${image}"),
+                                                  //   fit: BoxFit.cover, //change image fill type
+                                                  // ),
+                                                  ),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Color.fromARGB(
+                                                    255, 179, 3, 3),
+                                              ),
+                                              onPressed: () async {
+                                                getfirstImage();
+                                              },
+                                              child: Text(
+                                                'Change Image',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    )
-                                  : GestureDetector(
-                                      onTap: () {
-                                        getfirstImage();
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 130.sp,
-                                            height: 130.sp,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 4,
-                                                    color: Theme.of(context)
-                                                        .scaffoldBackgroundColor),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      spreadRadius: 2,
-                                                      blurRadius: 10,
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      offset: Offset(0, 10))
-                                                ],
-                                                shape: BoxShape.circle,
-                                                image: new DecorationImage(
-                                                  image: FileImage(
-                                                      File(firstImage!.path)
-                                                          .absolute),
-                                                  fit: BoxFit.cover,
-                                                )
-                                                // image: DecorationImage(
-                                                //   image: NetworkImage(
-                                                //       "https://new-demo.inkcdogs.org/${image}"),
-                                                //   fit: BoxFit.cover, //change image fill type
-                                                // ),
-                                                ),
-                                          ),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Color.fromARGB(
-                                                  255, 179, 3, 3),
-                                            ),
-                                            onPressed: () async {
-                                              getfirstImage();
-                                            },
-                                            child: Text(
-                                              'Change Image',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Photograph of the dog's height ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 73, 72, 72),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
                               ),
-                            ),
-                            Container(
-                              child: secondImage == null
-                                  ? Container(
-                                      margin: EdgeInsets.only(
-                                          left: 60.sp, right: 60.sp),
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromARGB(255, 182, 5, 5),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Photograph of the dog's height ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 73, 72, 72),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: secondImage == null
+                                    ? Container(
+                                        margin: EdgeInsets.only(
+                                            left: 60.sp, right: 60.sp),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary:
+                                                Color.fromARGB(255, 182, 5, 5),
+                                          ),
+                                          onPressed: () async {
+                                            getsecondImage();
+                                          },
+                                          child: Text(
+                                            'Pick Image',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                         ),
-                                        onPressed: () async {
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
                                           getsecondImage();
                                         },
-                                        child: Text(
-                                          'Pick Image',
-                                          style: TextStyle(color: Colors.white),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 130.sp,
+                                              height: 130.sp,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 4,
+                                                      color: Theme.of(context)
+                                                          .scaffoldBackgroundColor),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        spreadRadius: 2,
+                                                        blurRadius: 10,
+                                                        color: Colors.black
+                                                            .withOpacity(0.1),
+                                                        offset: Offset(0, 10))
+                                                  ],
+                                                  shape: BoxShape.circle,
+                                                  image: new DecorationImage(
+                                                    image: FileImage(
+                                                        File(secondImage!.path)
+                                                            .absolute),
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                  // image: DecorationImage(
+                                                  //   image: NetworkImage(
+                                                  //       "https://www.inkc.in/${image}"),
+                                                  //   fit: BoxFit.cover, //change image fill type
+                                                  // ),
+                                                  ),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Color.fromARGB(
+                                                    255, 180, 5, 5),
+                                              ),
+                                              onPressed: () async {
+                                                getsecondImage();
+                                              },
+                                              child: Text(
+                                                'Change Image',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    )
-                                  : GestureDetector(
-                                      onTap: () {
-                                        getsecondImage();
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 130.sp,
-                                            height: 130.sp,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 4,
-                                                    color: Theme.of(context)
-                                                        .scaffoldBackgroundColor),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      spreadRadius: 2,
-                                                      blurRadius: 10,
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      offset: Offset(0, 10))
-                                                ],
-                                                shape: BoxShape.circle,
-                                                image: new DecorationImage(
-                                                  image: FileImage(
-                                                      File(secondImage!.path)
-                                                          .absolute),
-                                                  fit: BoxFit.cover,
-                                                )
-                                                // image: DecorationImage(
-                                                //   image: NetworkImage(
-                                                //       "https://new-demo.inkcdogs.org/${image}"),
-                                                //   fit: BoxFit.cover, //change image fill type
-                                                // ),
-                                                ),
-                                          ),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Color.fromARGB(
-                                                  255, 180, 5, 5),
-                                            ),
-                                            onPressed: () async {
-                                              getsecondImage();
-                                            },
-                                            child: Text(
-                                              'Change Image',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Photograph of the dog from one side ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
-                                  ),
-                                  Text(
-                                    "*",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 231, 11, 11),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
                               ),
-                            ),
-                            Container(
-                              child: thiredImage == null
-                                  ? Container(
-                                      margin: EdgeInsets.only(
-                                          left: 60.sp, right: 60.sp),
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromARGB(255, 168, 3, 3),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Photograph of the dog from one side ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: thiredImage == null
+                                    ? Container(
+                                        margin: EdgeInsets.only(
+                                            left: 60.sp, right: 60.sp),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary:
+                                                Color.fromARGB(255, 168, 3, 3),
+                                          ),
+                                          onPressed: () async {
+                                            getthardImage();
+                                          },
+                                          child: Text(
+                                            'Pick Image',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                         ),
-                                        onPressed: () async {
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
                                           getthardImage();
                                         },
-                                        child: Text(
-                                          'Pick Image',
-                                          style: TextStyle(color: Colors.white),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 130.sp,
+                                              height: 130.sp,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 4,
+                                                      color: Theme.of(context)
+                                                          .scaffoldBackgroundColor),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        spreadRadius: 2,
+                                                        blurRadius: 10,
+                                                        color: Colors.black
+                                                            .withOpacity(0.1),
+                                                        offset: Offset(0, 10))
+                                                  ],
+                                                  shape: BoxShape.circle,
+                                                  image: new DecorationImage(
+                                                    image: FileImage(
+                                                        File(thiredImage!.path)
+                                                            .absolute),
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                  // image: DecorationImage(
+                                                  //   image: NetworkImage(
+                                                  //       "https://www.inkc.in/${image}"),
+                                                  //   fit: BoxFit.cover, //change image fill type
+                                                  // ),
+                                                  ),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Color.fromARGB(
+                                                    255, 153, 2, 2),
+                                              ),
+                                              onPressed: () async {
+                                                getthardImage();
+                                              },
+                                              child: Text(
+                                                'Change Image',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    )
-                                  : GestureDetector(
-                                      onTap: () {
-                                        getthardImage();
-                                      },
-                                      child: Column(
+                              ),
+
+                              if (widget.eventstal.toString() == "1" ||
+                                  widget.eventstal.toString() == "2")
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20.0, left: 12),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "EVENT DETAILS",
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 22, 21, 21),
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 17.sp),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                              if (widget.eventtype.toString() == "2")
+                                Visibility(
+                                    child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Class (Select at least two option.)",
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 22, 21, 21),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12.sp),
+                                      ),
+                                    ),
+
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Row(
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: 10,
+                                            ), //SizedBox
+                                            Text(
+                                              'Pre-Beginner ',
+                                              style: TextStyle(fontSize: 15.0),
+                                            ), //Text
+                                            SizedBox(width: 10), //SizedBox
+                                            /** Checkbox Widget **/
+                                            Checkbox(
+                                              value: this.prebigner,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  this.prebigner = value!;
+                                                  // obidient.add(value);
+                                                  print(this.prebigner);
+                                                });
+                                              },
+                                            ), //Checkbox
+                                          ], //<Widget>[]
+                                        ),
+                                        Row(
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: 10,
+                                            ), //SizedBox
+                                            Text(
+                                              'Beginner ',
+                                              style: TextStyle(fontSize: 15.0),
+                                            ), //Text
+                                            SizedBox(width: 10), //SizedBox
+                                            /** Checkbox Widget **/
+                                            Checkbox(
+                                              value: this.bigner,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  this.bigner = value!;
+                                                  // obidient.add(value);
+                                                });
+                                              },
+                                            ), //Checkbox
+                                          ], //<Widget>[]
+                                        ),
+                                      ],
+                                    ),
+
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 35.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         children: [
-                                          Container(
-                                            width: 130.sp,
-                                            height: 130.sp,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 4,
-                                                    color: Theme.of(context)
-                                                        .scaffoldBackgroundColor),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      spreadRadius: 2,
-                                                      blurRadius: 10,
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      offset: Offset(0, 10))
-                                                ],
-                                                shape: BoxShape.circle,
-                                                image: new DecorationImage(
-                                                  image: FileImage(
-                                                      File(thiredImage!.path)
-                                                          .absolute),
-                                                  fit: BoxFit.cover,
-                                                )
-                                                // image: DecorationImage(
-                                                //   image: NetworkImage(
-                                                //       "https://new-demo.inkcdogs.org/${image}"),
-                                                //   fit: BoxFit.cover, //change image fill type
-                                                // ),
-                                                ),
+                                          Row(
+                                            children: <Widget>[
+                                              SizedBox(
+                                                width: 10,
+                                              ), //SizedBox
+                                              Text(
+                                                'Novice ',
+                                                style:
+                                                    TextStyle(fontSize: 15.0),
+                                              ), //Text
+                                              SizedBox(width: 10), //SizedBox
+                                              /** Checkbox Widget **/
+                                              Checkbox(
+                                                value: this.novic,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    this.novic = value!;
+                                                    // obidient.add(value);
+                                                  });
+                                                },
+                                              ), //Checkbox
+                                            ], //<Widget>[]
                                           ),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Color.fromARGB(
-                                                  255, 153, 2, 2),
-                                            ),
-                                            onPressed: () async {
-                                              getthardImage();
-                                            },
-                                            child: Text(
-                                              'Change Image',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          )
+                                          Row(
+                                            children: <Widget>[
+                                              SizedBox(
+                                                width: 10,
+                                              ), //SizedBox
+                                              Text(
+                                                'Test-A ',
+                                                style:
+                                                    TextStyle(fontSize: 15.0),
+                                              ), //Text
+                                              SizedBox(width: 10), //SizedBox
+                                              /** Checkbox Widget **/
+                                              Checkbox(
+                                                value: this.Texta,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    this.Texta = value!;
+                                                    //obidient.add(value);
+                                                  });
+                                                },
+                                              ), //Checkbox
+                                            ], //<Widget>[]
+                                          ),
                                         ],
                                       ),
                                     ),
-                            ),
 
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Color.fromARGB(255, 20, 10, 151),
-                                      textStyle: TextStyle(
-                                          fontSize: 10.sp,
-                                          color: const Color.fromARGB(
-                                              255, 241, 236, 236),
-                                          fontWeight: FontWeight.bold)),
-                                  onPressed: () {
-                                    // if (dog.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     dogvalidate = Dogname.text.isEmpty;
-                                    //   });
-                                    // } else if (registernum.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     regisvalidate =
-                                    //         Registornumber.text.isEmpty;
-                                    //   });
-                                    // } else if (kenel.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     kennelvalidate = selectedid.text.isEmpty;
-                                    //   });
-                                    // } else if (breed.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     breedvalidate =
-                                    //         selectedbreedid.text.isEmpty;
-                                    //   });
-                                    // } else if (date.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     datevalidate = dateofbirth.text.isEmpty;
-                                    //   });
-                                    // } else if (genders.toString().isEmpty) {
-                                    //   setState(() {
-                                    //     gendervalidator =
-                                    //         gender.toString().isEmpty;
-                                    //   });
-                                    // } else {}
-                                    // String kennelname = selectedid;
-                                    // String dogid = selectedbreedid;
-                                    print(gender.toString());
-
-                                    uploadData();
-                                  },
-                                  child: Text(
-                                    'Submit',
-                                    style: TextStyle(
-                                      color: Colors.white,
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 35.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Row(
+                                            children: <Widget>[
+                                              SizedBox(
+                                                width: 10,
+                                              ), //SizedBox
+                                              Text(
+                                                'Test-B ',
+                                                style:
+                                                    TextStyle(fontSize: 15.0),
+                                              ), //Text
+                                              SizedBox(width: 10), //SizedBox
+                                              /** Checkbox Widget **/
+                                              Checkbox(
+                                                value: this.Textb,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    this.Textb = value!;
+                                                    // obidient.add(value);
+                                                  });
+                                                },
+                                              ), //Checkbox
+                                            ], //<Widget>[]
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              SizedBox(
+                                                width: 10,
+                                              ), //SizedBox
+                                              Text(
+                                                'Test-C ',
+                                                style:
+                                                    TextStyle(fontSize: 15.0),
+                                              ), //Text
+                                              SizedBox(width: 10), //SizedBox
+                                              /** Checkbox Widget **/
+                                              Checkbox(
+                                                value: this.Textc,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    this.Textc = value!;
+                                                    //  obidient.add(value);
+                                                  });
+                                                },
+                                              ), //Checkbox
+                                            ], //<Widget>[]
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  )),
-                            )
-                          ],
-                        ))
-                  ],
+
+                                    // FutureBuilder(
+                                    //     future: FetchData(),
+                                    //     builder: (context, snapshot) {
+                                    //       if (snapshot.hasData) {
+                                    //         return ListView.builder(
+                                    //           itemCount: dataload.length,
+                                    //           itemBuilder: (context, position) {
+                                    //             return Card(
+                                    //               elevation: 10,
+                                    //               color: Color.fromARGB(255, 255, 255, 255),
+                                    //               margin: EdgeInsets.all(5),
+                                    //               child: Container(
+                                    //                 decoration: BoxDecoration(
+                                    //                   borderRadius: BorderRadius.circular(10),
+                                    //                   gradient: LinearGradient(
+                                    //                     colors: [
+                                    //                       Color.fromARGB(255, 255, 255, 255),
+                                    //                       Color.fromARGB(255, 255, 255, 255),
+                                    //                     ],
+                                    //                     begin: Alignment.topLeft,
+                                    //                     end: Alignment.bottomRight,
+                                    //                   ),
+                                    //                 ),
+                                    //                 // decoration: const BoxDecoration(
+                                    //                 //   image: DecorationImage(
+                                    //                 //       image: NetworkImage(
+                                    //                 //           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReL_kSGg4Ux5ZiwK-mIRe6_L-Ft8GxRaaT1Q&usqp=CAU"),
+                                    //                 //       fit: BoxFit.cover),
+                                    //                 // ),
+                                    //                 child: Padding(
+                                    //                   padding: const EdgeInsets.all(20.0),
+                                    //                   child: Column(
+                                    //                     children: [
+                                    //                       Card(
+                                    //                         child: Padding(
+                                    //                           padding:
+                                    //                               const EdgeInsets.all(15.0),
+                                    //                           child: SizedBox(
+                                    //                             width: 30,
+                                    //                             height: 70,
+                                    //                             child: Column(
+                                    //                               children: [
+                                    //                                 Row(
+                                    //                                   children: <Widget>[
+                                    //                                     SizedBox(
+                                    //                                       width: 10,
+                                    //                                     ), //SizedBox
+                                    //                                     Text(
+                                    //                                       dataload[position]
+                                    //                                           .className
+                                    //                                           .toString(),
+                                    //                                       style: TextStyle(
+                                    //                                           fontSize: 17.0),
+                                    //                                     ), //Text
+                                    //                                     SizedBox(
+                                    //                                         width:
+                                    //                                             10), //SizedBox
+                                    //                                     /** Checkbox Widget **/
+                                    //                                     Checkbox(
+                                    //                                       value: this.values,
+                                    //                                       onChanged: (value) {
+                                    //                                         this.values =
+                                    //                                             value!;
+                                    //                                       },
+                                    //                                     ), //Checkbox
+                                    //                                   ], //<Widget>[]
+                                    //                                 ), //Row
+                                    //                               ],
+                                    //                             ), //Column
+                                    //                           ), //SizedBox
+                                    //                         ), //Padding
+                                    //                       ),
+                                    //                     ],
+                                    //                   ),
+                                    //                 ),
+                                    //               ),
+                                    //             );
+                                    //           },
+                                    //         );
+                                    //       } else {
+                                    //         // print("dataloadlength");
+                                    //         return Center(
+                                    //           child: CircularProgressIndicator(),
+                                    //         );
+                                    //       }
+                                    //     }),
+                                  ],
+                                )),
+                              if (widget.eventstal.toString() == "1")
+                                Visibility(
+                                    child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 20.0, left: 12),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Do you need stall              ",
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 22, 21, 21),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12.sp),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(top: 0),
+                                            // decoration: BoxDecoration(
+                                            //   boxShadow: [],
+                                            //   border: Border.all(
+                                            //     color: Colors.black,
+                                            //     width: 0.5,
+                                            //   ),
+                                            //   borderRadius: BorderRadius.circular(4.sp),
+                                            //   color: Colors.white,
+                                            // ),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(top: 0),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Radio(
+                                                            value: "0",
+                                                            groupValue:
+                                                                stallReq,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                stall_day_type =
+                                                                    false;
+                                                                stallReq = value
+                                                                    .toString();
+                                                              });
+                                                            },
+                                                          ),
+                                                          Text(
+                                                            'No',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize:
+                                                                    11.sp),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Radio(
+                                                            value: "1",
+                                                            groupValue:
+                                                                stallReq,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                stall_day_type =
+                                                                    true;
+                                                                stallReq = value
+                                                                    .toString();
+                                                              });
+                                                            },
+                                                          ),
+                                                          Text(
+                                                            'Yes',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize:
+                                                                    11.sp),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                              if (widget.eventstal.toString() == "1")
+                                Visibility(
+                                    visible: stall_day_type,
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 20.0, left: 12),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "stall Day          ",
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 22, 21, 21),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12.sp),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Radio(
+                                                          value: "1",
+                                                          groupValue: StallDay,
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              // _isShowOff = true;
+                                                              StallDay = value
+                                                                  .toString();
+                                                            });
+                                                          },
+                                                        ),
+                                                        Text(
+                                                          'First Day',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 11.sp),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 18.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Radio(
+                                                            value: "2",
+                                                            groupValue:
+                                                                StallDay,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                // _isShowOff = true;
+                                                                StallDay = value
+                                                                    .toString();
+                                                              });
+                                                            },
+                                                          ),
+                                                          Text(
+                                                            'Second Day',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize:
+                                                                    11.sp),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Radio(
+                                                            value: "3",
+                                                            groupValue:
+                                                                StallDay,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                // _isShowOff = true;
+                                                                StallDay = value
+                                                                    .toString();
+                                                              });
+                                                            },
+                                                          ),
+                                                          Text(
+                                                            'Both Days',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize:
+                                                                    11.sp),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                              if (widget.eventstal.toString() == "1")
+                                Visibility(
+                                    visible: stall_day_type,
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 20.0, left: 12),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Stall Type             ",
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 22, 21, 21),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12.sp),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(top: 0),
+                                                // decoration: BoxDecoration(
+                                                //   boxShadow: [],
+                                                //   border: Border.all(
+                                                //     color: Colors.black,
+                                                //     width: 0.5,
+                                                //   ),
+                                                //   borderRadius: BorderRadius.circular(4.sp),
+                                                //   color: Colors.white,
+                                                // ),
+                                                child: Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 0),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Radio(
+                                                                value: "0",
+                                                                groupValue:
+                                                                    StallType,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    // _isShowOff = false;
+                                                                    StallType =
+                                                                        value
+                                                                            .toString();
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                'FAN',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        11.sp),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Radio(
+                                                                value: "1",
+                                                                groupValue:
+                                                                    StallType,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    // _isShowOff = true;
+                                                                    StallType =
+                                                                        value
+                                                                            .toString();
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                'AC',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        11.sp),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary:
+                                            Color.fromARGB(255, 15, 50, 70),
+                                        textStyle: TextStyle(
+                                            fontSize: 10.sp,
+                                            color: const Color.fromARGB(
+                                                255, 241, 236, 236),
+                                            fontWeight: FontWeight.bold)),
+                                    onPressed: () {
+                                      print("intaha");
+
+                                      obidient.clear();
+
+                                      if (prebigner == true) {
+                                        obidient.add("1");
+                                      }
+                                      if (bigner == true) {
+                                        obidient.add("2");
+                                      }
+                                      if (novic == true) {
+                                        obidient.add("3");
+                                      }
+                                      if (Texta == true) {
+                                        obidient.add("4");
+                                      }
+                                      if (Textb == true) {
+                                        obidient.add("5");
+                                      }
+                                      if (Textc == true) {
+                                        obidient.add("6");
+                                      }
+                                      // if (dog.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     dogvalidate = Dogname.text.isEmpty;
+                                      //   });
+                                      // } else if (registernum.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     regisvalidate =
+                                      //         Registornumber.text.isEmpty;
+                                      //   });
+                                      // } else if (kenel.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     kennelvalidate = selectedid.text.isEmpty;
+                                      //   });
+                                      // } else if (breed.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     breedvalidate =
+                                      //         selectedbreedid.text.isEmpty;
+                                      //   });
+                                      // } else if (date.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     datevalidate = dateofbirth.text.isEmpty;
+                                      //   });
+                                      // } else if (genders.toString().isEmpty) {
+                                      //   setState(() {
+                                      //     gendervalidator =
+                                      //         gender.toString().isEmpty;
+                                      //   });
+                                      // } else {}
+                                      // String kennelname = selectedid;
+                                      // String dogid = selectedbreedid;
+                                      if (Dogname.text.toString() == "") {
+                                        QuickAlert.show(
+                                          context: context,
+                                          type: QuickAlertType.error,
+                                          title: 'Oops...',
+                                          text: 'Please Enter Name',
+                                        );
+                                      } else {
+                                        if (dateofbirth.text.toString() == "") {
+                                          QuickAlert.show(
+                                            context: context,
+                                            type: QuickAlertType.error,
+                                            title: 'Oops...',
+                                            text: 'Please Select Date of birth',
+                                          );
+                                        } else {
+                                          if (selectedbreedid.toString() ==
+                                              "null") {
+                                            QuickAlert.show(
+                                              context: context,
+                                              type: QuickAlertType.error,
+                                              title: 'Oops...',
+                                              text: 'Please Select breed',
+                                            );
+                                          } else {
+                                            if (selectcolormakingid
+                                                    .toString() ==
+                                                "null") {
+                                              QuickAlert.show(
+                                                context: context,
+                                                type: QuickAlertType.error,
+                                                title: 'Oops...',
+                                                text:
+                                                    'Please Select color and making',
+                                              );
+                                            } else {
+                                              if (counrty.text.toString() ==
+                                                  "") {
+                                                QuickAlert.show(
+                                                  context: context,
+                                                  type: QuickAlertType.error,
+                                                  title: 'Oops...',
+                                                  text: 'Please Enter Country',
+                                                );
+                                              } else {
+                                                if (obidient.length <= 1 &&
+                                                    widget.eventtype
+                                                            .toString() ==
+                                                        "2") {
+                                                  QuickAlert.show(
+                                                    context: context,
+                                                    type: QuickAlertType.error,
+                                                    title: 'Oops...',
+                                                    text:
+                                                        'Please Select atlest 2 box',
+                                                  );
+                                                } else {
+                                                  uploadData();
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                      print(Dogname.text.toString() +
+                                          " - " +
+                                          dateofbirth.text.toString() +
+                                          " - " +
+                                          selectedbreedid.toString() +
+                                          " - " +
+                                          selectcolormakingid.toString() +
+                                          " - " +
+                                          gender.toString() +
+                                          " - " +
+                                          counrty.text.toString() +
+                                          " - " +
+                                          widget.eventstal.toString());
+
+                                      // uploadData();
+                                    },
+                                    child: Text(
+                                      'Submit',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    )),
+                              )
+                            ],
+                          ))
+                    ],
+                  ),
                 ),
               ),
             ),
