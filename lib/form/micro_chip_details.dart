@@ -162,7 +162,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
             firstImage!.path,
             filename: now.second.toString() + ".jpg"),
         'implementer_name': ImplementNames,
-        'implement_by': impletedId,
+        //'implement_by': impletedId,
         'pet_microchip_number': MicroNumber,
         'implementer_mobile_number': number,
         'implemented_date': DOB,
@@ -482,112 +482,126 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Implemented by ",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 22, 21, 21),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13.sp),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 231, 11, 11),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.sp),
-                                    ),
-                                  ],
+                              Visibility(
+                                visible: false,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20.0, left: 12),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Implemented by ",
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 22, 21, 21),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13.sp),
+                                      ),
+                                      Text(
+                                        "*",
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 231, 11, 11),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15.sp),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              FutureBuilder<List<MicroChipModel>>(
-                                  future: getkennelclub(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.blueGrey),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: DropdownButtonHideUnderline(
-                                            child: DropdownButton<String>(
-                                              isExpanded: true,
-                                              value: selectedvalue,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  selectedvalue = value;
-                                                  selectedid = value;
-                                                });
-                                              },
-                                              hint: Text('Select value'),
-                                              items: snapshot.data!.map((e) {
-                                                return DropdownMenuItem<String>(
-                                                  value: e.empTypeId.toString(),
-                                                  child: Container(
-                                                    width: double
-                                                        .infinity, // Auto size based on content
-                                                    child: Text(
-                                                      e.empTypeName.toString(),
-                                                      style: TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 95, 46, 46),
-                                                          fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                              Visibility(
+                                visible: false,
+                                child: FutureBuilder<List<MicroChipModel>>(
+                                    future: getkennelclub(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.blueGrey),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButton<String>(
+                                                isExpanded: true,
+                                                value: selectedvalue,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    selectedvalue = value;
+                                                    selectedid = value;
+                                                  });
+                                                },
+                                                hint: Text('Select value'),
+                                                items: snapshot.data!.map((e) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value:
+                                                        e.empTypeId.toString(),
+                                                    child: Container(
+                                                      width: double
+                                                          .infinity, // Auto size based on content
+                                                      child: Text(
+                                                        e.empTypeName
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    95,
+                                                                    46,
+                                                                    46),
+                                                            fontSize: 12.sp,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              }).toList(),
+                                                  );
+                                                }).toList(),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        // DropdownButtonFormField(
-                                        //     decoration: InputDecoration(
-                                        //       contentPadding:
-                                        //           const EdgeInsets.only(
-                                        //               left: 30, right: 10),
-                                        //       border: OutlineInputBorder(
-                                        //           borderRadius: BorderRadius.all(
-                                        //               Radius.circular(10))),
-                                        //     ),
-                                        //     hint: Text('Select value'),
-                                        //     isExpanded: true,
-                                        //     value: selectedvalue,
-                                        //     items: snapshot.data!.map((e) {
-                                        //       return DropdownMenuItem(
-                                        //           value: e.empTypeId.toString(),
-                                        //           child: Text(
-                                        //             e.empTypeName.toString(),
-                                        //             style: TextStyle(
-                                        //                 color: Color.fromARGB(
-                                        //                     255, 95, 46, 46),
-                                        //                 fontSize: 12.sp,
-                                        //                 fontWeight:
-                                        //                     FontWeight.bold),
-                                        //           ));
-                                        //     }).toList(),
-                                        //     onChanged: (value) {
-                                        //       selectedvalue = value;
-                                        //       selectedid = value;
-                                        //       setState(() {});
-                                        //     }),
-                                      );
-                                    } else {
-                                      return CircularProgressIndicator();
-                                    }
-                                  }),
+                                          // DropdownButtonFormField(
+                                          //     decoration: InputDecoration(
+                                          //       contentPadding:
+                                          //           const EdgeInsets.only(
+                                          //               left: 30, right: 10),
+                                          //       border: OutlineInputBorder(
+                                          //           borderRadius: BorderRadius.all(
+                                          //               Radius.circular(10))),
+                                          //     ),
+                                          //     hint: Text('Select value'),
+                                          //     isExpanded: true,
+                                          //     value: selectedvalue,
+                                          //     items: snapshot.data!.map((e) {
+                                          //       return DropdownMenuItem(
+                                          //           value: e.empTypeId.toString(),
+                                          //           child: Text(
+                                          //             e.empTypeName.toString(),
+                                          //             style: TextStyle(
+                                          //                 color: Color.fromARGB(
+                                          //                     255, 95, 46, 46),
+                                          //                 fontSize: 12.sp,
+                                          //                 fontWeight:
+                                          //                     FontWeight.bold),
+                                          //           ));
+                                          //     }).toList(),
+                                          //     onChanged: (value) {
+                                          //       selectedvalue = value;
+                                          //       selectedid = value;
+                                          //       setState(() {});
+                                          //     }),
+                                        );
+                                      } else {
+                                        return CircularProgressIndicator();
+                                      }
+                                    }),
+                              ),
                               // Padding(
                               //   padding: EdgeInsets.all(18),
                               //   child: DropdownButton(
@@ -614,7 +628,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Implementer Name ",
+                                      "Veterinarian Name ",
                                       style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 22, 21, 21),
@@ -659,7 +673,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Implementer Mobile Number ",
+                                      "Veterinarian Mobile Number ",
                                       style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 22, 21, 21),
@@ -690,7 +704,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                       borderSide: BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
-                                    labelText: 'Implementer Mobile Numbe',
+                                    labelText: ' Mobile Numbe',
                                     errorText: Numbervalidate
                                         ? "Value Can't Be Empty"
                                         : null,
@@ -703,7 +717,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Implemented Date ",
+                                      "Veterinarian Date ",
                                       style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 22, 21, 21),
@@ -895,14 +909,16 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                           micronumbervalidate =
                                               micronumber.text.isEmpty;
                                         });
-                                      } else if (selectedid
-                                          .toString()
-                                          .isEmpty) {
-                                        // setState(() {
-                                        //   regisvalidate =
-                                        //       Registornumber.text.isEmpty;
-                                        // });
-                                      } else if (implementName.text
+                                      }
+                                      // else if (selectedid
+                                      //     .toString()
+                                      //     .isEmpty) {
+                                      //   // setState(() {
+                                      //   //   regisvalidate =
+                                      //   //       Registornumber.text.isEmpty;
+                                      //   // });
+                                      // }
+                                      else if (implementName.text
                                           .toString()
                                           .isEmpty) {
                                         setState(() {

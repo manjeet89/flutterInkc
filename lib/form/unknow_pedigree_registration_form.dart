@@ -44,6 +44,7 @@ class __UnknowPedigreeDogRegistrationFormState
   TextEditingController sire = new TextEditingController();
   TextEditingController dam = new TextEditingController();
   TextEditingController Dogname = new TextEditingController();
+  TextEditingController Dognamehight = new TextEditingController();
   TextEditingController dateofbirth = new TextEditingController();
   TextEditingController cowner = new TextEditingController();
 
@@ -179,6 +180,7 @@ class __UnknowPedigreeDogRegistrationFormState
   bool regisvalidate = false;
   bool kennelvalidate = false;
   bool dogvalidate = false;
+  bool dogvalidatehight = false;
   bool datevalidate = false;
   bool breedvalidate = false;
   bool gendervalidator = false;
@@ -201,6 +203,7 @@ class __UnknowPedigreeDogRegistrationFormState
     String AddCoowner = AddCoOwner.toString();
     String MICRO = MicroRequired.toString();
     String Breed = selectedbreedid.toString();
+    String hight = Dognamehight.text.toString();
 
     try {
       SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
@@ -227,6 +230,7 @@ class __UnknowPedigreeDogRegistrationFormState
         'sire_reg_number': SIRE,
         'breded_country': counrty.text.toString(),
         'pet_sub_category_id': Breed,
+        'pet_height_inches': hight,
       });
       print(Gender +
           "-" +
@@ -1382,6 +1386,51 @@ class __UnknowPedigreeDogRegistrationFormState
                                           ],
                                         ),
                                       ),
+                              ),
+
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Height (in inches) ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: TextField(
+                                  controller: Dognamehight,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Height (in inches)',
+                                    hintText: '',
+                                    errorText: dogvalidatehight
+                                        ? "Value Can't Be Empty"
+                                        : null,
+                                  ),
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),

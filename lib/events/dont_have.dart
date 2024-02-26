@@ -54,6 +54,7 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
   TextEditingController dateofbirth = new TextEditingController();
   TextEditingController cowner = new TextEditingController();
   TextEditingController counrty = new TextEditingController();
+  TextEditingController Dognamehight = new TextEditingController();
 
   List breedlist = [];
   var selectebreedvalue;
@@ -239,6 +240,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
   bool regisvalidate = false;
   bool kennelvalidate = false;
   bool dogvalidate = false;
+  bool dogvalidatehight = false;
+
   bool datevalidate = false;
   bool breedvalidate = false;
   bool gendervalidator = false;
@@ -286,6 +289,7 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
     String Gender = gender.toString();
     String color = selectcolormakingid.toString();
     String breed = selectedbreedid.toString();
+    String hight = Dognamehight.text.toString();
 
     try {
       SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
@@ -312,7 +316,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
         "is_stall_required": stallReq,
         "event_stall_day": Day,
         "event_stall_type": Type,
-        "register_with_event": "1"
+        "register_with_event": "1",
+        'pet_height_inches': hight,
       });
       // print(Gender +
       //     "-" +
@@ -1035,6 +1040,52 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                         ),
                                       ),
                               ),
+
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Height (in inches) ",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: TextField(
+                                  controller: Dognamehight,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(4.sp)),
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Height (in inches)',
+                                    hintText: '',
+                                    errorText: dogvalidatehight
+                                        ? "Value Can't Be Empty"
+                                        : null,
+                                  ),
+                                ),
+                              ),
+
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
