@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/model/notificationmodel.dart';
+import 'package:intl/intl.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,7 +82,7 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   List<NotificationModel> dataload = [];
-
+  String time = "";
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
@@ -162,16 +163,29 @@ class _NotificationPageState extends State<NotificationPage> {
                           'Sunday',
                         ];
 
+                        // final dateTimeObj =
+                        //     DateTime.parse(dataload[position].notiCreatedOn);
+
                         final dateTimeObj =
                             DateTime.parse(dataload[position].notiCreatedOn);
 
-                        // date format
                         String fdate =
-                            "${days[dateTimeObj.weekday - 1].substring(0, 3)}, ${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
+                            " ${dateTimeObj.day} ${months[dateTimeObj.month - 1].substring(0, 3)} ${dateTimeObj.year}";
+
+                        // date format
+                        // String fdate =
+                        //     "${days[dateTimeObj.weekday - 1].substring(0, 3)}, ${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
                         // time format
+                        String timeStamp24HR = dataload[position]
+                            .notiCreatedOn
+                            .toString(); //"2020-07-20T18:15:12";
+                        time = new DateFormat.jm()
+                            .format(DateTime.parse(timeStamp24HR));
+
                         dateset = fdate;
-                        String time =
-                            "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
+
+                        // String time =
+                        //     "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
                         print("$fdate $time");
                       } else {
                         navigator?.pop(context);
@@ -205,7 +219,7 @@ class _NotificationPageState extends State<NotificationPage> {
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
-                                  dateset,
+                                  dateset + " ( " + time + " )",
                                   style: TextStyle(
                                     // color: Color.fromARGB(255, 17, 17, 17),
                                     fontSize: 12.sp,
@@ -215,8 +229,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                         const Offset(100, 140),
                                         const Offset(150, 20),
                                         <Color>[
-                                          Color.fromARGB(255, 235, 15, 15),
-                                          Color.fromARGB(255, 22, 26, 226),
+                                          Color.fromARGB(255, 66, 15, 15),
+                                          Color.fromARGB(255, 172, 12, 12),
                                         ],
                                       ),
                                   ),
@@ -232,8 +246,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                           const Offset(50, 100),
                                           const Offset(150, 20),
                                           <Color>[
-                                            Color.fromARGB(255, 235, 15, 15),
-                                            Color.fromARGB(255, 22, 26, 226),
+                                            Color.fromARGB(255, 11, 8, 61),
+                                            Color.fromARGB(255, 24, 24, 34),
                                           ],
                                         ),
                                       fontSize: 12.sp,

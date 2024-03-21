@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get/get.dart';
 import 'package:inkc/bottom_nav_pages/home.dart';
 import 'package:inkc/credential/signup.dart';
+import 'package:inkc/firebase_messagign/fire_base_message.dart';
 import 'package:inkc/main.dart';
 import 'package:inkc/myhomepage.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -282,6 +284,7 @@ class _HomeLogin extends State<HomeLogin> {
                               //   type: QuickAlertType.loading,
                               //   title: 'Loading',
                               // );
+
                               EasyLoading.dismiss();
                               // print(data['data']['first_name']);
 
@@ -455,6 +458,10 @@ class _HomeLogin extends State<HomeLogin> {
                               //     context,
                               //     MaterialPageRoute(
                               //         builder: (context) => MyApp()));
+
+                              WidgetsFlutterBinding.ensureInitialized();
+                              await Firebase.initializeApp();
+                              await FireBaseApi().initNotification();
 
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) => MyApp()));

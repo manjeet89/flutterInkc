@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "447539041579",
+    "project_id": "doggylocker-97b05",
+    "storage_bucket": "doggylocker-97b05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447539041579:android:5ba94f51fe42f76519e16e",
+        "android_client_info": {
+          "package_name": "net.inkcdogs.doggylocker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU5_dUkirn1YUCaUn9poMU-FXodpSWxh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

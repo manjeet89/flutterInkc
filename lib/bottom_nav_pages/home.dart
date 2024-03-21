@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui' as ui;
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ import 'package:inkc/adddoginfo.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/events/events.dart';
 import 'package:inkc/events/participate.dart';
+import 'package:inkc/firebase_messagign/fire_base_message.dart';
 import 'package:inkc/inkcstore.dart';
 import 'package:inkc/KennelClub/kennelnamehistory.dart';
 import 'package:inkc/litternumber.dart';
@@ -46,7 +49,11 @@ import 'package:sizer/sizer.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:http/http.dart' as http;
 
-void main() {
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  // await FireBaseApi().initNotification();
+
   runApp(const HomePages());
 }
 
@@ -1992,7 +1999,10 @@ class _HomeState extends State<Home> {
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
-                              onTap: () {
+                              onTap: () async {
+                                // await FirebaseAnalytics.instance.logEvent(
+                                //     name: 'Inkc_Store',
+                                //     parameters: {'note': 'go to inkc store'});
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         INKCStore()));

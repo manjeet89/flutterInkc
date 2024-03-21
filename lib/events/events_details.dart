@@ -60,6 +60,8 @@ class _EventsDetailsState extends State<EventsDetails> {
   String To = "";
   String Amount = "";
 
+  String faltu = "";
+
   // printed value
   String Froms = "";
   String tos = "";
@@ -91,6 +93,12 @@ class _EventsDetailsState extends State<EventsDetails> {
 
   bool TrueCheck = false;
   bool judgenamechake = false;
+
+  // new try for Event venue
+  String hidedataEarly = "";
+  String hidedataRegular = "";
+  String hidedataLate = "";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -172,106 +180,162 @@ class _EventsDetailsState extends State<EventsDetails> {
   }
 
   DogPrice() {
-    print(widget.Eventstall.toString());
+    // print(widget.Eventstall.toString());
 
     if (TrueCheck == false) {
       String number = widget.EventContactPerson.toString()
           .replaceAll(", ", "")
           .replaceAll('<b>', "")
-          .replaceAll('</b>', "");
-      Phonenumber = number.split('<br>');
+          .replaceAll('</b>', "")
+          .replaceAll('</b>', "")
+          .replaceAll('</a>', "")
+          .replaceAll("\"", "")
+          // .replaceAll(">", "")
+          .replaceAll("<a href=tel:+", "");
 
+      Phonenumber = number.split('<br>');
+      // for (int i = 0; i < Phonenumber.length - 1; i++) {
+      //   // print(Phonenumber[i].toString().substring(15).trim() +
+      //   // "  " +
+      //   // i.toString());
+      //   if (i >= 1) {
+      //     print(Phonenumber[i].toString().substring(15) + "  " + i.toString());
+      //   } else {
+      //     print(Phonenumber[i].toString().substring(13) + "  " + i.toString());
+      //   }
+      // }
       String dogs = widget.EventDogPriceDiscound.toString()
           .replaceAll("{", "")
           .replaceAll("}", "")
           .replaceAll("[", "")
-          .replaceAll("]", "")
-          .replaceAll("\"", "")
+          .replaceAll("]", ":")
+          .replaceAll('""', "data")
           .replaceAll(":", ",")
-          .replaceAll(",,", "")
+          .replaceAll("\"", "")
+          .replaceAll(",,", ",")
           .trim();
-      //(",")
+
+      // print("bakri" + dogs.toString());
 
       List kap = dogs.split(",");
-      //print(kap.toString());
+      print("bakri   " +
+          dogs.toString() +
+          "find length     " +
+          kap.length.toString());
 
-      if (kap.length == 16) {
-        for (int i = 0; i < kap.length; i++) {
-          if ("from" == kap[i]) {
-            Earlyfromdate = kap[i + 1];
-            // Regularfromdate = kap[i + 2];
-            // Latefromdate = kap[i + 3];
-          }
-          if (2 == i) {
-            print(kap[i]);
-            Regularfromdate = kap[i];
-          }
-          if (3 == i) {
-            Latefromdate = kap[i];
-          }
+      for (int k = 0; k < kap.length - 1; k++) {
+        // print("check datas " + kap[k].toString() + "   " + k.toString() + "\n");
 
-          if ("to" == kap[i]) {
-            Earlytodate = kap[i + 1];
-            // Regulartodate = kap[i + 2];
-            // Latetodate = kap[i + 3];
-          }
-          if (6 == i) {
-            Regulartodate = kap[i];
-          }
-          if (7 == i) {
-            Latetodate = kap[i];
-          }
-
-          if ("amount" == kap[i]) {
-            Earlyprice = kap[i + 1];
-            //Regularprice = kap[i + 2];
-            // Lateprice = kap[i + 3];
-          }
-          if (10 == i) {
-            Regularprice = kap[i];
-          }
-          if (11 == i) {
-            Lateprice = kap[i];
+        if (1 == k) {
+          if ("data" == kap[k] && 1 == k) {
+            hidedataEarly = "hireEarly";
+            print("is work or not");
+          } else {
+            hidedataEarly = "showEarly";
+            Earlyfromdate = kap[k];
           }
         }
 
-        setState(() {
+        if (2 == k) {
+          if ("data" == kap[k] && 2 == k) {
+            hidedataRegular = "hireRegular";
+          } else {
+            // print("is work or just chill");
+            hidedataRegular = "showRegular";
+            Regularfromdate = kap[k];
+          }
+        }
+
+        if (3 == k) {
+          if ("data" == kap[k] && 3 == k) {
+            hidedataLate = "hireLate";
+          } else {
+            hidedataLate = "showLate";
+            Latefromdate = kap[k];
+          }
+        }
+
+        if (5 == k) {
+          if ("data" == kap[k] && 5 == k) {
+            hidedataEarly = "hireEarly";
+          } else {
+            hidedataEarly = "showEarly";
+            Earlytodate = kap[k];
+          }
+        }
+
+        if (6 == k) {
+          if ("data" == kap[k] && 6 == k) {
+            hidedataRegular = "hireRegular";
+          } else {
+            hidedataRegular = "showRegular";
+            Regulartodate = kap[k];
+          }
+        }
+
+        if (7 == k) {
+          if ("data" == kap[k] && 7 == k) {
+            hidedataLate = "hireLate";
+          } else {
+            hidedataLate = "showLate";
+            Latetodate = kap[k];
+          }
+        }
+
+        if ("amount" == kap[k]) {
+          Earlyprice = kap[k + 1];
+          //Regularprice = kap[i + 2];
+          // Lateprice = kap[i + 3];
+        }
+        if (10 == k) {
+          Regularprice = kap[k];
+        }
+        if (11 == k) {
+          Lateprice = kap[k];
+        }
+      }
+
+      setState(() {
+        // Early = true;
+        // Regular = true;
+        // Late = true;
+
+        // Earlyfromdate = Earlyfromdate; //"2024-01-01";
+        // // From;
+        // Earlytodate = Earlytodate;
+        // //"2024-03-31"; //To;
+        Earlyprice = Earlyprice;
+        Regularprice = Regularprice;
+        Lateprice = Lateprice;
+        TrueCheck = true;
+
+        List<String> months = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+        ];
+
+        List<String> days = [
+          'Monday',
+          'Tuseday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+          'Sunday',
+        ];
+
+        if (hidedataEarly == "showEarly") {
           Early = true;
-          Regular = true;
-          Late = true;
-          Earlyfromdate = Earlyfromdate; //"2024-01-01";
-          // From;
-          Earlytodate = Earlytodate;
-          //"2024-03-31"; //To;
-          Earlyprice = Earlyprice;
-          Regularprice = Regularprice;
-          Lateprice = Lateprice;
-          TrueCheck = true;
-
-          List<String> months = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-          ];
-
-          List<String> days = [
-            'Monday',
-            'Tuseday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday',
-          ];
 
           final Earlyfrom = DateTime.parse(Earlyfromdate);
           final Earlyto = DateTime.parse(Earlytodate);
@@ -281,92 +345,10 @@ class _EventsDetailsState extends State<EventsDetails> {
 
           Earlyfromdate =
               "  ${Earlyfrom.day} ${months[Earlyfrom.month - 1].substring(0, 3)} ${Earlyfrom.year}";
-
-          final Regularfrom = DateTime.parse(Regularfromdate);
-          final Regularto = DateTime.parse(Regulartodate);
-
-          Regulartodate =
-              "${Regularto.day} ${months[Regularto.month - 1].substring(0, 3)} ${Regularto.year}";
-
-          Regularfromdate =
-              "  ${Regularfrom.day} ${months[Regularfrom.month - 1].substring(0, 3)} ${Regularfrom.year}";
-          final Latefrom = DateTime.parse(Latefromdate);
-          final Lateto = DateTime.parse(Latetodate);
-
-          Latetodate =
-              "${Lateto.day} ${months[Lateto.month - 1].substring(0, 3)} ${Lateto.year}";
-
-          Latefromdate =
-              "  ${Latefrom.day} ${months[Latefrom.month - 1].substring(0, 3)} ${Latefrom.year}";
-          print("boofat");
-        });
-      } else if (kap.length == 12) {
-        for (int i = 0; i < kap.length; i++) {
-          // print("biwi  " + kap[i]);
-          if ("from" == kap[i]) {
-            Regularfromdate = kap[i + 1];
-            // Regularfromdate = kap[i + 2];
-            // Latefromdate = kap[i + 3];
-          }
-          if (2 == i) {
-            Latefromdate = kap[i];
-          }
-
-          if ("to" == kap[i]) {
-            // Earlytodate = kap[i + 1];
-            Regulartodate = kap[i + 1];
-            // Latetodate = kap[i + 3];
-          }
-          if (5 == i) {
-            Latetodate = kap[i];
-          }
-
-          if ("amount" == kap[i]) {
-            Regularprice = kap[i + 1];
-            //Regularprice = kap[i + 2];
-            // Lateprice = kap[i + 3];
-          }
-          if (8 == i) {
-            Lateprice = kap[i];
-          }
-          // if (11 == i) {
-          //   Lateprice = kap[i];
-          // }
         }
 
-        setState(() {
-          // Early = true;
+        if (hidedataRegular == "showRegular") {
           Regular = true;
-          Late = true;
-          Regularprice = Regularprice;
-          Lateprice = Lateprice;
-          TrueCheck = true;
-
-          List<String> months = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-          ];
-
-          List<String> days = [
-            'Monday',
-            'Tuseday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday',
-          ];
-
           final Regularfrom = DateTime.parse(Regularfromdate);
           final Regularto = DateTime.parse(Regulartodate);
 
@@ -375,6 +357,10 @@ class _EventsDetailsState extends State<EventsDetails> {
 
           Regularfromdate =
               "  ${Regularfrom.day} ${months[Regularfrom.month - 1].substring(0, 3)} ${Regularfrom.year}";
+        }
+
+        if (hidedataLate == "showLate") {
+          Late = true;
           final Latefrom = DateTime.parse(Latefromdate);
           final Lateto = DateTime.parse(Latetodate);
 
@@ -384,69 +370,271 @@ class _EventsDetailsState extends State<EventsDetails> {
           Latefromdate =
               "  ${Latefrom.day} ${months[Latefrom.month - 1].substring(0, 3)} ${Latefrom.year}";
           // print("boofat");
-        });
-      } else {
-        for (int i = 0; i < kap.length; i++) {
-          // print(kap[i].toString());
-          if ("from" == kap[i]) {
-            Latefromdate = kap[i + 1];
-          }
-          if ("to" == kap[i]) {
-            Latetodate = kap[i + 1];
-          }
-          if ("amount" == kap[i]) {
-            Lateprice = kap[i + 1];
-          }
         }
+      });
 
-        setState(() {
-          //Early = true;
-          Regular = true;
-          Late = true;
-          Lateprice = Lateprice;
-          TrueCheck = true;
+      // print(widget.EventDogPriceDiscound.toString() +
+      //     "media" +
+      //     kap.length.toString());
 
-          List<String> months = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-          ];
+      // if (kap.length - 1 == 16) {
+      //   print("media take from early " + kap.length.toString());
 
-          List<String> days = [
-            'Monday',
-            'Tuseday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday',
-          ];
-          final Latefrom = DateTime.parse(Latefromdate);
-          final Lateto = DateTime.parse(Latetodate);
+      //   for (int i = 0; i < kap.length - 1; i++) {
+      //     if ("from" == kap[i]) {
+      //       Earlyfromdate = kap[i + 1];
+      //       // Regularfromdate = kap[i + 2];
+      //       // Latefromdate = kap[i + 3];
+      //     }
+      //     if (2 == i) {
+      //       // print(kap[i]);
+      //       Regularfromdate = kap[i];
+      //     }
+      //     if (3 == i) {
+      //       Latefromdate = kap[i];
+      //     }
 
-          Latetodate =
-              "${Lateto.day} ${months[Lateto.month - 1].substring(0, 3)} ${Lateto.year}";
+      //     if ("to" == kap[i]) {
+      //       Earlytodate = kap[i + 1];
+      //       // Regulartodate = kap[i + 2];
+      //       // Latetodate = kap[i + 3];
+      //     }
+      //     if (6 == i) {
+      //       Regulartodate = kap[i];
+      //     }
+      //     if (7 == i) {
+      //       Latetodate = kap[i];
+      //     }
 
-          Latefromdate =
-              "  ${Latefrom.day} ${months[Latefrom.month - 1].substring(0, 3)} ${Latefrom.year}";
-          // print("boofat");
-        });
-      }
+      //     if ("amount" == kap[i]) {
+      //       Earlyprice = kap[i + 1];
+      //       //Regularprice = kap[i + 2];
+      //       // Lateprice = kap[i + 3];
+      //     }
+      //     if (10 == i) {
+      //       Regularprice = kap[i];
+      //     }
+      //     if (11 == i) {
+      //       Lateprice = kap[i];
+      //     }
+      //   }
+
+      //   setState(() {
+      //     Early = true;
+      //     Regular = true;
+      //     Late = true;
+      //     Earlyfromdate = Earlyfromdate; //"2024-01-01";
+      //     // From;
+      //     Earlytodate = Earlytodate;
+      //     //"2024-03-31"; //To;
+      //     Earlyprice = Earlyprice;
+      //     Regularprice = Regularprice;
+      //     Lateprice = Lateprice;
+      //     TrueCheck = true;
+
+      //     List<String> months = [
+      //       'January',
+      //       'February',
+      //       'March',
+      //       'April',
+      //       'May',
+      //       'June',
+      //       'July',
+      //       'August',
+      //       'September',
+      //       'October',
+      //       'November',
+      //       'December'
+      //     ];
+
+      //     List<String> days = [
+      //       'Monday',
+      //       'Tuseday',
+      //       'Wednesday',
+      //       'Thursday',
+      //       'Friday',
+      //       'Saturday',
+      //       'Sunday',
+      //     ];
+
+      //     final Earlyfrom = DateTime.parse(Earlyfromdate);
+      //     final Earlyto = DateTime.parse(Earlytodate);
+
+      //     Earlytodate =
+      //         "${Earlyto.day} ${months[Earlyto.month - 1].substring(0, 3)} ${Earlyto.year}";
+
+      //     Earlyfromdate =
+      //         "  ${Earlyfrom.day} ${months[Earlyfrom.month - 1].substring(0, 3)} ${Earlyfrom.year}";
+
+      //     final Regularfrom = DateTime.parse(Regularfromdate);
+      //     final Regularto = DateTime.parse(Regulartodate);
+
+      //     Regulartodate =
+      //         "${Regularto.day} ${months[Regularto.month - 1].substring(0, 3)} ${Regularto.year}";
+
+      //     Regularfromdate =
+      //         "  ${Regularfrom.day} ${months[Regularfrom.month - 1].substring(0, 3)} ${Regularfrom.year}";
+      //     final Latefrom = DateTime.parse(Latefromdate);
+      //     final Lateto = DateTime.parse(Latetodate);
+
+      //     Latetodate =
+      //         "${Lateto.day} ${months[Lateto.month - 1].substring(0, 3)} ${Lateto.year}";
+
+      //     Latefromdate =
+      //         "  ${Latefrom.day} ${months[Latefrom.month - 1].substring(0, 3)} ${Latefrom.year}";
+      //     // print("boofat");
+      //   });
+      // } else if (kap.length - 1 == 12) {
+      //   print("media take from Regular " + kap.length.toString());
+
+      //   for (int i = 0; i < kap.length - 1; i++) {
+      //     // print("biwi  " + kap[i]);
+      //     if ("from" == kap[i]) {
+      //       Regularfromdate = kap[i + 1];
+      //       // Regularfromdate = kap[i + 2];
+      //       // Latefromdate = kap[i + 3];
+      //     }
+      //     if (2 == i) {
+      //       Latefromdate = kap[i];
+      //     }
+
+      //     if ("to" == kap[i]) {
+      //       // Earlytodate = kap[i + 1];
+      //       Regulartodate = kap[i + 1];
+      //       // Latetodate = kap[i + 3];
+      //     }
+      //     if (5 == i) {
+      //       Latetodate = kap[i];
+      //     }
+
+      //     if ("amount" == kap[i]) {
+      //       Regularprice = kap[i + 1];
+      //       //Regularprice = kap[i + 2];
+      //       // Lateprice = kap[i + 3];
+      //     }
+      //     if (8 == i) {
+      //       Lateprice = kap[i];
+      //     }
+      //     // if (11 == i) {
+      //     //   Lateprice = kap[i];
+      //     // }
+      //   }
+
+      //   setState(() {
+      //     // Early = true;
+      //     Regular = true;
+      //     Late = true;
+      //     Regularprice = Regularprice;
+      //     Lateprice = Lateprice;
+      //     TrueCheck = true;
+
+      //     List<String> months = [
+      //       'January',
+      //       'February',
+      //       'March',
+      //       'April',
+      //       'May',
+      //       'June',
+      //       'July',
+      //       'August',
+      //       'September',
+      //       'October',
+      //       'November',
+      //       'December'
+      //     ];
+
+      //     List<String> days = [
+      //       'Monday',
+      //       'Tuseday',
+      //       'Wednesday',
+      //       'Thursday',
+      //       'Friday',
+      //       'Saturday',
+      //       'Sunday',
+      //     ];
+
+      //     final Regularfrom = DateTime.parse(Regularfromdate);
+      //     final Regularto = DateTime.parse(Regulartodate);
+
+      //     Regulartodate =
+      //         "${Regularto.day} ${months[Regularto.month - 1].substring(0, 3)} ${Regularto.year}";
+
+      //     Regularfromdate =
+      //         "  ${Regularfrom.day} ${months[Regularfrom.month - 1].substring(0, 3)} ${Regularfrom.year}";
+      //     final Latefrom = DateTime.parse(Latefromdate);
+      //     final Lateto = DateTime.parse(Latetodate);
+
+      //     Latetodate =
+      //         "${Lateto.day} ${months[Lateto.month - 1].substring(0, 3)} ${Lateto.year}";
+
+      //     Latefromdate =
+      //         "  ${Latefrom.day} ${months[Latefrom.month - 1].substring(0, 3)} ${Latefrom.year}";
+      //     // print("boofat");
+      //   });
+      // } else {
+      //   for (int i = 0; i < kap.length - 1; i++) {
+      //     print("media take from late " + kap.length.toString());
+
+      //     // print(kap[i].toString());
+      //     if ("from" == kap[i]) {
+      //       Latefromdate = kap[i + 1];
+      //     }
+      //     if ("to" == kap[i]) {
+      //       Latetodate = kap[i + 1];
+      //     }
+      //     if ("amount" == kap[i]) {
+      //       Lateprice = kap[i + 1];
+      //     }
+      //   }
+
+      //   setState(() {
+      //     //Early = true;
+      //     Regular = true;
+      //     Late = true;
+      //     Lateprice = Lateprice;
+      //     TrueCheck = true;
+
+      //     List<String> months = [
+      //       'January',
+      //       'February',
+      //       'March',
+      //       'April',
+      //       'May',
+      //       'June',
+      //       'July',
+      //       'August',
+      //       'September',
+      //       'October',
+      //       'November',
+      //       'December'
+      //     ];
+
+      //     List<String> days = [
+      //       'Monday',
+      //       'Tuseday',
+      //       'Wednesday',
+      //       'Thursday',
+      //       'Friday',
+      //       'Saturday',
+      //       'Sunday',
+      //     ];
+      //     final Latefrom = DateTime.parse(Latefromdate);
+      //     final Lateto = DateTime.parse(Latetodate);
+
+      //     Latetodate =
+      //         "${Lateto.day} ${months[Lateto.month - 1].substring(0, 3)} ${Lateto.year}";
+
+      //     Latefromdate =
+      //         "  ${Latefrom.day} ${months[Latefrom.month - 1].substring(0, 3)} ${Latefrom.year}";
+      //     print("boofat");
+      //   });
+      // }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.EventStartDate);
+    print(widget.EventClossEntry);
     // print(widget.EventContactPerson.toString().replaceAll("<br>", ""));
     return WillPopScope(
       onWillPop: () async {
@@ -1062,35 +1250,93 @@ class _EventsDetailsState extends State<EventsDetails> {
                   ),
                 ),
                 Divider(),
-                for (int i = 0; i < Phonenumber.length; i++)
+
+                for (int i = 0; i < Phonenumber.length - 1; i++)
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () async {
-                            //print(i.toString() + " - " + Phonenumber[i]);
-                            List numer = Phonenumber[i].toString().split(':');
-                            // print(numer[1]);
-                            var url = Uri.parse("tel:" + numer[1].toString());
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(url);
-                            } else {
-                              throw 'Could not launch $url';
-                            }
-                          },
-                          child: FittedBox(
-                            fit: BoxFit.contain,
+                        if (i >= 1)
+                          InkWell(
+                            onTap: () async {
+                              print(i.toString() +
+                                  " - " +
+                                  Phonenumber[i].toString());
+
+                              faltu = Phonenumber[i].toString();
+                              faltu = faltu.replaceRange(0, 15, "");
+                              List numer = Phonenumber[i].toString().split(':');
+                              print(numer[0] + "-" + faltu);
+                              var url = Uri.parse("tel:" + faltu);
+
+                              // numer[0].toString());
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+
                             child: AutoSizeText(
-                              Phonenumber[i].toString(),
+                              Phonenumber[i].toString().substring(15),
                               style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 12.sp,
                                   color: Color.fromARGB(255, 172, 4, 4),
                                   fontWeight: FontWeight.w600),
                             ),
-                          ),
-                        ),
+
+                            //     FittedBox(
+                            //   fit: BoxFit.cover,
+                            //   child: AutoSizeText(
+                            //     Phonenumber[i].toString(),
+                            //     style: TextStyle(
+                            //         fontSize: 14.sp,
+                            //         color: Color.fromARGB(255, 172, 4, 4),
+                            //         fontWeight: FontWeight.w600),
+                            //   ),
+                            // ),
+                          )
+                        else
+                          InkWell(
+                            onTap: () async {
+                              print(i.toString() +
+                                  " - " +
+                                  Phonenumber[i].toString());
+
+                              faltu = Phonenumber[i].toString();
+                              faltu = faltu.replaceRange(0, 13, "");
+                              List numer = Phonenumber[i].toString().split(':');
+                              print(numer[0] + "-" + faltu);
+                              var url = Uri.parse("tel:" + faltu);
+
+                              // numer[0].toString());
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+
+                            child: AutoSizeText(
+                              Phonenumber[i].toString().substring(13),
+                              style: TextStyle(
+                                  fontSize: 13.sp,
+                                  color: Color.fromARGB(255, 172, 4, 4),
+                                  fontWeight: FontWeight.w600),
+                            ),
+
+                            //     FittedBox(
+                            //   fit: BoxFit.cover,
+                            //   child: AutoSizeText(
+                            //     Phonenumber[i].toString(),
+                            //     style: TextStyle(
+                            //         fontSize: 14.sp,
+                            //         color: Color.fromARGB(255, 172, 4, 4),
+                            //         fontWeight: FontWeight.w600),
+                            //   ),
+                            // ),
+                          )
                       ],
                     ),
                   ),

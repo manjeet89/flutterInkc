@@ -58,25 +58,40 @@ class _OverView extends State {
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
-                        url: Uri.parse(
-                            "https://www.inkc.in/assets/newapp/inkcapp2/an-overview.html")),
+                      url: WebUri.uri(Uri.parse(
+                          "https://www.inkc.in/assets/newapp/inkcapp2/an-overview.html")),
+                    ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
                     },
                     onProgressChanged:
-                        (InAppWebViewController controll, int progress) {
+                        (InAppWebViewController controller, int progress) {
                       setState(() {
                         _progress = progress / 100;
                       });
                     },
                   ),
-                  _progress < 1
-                      ? Container(
-                          child: LinearProgressIndicator(
-                            value: _progress,
-                          ),
-                        )
-                      : SizedBox()
+                  // InAppWebView(
+                  //   initialUrlRequest: URLRequest(
+                  //       url: Uri.parse(
+                  //           "https://www.inkc.in/assets/newapp/inkcapp2/an-overview.html")),
+                  //   onWebViewCreated: (InAppWebViewController controller) {
+                  //     inappwebview = controller;
+                  //   },
+                  //   onProgressChanged:
+                  //       (InAppWebViewController controll, int progress) {
+                  //     setState(() {
+                  //       _progress = progress / 100;
+                  //     });
+                  //   },
+                  // ),
+                  // _progress < 1
+                  //     ? Container(
+                  //         child: LinearProgressIndicator(
+                  //           value: _progress,
+                  //         ),
+                  //       )
+                  //     : SizedBox()
                 ],
               ),
             ),

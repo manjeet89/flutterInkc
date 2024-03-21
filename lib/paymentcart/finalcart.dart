@@ -124,12 +124,17 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
       'Userid': userid
     };
 
+    print("Toal Check Data" +
+        widget.jsonMap.toString() +
+        "Ring " +
+        Orders.toString());
+
     final uri = "https://www.inkc.in/api/store/success_fullpayment";
 
     final responce = await http.post(Uri.parse(uri),
         body: {
-          "payment_details": widget.jsonMap.toString(),
-          "order_details": Orders.toString(),
+          "payment_details": Orders.toString(),
+          "order_details": widget.jsonMap.toString(),
         },
         headers: requestHeaders);
     var data = json.decode(responce.body);

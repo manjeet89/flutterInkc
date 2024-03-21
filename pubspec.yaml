@@ -50,13 +50,13 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_easyloading: ^3.0.5
   quickalert: ^1.0.2
-  flutter_inappwebview: ^5.8.0
+  flutter_inappwebview: ^6.0.0
   # flutter_webview_plugin: ^0.4.0
   # flutter_statusbarcolor: ^0.2.3
 
-  image_picker: 0.8.4+3
-  modal_progress_hud_nsn: 0.2.0
-  permission_handler: 8.2.6
+  image_picker: ^1.0.7
+  modal_progress_hud_nsn: ^0.5.1
+  permission_handler: ^11.3.0
   dio: ^5.3.3
 
   #upi Dependency
@@ -73,13 +73,13 @@ dependencies:
 
   #custom navigation
   #call
-  url_launcher: ^6.0.16
+  url_launcher: ^6.0.0
 
   #container curve
   curved_container: ^0.0.2
 
   #lotti
-  lottie: ^2.6.0
+  lottie: ^3.0.0
   
   #barcode scanner
   #mobile_scanner: ^3.5.5
@@ -87,10 +87,16 @@ dependencies:
   # qrscan: ^0.3.2
   flutter_barcode_scanner: ^2.0.0
 
-  provider: ^5.0.0
+  provider: ^6.1.2
   
   #time
-  intl: ^0.17.0
+  intl: ^0.19.0
+  #cloud fire base
+  # cloud_firestore: ^4.15.7
+  firebase_core: ^2.27.0
+  firebase_messaging: ^14.7.19
+  flutter_local_notifications: ^17.0.0
+  firebase_analytics: ^10.8.9
 
 
 
@@ -103,7 +109,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -979,11 +979,11 @@ class _SearchpageState extends State<Searchpage> {
 
             if (p_pet_id.isEmpty) {
               map = {
-                "cart_id": data['data'][j]['cart_id'],
                 "product_id": p_id,
                 "product_name": p_name,
                 "product_quantity": p_quantity,
-                "product_charges": p_charges
+                "product_charges": p_charges,
+                "cart_id": data['data'][j]['cart_id'],
               };
             } else {
               map = {
@@ -1017,7 +1017,7 @@ class _SearchpageState extends State<Searchpage> {
       } else {
         cart_total = {
           "sub_total_cost": SUBTOTAL.toString(),
-          "total_cost": SUBTOTAL + 50,
+          "total_cost": SUBTOTAL,
         };
       }
       // String jsonMap = jsonEncode(cart_data_product);

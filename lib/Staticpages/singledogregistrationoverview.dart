@@ -59,25 +59,40 @@ class _SingleDogRegistrationOverViewState extends State {
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
-                        url: Uri.parse(
-                            "https://www.inkc.in/assets/newapp/inkc-app/single-dog-registration.html")),
+                      url: WebUri.uri(Uri.parse(
+                          "https://www.inkc.in/assets/newapp/inkc-app/single-dog-registration.html")),
+                    ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
                     },
                     onProgressChanged:
-                        (InAppWebViewController controll, int progress) {
+                        (InAppWebViewController controller, int progress) {
                       setState(() {
                         _progress = progress / 100;
                       });
                     },
                   ),
-                  _progress < 1
-                      ? Container(
-                          child: LinearProgressIndicator(
-                            value: _progress,
-                          ),
-                        )
-                      : SizedBox()
+                  // InAppWebView(
+                  //   initialUrlRequest: URLRequest(
+                  //       url: Uri.parse(
+                  //           "https://www.inkc.in/assets/newapp/inkc-app/single-dog-registration.html")),
+                  //   onWebViewCreated: (InAppWebViewController controller) {
+                  //     inappwebview = controller;
+                  //   },
+                  //   onProgressChanged:
+                  //       (InAppWebViewController controll, int progress) {
+                  //     setState(() {
+                  //       _progress = progress / 100;
+                  //     });
+                  //   },
+                  // ),
+                  // _progress < 1
+                  //     ? Container(
+                  //         child: LinearProgressIndicator(
+                  //           value: _progress,
+                  //         ),
+                  //       )
+                  //     : SizedBox()
                 ],
               ),
             ),
