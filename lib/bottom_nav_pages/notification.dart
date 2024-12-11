@@ -1,15 +1,9 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/model/notificationmodel.dart';
 import 'package:intl/intl.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
@@ -62,23 +56,12 @@ class _NotificationPageState extends State<NotificationPage> {
 
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    if (check != null) {
-      print("object with not back");
-    } else {
-      setState(() async {
-        // QuickAlert.show(
-        //   context: context,
-        //   type: QuickAlertType.error,
-        //   title: 'Oops...',
-        //   text: 'Sorry, Please Login First',
-        // );
 
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (BuildContext context) => Login()));
-      });
+    if (check.toString() == "null") {
+      Navigator.of(context, rootNavigator: true)
+          .push(MaterialPageRoute(builder: (_) => const Login()));
     }
+    print("object with not back");
   }
 
   List<NotificationModel> dataload = [];
@@ -92,7 +75,7 @@ class _NotificationPageState extends State<NotificationPage> {
           title: Text(
             'Notifications',
             style: TextStyle(
-                shadows: [
+                shadows: const [
                   Shadow(
                     blurRadius: 10.0, // shadow blur
                     color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -101,7 +84,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 ],
                 fontSize: 20.sp,
                 decorationColor: Colors.red,
-                color: Color.fromARGB(255, 194, 97, 33),
+                color: const Color.fromARGB(255, 194, 97, 33),
                 // color: Colors.black,
                 fontWeight: FontWeight.bold),
           ),
@@ -112,7 +95,7 @@ class _NotificationPageState extends State<NotificationPage> {
           child: FutureBuilder(
               future: FetchData(),
               builder: (context, snapshot) {
-                if (ifDataisnotavailavle.toString() == "False")
+                if (ifDataisnotavailavle.toString() == "False") {
                   return Center(
                     child: Container(
                       child: Column(
@@ -124,7 +107,7 @@ class _NotificationPageState extends State<NotificationPage> {
                             child: Text(
                               "No Data",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 177, 43, 10),
+                                  color: const Color.fromARGB(255, 177, 43, 10),
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w900),
                             ),
@@ -133,71 +116,67 @@ class _NotificationPageState extends State<NotificationPage> {
                       ),
                     ),
                   );
-                else if (snapshot.hasData) {
+                } else if (snapshot.hasData) {
                   return ListView.builder(
                     itemCount: dataload.length,
                     itemBuilder: (context, position) {
-                      if (dataload[position].notiCreatedOn != null) {
-                        List<String> months = [
-                          'January',
-                          'February',
-                          'March',
-                          'April',
-                          'May',
-                          'June',
-                          'July',
-                          'August',
-                          'September',
-                          'October',
-                          'November',
-                          'December'
-                        ];
+                      List<String> months = [
+                        'January',
+                        'February',
+                        'March',
+                        'April',
+                        'May',
+                        'June',
+                        'July',
+                        'August',
+                        'September',
+                        'October',
+                        'November',
+                        'December'
+                      ];
 
-                        List<String> days = [
-                          'Monday',
-                          'Tuseday',
-                          'Wednesday',
-                          'Thursday',
-                          'Friday',
-                          'Saturday',
-                          'Sunday',
-                        ];
+                      List<String> days = [
+                        'Monday',
+                        'Tuseday',
+                        'Wednesday',
+                        'Thursday',
+                        'Friday',
+                        'Saturday',
+                        'Sunday',
+                      ];
 
-                        // final dateTimeObj =
-                        //     DateTime.parse(dataload[position].notiCreatedOn);
+                      // final dateTimeObj =
+                      //     DateTime.parse(dataload[position].notiCreatedOn);
 
-                        final dateTimeObj =
-                            DateTime.parse(dataload[position].notiCreatedOn);
+                      final dateTimeObj =
+                          DateTime.parse(dataload[position].notiCreatedOn);
 
-                        String fdate =
-                            " ${dateTimeObj.day} ${months[dateTimeObj.month - 1].substring(0, 3)} ${dateTimeObj.year}";
+                      String fdate =
+                          " ${dateTimeObj.day} ${months[dateTimeObj.month - 1].substring(0, 3)} ${dateTimeObj.year}";
 
-                        // date format
-                        // String fdate =
-                        //     "${days[dateTimeObj.weekday - 1].substring(0, 3)}, ${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
-                        // time format
-                        String timeStamp24HR = dataload[position]
-                            .notiCreatedOn
-                            .toString(); //"2020-07-20T18:15:12";
-                        time = new DateFormat.jm()
-                            .format(DateTime.parse(timeStamp24HR));
+                      // date format
+                      // String fdate =
+                      //     "${days[dateTimeObj.weekday - 1].substring(0, 3)}, ${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
+                      // time format
+                      String timeStamp24HR = dataload[position]
+                          .notiCreatedOn
+                          .toString(); //"2020-07-20T18:15:12";
+                      time =
+                          DateFormat.jm().format(DateTime.parse(timeStamp24HR));
 
-                        dateset = fdate;
+                      dateset = fdate;
 
-                        // String time =
-                        //     "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
-                        print("$fdate $time");
-                      } else {
-                        navigator?.pop(context);
-                      }
+                      // String time =
+                      //     "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
+                      print("$fdate $time");
                       return Card(
                         elevation: 10,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        margin: EdgeInsets.all(5),
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        margin: const EdgeInsets.all(5),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [
                                 Color.fromARGB(255, 255, 255, 255),
                                 Color.fromARGB(255, 255, 255, 255),
@@ -219,7 +198,7 @@ class _NotificationPageState extends State<NotificationPage> {
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
-                                  dateset + " ( " + time + " )",
+                                  "$dateset ( $time )",
                                   style: TextStyle(
                                     // color: Color.fromARGB(255, 17, 17, 17),
                                     fontSize: 12.sp,
@@ -229,8 +208,9 @@ class _NotificationPageState extends State<NotificationPage> {
                                         const Offset(100, 140),
                                         const Offset(150, 20),
                                         <Color>[
-                                          Color.fromARGB(255, 66, 15, 15),
-                                          Color.fromARGB(255, 172, 12, 12),
+                                          const Color.fromARGB(255, 66, 15, 15),
+                                          const Color.fromARGB(
+                                              255, 172, 12, 12),
                                         ],
                                       ),
                                   ),
@@ -246,8 +226,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                           const Offset(50, 100),
                                           const Offset(150, 20),
                                           <Color>[
-                                            Color.fromARGB(255, 11, 8, 61),
-                                            Color.fromARGB(255, 24, 24, 34),
+                                            const Color.fromARGB(
+                                                255, 11, 8, 61),
+                                            const Color.fromARGB(
+                                                255, 24, 24, 34),
                                           ],
                                         ),
                                       fontSize: 12.sp,
@@ -261,7 +243,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     },
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
@@ -277,9 +259,9 @@ class _NotificationPageState extends State<NotificationPage> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    print('${userid} / ${token}');
+    print('$userid / $token');
 
-    final uri = "https://www.inkc.in/api/notifications";
+    const uri = "https://new-demo.inkcdogs.org/api/notifications";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -290,7 +272,17 @@ class _NotificationPageState extends State<NotificationPage> {
 
     final responce = await http.post(Uri.parse(uri), headers: requestHeaders);
     var data = json.decode(responce.body);
+
+    var message = data['message'];
+
+    if (message.toString() == "Invalid user request") {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.clear();
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+    }
     var dataarray = data['data']['noti_record'];
+
     print(dataarray.toString());
 
     if (dataarray.toString() == "false") {
@@ -306,15 +298,15 @@ class _NotificationPageState extends State<NotificationPage> {
         }
         return dataload;
       } else {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (BuildContext context) => Login()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => const Login()));
         return dataload;
       }
     } else {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) => Login()));
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => const Login()));
       return dataload;
     }
   }

@@ -5,20 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inkc/dropdownmodel/drop_down_breed_list.dart';
 import 'package:inkc/dropdownmodel/drop_down_color_and_making_list.dart';
-import 'package:inkc/dropdownmodel/drop_down_model_kennel_name.dart';
-import 'package:inkc/model/profilemodel.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
 class UnknowPedigreeDogRegistrationForm extends StatelessWidget {
+  const UnknowPedigreeDogRegistrationForm({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,12 +39,12 @@ class _UnknowPedigreeDogRegistrationForm extends StatefulWidget {
 
 class __UnknowPedigreeDogRegistrationFormState
     extends State<_UnknowPedigreeDogRegistrationForm> {
-  TextEditingController sire = new TextEditingController();
-  TextEditingController dam = new TextEditingController();
-  TextEditingController Dogname = new TextEditingController();
-  TextEditingController Dognamehight = new TextEditingController();
-  TextEditingController dateofbirth = new TextEditingController();
-  TextEditingController cowner = new TextEditingController();
+  TextEditingController sire = TextEditingController();
+  TextEditingController dam = TextEditingController();
+  TextEditingController Dogname = TextEditingController();
+  TextEditingController Dognamehight = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController cowner = TextEditingController();
 
   FocusNode focusNode = FocusNode();
 
@@ -64,11 +62,7 @@ class __UnknowPedigreeDogRegistrationFormState
       setState(() {
         date = datepicker;
         dateofbirth.value = TextEditingValue(
-            text: date.day.toString() +
-                "-" +
-                date.month.toString() +
-                "-" +
-                date.year.toString());
+            text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -147,7 +141,7 @@ class __UnknowPedigreeDogRegistrationFormState
 
     try {
       final res = await http.post(
-          Uri.parse("https://www.inkc.in/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -214,11 +208,11 @@ class __UnknowPedigreeDogRegistrationFormState
 
       FormData formData = FormData.fromMap({
         'pet_image': await MultipartFile.fromFile(firstImage!.path,
-            filename: now.second.toString() + ".jpg"),
+            filename: "${now.second}.jpg"),
         'pet_height_image': await MultipartFile.fromFile(secondImage!.path,
-            filename: now.second.toString() + ".jpg"),
+            filename: "${now.second}.jpg"),
         'pet_side_image': await MultipartFile.fromFile(thiredImage!.path,
-            filename: now.second.toString() + ".jpg"),
+            filename: "${now.second}.jpg"),
         'pet_gender': Gender,
         'birth_date': DOB,
         'pet_name': DogName,
@@ -232,26 +226,11 @@ class __UnknowPedigreeDogRegistrationFormState
         'pet_sub_category_id': Breed,
         'pet_height_inches': hight,
       });
-      print(Gender +
-          "-" +
-          DOB +
-          "-" +
-          DogName +
-          "-" +
-          cowner.text +
-          "-" +
-          AddCoowner.toString() +
-          "-" +
-          MICRO +
-          "-" +
-          selectcolormakingid +
-          "-" +
-          DAM +
-          "-" +
-          SIRE);
+      print("${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" +
+          selectcolormakingid}-$DAM-$SIRE");
 
       Response response = await dio.post(
-          'https://www.inkc.in/api/dog/unknown_pedigree_dog_registration',
+          'https://new-demo.inkcdogs.org/api/dog/unknown_pedigree_dog_registration',
           data: formData,
           options: Options(headers: {
             'Content-type': 'application/json',
@@ -313,7 +292,7 @@ class __UnknowPedigreeDogRegistrationFormState
     // var lengthsecond = await secondimages!.length();
     // var lengththired = await thiredimages!.length();
 
-    // var uri = Uri.parse("https://www.inkc.in/api/dog/non_inkc_registration");
+    // var uri = Uri.parse("https://new-demo.inkcdogs.org/api/dog/non_inkc_registration");
 
     // var request = new http.MultipartRequest("POST", uri);
 
@@ -387,7 +366,7 @@ class __UnknowPedigreeDogRegistrationFormState
 
     try {
       final res = await http.post(
-          Uri.parse("https://www.inkc.in/api/dog/dog_breed_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -422,7 +401,7 @@ class __UnknowPedigreeDogRegistrationFormState
   }
 
   // Country
-  TextEditingController counrty = new TextEditingController();
+  TextEditingController counrty = TextEditingController();
   bool countryvalidate = false;
 
   //RefreshCart
@@ -431,7 +410,7 @@ class __UnknowPedigreeDogRegistrationFormState
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/cart/cartready";
+    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -448,7 +427,7 @@ class __UnknowPedigreeDogRegistrationFormState
     //   showSpinner = false;
     // });
 
-    print(responce.body + " Refresh");
+    print("${responce.body} Refresh");
   }
 
   GetAllDam(String text) async {
@@ -456,7 +435,7 @@ class __UnknowPedigreeDogRegistrationFormState
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/dog/get_dam_details";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/get_dam_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -484,7 +463,7 @@ class __UnknowPedigreeDogRegistrationFormState
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/dog/get_sire_details";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/get_sire_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -527,7 +506,7 @@ class __UnknowPedigreeDogRegistrationFormState
                 //       color: Color.fromARGB(255, 223, 39, 39)),
                 //   onPressed: () => Navigator.of(context).pop(),
                 // ),
-                title: Text(
+                title: const Text(
                   'Unknown Pedigree Dog Registration',
                   style: TextStyle(
                       fontSize: 17,
@@ -539,8 +518,8 @@ class __UnknowPedigreeDogRegistrationFormState
                 centerTitle: true,
               ),
               body: Container(
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.only(left: 16, top: 5, right: 16),
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(left: 16, top: 5, right: 16),
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
@@ -554,7 +533,7 @@ class __UnknowPedigreeDogRegistrationFormState
                             Text(
                               "Sire's INKC Registration Number",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 22, 21, 21),
+                                  color: const Color.fromARGB(255, 22, 21, 21),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12.sp),
                             ),
@@ -569,11 +548,11 @@ class __UnknowPedigreeDogRegistrationFormState
                         ),
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.only(top: 5),
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   onChanged: (value) {
                                     GetAllSire(sire.text.toString());
@@ -583,7 +562,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText:
@@ -599,10 +578,10 @@ class __UnknowPedigreeDogRegistrationFormState
                               Visibility(
                                 visible: sirevalide,
                                 child: Padding(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   child: Text(
                                     sireString.toString(),
-                                    style: TextStyle(color: Colors.deepOrange),
+                                    style: const TextStyle(color: Colors.deepOrange),
                                   ),
                                 ),
                               ),
@@ -615,7 +594,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Dam's INKC Registration Number",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -630,7 +609,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   onChanged: (value) {
                                     GetAllDam(dam.text.toString());
@@ -640,7 +619,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: "Dam's INKC Registration Number",
@@ -654,10 +633,10 @@ class __UnknowPedigreeDogRegistrationFormState
                               Visibility(
                                 visible: damvalide,
                                 child: Padding(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   child: Text(
                                     DamString.toString(),
-                                    style: TextStyle(color: Colors.deepOrange),
+                                    style: const TextStyle(color: Colors.deepOrange),
                                   ),
                                 ),
                               ),
@@ -670,7 +649,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Add Co Owner ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -678,7 +657,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -686,7 +665,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(top: 5),
+                                margin: const EdgeInsets.only(top: 5),
                                 // decoration: BoxDecoration(
                                 //   boxShadow: [],
                                 //   border: Border.all(
@@ -697,7 +676,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                 //   color: Colors.white,
                                 // ),
                                 child: Padding(
-                                  padding: EdgeInsets.only(top: 5),
+                                  padding: const EdgeInsets.only(top: 5),
                                   child: Column(
                                     children: [
                                       Row(
@@ -764,7 +743,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                             Text(
                                               "Co Owner ID ",
                                               style: TextStyle(
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 22, 21, 21),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 12.sp),
@@ -772,7 +751,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                             Text(
                                               "*",
                                               style: TextStyle(
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 231, 11, 11),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15.sp),
@@ -781,7 +760,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.all(8),
+                                        padding: const EdgeInsets.all(8),
                                         child: TextField(
                                           controller: cowner,
                                           // obscureText: true,
@@ -789,7 +768,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                             border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(4.sp)),
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 1,
                                                   color: Colors.green),
                                             ),
@@ -812,7 +791,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Name of the dog ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -820,7 +799,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -828,7 +807,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   controller: Dogname,
                                   // obscureText: true,
@@ -836,7 +815,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Name of the dog',
@@ -856,7 +835,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Date of Birth ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -864,7 +843,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -872,14 +851,14 @@ class __UnknowPedigreeDogRegistrationFormState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Row(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.all(8),
+                                      margin: const EdgeInsets.all(8),
                                       width: 160.sp,
                                       child: TextField(
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black),
                                         onTap: () {},
@@ -895,11 +874,11 @@ class __UnknowPedigreeDogRegistrationFormState
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon: Icon(Icons.date_range),
+                                          prefixIcon: const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.sp)),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
@@ -911,7 +890,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            primary: Color.fromARGB(
+                                            backgroundColor: const Color.fromARGB(
                                                 255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
@@ -921,7 +900,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                         onPressed: () {
                                           selectDatePicker();
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Pick date',
                                           style: TextStyle(
                                             color: Colors.white,
@@ -940,7 +919,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Breed ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -948,7 +927,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -980,7 +959,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           decoration: BoxDecoration(
                                             border: Border.all(
@@ -998,18 +977,18 @@ class __UnknowPedigreeDogRegistrationFormState
                                                   selectedbreedid = value;
                                                 });
                                               },
-                                              hint: Text('Select value'),
+                                              hint: const Text('Select value'),
                                               items: snapshot.data!.map((e) {
                                                 return DropdownMenuItem<String>(
                                                   value: e.subCatId.toString(),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: double
                                                         .infinity, // Auto size based on content
                                                     child: Text(
                                                       e.subCategoryName
                                                           .toString(),
                                                       style: TextStyle(
-                                                          color: Color.fromARGB(
+                                                          color: const Color.fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -1053,7 +1032,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                         //     }),
                                       );
                                     } else {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     }
                                   }),
 
@@ -1066,7 +1045,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Color and Marking ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1074,7 +1053,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1088,7 +1067,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           decoration: BoxDecoration(
                                             border: Border.all(
@@ -1107,17 +1086,17 @@ class __UnknowPedigreeDogRegistrationFormState
                                                   selectcolormakingid = value;
                                                 });
                                               },
-                                              hint: Text('Select value'),
+                                              hint: const Text('Select value'),
                                               items: snapshot.data!.map((e) {
                                                 return DropdownMenuItem<String>(
                                                   value: e.colourId.toString(),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: double
                                                         .infinity, // Auto size based on content
                                                     child: Text(
                                                       e.colourName.toString(),
                                                       style: TextStyle(
-                                                          color: Color.fromARGB(
+                                                          color: const Color.fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -1161,7 +1140,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                         //     }),
                                       );
                                     } else {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     }
                                   }),
 
@@ -1174,7 +1153,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Sex of the dog ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1182,7 +1161,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1190,9 +1169,9 @@ class __UnknowPedigreeDogRegistrationFormState
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.all(5),
+                                margin: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  boxShadow: [],
+                                  boxShadow: const [],
                                   border: Border.all(
                                     color: Colors.black,
                                     width: 0.5,
@@ -1201,7 +1180,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                   color: Colors.white,
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   child: Column(
                                     children: [
                                       Row(
@@ -1261,7 +1240,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Country Bred In ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1269,9 +1248,9 @@ class __UnknowPedigreeDogRegistrationFormState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
                                   controller: counrty,
@@ -1279,7 +1258,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Country Bred in',
@@ -1298,7 +1277,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Upload your dog’s best photograph ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1306,7 +1285,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1320,13 +1299,13 @@ class __UnknowPedigreeDogRegistrationFormState
                                             left: 60.sp, right: 60.sp),
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            primary:
-                                                Color.fromARGB(255, 199, 5, 5),
+                                            backgroundColor:
+                                                const Color.fromARGB(255, 199, 5, 5),
                                           ),
                                           onPressed: () async {
                                             getfirstImage();
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             'Pick Image',
                                             style:
                                                 TextStyle(color: Colors.white),
@@ -1353,10 +1332,10 @@ class __UnknowPedigreeDogRegistrationFormState
                                                         blurRadius: 10,
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: Offset(0, 10))
+                                                        offset: const Offset(0, 10))
                                                   ],
                                                   shape: BoxShape.circle,
-                                                  image: new DecorationImage(
+                                                  image: DecorationImage(
                                                     image: FileImage(
                                                         File(firstImage!.path)
                                                             .absolute),
@@ -1364,20 +1343,20 @@ class __UnknowPedigreeDogRegistrationFormState
                                                   )
                                                   // image: DecorationImage(
                                                   //   image: NetworkImage(
-                                                  //       "https://www.inkc.in/${image}"),
+                                                  //       "https://new-demo.inkcdogs.org/${image}"),
                                                   //   fit: BoxFit.cover, //change image fill type
                                                   // ),
                                                   ),
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                primary: Color.fromARGB(
+                                                backgroundColor: const Color.fromARGB(
                                                     255, 179, 3, 3),
                                               ),
                                               onPressed: () async {
                                                 getfirstImage();
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 'Change Image',
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -1397,7 +1376,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Height (in inches) ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1405,7 +1384,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1413,7 +1392,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   controller: Dognamehight,
                                   // obscureText: true,
@@ -1421,7 +1400,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Height (in inches)',
@@ -1440,7 +1419,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Photograph of the dog's height ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 73, 72, 72),
+                                              const Color.fromARGB(255, 73, 72, 72),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1448,7 +1427,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1462,13 +1441,13 @@ class __UnknowPedigreeDogRegistrationFormState
                                             left: 60.sp, right: 60.sp),
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            primary:
-                                                Color.fromARGB(255, 182, 5, 5),
+                                            backgroundColor:
+                                                const Color.fromARGB(255, 182, 5, 5),
                                           ),
                                           onPressed: () async {
                                             getsecondImage();
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             'Pick Image',
                                             style:
                                                 TextStyle(color: Colors.white),
@@ -1495,10 +1474,10 @@ class __UnknowPedigreeDogRegistrationFormState
                                                         blurRadius: 10,
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: Offset(0, 10))
+                                                        offset: const Offset(0, 10))
                                                   ],
                                                   shape: BoxShape.circle,
-                                                  image: new DecorationImage(
+                                                  image: DecorationImage(
                                                     image: FileImage(
                                                         File(secondImage!.path)
                                                             .absolute),
@@ -1506,20 +1485,20 @@ class __UnknowPedigreeDogRegistrationFormState
                                                   )
                                                   // image: DecorationImage(
                                                   //   image: NetworkImage(
-                                                  //       "https://www.inkc.in/${image}"),
+                                                  //       "https://new-demo.inkcdogs.org/${image}"),
                                                   //   fit: BoxFit.cover, //change image fill type
                                                   // ),
                                                   ),
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                primary: Color.fromARGB(
+                                                backgroundColor: const Color.fromARGB(
                                                     255, 180, 5, 5),
                                               ),
                                               onPressed: () async {
                                                 getsecondImage();
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 'Change Image',
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -1537,7 +1516,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Photograph of the dog from one side ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1545,7 +1524,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1559,13 +1538,13 @@ class __UnknowPedigreeDogRegistrationFormState
                                             left: 60.sp, right: 60.sp),
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            primary:
-                                                Color.fromARGB(255, 168, 3, 3),
+                                            backgroundColor:
+                                                const Color.fromARGB(255, 168, 3, 3),
                                           ),
                                           onPressed: () async {
                                             getthardImage();
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             'Pick Image',
                                             style:
                                                 TextStyle(color: Colors.white),
@@ -1592,10 +1571,10 @@ class __UnknowPedigreeDogRegistrationFormState
                                                         blurRadius: 10,
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: Offset(0, 10))
+                                                        offset: const Offset(0, 10))
                                                   ],
                                                   shape: BoxShape.circle,
-                                                  image: new DecorationImage(
+                                                  image: DecorationImage(
                                                     image: FileImage(
                                                         File(thiredImage!.path)
                                                             .absolute),
@@ -1603,20 +1582,20 @@ class __UnknowPedigreeDogRegistrationFormState
                                                   )
                                                   // image: DecorationImage(
                                                   //   image: NetworkImage(
-                                                  //       "https://www.inkc.in/${image}"),
+                                                  //       "https://new-demo.inkcdogs.org/${image}"),
                                                   //   fit: BoxFit.cover, //change image fill type
                                                   // ),
                                                   ),
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                primary: Color.fromARGB(
+                                                backgroundColor: const Color.fromARGB(
                                                     255, 153, 2, 2),
                                               ),
                                               onPressed: () async {
                                                 getthardImage();
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 'Change Image',
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -1635,7 +1614,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "Microchip required ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1643,7 +1622,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1651,9 +1630,9 @@ class __UnknowPedigreeDogRegistrationFormState
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.all(5),
+                                margin: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  boxShadow: [],
+                                  boxShadow: const [],
                                   border: Border.all(
                                     color: Colors.black,
                                     width: 0.5,
@@ -1662,7 +1641,7 @@ class __UnknowPedigreeDogRegistrationFormState
                                   color: Colors.white,
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   child: Column(
                                     children: [
                                       Column(
@@ -1719,8 +1698,8 @@ class __UnknowPedigreeDogRegistrationFormState
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        primary:
-                                            Color.fromARGB(255, 20, 10, 151),
+                                        backgroundColor:
+                                            const Color.fromARGB(255, 20, 10, 151),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
                                             color: const Color.fromARGB(
@@ -1876,7 +1855,7 @@ class __UnknowPedigreeDogRegistrationFormState
 
                                       // uploadData();
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Submit',
                                       style: TextStyle(
                                         color: Colors.white,

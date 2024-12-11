@@ -24,13 +24,13 @@ class DropDownKennelName {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['kennel_club_id'] = this.kennelClubId;
-    data['kennel_club_name'] = this.kennelClubName;
-    data['kennel_club_prefix'] = this.kennelClubPrefix;
-    data['kennel_club_status'] = this.kennelClubStatus;
-    data['kennel_club_updated_on'] = this.kennelClubUpdatedOn;
-    data['kennel_club_created_on'] = this.kennelClubCreatedOn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['kennel_club_id'] = kennelClubId;
+    data['kennel_club_name'] = kennelClubName;
+    data['kennel_club_prefix'] = kennelClubPrefix;
+    data['kennel_club_status'] = kennelClubStatus;
+    data['kennel_club_updated_on'] = kennelClubUpdatedOn;
+    data['kennel_club_created_on'] = kennelClubCreatedOn;
     return data;
   }
 }

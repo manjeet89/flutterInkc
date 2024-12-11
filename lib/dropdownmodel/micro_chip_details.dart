@@ -27,14 +27,14 @@ class MicroChipModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['emp_type_id'] = this.empTypeId;
-    data['emp_type_name'] = this.empTypeName;
-    data['emp_type_access'] = this.empTypeAccess;
-    data['emp_type_status'] = this.empTypeStatus;
-    data['emp_type_updated_on'] = this.empTypeUpdatedOn;
-    data['emp_type_created_on'] = this.empTypeCreatedOn;
-    data['is_admin_login'] = this.isAdminLogin;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['emp_type_id'] = empTypeId;
+    data['emp_type_name'] = empTypeName;
+    data['emp_type_access'] = empTypeAccess;
+    data['emp_type_status'] = empTypeStatus;
+    data['emp_type_updated_on'] = empTypeUpdatedOn;
+    data['emp_type_created_on'] = empTypeCreatedOn;
+    data['is_admin_login'] = isAdminLogin;
     return data;
   }
 }

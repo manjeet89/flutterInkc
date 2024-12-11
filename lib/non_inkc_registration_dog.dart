@@ -2,14 +2,11 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
 import 'model/noninkcRegistrationDogmodel.dart';
-import 'model/storelistmodel.dart';
 import 'non_inkc_registor_dog_details.dart';
 
 class NonInkcRegistrationDog extends StatefulWidget {
@@ -32,9 +29,9 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    print('${userid} / ${token}');
+    print('$userid / $token');
 
-    final uri = "https://www.inkc.in/api/dog/non_inkc_kci_registered_dog";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/non_inkc_kci_registered_dog";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -91,7 +88,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                   Text(
                     'Non-INKC Registered dogs',
                     style: TextStyle(
-                        shadows: [
+                        shadows: const [
                           Shadow(
                             blurRadius: 10.0, // shadow blur
                             color: Color.fromARGB(
@@ -102,7 +99,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                         ],
                         fontSize: 15.sp,
                         decorationColor: Colors.red,
-                        color: Color.fromARGB(255, 194, 97, 33),
+                        color: const Color.fromARGB(255, 194, 97, 33),
                         // color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
@@ -136,7 +133,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                               child: Text(
                                 "No Dog Registered yet.",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 177, 43, 10),
+                                    color: const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -165,12 +162,12 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                       itemBuilder: (context, position) {
                         return Card(
                           elevation: 10,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          margin: EdgeInsets.all(5),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          margin: const EdgeInsets.all(5),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [
                                   Color.fromARGB(255, 255, 255, 255),
                                   Color.fromARGB(255, 255, 255, 255),
@@ -193,7 +190,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                                     height: 150.0.sp,
                                     width: 180.0.sp,
                                     decoration: BoxDecoration(
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                           color: Color.fromARGB(
                                               255, 178, 177, 189),
@@ -209,14 +206,14 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                                       //set border radius to 50% of square height and width
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                            "https://www.inkc.in/${dataload[position].petImage}"),
+                                            "https://new-demo.inkcdogs.org/${dataload[position].petImage}"),
                                         fit: BoxFit
                                             .cover, //change image fill type
                                       ),
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 5),
+                                    margin: const EdgeInsets.only(left: 5),
                                     // width: double.infinity,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -253,7 +250,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Color.fromARGB(
+                                                  backgroundColor: const Color.fromARGB(
                                                       255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
@@ -299,7 +296,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                                                                 .colorMarking
                                                                 .toString())));
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 "Details",
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -311,7 +308,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                                                 const EdgeInsets.only(left: 20),
                                             child: Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Registration Number - ',
                                                   style: TextStyle(
                                                       color: Colors.black,
@@ -344,7 +341,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                     );
                   } else {
                     // print("dataloadlength");
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -477,7 +474,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
   //                                     //set border radius to 50% of square height and width
   //                                     image: DecorationImage(
   //                                       image: NetworkImage(
-  //                                           "https://www.inkc.in/${dataload[position].petImage}"),
+  //                                           "https://new-demo.inkcdogs.org/${dataload[position].petImage}"),
   //                                       fit: BoxFit
   //                                           .cover, //change image fill type
   //                                     ),
@@ -621,7 +618,7 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
   //   print('${userid} / ${token}');
 
   //   final uri =
-  //       "https://www.inkc.in/api/dog/non_inkc_kci_registered_dog";
+  //       "https://new-demo.inkcdogs.org/api/dog/non_inkc_kci_registered_dog";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',

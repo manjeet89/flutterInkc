@@ -17,13 +17,13 @@ class _WalletState extends State<Wallet> {
           backgroundColor: Colors.white,
           leading: IconButton(
             icon:
-                Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
+                const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
             'INKC Wallet',
             style: TextStyle(
-                shadows: [
+                shadows: const [
                   Shadow(
                     blurRadius: 10.0, // shadow blur
                     color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -32,7 +32,7 @@ class _WalletState extends State<Wallet> {
                 ],
                 fontSize: 18.sp,
                 decorationColor: Colors.red,
-                color: Color.fromARGB(255, 194, 97, 33),
+                color: const Color.fromARGB(255, 194, 97, 33),
                 // color: Colors.black,
                 fontWeight: FontWeight.bold),
           ),

@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:inkc/credential/login.dart';
-import 'package:inkc/model/InkcRegisterDogmodel.dart';
 import 'package:inkc/non_inkc_registration_dog.dart';
-import 'package:inkc/profile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 import 'inkcRegisterDog.dart';
@@ -39,7 +33,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
               title: Text(
                 'My Dogs',
                 style: TextStyle(
-                    shadows: [
+                    shadows: const [
                       Shadow(
                         blurRadius: 10.0, // shadow blur
                         color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -49,7 +43,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                     ],
                     fontSize: 20.sp,
                     decorationColor: Colors.red,
-                    color: Color.fromARGB(255, 194, 97, 33),
+                    color: const Color.fromARGB(255, 194, 97, 33),
                     // color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
@@ -86,7 +80,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                         height: 140.sp,
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               blurRadius: 10,
                               offset: Offset(
@@ -102,7 +96,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: Row(
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -110,15 +104,13 @@ class _MyDogInfoState extends State<MyDogInfo> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        INKCDogRegistration()));
+                                        const INKCDogRegistration()));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     top: 12, left: 12, bottom: 12),
                                 height: 130.0.sp,
                                 width: 120.0.sp,
-                                child: Image.asset(
-                                    "assets/registeredinkcdogs.png"),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.sp),
 
@@ -129,6 +121,8 @@ class _MyDogInfoState extends State<MyDogInfo> {
                                   //   fit: BoxFit.fill, //change image fill type
                                   // ),
                                 ),
+                                child: Image.asset(
+                                    "assets/registeredinkcdogs.png"),
                               ),
                             ),
                             Padding(
@@ -137,7 +131,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                               child: Text(
                                 'Registered INKC\n Dogs',
                                 style: TextStyle(
-                                    shadows: [
+                                    shadows: const [
                                       Shadow(
                                         blurRadius: 10.0, // shadow blur
                                         color: Color.fromARGB(
@@ -146,7 +140,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                                             2.0), // how much shadow will be shown
                                       ),
                                     ],
-                                    color: Color.fromARGB(255, 223, 71, 45),
+                                    color: const Color.fromARGB(255, 223, 71, 45),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp),
                               ),
@@ -165,7 +159,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                         height: 140.sp,
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               blurRadius: 10,
                               offset: Offset(
@@ -181,7 +175,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: Row(
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -189,14 +183,13 @@ class _MyDogInfoState extends State<MyDogInfo> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        NonInkcRegistrationDog()));
+                                        const NonInkcRegistrationDog()));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     top: 12, left: 12, bottom: 12),
                                 height: 130.0.sp,
                                 width: 120.0.sp,
-                                child: Image.asset("assets/noninkcdogs.png"),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.sp),
 
@@ -207,6 +200,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                                   //   fit: BoxFit.fill, //change image fill type
                                   // ),
                                 ),
+                                child: Image.asset("assets/noninkcdogs.png"),
                               ),
                             ),
                             Padding(
@@ -215,7 +209,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                               child: Text(
                                 'Non-INKC Dogs',
                                 style: TextStyle(
-                                  shadows: [
+                                  shadows: const [
                                     Shadow(
                                       blurRadius: 10.0, // shadow blur
                                       color: Color.fromARGB(
@@ -224,7 +218,7 @@ class _MyDogInfoState extends State<MyDogInfo> {
                                           2.0), // how much shadow will be shown
                                     ),
                                   ],
-                                  color: Color.fromARGB(255, 223, 71, 45),
+                                  color: const Color.fromARGB(255, 223, 71, 45),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12.sp,
                                 ),

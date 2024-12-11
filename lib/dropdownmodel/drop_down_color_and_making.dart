@@ -24,13 +24,13 @@ class ColorAndMakingModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['colour_id'] = this.colourId;
-    data['colour_code'] = this.colourCode;
-    data['colour_name'] = this.colourName;
-    data['colour_status'] = this.colourStatus;
-    data['colour_updated_on'] = this.colourUpdatedOn;
-    data['colour_created_on'] = this.colourCreatedOn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['colour_id'] = colourId;
+    data['colour_code'] = colourCode;
+    data['colour_name'] = colourName;
+    data['colour_status'] = colourStatus;
+    data['colour_updated_on'] = colourUpdatedOn;
+    data['colour_created_on'] = colourCreatedOn;
     return data;
   }
 }

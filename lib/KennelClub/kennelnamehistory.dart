@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkc/KennelClub/kennelclubname.dart';
 import 'package:inkc/model/kennelNames/kennel_history.dart';
 import 'package:inkc/model/kennelNames/kennel_second_owner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,7 +51,7 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/user/kennel_details";
+    const uri = "https://new-demo.inkcdogs.org/api/user/kennel_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -127,10 +125,10 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
   @override
   Widget build(BuildContext context) {
     if (notsecondowneravailable == "false") {
-      return Scaffold(
+      return const Scaffold(
         body: Center(child: Text('Nothing')),
       );
-    } else
+    } else {
       return WillPopScope(
         onWillPop: () async {
           // Handle Android hardware back button press
@@ -151,7 +149,7 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
               style: TextStyle(
                   fontSize: 18.sp,
                   decorationColor: Colors.red,
-                  color: Color.fromARGB(255, 17, 11, 7),
+                  color: const Color.fromARGB(255, 17, 11, 7),
                   // color: Colors.black,
                   fontWeight: FontWeight.bold),
             ),
@@ -210,7 +208,7 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
                                   child: Text(
                                     "You don't have History.",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 177, 43, 10),
+                                        color: const Color.fromARGB(255, 177, 43, 10),
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w900),
                                   ),
@@ -307,7 +305,7 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
                           },
                         );
                       } else {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
@@ -317,5 +315,6 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
           ),
         ),
       );
+    }
   }
 }

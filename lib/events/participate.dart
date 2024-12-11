@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 class Participatent extends StatefulWidget {
   String eventid, eventname, eventType, eventstall;
   Participatent(
-      {required this.eventid,
+      {super.key, required this.eventid,
       required this.eventname,
       required this.eventType,
       required this.eventstall});
@@ -45,7 +45,7 @@ class _ParticipatentState extends State<Participatent> {
                 Text(
                   'Event Participate',
                   style: TextStyle(
-                      shadows: [
+                      shadows: const [
                         Shadow(
                           blurRadius: 10.0, // shadow blur
                           color:
@@ -56,7 +56,7 @@ class _ParticipatentState extends State<Participatent> {
                       ],
                       fontSize: 20.sp,
                       decorationColor: Colors.red,
-                      color: Color.fromARGB(255, 194, 97, 33),
+                      color: const Color.fromARGB(255, 194, 97, 33),
                       // color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
@@ -111,7 +111,7 @@ class _ParticipatentState extends State<Participatent> {
                                 'INKC Registered Dog',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 206, 26, 26),
+                                    color: const Color.fromARGB(255, 206, 26, 26),
                                     fontSize: 11.sp),
                               )
                             ],
@@ -166,7 +166,7 @@ class _ParticipatentState extends State<Participatent> {
                                   'I have certificate',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 206, 26, 26),
+                                      color: const Color.fromARGB(255, 206, 26, 26),
                                       fontSize: 10.sp),
                                 )
                               ],
@@ -203,7 +203,7 @@ class _ParticipatentState extends State<Participatent> {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 231, 25, 25),
+                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                             textStyle: TextStyle(
                                 fontSize: 10.sp,
                                 color: const Color.fromARGB(255, 241, 236, 236),
@@ -236,7 +236,7 @@ class _ParticipatentState extends State<Participatent> {
                                         eventstal: widget.eventstall)));
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           "Submit",
                           style: TextStyle(
                               fontWeight: FontWeight.w700, color: Colors.white),

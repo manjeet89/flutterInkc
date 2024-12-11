@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:inkc/form/non_inkc_register_form.dart';
 import 'package:inkc/form/pedigree_dog_registration.dart';
 import 'package:inkc/form/unknow_pedigree_registration_form.dart';
 import 'package:sizer/sizer.dart';
 
 class AddDogInfo extends StatefulWidget {
+  const AddDogInfo({super.key});
+
   //const AddDogInfo(JsonCodec json, {super.key});
 
   @override
@@ -38,7 +38,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
               //       color: Color.fromARGB(255, 223, 39, 39)),
               //   onPressed: () => Navigator.of(context).pop(),
               // ),
-              title: Text(
+              title: const Text(
                 'Add Dogs',
                 style: TextStyle(
                     fontSize: 20,
@@ -60,7 +60,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                         height: 140.sp,
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               blurRadius: 10,
                               offset: Offset(
@@ -76,7 +76,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                           borderRadius: BorderRadius.circular(20.sp),
                           color: Colors.white,
                         ),
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           // crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,12 +94,10 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                 //         AddDogInfo()));
                               },
                               child: Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     top: 12, left: 12, bottom: 12),
                                 height: 130.0.sp,
                                 width: 120.0.sp,
-                                child: Image.asset(
-                                    "assets/registerdogwithinkc.png"),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
 
@@ -110,6 +108,8 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                   //   fit: BoxFit.fill, //change image fill type
                                   // ),
                                 ),
+                                child: Image.asset(
+                                    "assets/registerdogwithinkc.png"),
                               ),
                             ),
                             Padding(
@@ -118,7 +118,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                               child: Text(
                                 'Register Dog  with \nINKC',
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 14, 13, 13),
+                                    color: const Color.fromARGB(255, 14, 13, 13),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp),
                               ),
@@ -139,7 +139,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                           height: 140.sp,
                           // width: double.infinity,
                           decoration: BoxDecoration(
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 10,
                                 offset: Offset(
@@ -155,7 +155,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                             borderRadius: BorderRadius.circular(20.sp),
                             color: Colors.white,
                           ),
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             // crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +164,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          NonInkcRegistrationForm()));
+                                          const NonInkcRegistrationForm()));
 
                                   // PopCard(context);
                                   // Navigator.of(context).push(MaterialPageRoute(
@@ -172,11 +172,10 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                   //         AddDogInfo()));
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 12, left: 12, bottom: 12),
                                   height: 130.0.sp,
                                   width: 120.0.sp,
-                                  child: Image.asset("assets/noninkcdogs.png"),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
 
@@ -187,6 +186,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                     //   fit: BoxFit.fill, //change image fill type
                                     // ),
                                   ),
+                                  child: Image.asset("assets/noninkcdogs.png"),
                                 ),
                               ),
                               Padding(
@@ -195,7 +195,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                 child: Text(
                                   'Non-INKC Dog \nRegistration',
                                   style: TextStyle(
-                                      color: Color.fromARGB(255, 10, 10, 10),
+                                      color: const Color.fromARGB(255, 10, 10, 10),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12.sp),
                                 ),
@@ -215,7 +215,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                           height: 150.sp,
                           // width: double.infinity,
                           decoration: BoxDecoration(
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 10,
                                 offset: Offset(
@@ -231,7 +231,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                             borderRadius: BorderRadius.circular(20.sp),
                             color: Colors.white,
                           ),
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             // crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,15 +240,13 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          PedigreeDogRegistrationForm()));
+                                          const PedigreeDogRegistrationForm()));
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 12, left: 12, bottom: 12),
                                   height: 150.0.sp,
                                   width: 120.0.sp,
-                                  child: Image.asset(
-                                      "assets/registeredinkcdogs.png"),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
 
@@ -259,6 +257,8 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                     //   fit: BoxFit.fill, //change image fill type
                                     // ),
                                   ),
+                                  child: Image.asset(
+                                      "assets/registeredinkcdogs.png"),
                                 ),
                               ),
                               Column(
@@ -269,13 +269,13 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                     child: Text(
                                       'Pedigree Dog \n Registration',
                                       style: TextStyle(
-                                          color: Color.fromARGB(255, 105, 2, 2),
+                                          color: const Color.fromARGB(255, 105, 2, 2),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         top: 10.0, left: 15, right: 5),
                                     child: Text(
                                       maxLines: null,
@@ -304,7 +304,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                           height: 140.sp,
                           // width: double.infinity,
                           decoration: BoxDecoration(
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 10,
                                 offset: Offset(
@@ -320,7 +320,7 @@ class _AddDogInfoState extends State<AddDogInfo> {
                             borderRadius: BorderRadius.circular(20.sp),
                             color: Colors.white,
                           ),
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             // crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,15 +334,13 @@ class _AddDogInfoState extends State<AddDogInfo> {
 
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          UnknowPedigreeDogRegistrationForm()));
+                                          const UnknowPedigreeDogRegistrationForm()));
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 12, left: 12, bottom: 12),
                                   height: 130.0.sp,
                                   width: 120.0.sp,
-                                  child: Image.asset(
-                                      "assets/unknownpedigreeregistration.png"),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
 
@@ -353,6 +351,8 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                     //   fit: BoxFit.fill, //change image fill type
                                     // ),
                                   ),
+                                  child: Image.asset(
+                                      "assets/unknownpedigreeregistration.png"),
                                 ),
                               ),
                               Column(
@@ -363,13 +363,13 @@ class _AddDogInfoState extends State<AddDogInfo> {
                                     child: Text(
                                       'Unknown Pedigree \n Registration',
                                       style: TextStyle(
-                                          color: Color.fromARGB(255, 105, 2, 2),
+                                          color: const Color.fromARGB(255, 105, 2, 2),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         top: 15.0, left: 5),
                                     child: Text(
                                       maxLines: null,

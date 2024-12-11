@@ -1,10 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:inkc/bottom_nav_pages/home.dart';
-import 'package:inkc/main.dart';
 import 'package:inkc/myhomepage.dart';
 import 'package:lottie/lottie.dart';
 
@@ -49,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 10),
+        const Duration(seconds: 10),
         () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const MyApp())));
   }

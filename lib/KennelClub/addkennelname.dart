@@ -1,13 +1,7 @@
 import 'dart:convert';
-import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkc/KennelClub/kennelclubname.dart';
-import 'package:inkc/model/kennelNames/kennel_history.dart';
-import 'package:inkc/model/kennelNames/kennel_second_owner.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
@@ -19,9 +13,9 @@ class AddKennelName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return MaterialApp(
+        return const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const AddKennelNameHistre(),
+          home: AddKennelNameHistre(),
         );
       },
     );
@@ -36,8 +30,8 @@ class AddKennelNameHistre extends StatefulWidget {
 }
 
 class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
-  TextEditingController First = new TextEditingController();
-  TextEditingController lastname = new TextEditingController();
+  TextEditingController First = TextEditingController();
+  TextEditingController lastname = TextEditingController();
 
   String? gender = "0";
   late bool hide = false;
@@ -85,7 +79,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
             style: TextStyle(
                 fontSize: 18.sp,
                 decorationColor: Colors.red,
-                color: Color.fromARGB(255, 17, 11, 7),
+                color: const Color.fromARGB(255, 17, 11, 7),
                 // color: Colors.black,
                 fontWeight: FontWeight.bold),
           ),
@@ -97,14 +91,14 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: TextField(
                   controller: First,
                   enabled: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4.sp)),
-                      borderSide: BorderSide(width: 1, color: Colors.green),
+                      borderSide: const BorderSide(width: 1, color: Colors.green),
                     ),
                     labelText: 'Kennel Name',
                     hintText: 'Kennel Name',
@@ -113,9 +107,9 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(5),
+                margin: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  boxShadow: [],
+                  boxShadow: const [],
                   border: Border.all(
                     color: Colors.black,
                     width: 0.5,
@@ -124,7 +118,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
                   color: Colors.white,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     children: [
                       Align(
@@ -192,7 +186,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
               Visibility(
                 visible: hide,
                 child: Padding(
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   child: TextField(
                     controller: lastname,
                     enabled: true,
@@ -200,7 +194,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6.sp)),
-                        borderSide: BorderSide(width: 1, color: Colors.green),
+                        borderSide: const BorderSide(width: 1, color: Colors.green),
                       ),
                       labelText: 'Second owner’s ID',
                       hintText: 'Second owner’s ID',
@@ -227,16 +221,16 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
                     RUNDATA();
                   }
                 },
-                child: Text(
-                  "Submit",
-                  style: TextStyle(color: Colors.white),
-                ),
                 style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 231, 25, 25),
+                    backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                     textStyle: TextStyle(
                         fontSize: 10.sp,
                         color: const Color.fromARGB(255, 241, 236, 236),
                         fontWeight: FontWeight.bold)),
+                child: const Text(
+                  "Submit",
+                  style: TextStyle(color: Colors.white),
+                ),
               )
             ],
           ),
@@ -251,7 +245,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/dog/kennel_name_registration";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -284,7 +278,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/cart/cartready";
+    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -301,7 +295,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     //   showSpinner = false;
     // });
 
-    print(responce.body + " Refresh");
+    print("${responce.body} Refresh");
   }
 
   void RUNDATAWITHSECONDOWNER(String string) async {
@@ -310,7 +304,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/dog/kennel_name_registration";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

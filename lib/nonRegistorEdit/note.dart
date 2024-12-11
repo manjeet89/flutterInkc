@@ -1,21 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
-import 'package:inkc/credential/login.dart';
 import 'package:inkc/model/notelistmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-import 'dart:ui' as ui;
 import 'package:http/http.dart' as http;
 import 'package:quickalert/quickalert.dart';
 
 class NonRegisterNote extends StatefulWidget {
   String id = "";
-  NonRegisterNote({required this.id});
+  NonRegisterNote({super.key, required this.id});
 
   @override
   State<NonRegisterNote> createState() => _NonRegisterNoteState();
@@ -39,12 +34,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
   Check() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    if (check != null) {
-    } else {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) => Login()));
     }
-  }
 
   List<NoteList> dataload = [];
 
@@ -61,14 +51,14 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   color: Color.fromARGB(255, 223, 39, 39)),
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text(
               'Note',
               style: TextStyle(
-                  shadows: [
+                  shadows: const [
                     Shadow(
                       blurRadius: 10.0, // shadow blur
                       color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -77,7 +67,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                   ],
                   fontSize: 20.sp,
                   decorationColor: Colors.red,
-                  color: Color.fromARGB(255, 194, 97, 33),
+                  color: const Color.fromARGB(255, 194, 97, 33),
                   // color: Colors.black,
                   fontWeight: FontWeight.bold),
             ),
@@ -93,54 +83,50 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                     return ListView.builder(
                       itemCount: dataload.length,
                       itemBuilder: (context, position) {
-                        if (dataload[position].noteCreatedOn != null) {
-                          List<String> months = [
-                            'January',
-                            'February',
-                            'March',
-                            'April',
-                            'May',
-                            'June',
-                            'July',
-                            'August',
-                            'September',
-                            'October',
-                            'November',
-                            'December'
-                          ];
+                        List<String> months = [
+                          'January',
+                          'February',
+                          'March',
+                          'April',
+                          'May',
+                          'June',
+                          'July',
+                          'August',
+                          'September',
+                          'October',
+                          'November',
+                          'December'
+                        ];
 
-                          List<String> days = [
-                            'Monday',
-                            'Tuseday',
-                            'Wednesday',
-                            'Thursday',
-                            'Friday',
-                            'Saturday',
-                            'Sunday',
-                          ];
+                        List<String> days = [
+                          'Monday',
+                          'Tuseday',
+                          'Wednesday',
+                          'Thursday',
+                          'Friday',
+                          'Saturday',
+                          'Sunday',
+                        ];
 
-                          final dateTimeObj =
-                              DateTime.parse(dataload[position].noteCreatedOn);
+                        final dateTimeObj =
+                            DateTime.parse(dataload[position].noteCreatedOn);
 
-                          // date format
-                          String fdate =
-                              "${days[dateTimeObj.weekday - 1].substring(0, 3)}\n${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
-                          // time format
-                          dateset = fdate;
-                          String time =
-                              "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
-                          // print("$fdate $time");
-                        } else {
-                          navigator?.pop(context);
-                        }
-                        return Card(
+                        // date format
+                        String fdate =
+                            "${days[dateTimeObj.weekday - 1].substring(0, 3)}\n${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
+                        // time format
+                        dateset = fdate;
+                        String time =
+                            "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
+                        // print("$fdate $time");
+                                              return Card(
                           elevation: 10,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          margin: EdgeInsets.all(5),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          margin: const EdgeInsets.all(5),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [
                                   Color.fromARGB(255, 255, 255, 255),
                                   Color.fromARGB(255, 255, 255, 255),
@@ -188,7 +174,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.all(18),
+                                  margin: const EdgeInsets.all(18),
                                   child: Text(
                                     dateset,
                                     style: TextStyle(
@@ -228,18 +214,18 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                         );
                       },
                     );
-                  } else if (dataload.length == 0) {
+                  } else if (dataload.isEmpty) {
                     return Center(
                       child: Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 30, left: 20),
+                            margin: const EdgeInsets.only(top: 30, left: 20),
                             height: 170.0.sp,
                             width: 170.0.sp,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.sp),
                               //set border radius to 50% of square height and width
-                              image: DecorationImage(
+                              image: const DecorationImage(
                                 image: AssetImage("assets/dogs.png"),
                                 fit: BoxFit.cover, //change image fill type
                               ),
@@ -259,7 +245,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                       ),
                     );
                   } else {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -268,13 +254,14 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           floatingActionButton: FloatingActionButton(
             // isExtended: true,
-            child: Icon(Icons.add),
             backgroundColor: Colors.green,
             onPressed: () {
               setState(() {
                 EditSlide(context);
               });
             },
+            // isExtended: true,
+            child: const Icon(Icons.add),
           ),
         );
       }),
@@ -288,7 +275,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
     // print(widget.id);
 
-    final uri = "https://www.inkc.in/api/dog/note_list";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/note_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -321,7 +308,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
     TextEditingController note = TextEditingController();
 
     showModalBottomSheet(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(20),
           ),
@@ -355,12 +342,12 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.sp,
-                          color: Color.fromARGB(255, 255, 3, 3)),
+                          color: const Color.fromARGB(255, 255, 3, 3)),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: TextField(
                     maxLines: null,
                     controller: note,
@@ -368,7 +355,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4.sp)),
-                        borderSide: BorderSide(width: 1, color: Colors.green),
+                        borderSide: const BorderSide(width: 1, color: Colors.green),
                       ),
                       labelText: 'Note',
                       hintText: '',
@@ -382,7 +369,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
+                          backgroundColor: Colors.black,
                           minimumSize: const Size.fromHeight(40), // NEW
                         ),
                         onPressed: () async {
@@ -390,7 +377,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
                           EasyLoading.showToast('Please Wait...');
 
-                          final uri = "https://www.inkc.in/api/dog/add_note";
+                          const uri = "https://new-demo.inkcdogs.org/api/dog/add_note";
 
                           Map<String, String> requestHeaders = {
                             'Accept': 'application/json',
@@ -430,7 +417,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                             );
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           'Submit',
                           style: TextStyle(color: Colors.white),
                         ),

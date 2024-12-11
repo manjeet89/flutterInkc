@@ -1,41 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:ui' as ui;
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:inkc/KennelClub/kennelclubname.dart';
 import 'package:inkc/Staticpages/doglittertransferoverview.dart';
-import 'package:inkc/Staticpages/puppiesavailable.dart';
-import 'package:inkc/Staticpages/studsavailable.dart';
 import 'package:inkc/Staticpages/verservices.dart';
 import 'package:inkc/Staticpages/wallet.dart';
-import 'package:inkc/adddoginfo.dart';
-import 'package:inkc/credential/login.dart';
 import 'package:inkc/events/events.dart';
-import 'package:inkc/events/participate.dart';
-import 'package:inkc/firebase_messagign/fire_base_message.dart';
 import 'package:inkc/inkcstore.dart';
-import 'package:inkc/KennelClub/kennelnamehistory.dart';
-import 'package:inkc/litternumber.dart';
-import 'package:inkc/main.dart';
-import 'package:inkc/model/cartlist.dart';
-import 'package:inkc/mydoginfo.dart';
-import 'package:inkc/other/contactus.dart';
-import 'package:inkc/other/overview.dart';
-import 'package:inkc/other/refunds.dart';
-import 'package:inkc/other/social.dart';
-import 'package:inkc/other/terms.dart';
-import 'package:inkc/verification.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -44,18 +15,15 @@ import '../Staticpages/kennelnameregistrationoverview.dart';
 import '../Staticpages/litterregistrationoverview.dart';
 import '../Staticpages/singledogregistrationoverview.dart';
 import '../Staticpages/unknowpadigreeoverview.dart';
-import '../profile.dart';
 import 'package:sizer/sizer.dart';
-import 'package:badges/badges.dart' as badges;
-import 'package:http/http.dart' as http;
 
-void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  // await FireBaseApi().initNotification();
+// void main() async {
+//   // WidgetsFlutterBinding.ensureInitialized();
+//   // await Firebase.initializeApp();
+//   // await FireBaseApi().initNotification();
 
-  runApp(const HomePages());
-}
+//   runApp(const HomePages());
+// }
 
 var finalToken;
 
@@ -66,9 +34,9 @@ class HomePages extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return MaterialApp(
+        return const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const Home(),
+          home: Home(),
         );
       },
     );
@@ -130,7 +98,7 @@ int mycurrentindex = 0;
 
 class _HomeState extends State<Home> {
   bool _isShow = false;
-  bool _isShowoff = false;
+  final bool _isShowoff = false;
   bool _storeshow = false;
   bool _storehide = true;
 
@@ -156,14 +124,14 @@ class _HomeState extends State<Home> {
 
   // EventsCheck() async {
   //   if (istrue == false) {
-  //     final uri = "https://www.inkc.in/api/home/event";
+  //     final uri = "https://new-demo.inkcdogs.org/api/home/event";
   //     final responce = await http.post(Uri.parse(uri));
   //     var data = json.decode(responce.body);
   //     List dataarray = data['data'];
   //     for (int i = 0; i < dataarray.length; i++) {
   //       // print(data['data'][i]['event_image'].toString());
   //       toona.add(
-  //           "https://www.inkc.in/" + data['data'][i]['event_image'].toString());
+  //           "https://new-demo.inkcdogs.org/" + data['data'][i]['event_image'].toString());
   //     }
   //     setState(() {
   //       cup = toona;
@@ -175,18 +143,11 @@ class _HomeState extends State<Home> {
   checkstore() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    if (check != null) {
-      setState(() {
-        _storeshow = false;
-        _storehide = true;
-      });
-    } else {
-      setState(() {
-        _storeshow = true;
-        _storehide = false;
-      });
+    setState(() {
+      _storeshow = false;
+      _storehide = true;
+    });
     }
-  }
 
   String? First;
   String? Last;
@@ -207,16 +168,10 @@ class _HomeState extends State<Home> {
   Checklogin() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    if (check != null) {
-      setState(() {
-        _isShow = true;
-      });
-    } else {
-      setState(() {
-        _isShowoff = true;
-      });
+    setState(() {
+      _isShow = true;
+    });
     }
-  }
 
   @override
   @override
@@ -269,12 +224,12 @@ class _HomeState extends State<Home> {
                                     spreadRadius: 2,
                                     blurRadius: 10,
                                     color: Colors.black.withOpacity(0.1),
-                                    offset: Offset(0, 10))
+                                    offset: const Offset(0, 10))
                               ],
                             ),
 
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: ui.Color.fromARGB(255, 85, 70, 218),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
@@ -314,7 +269,7 @@ class _HomeState extends State<Home> {
                           child: Text(
                             'DoggyLocker',
                             style: TextStyle(
-                              shadows: [
+                              shadows: const [
                                 Shadow(
                                   blurRadius: 10.0, // shadow blur
                                   color: Color.fromARGB(
@@ -344,7 +299,7 @@ class _HomeState extends State<Home> {
               ),
             ),
 
-            Divider(),
+            const Divider(),
 
             Container(
               child: SingleChildScrollView(
@@ -362,7 +317,7 @@ class _HomeState extends State<Home> {
                           InkWell(
                             onTap: () async {
                               var url = Uri.parse(
-                                  "https://www.inkc.in/studs-available");
+                                  "https://new-demo.inkcdogs.org/studs-available");
                               if (await canLaunchUrl(url)) {
                                 await launchUrl(url);
                               } else {
@@ -372,9 +327,8 @@ class _HomeState extends State<Home> {
                             child: Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child: Image.asset("assets/studsavailable.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color:
                                         ui.Color.fromARGB(255, 195, 192, 226),
@@ -394,12 +348,13 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child: Image.asset("assets/studsavailable.png"),
                             ),
                           ),
-                          Container(
+                          const SizedBox(
                             width: 100,
                             child: Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                   top: 10.0, left: 25, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -440,15 +395,13 @@ class _HomeState extends State<Home> {
                               Navigator.of(context, rootNavigator: true).push(
                                   MaterialPageRoute(
                                       builder: (_) =>
-                                          SingleDogRegistrationOverView()));
+                                          const SingleDogRegistrationOverView()));
                             },
                             child: Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child: Image.asset(
-                                  "assets/singledogregistration.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color:
                                         ui.Color.fromARGB(255, 186, 183, 214),
@@ -468,12 +421,14 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child: Image.asset(
+                                  "assets/singledogregistration.png"),
                             ),
                           ),
-                          Container(
+                          const SizedBox(
                             width: 100,
                             child: Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                   top: 10.0, left: 20, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -514,15 +469,13 @@ class _HomeState extends State<Home> {
                               Navigator.of(context, rootNavigator: true).push(
                                   MaterialPageRoute(
                                       builder: (_) =>
-                                          UnKnowPadigreeOverView()));
+                                          const UnKnowPadigreeOverView()));
                             },
                             child: Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child: Image.asset(
-                                  "assets/unknownpedigreeregistration.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color:
                                         ui.Color.fromARGB(255, 202, 200, 221),
@@ -542,12 +495,14 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child: Image.asset(
+                                  "assets/unknownpedigreeregistration.png"),
                             ),
                           ),
-                          Container(
+                          const SizedBox(
                             width: 100,
                             child: Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                   top: 10.0, left: 30, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -659,16 +614,14 @@ class _HomeState extends State<Home> {
                               Navigator.of(context, rootNavigator: true).push(
                                   MaterialPageRoute(
                                       builder: (_) =>
-                                          LitterRegistrationOverView()));
+                                          const LitterRegistrationOverView()));
                             },
                             child: Container(
                               margin: EdgeInsets.all(5.sp),
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child: Image.asset(
-                                  "assets/litterregistrationservices.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color:
                                         ui.Color.fromARGB(255, 208, 207, 226),
@@ -687,12 +640,14 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child: Image.asset(
+                                  "assets/litterregistrationservices.png"),
                             ),
                           ),
-                          Container(
+                          const SizedBox(
                             width: 120,
                             child: Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                   top: 10.0, left: 35, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -731,15 +686,14 @@ class _HomeState extends State<Home> {
                             onTap: () {
                               Navigator.of(context, rootNavigator: true).push(
                                   MaterialPageRoute(
-                                      builder: (_) => Vetservices()));
+                                      builder: (_) => const Vetservices()));
                             },
                             child: Container(
                               margin: EdgeInsets.all(5.sp),
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child: Image.asset("assets/vetservices.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color:
                                         ui.Color.fromARGB(255, 208, 207, 226),
@@ -758,12 +712,13 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child: Image.asset("assets/vetservices.png"),
                             ),
                           ),
-                          Container(
+                          const SizedBox(
                             width: 120,
                             child: Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                   top: 10.0, left: 35, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -806,7 +761,7 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () async {
                         var url =
-                            Uri.parse("https://www.inkc.in/puppies-available");
+                            Uri.parse("https://new-demo.inkcdogs.org/puppies-available");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {
@@ -820,9 +775,8 @@ class _HomeState extends State<Home> {
                               margin: EdgeInsets.all(5.sp),
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child: Image.asset("assets/puppiesavailable.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color:
                                         ui.Color.fromARGB(255, 224, 222, 241),
@@ -841,11 +795,12 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child: Image.asset("assets/puppiesavailable.png"),
                             ),
-                            Container(
+                            const SizedBox(
                               width: 120,
                               child: Padding(
-                                padding: const EdgeInsets.only(
+                                padding: EdgeInsets.only(
                                     top: 10.0, left: 35, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -881,7 +836,7 @@ class _HomeState extends State<Home> {
                         Navigator.of(context, rootNavigator: true).push(
                             MaterialPageRoute(
                                 builder: (_) =>
-                                    KennelNameRegistrationOverView()));
+                                    const KennelNameRegistrationOverView()));
                       },
                       child: Container(
                         child: Column(
@@ -890,10 +845,8 @@ class _HomeState extends State<Home> {
                               margin: EdgeInsets.all(5.sp),
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child: Image.asset(
-                                  "assets/kennelnameregistrationservices.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color:
                                         ui.Color.fromARGB(255, 226, 225, 243),
@@ -912,11 +865,13 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child: Image.asset(
+                                  "assets/kennelnameregistrationservices.png"),
                             ),
-                            Container(
+                            const SizedBox(
                               width: 120,
                               child: Padding(
-                                padding: const EdgeInsets.only(
+                                padding: EdgeInsets.only(
                                     top: 10.0, left: 25, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -951,7 +906,7 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.of(context, rootNavigator: true).push(
                             MaterialPageRoute(
-                                builder: (_) => DogLitterTransferOverView()));
+                                builder: (_) => const DogLitterTransferOverView()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -962,10 +917,8 @@ class _HomeState extends State<Home> {
                             Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child:
-                                  Image.asset("assets/doglittertransfer.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color:
                                         ui.Color.fromARGB(255, 222, 221, 238),
@@ -984,11 +937,13 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child:
+                                  Image.asset("assets/doglittertransfer.png"),
                             ),
-                            Container(
+                            const SizedBox(
                               width: 100,
                               child: Padding(
-                                padding: const EdgeInsets.only(
+                                padding: EdgeInsets.only(
                                     top: 10.0, left: 25, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1023,7 +978,7 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.of(context, rootNavigator: true).push(
                             MaterialPageRoute(
-                                builder: (_) => AssosicateMemberOverView()));
+                                builder: (_) => const AssosicateMemberOverView()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -1034,10 +989,8 @@ class _HomeState extends State<Home> {
                             Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child:
-                                  Image.asset("assets/associatemembership.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Color.fromARGB(255, 178, 177, 189),
                                     blurRadius: 5,
@@ -1055,11 +1008,13 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child:
+                                  Image.asset("assets/associatemembership.png"),
                             ),
-                            Container(
+                            const SizedBox(
                               width: 120,
                               child: Padding(
-                                padding: const EdgeInsets.only(
+                                padding: EdgeInsets.only(
                                     top: 10.0, left: 25, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1092,7 +1047,7 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         Navigator.of(context, rootNavigator: true)
-                            .push(MaterialPageRoute(builder: (_) => Wallet()));
+                            .push(MaterialPageRoute(builder: (_) => const Wallet()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -1103,9 +1058,8 @@ class _HomeState extends State<Home> {
                             Container(
                               height: 45.0.sp,
                               width: 45.0.sp,
-                              child: Image.asset("assets/wallet.png"),
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Color.fromARGB(255, 178, 177, 189),
                                     blurRadius: 5,
@@ -1123,11 +1077,12 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
+                              child: Image.asset("assets/wallet.png"),
                             ),
-                            Container(
+                            const SizedBox(
                               width: 120,
                               child: Padding(
-                                padding: const EdgeInsets.only(
+                                padding: EdgeInsets.only(
                                     top: 10.0, left: 25, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1162,7 +1117,7 @@ class _HomeState extends State<Home> {
               ),
             ),
 
-            Divider(),
+            const Divider(),
             //Events
 
             Container(
@@ -1172,7 +1127,7 @@ class _HomeState extends State<Home> {
                   Text(
                     'Dog of the Year',
                     style: TextStyle(
-                        shadows: [
+                        shadows: const [
                           Shadow(
                             // blurRadius: 10.0, // shadow blur
                             color: ui.Color.fromARGB(
@@ -1196,7 +1151,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            Divider(),
+            const Divider(),
             // listview
             Container(
               margin: EdgeInsets.only(top: 10.sp, bottom: 31.sp),
@@ -1206,7 +1161,7 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: ui.Color.fromARGB(255, 246, 245, 252),
                             blurRadius: 1,
@@ -1214,10 +1169,10 @@ class _HomeState extends State<Home> {
                         ],
                         // border: Border.all(),
                         border: Border.all(
-                          color: ui.Color.fromARGB(207, 240, 234, 234),
+                          color: const ui.Color.fromARGB(207, 240, 234, 234),
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderRadius: const BorderRadius.all(Radius.circular(15)),
                       ),
                       child: Column(
                         children: [
@@ -1228,8 +1183,8 @@ class _HomeState extends State<Home> {
                               height: 180.sp,
                               autoPlayCurve: Curves.fastOutSlowIn,
                               autoPlayAnimationDuration:
-                                  Duration(milliseconds: 800),
-                              autoPlayInterval: Duration(seconds: 2),
+                                  const Duration(milliseconds: 800),
+                              autoPlayInterval: const Duration(seconds: 2),
                               enlargeCenterPage: true,
                               aspectRatio: 3.0,
                               onPageChanged: (index, reason) {
@@ -1350,18 +1305,18 @@ class _HomeState extends State<Home> {
               ),
             ),
 
-            Divider(),
+            const Divider(),
             //Events
 
             Container(
-              margin: EdgeInsets.all(5),
+              margin: const EdgeInsets.all(5),
               child: Column(
                 children: [
                   Text(
                     'Our Services',
                     style: TextStyle(
                         fontSize: 17.sp,
-                        shadows: [
+                        shadows: const [
                           Shadow(
                             // blurRadius: 10.0, // shadow blur
                             color:
@@ -1385,7 +1340,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            Divider(),
+            const Divider(),
 
             // Main Feature Card
             Container(
@@ -1399,7 +1354,7 @@ class _HomeState extends State<Home> {
                         height: 180.sp,
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Color.fromARGB(255, 178, 177, 189),
                               blurRadius: 10,
@@ -1416,7 +1371,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: Column(
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1424,10 +1379,10 @@ class _HomeState extends State<Home> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        INKCStore()));
+                                        const INKCStore()));
                               },
                               child: Container(
-                                margin: EdgeInsets.all(12),
+                                margin: const EdgeInsets.all(12),
                                 height: 110.0.sp,
                                 width: 110.0.sp,
                                 child: Image.asset("assets/inkcstore.png"),
@@ -1449,7 +1404,7 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 'INKC Store',
                                 style: TextStyle(
-                                    shadows: [
+                                    shadows: const [
                                       Shadow(
                                         // blurRadius: 5.0, // shadow blur
                                         color: ui.Color.fromARGB(
@@ -1486,7 +1441,7 @@ class _HomeState extends State<Home> {
                         height: 180.sp,
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Color.fromARGB(255, 178, 177, 189),
                               blurRadius: 10,
@@ -1503,7 +1458,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: Column(
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1511,10 +1466,10 @@ class _HomeState extends State<Home> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        Events()));
+                                        const Events()));
                               },
                               child: Container(
-                                margin: EdgeInsets.all(12),
+                                margin: const EdgeInsets.all(12),
                                 height: 110.0.sp,
                                 width: 110.0.sp,
                                 child: Image.asset("assets/events.png"),
@@ -1536,7 +1491,7 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 'Events',
                                 style: TextStyle(
-                                    shadows: [
+                                    shadows: const [
                                       Shadow(
                                         // blurRadius: 5.0, // shadow blur
                                         color: ui.Color.fromARGB(
@@ -1977,7 +1932,7 @@ class _HomeState extends State<Home> {
                         height: 180.sp,
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Color.fromARGB(255, 178, 177, 189),
                               blurRadius: 10,
@@ -1994,7 +1949,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: Column(
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -2005,10 +1960,10 @@ class _HomeState extends State<Home> {
                                 //     parameters: {'note': 'go to inkc store'});
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        INKCStore()));
+                                        const INKCStore()));
                               },
                               child: Container(
-                                margin: EdgeInsets.all(12),
+                                margin: const EdgeInsets.all(12),
                                 height: 110.0.sp,
                                 width: 110.0.sp,
                                 child: Image.asset("assets/inkcstore.png"),
@@ -2030,7 +1985,7 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 'INKC Store',
                                 style: TextStyle(
-                                    shadows: [
+                                    shadows: const [
                                       Shadow(
                                         // blurRadius: 5.0, // shadow blur
                                         color: ui.Color.fromARGB(
@@ -2134,7 +2089,7 @@ class _HomeState extends State<Home> {
                         height: 180.sp,
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Color.fromARGB(255, 178, 177, 189),
                               blurRadius: 10,
@@ -2151,7 +2106,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: Column(
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -2163,10 +2118,10 @@ class _HomeState extends State<Home> {
 
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        Events()));
+                                        const Events()));
                               },
                               child: Container(
-                                margin: EdgeInsets.all(12),
+                                margin: const EdgeInsets.all(12),
                                 height: 110.0.sp,
                                 width: 110.0.sp,
                                 child: Image.asset("assets/events.png"),
@@ -2188,7 +2143,7 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 'Events',
                                 style: TextStyle(
-                                    shadows: [
+                                    shadows: const [
                                       Shadow(
                                         // blurRadius: 5.0, // shadow blur
                                         color: ui.Color.fromARGB(

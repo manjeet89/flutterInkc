@@ -1,36 +1,18 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:ffi';
-import 'package:inkc/events/events.dart';
 
-import 'package:badges/badges.dart' as badges;
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
-import 'package:inkc/bottom_nav_pages/bar.dart';
-import 'package:inkc/bottom_nav_pages/more.dart';
-import 'package:inkc/bottom_nav_pages/search.dart';
-import 'package:inkc/credential/login.dart';
-import 'package:inkc/firebase_messagign/fire_base_message.dart';
-import 'package:inkc/model/cartlist.dart';
 import 'package:inkc/myhomepage.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
-import 'bottom_nav_pages/home.dart';
-import 'bottom_nav_pages/notification.dart';
-import 'package:flutter/foundation.dart';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: Colors.white,
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.dark,
@@ -118,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Timer(
-        Duration(seconds: 3),
+        const Duration(seconds: 3),
         () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const MyApp())));
   }

@@ -7,8 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:inkc/main.dart';
 import 'package:inkc/myhomepage.dart';
 
 void main() {

@@ -3,6 +3,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:sizer/sizer.dart';
 
 class PrivacyAndPolicies extends StatefulWidget {
+  const PrivacyAndPolicies({super.key});
+
   @override
   _PrivacyAndPolicies createState() => _PrivacyAndPolicies();
 }
@@ -29,14 +31,14 @@ class _PrivacyAndPolicies extends State {
             appBar: AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back,
+                icon: const Icon(Icons.arrow_back,
                     color: Color.fromARGB(255, 223, 39, 39)),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text(
                 'Privacy Policy',
                 style: TextStyle(
-                    shadows: [
+                    shadows: const [
                       Shadow(
                         blurRadius: 10.0, // shadow blur
                         color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -46,20 +48,20 @@ class _PrivacyAndPolicies extends State {
                     ],
                     fontSize: 25.sp,
                     decorationColor: Colors.red,
-                    color: Color.fromARGB(255, 194, 97, 33),
+                    color: const Color.fromARGB(255, 194, 97, 33),
                     // color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
               centerTitle: true,
             ),
             body: Container(
-              margin: EdgeInsets.all(6),
+              margin: const EdgeInsets.all(6),
               child: Stack(
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
                       url: WebUri.uri(Uri.parse(
-                          "https://www.inkc.in/assets/newapp/inkcapp2/privacy.html")),
+                          "https://new-demo.inkcdogs.org/assets/newapp/inkcapp2/privacy.html")),
                     ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
@@ -75,7 +77,7 @@ class _PrivacyAndPolicies extends State {
                   // InAppWebView(
                   //   initialUrlRequest: URLRequest(
                   //       url: Uri.parse(
-                  //           "https://www.inkc.in/assets/newapp/inkcapp2/privacy.html")),
+                  //           "https://new-demo.inkcdogs.org/assets/newapp/inkcapp2/privacy.html")),
                   //   onWebViewCreated: (InAppWebViewController controller) {
                   //     inappwebview = controller;
                   //   },

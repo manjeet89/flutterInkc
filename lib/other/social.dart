@@ -18,13 +18,13 @@ class _SocialMediaState extends State<SocialMedia> {
           backgroundColor: Colors.white,
           leading: IconButton(
             icon:
-                Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
+                const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
             'Digital Presence',
             style: TextStyle(
-                shadows: [
+                shadows: const [
                   Shadow(
                     blurRadius: 10.0, // shadow blur
                     color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -33,7 +33,7 @@ class _SocialMediaState extends State<SocialMedia> {
                 ],
                 fontSize: 20.sp,
                 decorationColor: Colors.red,
-                color: Color.fromARGB(255, 194, 97, 33),
+                color: const Color.fromARGB(255, 194, 97, 33),
                 // color: Colors.black,
                 fontWeight: FontWeight.bold),
           ),
@@ -84,10 +84,10 @@ class _SocialMediaState extends State<SocialMedia> {
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
+                                offset: const Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
-                          image: DecorationImage(
+                          image: const DecorationImage(
                             image: AssetImage("assets/face.png"),
                             fit: BoxFit.cover, //change image fill type
                           ),
@@ -121,10 +121,10 @@ class _SocialMediaState extends State<SocialMedia> {
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
+                                offset: const Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
-                          image: DecorationImage(
+                          image: const DecorationImage(
                             image: AssetImage("assets/insta.png"),
                             fit: BoxFit.cover, //change image fill type
                           ),
@@ -158,10 +158,10 @@ class _SocialMediaState extends State<SocialMedia> {
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
+                                offset: const Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
-                          image: DecorationImage(
+                          image: const DecorationImage(
                             image: AssetImage("assets/twit.png"),
                             fit: BoxFit.cover, //change image fill type
                           ),
@@ -208,10 +208,10 @@ class _SocialMediaState extends State<SocialMedia> {
                                   spreadRadius: 2,
                                   blurRadius: 10,
                                   color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(0, 10))
+                                  offset: const Offset(0, 10))
                             ],
                             shape: BoxShape.circle,
-                            image: DecorationImage(
+                            image: const DecorationImage(
                               image: AssetImage("assets/what.png"),
                               fit: BoxFit.cover, //change image fill type
                             ),
@@ -247,10 +247,10 @@ class _SocialMediaState extends State<SocialMedia> {
                                   spreadRadius: 2,
                                   blurRadius: 10,
                                   color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(0, 10))
+                                  offset: const Offset(0, 10))
                             ],
                             shape: BoxShape.circle,
-                            image: DecorationImage(
+                            image: const DecorationImage(
                               image: AssetImage("assets/you.png"),
                               fit: BoxFit.cover, //change image fill type
                             ),
@@ -285,10 +285,10 @@ class _SocialMediaState extends State<SocialMedia> {
                                   spreadRadius: 2,
                                   blurRadius: 10,
                                   color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(0, 10))
+                                  offset: const Offset(0, 10))
                             ],
                             shape: BoxShape.circle,
-                            image: DecorationImage(
+                            image: const DecorationImage(
                               image: AssetImage("assets/link.png"),
                               fit: BoxFit.cover, //change image fill type
                             ),

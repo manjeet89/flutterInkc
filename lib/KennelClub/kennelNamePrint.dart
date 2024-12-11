@@ -1,11 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkc/KennelClub/kennelnamehistory.dart';
-import 'package:inkc/bottom_nav_pages/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
 class Kennel {
@@ -44,7 +40,7 @@ class _KennelNameShowState extends State<KennelNameShow> {
       'Userid': userid
     };
     final response = await http.get(
-        Uri.parse('https://www.inkc.in/api/user/kennel_details'),
+        Uri.parse('https://new-demo.inkcdogs.org/api/user/kennel_details'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -71,7 +67,7 @@ class _KennelNameShowState extends State<KennelNameShow> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dropdown Example'),
+        title: const Text('Dropdown Example'),
       ),
       body: Center(
         child: Column(
@@ -94,10 +90,10 @@ class _KennelNameShowState extends State<KennelNameShow> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             selectedKennel != null
                 ? Text('Selected kennel: ${selectedKennel!['kennel_name']}')
-                : Text('No kennels available'),
+                : const Text('No kennels available'),
           ],
         ),
       ),

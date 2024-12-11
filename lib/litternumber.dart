@@ -2,9 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:inkc/bottom_nav_pages/notification.dart';
 import 'package:inkc/model/DamNumberModel.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
@@ -33,9 +30,9 @@ class _KennelNumberState extends State<KennelNumber> {
   bool _datecheck = false;
   bool _damOff = false;
 
-  TextEditingController address = new TextEditingController();
-  TextEditingController dateofbirth = new TextEditingController();
-  TextEditingController avalable = new TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController avalable = TextEditingController();
 
   late int difference;
 
@@ -51,11 +48,7 @@ class _KennelNumberState extends State<KennelNumber> {
       setState(() {
         date = datepicker;
         dateofbirth.value = TextEditingValue(
-            text: date.day.toString() +
-                "-" +
-                date.month.toString() +
-                "-" +
-                date.year.toString());
+            text: "${date.day}-${date.month}-${date.year}");
 
         final birthday = DateTime(int.parse(date.year.toString()),
             int.parse(date.month.toString()), int.parse(date.day.toString()));
@@ -96,7 +89,7 @@ class _KennelNumberState extends State<KennelNumber> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://www.inkc.in/api/dog/dog_dam_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_dam_list"),
           headers: requestHeaders);
 
       var body = json.decode(res.body);
@@ -179,7 +172,7 @@ class _KennelNumberState extends State<KennelNumber> {
   }
 
   // Country
-  TextEditingController counrty = new TextEditingController();
+  TextEditingController counrty = TextEditingController();
   bool countryvalidate = false;
 
   @override
@@ -196,7 +189,7 @@ class _KennelNumberState extends State<KennelNumber> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back,
+                icon: const Icon(Icons.arrow_back,
                     color: Color.fromARGB(255, 223, 39, 39)),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -206,14 +199,14 @@ class _KennelNumberState extends State<KennelNumber> {
                     shadows: [
                       Shadow(
                         blurRadius: 10.0.sp, // shadow blur
-                        color: Color.fromARGB(255, 223, 71, 45), // shadow color
+                        color: const Color.fromARGB(255, 223, 71, 45), // shadow color
                         offset:
-                            Offset(2.0, 2.0), // how much shadow will be shown
+                            const Offset(2.0, 2.0), // how much shadow will be shown
                       ),
                     ],
                     fontSize: 23.sp,
                     decorationColor: Colors.red,
-                    color: Color.fromARGB(255, 194, 97, 33),
+                    color: const Color.fromARGB(255, 194, 97, 33),
                     // color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
@@ -224,7 +217,7 @@ class _KennelNumberState extends State<KennelNumber> {
                 height: 450.sp,
                 // width: double.infinity,
                 decoration: BoxDecoration(
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       blurRadius: 10,
                       offset: Offset(
@@ -252,7 +245,7 @@ class _KennelNumberState extends State<KennelNumber> {
                         style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 209, 13, 13)),
+                            color: const Color.fromARGB(255, 209, 13, 13)),
                       ),
                     ),
                     Padding(
@@ -266,8 +259,8 @@ class _KennelNumberState extends State<KennelNumber> {
                           FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
                         ],
                         keyboardType:
-                            TextInputType.numberWithOptions(decimal: false),
-                        decoration: InputDecoration(
+                            const TextInputType.numberWithOptions(decimal: false),
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(4)),
                             borderSide:
@@ -280,8 +273,8 @@ class _KennelNumberState extends State<KennelNumber> {
                     ),
                     Visibility(
                       visible: _isShowOff,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 150.0, bottom: 20),
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 150.0, bottom: 20),
                         child: Text(
                           "Please Enter 0 to 10 number. ",
                           style: TextStyle(color: Colors.red),
@@ -293,14 +286,14 @@ class _KennelNumberState extends State<KennelNumber> {
                         padding: const EdgeInsets.only(
                             top: 5.0, left: 15, bottom: 5, right: 15),
                         child: TextField(
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.w600),
                           maxLines: 1,
                           controller: avalable,
                           enabled: false,
                           keyboardType:
-                              TextInputType.numberWithOptions(decimal: false),
-                          decoration: InputDecoration(
+                              const TextInputType.numberWithOptions(decimal: false),
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4)),
@@ -320,7 +313,7 @@ class _KennelNumberState extends State<KennelNumber> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.blueGrey),
                                     borderRadius: BorderRadius.circular(5),
@@ -340,13 +333,13 @@ class _KennelNumberState extends State<KennelNumber> {
                                       items: snapshot.data!.map((e) {
                                         return DropdownMenuItem<String>(
                                           value: e.damRegNumber.toString(),
-                                          child: Container(
+                                          child: SizedBox(
                                             width: double
                                                 .infinity, // Auto size based on content
                                             child: Text(
                                               e.petName.toString(),
                                               style: TextStyle(
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 95, 46, 46),
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.bold),
@@ -390,7 +383,7 @@ class _KennelNumberState extends State<KennelNumber> {
                                 //     }),
                               );
                             } else {
-                              return Center(
+                              return const Center(
                                   child: Center(
                                 child: Text(""),
                               ));
@@ -398,8 +391,8 @@ class _KennelNumberState extends State<KennelNumber> {
                           }),
                     Visibility(
                       visible: _damOff,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 150.0, bottom: 20),
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 150.0, bottom: 20),
                         child: Text(
                           "Please select dam number. ",
                           style: TextStyle(color: Colors.red),
@@ -407,14 +400,14 @@ class _KennelNumberState extends State<KennelNumber> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 140.sp,
                             child: TextField(
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600),
                               onTap: () {},
@@ -430,12 +423,12 @@ class _KennelNumberState extends State<KennelNumber> {
                                 //     );s
                                 //   },
                                 // ),
-                                prefixIcon: Icon(Icons.date_range),
+                                prefixIcon: const Icon(Icons.date_range),
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4.sp)),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.green),
+                                      const BorderSide(width: 1, color: Colors.green),
                                 ),
                                 labelText: 'Date of Birth',
                                 hintText: '',
@@ -449,7 +442,7 @@ class _KennelNumberState extends State<KennelNumber> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
                               ),
-                              child: Text(
+                              child: const Text(
                                 'Pick date',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -460,8 +453,8 @@ class _KennelNumberState extends State<KennelNumber> {
                     ),
                     Visibility(
                       visible: _datecheck,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 150.0, bottom: 20),
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 150.0, bottom: 20),
                         child: Text(
                           "Please select date under 60 day . ",
                           style: TextStyle(color: Colors.red),
@@ -475,7 +468,7 @@ class _KennelNumberState extends State<KennelNumber> {
                           Text(
                             "Country Bred In ",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 22, 21, 21),
+                                color: const Color.fromARGB(255, 22, 21, 21),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13.sp),
                           ),
@@ -483,7 +476,7 @@ class _KennelNumberState extends State<KennelNumber> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: TextField(
                         controller: counrty,
                         decoration: InputDecoration(
@@ -491,7 +484,7 @@ class _KennelNumberState extends State<KennelNumber> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(4.sp)),
                             borderSide:
-                                BorderSide(width: 1, color: Colors.green),
+                                const BorderSide(width: 1, color: Colors.green),
                           ),
                           labelText: 'Country Bred in',
                           hintText: 'Eg.India',
@@ -503,7 +496,7 @@ class _KennelNumberState extends State<KennelNumber> {
                     Center(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 43, 9, 168),
+                              backgroundColor: const Color.fromARGB(255, 43, 9, 168),
                               textStyle: TextStyle(
                                   fontSize: 10.sp,
                                   color:
@@ -519,7 +512,7 @@ class _KennelNumberState extends State<KennelNumber> {
                                 text: 'Please Enter Country',
                               );
                             } else {
-                              print(damnumbers.toString() + "audi");
+                              print("${damnumbers}audi");
                               setState(() {
                                 String va = address.text;
                                 int intVal = int.parse(va);
@@ -547,7 +540,7 @@ class _KennelNumberState extends State<KennelNumber> {
                               });
                             }
                           },
-                          child: Text(
+                          child: const Text(
                             'Submit',
                             style: TextStyle(color: Colors.white),
                           )),

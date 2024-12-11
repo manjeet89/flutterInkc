@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:inkc/credential/login.dart';
 import 'package:inkc/events/participate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -29,7 +28,7 @@ class EventsDetails extends StatefulWidget {
       Eventstall,
       event_stall;
 
-  EventsDetails({
+  EventsDetails({super.key, 
     required this.EventId,
     required this.EventNumber,
     required this.EventStuff,
@@ -152,9 +151,9 @@ class _EventsDetailsState extends State<EventsDetails> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    print('${userid} / ${token}');
+    print('$userid / $token');
 
-    final uri = "https://www.inkc.in/api/user/get_second_owner_id";
+    const uri = "https://new-demo.inkcdogs.org/api/user/get_second_owner_id";
 
     Map<String, String> requestHeaders = {
       // 'Content-type': 'application/json',
@@ -218,10 +217,7 @@ class _EventsDetailsState extends State<EventsDetails> {
       // print("bakri" + dogs.toString());
 
       List kap = dogs.split(",");
-      print("bakri   " +
-          dogs.toString() +
-          "find length     " +
-          kap.length.toString());
+      print("bakri   ${dogs}find length     ${kap.length}");
 
       for (int k = 0; k < kap.length - 1; k++) {
         // print("check datas " + kap[k].toString() + "   " + k.toString() + "\n");
@@ -657,7 +653,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                 Text(
                   'Event Details',
                   style: TextStyle(
-                      shadows: [
+                      shadows: const [
                         Shadow(
                           blurRadius: 10.0, // shadow blur
                           color:
@@ -668,7 +664,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                       ],
                       fontSize: 20.sp,
                       decorationColor: Colors.red,
-                      color: Color.fromARGB(255, 194, 97, 33),
+                      color: const Color.fromARGB(255, 194, 97, 33),
                       // color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
@@ -708,7 +704,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                       child: Text(
                         widget.EventStartDate,
                         style: TextStyle(
-                            color: Color.fromARGB(255, 83, 2, 2),
+                            color: const Color.fromARGB(255, 83, 2, 2),
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w700),
                       ),
@@ -718,7 +714,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                       child: Text(
                         widget.EventTime,
                         style: TextStyle(
-                            color: Color.fromARGB(255, 134, 3, 3),
+                            color: const Color.fromARGB(255, 134, 3, 3),
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w700),
                       ),
@@ -733,7 +729,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                       child: Text(
                         "ENTRIES CLOSE : ",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 12, 12, 12),
+                            color: const Color.fromARGB(255, 12, 12, 12),
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w700),
                       ),
@@ -743,20 +739,20 @@ class _EventsDetailsState extends State<EventsDetails> {
                       child: Text(
                         widget.EventClossEntry,
                         style: TextStyle(
-                            color: Color.fromARGB(255, 134, 6, 6),
+                            color: const Color.fromARGB(255, 134, 6, 6),
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w700),
                       ),
                     )
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 231, 25, 25),
+                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                             textStyle: TextStyle(
                                 fontSize: 10.sp,
                                 color: const Color.fromARGB(255, 241, 236, 236),
@@ -765,26 +761,16 @@ class _EventsDetailsState extends State<EventsDetails> {
                           SharedPreferences sharedprefrence =
                               await SharedPreferences.getInstance();
                           String? check = sharedprefrence.getString("Token");
-                          if (check != null) {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    Participatent(
-                                      eventid: widget.EventId,
-                                      eventname: widget.EventStuff.toString() +
-                                          " " +
-                                          widget.EventName.toString(),
-                                      eventType: widget.EventType,
-                                      eventstall: widget.event_stall,
-                                    )));
-                          } else {
-                            SharedPreferences preferences =
-                                await SharedPreferences.getInstance();
-                            await preferences.clear();
-                            Navigator.of(context, rootNavigator: true).push(
-                                MaterialPageRoute(builder: (_) => Login()));
-                          }
-                        },
-                        child: Text(
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Participatent(
+                                    eventid: widget.EventId,
+                                    eventname: "${widget.EventStuff} ${widget.EventName}",
+                                    eventType: widget.EventType,
+                                    eventstall: widget.event_stall,
+                                  )));
+                                                },
+                        child: const Text(
                           'Enter in this show',
                           style: TextStyle(
                               fontWeight: FontWeight.w700, color: Colors.white),
@@ -796,7 +782,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                     height: 250.0.sp,
                     width: 250.0.sp,
                     decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Color.fromARGB(255, 179, 168, 206),
                           blurRadius: 2.0,
@@ -811,7 +797,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                       //set border radius to 50% of square height and width
                       image: DecorationImage(
                         image: NetworkImage(
-                            "https://www.inkc.in/${widget.EventImage}"),
+                            "https://new-demo.inkcdogs.org/${widget.EventImage}"),
                         fit: BoxFit.cover, //change image fill type
                       ),
                     ),
@@ -824,7 +810,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                 //     style: TextStyle(fontSize: 22.sp),
                 //   ),
                 // ),
-                Divider(),
+                const Divider(),
 
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -856,12 +842,10 @@ class _EventsDetailsState extends State<EventsDetails> {
                           maxLines: 2,
                           // widget.EventStuff.toString() +
                           //     " " +
-                          widget.EventName.toString() +
-                              " : " +
-                              widget.EventStartDate.toString(),
+                          "${widget.EventName} : ${widget.EventStartDate}",
                           style: TextStyle(
                               fontSize: 17.sp,
-                              color: Color.fromARGB(255, 126, 3, 3),
+                              color: const Color.fromARGB(255, 126, 3, 3),
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -880,7 +864,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                           "Judges :              ",
                           style: TextStyle(
                               fontSize: 13.sp,
-                              color: Color.fromARGB(255, 8, 8, 8),
+                              color: const Color.fromARGB(255, 8, 8, 8),
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -929,7 +913,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                           "ENTRIES CLOSE :   ",
                           style: TextStyle(
                               fontSize: 12.sp,
-                              color: Color.fromARGB(255, 17, 17, 17),
+                              color: const Color.fromARGB(255, 17, 17, 17),
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -939,7 +923,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                           widget.EventClossEntry.toString(),
                           style: TextStyle(
                               fontSize: 13.sp,
-                              color: Color.fromARGB(255, 155, 6, 6),
+                              color: const Color.fromARGB(255, 155, 6, 6),
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -958,7 +942,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                           "Venue :                  ",
                           style: TextStyle(
                               fontSize: 13.sp,
-                              color: Color.fromARGB(255, 7, 7, 7),
+                              color: const Color.fromARGB(255, 7, 7, 7),
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -1011,7 +995,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                           "Entry fees :",
                           style: TextStyle(
                               fontSize: 13.sp,
-                              color: Color.fromARGB(255, 22, 5, 5),
+                              color: const Color.fromARGB(255, 22, 5, 5),
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -1029,13 +1013,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                         FittedBox(
                           fit: BoxFit.fill,
                           child: AutoSizeText(
-                            "Early Rs: " +
-                                Earlyprice.toString() +
-                                "/-(from" +
-                                Earlyfromdate +
-                                " to " +
-                                Earlytodate +
-                                ")",
+                            "Early Rs: $Earlyprice/-(from$Earlyfromdate to $Earlytodate)",
                             style: TextStyle(
                                 fontSize: 13.sp,
                                 color: const Color.fromARGB(255, 133, 13, 13),
@@ -1057,13 +1035,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                         FittedBox(
                           fit: BoxFit.fill,
                           child: AutoSizeText(
-                            "Regular Entries Rs." +
-                                Regularprice.toString() +
-                                "/-(from " +
-                                Regularfromdate +
-                                " to " +
-                                Regulartodate +
-                                ")",
+                            "Regular Entries Rs.$Regularprice/-(from $Regularfromdate to $Regulartodate)",
                             style: TextStyle(
                                 fontSize: 13.sp,
                                 color: const Color.fromARGB(255, 133, 13, 13),
@@ -1085,13 +1057,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                         FittedBox(
                           fit: BoxFit.fill,
                           child: AutoSizeText(
-                            "Late Entries Rs." +
-                                Lateprice.toString() +
-                                "/-(from " +
-                                Latefromdate +
-                                " to " +
-                                Latetodate +
-                                ")",
+                            "Late Entries Rs.$Lateprice/-(from $Latefromdate to $Latetodate)",
                             style: TextStyle(
                                 fontSize: 13.sp,
                                 color: const Color.fromARGB(255, 133, 13, 13),
@@ -1113,14 +1079,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                         FittedBox(
                           fit: BoxFit.fill,
                           child: AutoSizeText(
-                            "Optional Dog Benching (Stall fees): \n Cooler Stall 1 Day Charges Rs. " +
-                                ACfirstday.toString() +
-                                "/- \n FAN Stall 1 Day Charges Rs." +
-                                ACsecondday +
-                                "/- \n Cooler Stall 2 Day Charges Rs. " +
-                                Fanfirstday +
-                                "/- \n  FAN Stall 2 Day Charges Rs." +
-                                Fanseconday,
+                            "Optional Dog Benching (Stall fees): \n Cooler Stall 1 Day Charges Rs. $ACfirstday/- \n FAN Stall 1 Day Charges Rs.$ACsecondday/- \n Cooler Stall 2 Day Charges Rs. $Fanfirstday/- \n  FAN Stall 2 Day Charges Rs.$Fanseconday",
                             style: TextStyle(
                                 fontSize: 13.sp,
                                 color: const Color.fromARGB(255, 133, 13, 13),
@@ -1132,10 +1091,10 @@ class _EventsDetailsState extends State<EventsDetails> {
                   ),
                 ),
 
-                Divider(),
+                const Divider(),
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Text(
                       'Details',
                       style: TextStyle(
@@ -1145,7 +1104,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                     ),
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -1160,7 +1119,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                               "Date :         ",
                               style: TextStyle(
                                   fontSize: 13.sp,
-                                  color: Color.fromARGB(255, 7, 7, 7),
+                                  color: const Color.fromARGB(255, 7, 7, 7),
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -1188,7 +1147,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                               "Time :         ",
                               style: TextStyle(
                                   fontSize: 13.sp,
-                                  color: Color.fromARGB(255, 7, 7, 7),
+                                  color: const Color.fromARGB(255, 7, 7, 7),
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -1216,7 +1175,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                               "Location :    ",
                               style: TextStyle(
                                   fontSize: 13.sp,
-                                  color: Color.fromARGB(255, 7, 7, 7),
+                                  color: const Color.fromARGB(255, 7, 7, 7),
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -1236,10 +1195,10 @@ class _EventsDetailsState extends State<EventsDetails> {
                   ],
                 ),
 
-                Divider(),
+                const Divider(),
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Text(
                       'ORGANIZERS',
                       style: TextStyle(
@@ -1249,7 +1208,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                     ),
                   ),
                 ),
-                Divider(),
+                const Divider(),
 
                 for (int i = 0; i < Phonenumber.length - 1; i++)
                   Padding(
@@ -1260,15 +1219,13 @@ class _EventsDetailsState extends State<EventsDetails> {
                         if (i >= 1)
                           InkWell(
                             onTap: () async {
-                              print(i.toString() +
-                                  " - " +
-                                  Phonenumber[i].toString());
+                              print("$i - ${Phonenumber[i]}");
 
                               faltu = Phonenumber[i].toString();
                               faltu = faltu.replaceRange(0, 15, "");
                               List numer = Phonenumber[i].toString().split(':');
                               print(numer[0] + "-" + faltu);
-                              var url = Uri.parse("tel:" + faltu);
+                              var url = Uri.parse("tel:$faltu");
 
                               // numer[0].toString());
                               if (await canLaunchUrl(url)) {
@@ -1282,7 +1239,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                               Phonenumber[i].toString().substring(15),
                               style: TextStyle(
                                   fontSize: 12.sp,
-                                  color: Color.fromARGB(255, 172, 4, 4),
+                                  color: const Color.fromARGB(255, 172, 4, 4),
                                   fontWeight: FontWeight.w600),
                             ),
 
@@ -1300,15 +1257,13 @@ class _EventsDetailsState extends State<EventsDetails> {
                         else
                           InkWell(
                             onTap: () async {
-                              print(i.toString() +
-                                  " - " +
-                                  Phonenumber[i].toString());
+                              print("$i - ${Phonenumber[i]}");
 
                               faltu = Phonenumber[i].toString();
                               faltu = faltu.replaceRange(0, 13, "");
                               List numer = Phonenumber[i].toString().split(':');
                               print(numer[0] + "-" + faltu);
-                              var url = Uri.parse("tel:" + faltu);
+                              var url = Uri.parse("tel:$faltu");
 
                               // numer[0].toString());
                               if (await canLaunchUrl(url)) {
@@ -1322,7 +1277,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                               Phonenumber[i].toString().substring(13),
                               style: TextStyle(
                                   fontSize: 13.sp,
-                                  color: Color.fromARGB(255, 172, 4, 4),
+                                  color: const Color.fromARGB(255, 172, 4, 4),
                                   fontWeight: FontWeight.w600),
                             ),
 
@@ -1341,7 +1296,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                     ),
                   ),
 
-                Divider(),
+                const Divider(),
               ],
             ),
           ),

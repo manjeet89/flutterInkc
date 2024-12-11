@@ -1,20 +1,19 @@
 import 'dart:convert';
 
-import 'package:curved_container/curved_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:inkc/model/profilemodel.dart';
 import 'package:inkc/verification.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
 class SignUP extends StatelessWidget {
+  const SignUP({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "profile UI",
       home: SignUpHere(),
@@ -23,6 +22,8 @@ class SignUP extends StatelessWidget {
 }
 
 class SignUpHere extends StatefulWidget {
+  const SignUpHere({super.key});
+
   @override
   _SignUpHereState createState() => _SignUpHereState();
 }
@@ -36,14 +37,14 @@ class _SignUpHereState extends State<SignUpHere> {
     passwordVisible = true;
   }
 
-  TextEditingController lastname = new TextEditingController();
-  TextEditingController First = new TextEditingController();
-  TextEditingController phonenumber = new TextEditingController();
-  TextEditingController email = new TextEditingController();
-  TextEditingController dateofbirth = new TextEditingController();
-  TextEditingController address = new TextEditingController();
-  TextEditingController personalid = new TextEditingController();
-  TextEditingController password = new TextEditingController();
+  TextEditingController lastname = TextEditingController();
+  TextEditingController First = TextEditingController();
+  TextEditingController phonenumber = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController personalid = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   FocusNode focusNode = FocusNode();
 
@@ -63,11 +64,7 @@ class _SignUpHereState extends State<SignUpHere> {
       setState(() {
         date = datepicker;
         dateofbirth.value = TextEditingValue(
-            text: date.day.toString() +
-                "-" +
-                date.month.toString() +
-                "-" +
-                date.year.toString());
+            text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -84,8 +81,8 @@ class _SignUpHereState extends State<SignUpHere> {
         builder: (context, orientation, deviceType) {
           return Scaffold(
             body: Container(
-              margin: EdgeInsets.only(top: 10),
-              padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+              margin: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
               child: GestureDetector(
                 onTap: () {
                   FocusScope.of(context).unfocus();
@@ -117,8 +114,8 @@ class _SignUpHereState extends State<SignUpHere> {
                       // ),
 
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 8, 8, 8),
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 8, 8, 8),
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                         // color: Colors.black,
@@ -141,11 +138,11 @@ class _SignUpHereState extends State<SignUpHere> {
                       height: 5.sp,
                     ),
                     Padding(
-                        padding: EdgeInsets.only(top: 15),
+                        padding: const EdgeInsets.only(top: 15),
                         child: Column(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: TextField(
                                 controller: First,
                                 enabled: true,
@@ -153,7 +150,7 @@ class _SignUpHereState extends State<SignUpHere> {
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   labelText: 'First Name',
@@ -162,7 +159,7 @@ class _SignUpHereState extends State<SignUpHere> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               child: TextField(
                                 controller: lastname,
                                 enabled: true,
@@ -171,7 +168,7 @@ class _SignUpHereState extends State<SignUpHere> {
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(6.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Last Name',
@@ -180,9 +177,9 @@ class _SignUpHereState extends State<SignUpHere> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.all(5),
+                              margin: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                boxShadow: [],
+                                boxShadow: const [],
                                 border: Border.all(
                                   color: Colors.black,
                                   width: 0.5,
@@ -191,7 +188,7 @@ class _SignUpHereState extends State<SignUpHere> {
                                 color: Colors.white,
                               ),
                               child: Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Column(
                                   children: [
                                     Align(
@@ -255,12 +252,12 @@ class _SignUpHereState extends State<SignUpHere> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: IntlPhoneField(
                                 enabled: true,
                                 controller: phonenumber,
                                 focusNode: focusNode,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   labelText: 'Phone Number',
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(),
@@ -271,12 +268,12 @@ class _SignUpHereState extends State<SignUpHere> {
                                   print(phone.completeNumber);
                                 },
                                 onCountryChanged: (country) {
-                                  print('Country changed to: ' + country.name);
+                                  print('Country changed to: ${country.name}');
                                 },
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: TextField(
                                 controller: email,
                                 enabled: true,
@@ -285,7 +282,7 @@ class _SignUpHereState extends State<SignUpHere> {
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Email Address',
@@ -294,15 +291,15 @@ class _SignUpHereState extends State<SignUpHere> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 150.sp,
                                     child: TextField(
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w700),
                                       onTap: () {},
@@ -318,11 +315,11 @@ class _SignUpHereState extends State<SignUpHere> {
                                         //     );
                                         //   },
                                         // ),
-                                        prefixIcon: Icon(Icons.date_range),
+                                        prefixIcon: const Icon(Icons.date_range),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(4.sp)),
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                               width: 1, color: Colors.green),
                                         ),
                                         labelText: 'Date of Birth',
@@ -337,7 +334,7 @@ class _SignUpHereState extends State<SignUpHere> {
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.blue,
                                       ),
-                                      child: Text(
+                                      child: const Text(
                                         'Pick date',
                                         style: TextStyle(
                                           color: Colors.white,
@@ -347,7 +344,7 @@ class _SignUpHereState extends State<SignUpHere> {
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: TextField(
                                 controller: password,
                                 obscureText: passwordVisible,
@@ -355,14 +352,14 @@ class _SignUpHereState extends State<SignUpHere> {
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   hintText: "Password",
                                   labelText: "Password",
                                   helperText:
                                       "Password must contain special character",
-                                  helperStyle: TextStyle(color: Colors.green),
+                                  helperStyle: const TextStyle(color: Colors.green),
                                   suffixIcon: IconButton(
                                     icon: Icon(passwordVisible
                                         ? Icons.visibility
@@ -386,7 +383,8 @@ class _SignUpHereState extends State<SignUpHere> {
                               margin: EdgeInsets.only(bottom: 50.sp),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: Color.fromARGB(255, 63, 23, 23),
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 63, 23, 23),
                                   minimumSize: const Size.fromHeight(40), // NEW
                                 ),
                                 onPressed: () async {
@@ -400,8 +398,8 @@ class _SignUpHereState extends State<SignUpHere> {
 
                                   EasyLoading.showToast('Please Wait...');
 
-                                  final uri =
-                                      "https://www.inkc.in/api/login/signup";
+                                  const uri =
+                                      "https://new-demo.inkcdogs.org/api/login/signup";
 
                                   final responce = await http.post(
                                     Uri.parse(uri),
@@ -454,7 +452,7 @@ class _SignUpHereState extends State<SignUpHere> {
                                                 Text('Something went wrong')));
                                   }
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Submit',
                                   style: TextStyle(color: Colors.white),
                                 ),

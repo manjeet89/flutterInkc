@@ -5,11 +5,9 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
 import 'package:inkc/bottom_nav_pages/bar.dart';
 import 'package:inkc/bottom_nav_pages/more.dart';
 import 'package:inkc/bottom_nav_pages/search.dart';
-import 'package:inkc/credential/login.dart';
 import 'package:inkc/model/cartlist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +17,7 @@ import 'bottom_nav_pages/notification.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: Colors.white,
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.dark,
@@ -101,66 +99,81 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List pages = [
-    HomePages(),
-    Barpage(),
-    NotificationPage(),
-    Search(),
-    More(),
+    const HomePages(),
+    const Barpage(),
+    const NotificationPage(),
+    const Search(),
+    const More(),
   ];
 
   int currnetIndec = 0;
+  int _selectedIndex = 0;
 
   void onTap(int index) {
     setState(() {
       currnetIndec = index;
+      _selectedIndex = index;
     });
+  }
+
+  Future<bool> _onWillPop() async {
+    // if (_selectedIndex != 0) {
+    //   setState(() {
+    //     _selectedIndex = 0;
+    //   });
+    //   return false;
+    // }
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[currnetIndec],
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.shifting,
-          backgroundColor: Colors.black,
-          onTap: onTap,
-          currentIndex: currnetIndec,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey.withOpacity(1.0),
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 0,
-          items: [
-            BottomNavigationBarItem(
-              label: 'Home',
-              icon: Icon(Icons.home),
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              label: 'Our Serves',
-              icon: Icon(Icons.supervisor_account_outlined),
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              label: 'Notification',
-              icon: Icon(Icons.notifications),
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-                label: 'Cart',
-                icon: badges.Badge(
-                  badgeContent: Text(
-                    dataload.length.toString(),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  child: Icon(Icons.shopping_cart),
-                )),
-            BottomNavigationBarItem(
-              label: 'More',
-              icon: Icon(Icons.person),
-              backgroundColor: Colors.white,
-            ),
-          ]),
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        body: pages[currnetIndec],
+        bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.shifting,
+            backgroundColor: Colors.black,
+            onTap: onTap,
+            currentIndex: currnetIndec,
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.grey.withOpacity(1.0),
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            elevation: 0,
+            items: [
+              const BottomNavigationBarItem(
+                label: 'Home',
+                icon: Icon(Icons.home),
+                backgroundColor: Colors.white,
+              ),
+              const BottomNavigationBarItem(
+                label: 'Our Serves',
+                icon: Icon(Icons.supervisor_account_outlined),
+                backgroundColor: Colors.white,
+              ),
+              const BottomNavigationBarItem(
+                label: 'Notification',
+                icon: Icon(Icons.notifications),
+                backgroundColor: Colors.white,
+              ),
+              BottomNavigationBarItem(
+                  label: 'Cart',
+                  icon: badges.Badge(
+                    badgeContent: Text(
+                      dataload.length.toString(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    child: const Icon(Icons.shopping_cart),
+                  )),
+              const BottomNavigationBarItem(
+                label: 'More',
+                icon: Icon(Icons.person),
+                backgroundColor: Colors.white,
+              ),
+            ]),
+      ),
     );
   }
 
@@ -171,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     print(token);
 
-    final uri = "https://www.inkc.in/api/cart";
+    const uri = "https://new-demo.inkcdogs.org/api/cart";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

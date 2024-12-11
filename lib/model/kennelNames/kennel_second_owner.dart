@@ -36,17 +36,17 @@ class KennelSecondOwner {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['kennel_id'] = this.kennelId;
-    data['owner_user_id'] = this.ownerUserId;
-    data['is_second_owner'] = this.isSecondOwner;
-    data['second_owner_id'] = this.secondOwnerId;
-    data['kennel_name'] = this.kennelName;
-    data['kennel_comment'] = this.kennelComment;
-    data['kennel_status'] = this.kennelStatus;
-    data['is_kennel_name_paid'] = this.isKennelNamePaid;
-    data['kennel_updated_on'] = this.kennelUpdatedOn;
-    data['kennel_created_on'] = this.kennelCreatedOn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['kennel_id'] = kennelId;
+    data['owner_user_id'] = ownerUserId;
+    data['is_second_owner'] = isSecondOwner;
+    data['second_owner_id'] = secondOwnerId;
+    data['kennel_name'] = kennelName;
+    data['kennel_comment'] = kennelComment;
+    data['kennel_status'] = kennelStatus;
+    data['is_kennel_name_paid'] = isKennelNamePaid;
+    data['kennel_updated_on'] = kennelUpdatedOn;
+    data['kennel_created_on'] = kennelCreatedOn;
     return data;
   }
 }

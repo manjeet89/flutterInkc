@@ -10,9 +10,9 @@ class ParticipentEventDropDown {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['pet_id'] = this.petId;
-    data['pet_name'] = this.petName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['pet_id'] = petId;
+    data['pet_name'] = petName;
     return data;
   }
 }

@@ -24,13 +24,13 @@ class Obideint {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['class_id'] = this.classId;
-    data['class_name'] = this.className;
-    data['class_description'] = this.classDescription;
-    data['class_status'] = this.classStatus;
-    data['class_updated_on'] = this.classUpdatedOn;
-    data['class_created_on'] = this.classCreatedOn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['class_id'] = classId;
+    data['class_name'] = className;
+    data['class_description'] = classDescription;
+    data['class_status'] = classStatus;
+    data['class_updated_on'] = classUpdatedOn;
+    data['class_created_on'] = classCreatedOn;
     return data;
   }
 }

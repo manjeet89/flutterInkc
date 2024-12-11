@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:eosdart/eosdart.dart';
+// import 'package:eosdart/eosdart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inkc/dropdownmodel/micro_chip_details.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:permission_handler/permission_handler.dart';
 // import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -19,7 +18,10 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 class MicroChipDetails extends StatefulWidget {
   String? pname, rcnumber, pic;
   MicroChipDetails(
-      {required this.pname, required this.rcnumber, required this.pic});
+      {super.key,
+      required this.pname,
+      required this.rcnumber,
+      required this.pic});
 
   @override
   State<MicroChipDetails> createState() => _MicroChipDetailsState();
@@ -28,12 +30,12 @@ class MicroChipDetails extends StatefulWidget {
 class _MicroChipDetailsState extends State<MicroChipDetails> {
   bool showSpinner = false;
 
-  TextEditingController micronumber = new TextEditingController();
-  TextEditingController implementName = new TextEditingController();
-  TextEditingController Number = new TextEditingController();
-  TextEditingController dateofbirth = new TextEditingController();
-  TextEditingController address = new TextEditingController();
-  TextEditingController personalid = new TextEditingController();
+  TextEditingController micronumber = TextEditingController();
+  TextEditingController implementName = TextEditingController();
+  TextEditingController Number = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController personalid = TextEditingController();
 
   DateTime date = DateTime.now();
   void selectDatePicker() async {
@@ -46,12 +48,8 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value = TextEditingValue(
-            text: date.day.toString() +
-                "-" +
-                date.month.toString() +
-                "-" +
-                date.year.toString());
+        dateofbirth.value =
+            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -76,7 +74,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://www.inkc.in/api/dog/implemented_by_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/implemented_by_list"),
           headers: requestHeaders);
       // var data = json.decode(res.body);
       // var dataarray = data['data'];
@@ -160,7 +158,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
       FormData formData = FormData.fromMap({
         'upload_microchip_document': await MultipartFile.fromFile(
             firstImage!.path,
-            filename: now.second.toString() + ".jpg"),
+            filename: "${now.second}.jpg"),
         'implementer_name': ImplementNames,
         //'implement_by': impletedId,
         'pet_microchip_number': MicroNumber,
@@ -169,7 +167,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
       });
 
       Response response = await dio.post(
-          'https://www.inkc.in/api/dog/upload_document_microchip',
+          'https://new-demo.inkcdogs.org/api/dog/upload_document_microchip',
           data: formData,
           options: Options(headers: {
             'Content-type': 'application/json',
@@ -250,7 +248,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/cart/cartready";
+    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -267,7 +265,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
     //   showSpinner = false;
     // });
 
-    print(responce.body + " Refresh");
+    print("${responce.body} Refresh");
   }
 
   @override
@@ -290,7 +288,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                 //       color: Color.fromARGB(255, 223, 39, 39)),
                 //   onPressed: () => Navigator.of(context).pop(),
                 // ),
-                title: Text(
+                title: const Text(
                   'MicroChip Details',
                   style: TextStyle(
                       shadows: [
@@ -311,8 +309,8 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                 centerTitle: true,
               ),
               body: Container(
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.only(left: 16, top: 5, right: 16),
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(left: 16, top: 5, right: 16),
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
@@ -336,12 +334,12 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                       spreadRadius: 2,
                                       blurRadius: 10,
                                       color: Colors.black.withOpacity(0.1),
-                                      offset: Offset(0, 10))
+                                      offset: const Offset(0, 10))
                                 ],
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                   image: NetworkImage(
-                                      "https://www.inkc.in/${widget.pic}"),
+                                      "https://new-demo.inkcdogs.org/${widget.pic}"),
                                   fit: BoxFit.cover, //change image fill type
                                 ),
                               ),
@@ -358,19 +356,19 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     Text(
                                       "Name of Dog :     ",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: 100.sp,
                                       height: 50.sp,
                                       child: Text(
                                         widget.pname.toString(),
                                         style: TextStyle(
-                                            color:
-                                                Color.fromARGB(255, 163, 8, 8),
+                                            color: const Color.fromARGB(
+                                                255, 163, 8, 8),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13.sp),
                                       ),
@@ -386,15 +384,16 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     Text(
                                       "Registration Number :  ",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       widget.rcnumber.toString(),
                                       style: TextStyle(
-                                          color: Color.fromARGB(255, 163, 8, 8),
+                                          color: const Color.fromARGB(
+                                              255, 163, 8, 8),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -419,14 +418,16 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 Text(
                                   "Microchip Number ",
                                   style: TextStyle(
-                                      color: Color.fromARGB(255, 22, 21, 21),
+                                      color:
+                                          const Color.fromARGB(255, 22, 21, 21),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13.sp),
                                 ),
                                 Text(
                                   "*",
                                   style: TextStyle(
-                                      color: Color.fromARGB(255, 231, 11, 11),
+                                      color: const Color.fromARGB(
+                                          255, 231, 11, 11),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15.sp),
                                 ),
@@ -440,7 +441,8 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                             //         onQRViewCreated: _onQRVireCreated)),
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Color.fromARGB(255, 88, 8, 126),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 88, 8, 126),
                                     textStyle: TextStyle(
                                         fontSize: 10.sp,
                                         color: const Color.fromARGB(
@@ -460,18 +462,18 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                         ),
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.only(top: 5),
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   controller: micronumber,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Microchip Number ',
@@ -492,15 +494,15 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                       Text(
                                         "Implemented by ",
                                         style: TextStyle(
-                                            color:
-                                                Color.fromARGB(255, 22, 21, 21),
+                                            color: const Color.fromARGB(
+                                                255, 22, 21, 21),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13.sp),
                                       ),
                                       Text(
                                         "*",
                                         style: TextStyle(
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 255, 231, 11, 11),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
@@ -518,7 +520,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 5),
                                             decoration: BoxDecoration(
                                               border: Border.all(
@@ -536,25 +538,23 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                                     selectedid = value;
                                                   });
                                                 },
-                                                hint: Text('Select value'),
+                                                hint:
+                                                    const Text('Select value'),
                                                 items: snapshot.data!.map((e) {
                                                   return DropdownMenuItem<
                                                       String>(
                                                     value:
                                                         e.empTypeId.toString(),
-                                                    child: Container(
+                                                    child: SizedBox(
                                                       width: double
                                                           .infinity, // Auto size based on content
                                                       child: Text(
                                                         e.empTypeName
                                                             .toString(),
                                                         style: TextStyle(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    95,
-                                                                    46,
-                                                                    46),
+                                                            color: const Color
+                                                                .fromARGB(255,
+                                                                95, 46, 46),
                                                             fontSize: 12.sp,
                                                             fontWeight:
                                                                 FontWeight
@@ -598,7 +598,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                           //     }),
                                         );
                                       } else {
-                                        return CircularProgressIndicator();
+                                        return const CircularProgressIndicator();
                                       }
                                     }),
                               ),
@@ -630,16 +630,16 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     Text(
                                       "Veterinarian Name ",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -647,7 +647,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   controller: implementName,
                                   // obscureText: true,
@@ -655,7 +655,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Implementer Name ',
@@ -675,16 +675,16 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     Text(
                                       "Veterinarian Mobile Number ",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -692,7 +692,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   controller: Number,
                                   keyboardType: TextInputType.number,
@@ -701,7 +701,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: ' Mobile Numbe',
@@ -719,16 +719,16 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     Text(
                                       "Veterinarian Date ",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -736,11 +736,11 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Row(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.all(8),
+                                      margin: const EdgeInsets.all(8),
                                       width: 160.sp,
                                       child: TextField(
                                         onTap: () {},
@@ -756,11 +756,12 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon: Icon(Icons.date_range),
+                                          prefixIcon:
+                                              const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.sp)),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
@@ -772,8 +773,9 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            primary: Color.fromARGB(
-                                                255, 231, 25, 25),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
                                                 color: const Color.fromARGB(
@@ -782,7 +784,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                         onPressed: () {
                                           selectDatePicker();
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Pick date',
                                           style: TextStyle(
                                             color: Colors.white,
@@ -798,16 +800,16 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                     Text(
                                       "Upload Document ",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -821,13 +823,14 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                             left: 60.sp, right: 60.sp),
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            primary:
-                                                Color.fromARGB(255, 192, 5, 5),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 192, 5, 5),
                                           ),
                                           onPressed: () async {
                                             getfirstImage();
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             'Pick Image',
                                             style: TextStyle(
                                               color: Colors.white,
@@ -855,10 +858,11 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                                         blurRadius: 10,
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: Offset(0, 10))
+                                                        offset:
+                                                            const Offset(0, 10))
                                                   ],
                                                   shape: BoxShape.circle,
-                                                  image: new DecorationImage(
+                                                  image: DecorationImage(
                                                     image: FileImage(
                                                         File(firstImage!.path)
                                                             .absolute),
@@ -866,20 +870,21 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                                   )
                                                   // image: DecorationImage(
                                                   //   image: NetworkImage(
-                                                  //       "https://www.inkc.in/${image}"),
+                                                  //       "https://new-demo.inkcdogs.org/${image}"),
                                                   //   fit: BoxFit.cover, //change image fill type
                                                   // ),
                                                   ),
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                primary: Color.fromARGB(
-                                                    255, 223, 20, 20),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 223, 20, 20),
                                               ),
                                               onPressed: () async {
                                                 getfirstImage();
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 'Change Image',
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -896,8 +901,8 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        primary:
-                                            Color.fromARGB(255, 51, 6, 175),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 51, 6, 175),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
                                             color: const Color.fromARGB(
@@ -943,7 +948,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                         uploadData();
                                       }
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Submit',
                                       style: TextStyle(
                                         color: Colors.white,

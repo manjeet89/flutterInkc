@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Otp extends StatefulWidget {
+  const Otp({super.key});
+
   // const Otp({Key key}) : super(key: key);
 
   @override
@@ -12,24 +14,24 @@ class _OtpState extends State<Otp> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xfff7f6fb),
+      backgroundColor: const Color(0xfff7f6fb),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
           child: Column(
             children: [
               Align(
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back,
                     size: 32,
                     color: Colors.black54,
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Container(
@@ -43,20 +45,20 @@ class _OtpState extends State<Otp> {
                   'assets/images/shital123.png',
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
-              Text(
+              const Text(
                 'Verification',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "Enter your OTP number",
                 style: TextStyle(
                   fontSize: 14,
@@ -65,11 +67,11 @@ class _OtpState extends State<Otp> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 28,
               ),
               Container(
-                padding: EdgeInsets.all(28),
+                padding: const EdgeInsets.all(28),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
@@ -85,7 +87,7 @@ class _OtpState extends State<Otp> {
                         _textFieldOTP(first: false, last: true),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 22,
                     ),
                     SizedBox(
@@ -94,17 +96,17 @@ class _OtpState extends State<Otp> {
                         onPressed: () {},
                         style: ButtonStyle(
                           foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
+                              WidgetStateProperty.all<Color>(Colors.white),
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.black),
+                              WidgetStateProperty.all<Color>(Colors.black),
                           shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24.0),
                             ),
                           ),
                         ),
-                        child: Padding(
+                        child: const Padding(
                           padding: EdgeInsets.all(14.0),
                           child: Text(
                             'Verify',
@@ -116,10 +118,10 @@ class _OtpState extends State<Otp> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
-              Text(
+              const Text(
                 "Didn't you receive any code?",
                 style: TextStyle(
                   fontSize: 14,
@@ -128,10 +130,10 @@ class _OtpState extends State<Otp> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
-              Text(
+              const Text(
                 "Resend New Code",
                 style: TextStyle(
                   fontSize: 18,
@@ -148,7 +150,7 @@ class _OtpState extends State<Otp> {
   }
 
   Widget _textFieldOTP({bool? first, last}) {
-    return Container(
+    return SizedBox(
       height: 85,
       child: AspectRatio(
         aspectRatio: 1.0,
@@ -158,23 +160,23 @@ class _OtpState extends State<Otp> {
             if (value.length == 1 && last == false) {
               FocusScope.of(context).nextFocus();
             }
-            if (value.length == 0 && first == false) {
+            if (value.isEmpty && first == false) {
               FocusScope.of(context).previousFocus();
             }
           },
           showCursor: false,
           readOnly: false,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           keyboardType: TextInputType.number,
           maxLength: 1,
           decoration: InputDecoration(
-            counter: Offstage(),
+            counter: const Offstage(),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: Colors.black12),
+                borderSide: const BorderSide(width: 2, color: Colors.black12),
                 borderRadius: BorderRadius.circular(12)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: Colors.purple),
+                borderSide: const BorderSide(width: 2, color: Colors.purple),
                 borderRadius: BorderRadius.circular(12)),
           ),
         ),

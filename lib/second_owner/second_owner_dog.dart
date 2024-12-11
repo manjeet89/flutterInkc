@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:inkc/model/InkcRegisterDogmodel.dart';
 import 'package:inkc/non_inkc_registor_dog_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,8 +36,8 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
 
     // print('${userid} / ${token}');
 
-    final uri =
-        "https://www.inkc.in/api/dog/inkc_kci_registered_dog_second_own";
+    const uri =
+        "https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog_second_own";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -61,7 +59,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
         dataload.add(InckRegistrationDog.fromJson(index));
         print(index.length.toString());
       }
-      print("kaccha aam" + dataload.toString());
+      print("kaccha aam$dataload");
 
       return dataload;
     } else {
@@ -94,7 +92,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                     // ],
                     fontSize: 17.sp,
                     decorationColor: Colors.red,
-                    color: Color.fromARGB(255, 8, 8, 8),
+                    color: const Color.fromARGB(255, 8, 8, 8),
                     // color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
@@ -115,7 +113,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                               child: Text(
                                 "No Dog Registered yet.",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 177, 43, 10),
+                                    color: const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -144,12 +142,12 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                       itemBuilder: (context, position) {
                         return Card(
                           elevation: 10,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          margin: EdgeInsets.all(5),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          margin: const EdgeInsets.all(5),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [
                                   Color.fromARGB(255, 255, 255, 255),
                                   Color.fromARGB(255, 255, 255, 255),
@@ -172,7 +170,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                                     height: 150.0.sp,
                                     width: 180.0.sp,
                                     decoration: BoxDecoration(
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                           color: Color.fromARGB(
                                               255, 178, 177, 189),
@@ -188,14 +186,14 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                                       //set border radius to 50% of square height and width
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                            "https://www.inkc.in/${dataload[position].petImage}"),
+                                            "https://new-demo.inkcdogs.org/${dataload[position].petImage}"),
                                         fit: BoxFit
                                             .cover, //change image fill type
                                       ),
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 5),
+                                    margin: const EdgeInsets.only(left: 5),
                                     // width: double.infinity,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -232,7 +230,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Color.fromARGB(
+                                                  backgroundColor: const Color.fromARGB(
                                                       255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
@@ -279,7 +277,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                                                                 .colorMarking
                                                                 .toString())));
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 "Details",
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -291,7 +289,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                                                 const EdgeInsets.only(left: 30),
                                             child: Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Registration Number - ',
                                                   style: TextStyle(
                                                       color: Colors.black,
@@ -324,7 +322,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                     );
                   } else {
                     print("dataloadlength");
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }

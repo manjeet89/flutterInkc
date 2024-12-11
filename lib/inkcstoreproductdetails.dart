@@ -1,13 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:inkc/bottom_nav_pages/home.dart';
-import 'package:inkc/bottom_nav_pages/more.dart';
-import 'package:inkc/bottom_nav_pages/notification.dart';
-import 'package:inkc/bottom_nav_pages/search.dart';
-import 'package:inkc/inkcstore.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -22,7 +15,7 @@ class INKCDetails extends StatefulWidget {
       prductdescription,
       productId;
   INKCDetails(
-      {required this.image,
+      {super.key, required this.image,
       required this.productName,
       required this.productfacePrice,
       required this.productactualPrice,
@@ -52,7 +45,7 @@ class _INKCDetailsState extends State<INKCDetails> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/cart/cartready";
+    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -69,7 +62,7 @@ class _INKCDetailsState extends State<INKCDetails> {
       showSpinner = false;
     });
 
-    print(responce.body + " Refresh");
+    print("${responce.body} Refresh");
   }
 
   @override
@@ -88,14 +81,14 @@ class _INKCDetailsState extends State<INKCDetails> {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 leading: IconButton(
-                  icon: Icon(Icons.arrow_back,
+                  icon: const Icon(Icons.arrow_back,
                       color: Color.fromARGB(255, 223, 39, 39)),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 title: Text(
                   'INKC Product Details',
                   style: TextStyle(
-                      shadows: [
+                      shadows: const [
                         Shadow(
                           blurRadius: 10.0, // shadow blur
                           color:
@@ -106,7 +99,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                       ],
                       fontSize: 20.sp,
                       decorationColor: Colors.red,
-                      color: Color.fromARGB(255, 194, 97, 33),
+                      color: const Color.fromARGB(255, 194, 97, 33),
                       // color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
@@ -124,7 +117,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                             height: 180.0.sp,
                             width: 250.0.sp,
                             decoration: BoxDecoration(
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color.fromARGB(255, 179, 168, 206),
                                   blurRadius: 7.0,
@@ -139,7 +132,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                               //set border radius to 50% of square height and width
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    "https://www.inkc.in/${widget.image}"),
+                                    "https://new-demo.inkcdogs.org/${widget.image}"),
                                 fit: BoxFit.cover, //change image fill type
                               ),
                             ),
@@ -200,8 +193,8 @@ class _INKCDetailsState extends State<INKCDetails> {
                                         token =
                                             sharedprefrence.getString("Token")!;
 
-                                        final uri =
-                                            "https://www.inkc.in/api/cart/add_to_cart";
+                                        const uri =
+                                            "https://new-demo.inkcdogs.org/api/cart/add_to_cart";
                                         Map<String, String> requestHeaders = {
                                           //'Accept': 'application/json',
                                           'Usertoken': token,
@@ -216,7 +209,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                                             "product_id":
                                                 widget.productId.toString(),
                                             "product_quantity":
-                                                "${i.toString()}"
+                                                i.toString()
                                           },
                                         );
 
@@ -257,18 +250,18 @@ class _INKCDetailsState extends State<INKCDetails> {
 
                                         // That's it to display an alert, use other properties to customize.
                                       },
-                                      child: Text(
-                                        "Add to Cart",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
                                       style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromARGB(255, 231, 25, 25),
+                                          backgroundColor:
+                                              const Color.fromARGB(255, 231, 25, 25),
                                           textStyle: TextStyle(
                                               fontSize: 10.sp,
                                               color: const Color.fromARGB(
                                                   255, 241, 236, 236),
                                               fontWeight: FontWeight.bold)),
+                                      child: const Text(
+                                        "Add to Cart",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   )
                                 ],
@@ -362,7 +355,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(15.0),
-                            child: Container(
+                            child: SizedBox(
                               height: 180.0.sp,
                               width: double.infinity,
                               child: Text(

@@ -3,9 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:inkc/form/micro_chip_details.dart';
-import 'package:inkc/model/profilemodel.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +20,7 @@ class NonInkcDogDetails extends StatefulWidget {
       breed,
       colorandmaking;
 
-  NonInkcDogDetails({
+  NonInkcDogDetails({super.key, 
     required this.id,
     required this.image,
     required this.petnames,
@@ -55,13 +53,13 @@ class NonInkcDogDetails extends StatefulWidget {
 String IDs = "";
 
 class _NonInkcDogsState extends State<NonInkcDogDetails> {
-  TextEditingController petname = new TextEditingController();
-  TextEditingController breed = new TextEditingController();
-  TextEditingController sex = new TextEditingController();
-  TextEditingController image = new TextEditingController();
-  TextEditingController colorandmaking = new TextEditingController();
-  TextEditingController dateofbirth = new TextEditingController();
-  TextEditingController registration = new TextEditingController();
+  TextEditingController petname = TextEditingController();
+  TextEditingController breed = TextEditingController();
+  TextEditingController sex = TextEditingController();
+  TextEditingController image = TextEditingController();
+  TextEditingController colorandmaking = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController registration = TextEditingController();
 
   FocusNode focusNode = FocusNode();
 
@@ -84,7 +82,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://www.inkc.in/api/user/user_profile";
+  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',
@@ -117,7 +115,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://www.inkc.in/api/user/user_profile";
+  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',
@@ -199,10 +197,11 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
     petname.value = TextEditingValue(text: widget.petnames);
     image.value = TextEditingValue(text: widget.image);
-    if (widget.sex == "1")
-      sex.value = TextEditingValue(text: "Male");
-    else
-      sex.value = TextEditingValue(text: "Female");
+    if (widget.sex == "1") {
+      sex.value = const TextEditingValue(text: "Male");
+    } else {
+      sex.value = const TextEditingValue(text: "Female");
+    }
 
     registration.value = TextEditingValue(text: widget.registernumber);
     dateofbirth.value = TextEditingValue(text: widget.dateofbirth);
@@ -217,7 +216,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/dog/dog_color_marking_list";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list";
 
     Map<String, String> requestHeaders = {'Usertoken': token, 'Userid': userid};
 
@@ -238,7 +237,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
       for (int j = 0; j < che.length; j++) {
         // print(che[j]);
         if (widget.colorandmaking.toString() == che[j].toString().trim()) {
-          print(" chal na" + che[j + 4].toString());
+          print(" chal na${che[j + 4]}");
           setState(() {
             colorandmaking.value =
                 TextEditingValue(text: che[j + 4].toString());
@@ -275,7 +274,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
               title: Text(
                 widget.petnames.toString(),
                 style: TextStyle(
-                    shadows: [
+                    shadows: const [
                       Shadow(
                         blurRadius: 10.0, // shadow blur
                         color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -285,15 +284,15 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                     ],
                     fontSize: 14.sp,
                     decorationColor: Colors.red,
-                    color: Color.fromARGB(255, 194, 97, 33),
+                    color: const Color.fromARGB(255, 194, 97, 33),
                     // color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
               centerTitle: true,
             ),
             body: Container(
-              margin: EdgeInsets.only(top: 10),
-              padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+              margin: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
               child: GestureDetector(
                 onTap: () {
                   FocusScope.of(context).unfocus();
@@ -324,12 +323,12 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                     spreadRadius: 2,
                                     blurRadius: 10,
                                     color: Colors.black.withOpacity(0.1),
-                                    offset: Offset(0, 10))
+                                    offset: const Offset(0, 10))
                               ],
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    "https://www.inkc.in/${widget.image}"),
+                                    "https://new-demo.inkcdogs.org/${widget.image}"),
                                 fit: BoxFit.cover, //change image fill type
                               ),
                             ),
@@ -364,7 +363,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                     ),
 
                     Container(
-                      margin: EdgeInsets.only(top: 0, right: 8),
+                      margin: const EdgeInsets.only(top: 0, right: 8),
                       alignment: Alignment.topRight,
                       child: Container(
                         height: 40.sp,
@@ -414,13 +413,13 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                     ),
 
                     Padding(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 5),
                         child: Column(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: TextField(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600),
                                 controller: petname,
@@ -430,7 +429,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Pet Name',
@@ -439,9 +438,9 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: TextField(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600),
                                 controller: breed,
@@ -451,7 +450,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Breed Of Dogs',
@@ -460,9 +459,9 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: TextField(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600),
                                 controller: sex,
@@ -472,7 +471,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Sex',
@@ -481,20 +480,20 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: TextField(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600),
                                 controller: dateofbirth,
                                 enabled: false,
                                 // obscureText: true,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.date_range),
+                                  prefixIcon: const Icon(Icons.date_range),
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Date of Birth',
@@ -503,9 +502,9 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: TextField(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600),
                                 maxLines: null,
@@ -516,7 +515,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Registration Number',
@@ -525,10 +524,10 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: colorandmaking.text.toString() == null
                                   ? TextField(
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600),
                                       maxLines: null,
@@ -539,7 +538,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(4.sp)),
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                               width: 1, color: Colors.green),
                                         ),
                                         labelText: 'Color and Making',
@@ -547,7 +546,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                       ),
                                     )
                                   : TextField(
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600),
                                       maxLines: null,
@@ -558,7 +557,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(4.sp)),
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                               width: 1, color: Colors.green),
                                         ),
                                         labelText: ' - ',
@@ -580,7 +579,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
   void EditSlide(BuildContext context) {
     showModalBottomSheet(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(20),
           ),
@@ -611,7 +610,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                     height: 150.sp,
                     // width: double.infinity,
                     decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Color.fromARGB(255, 178, 177, 189),
                           blurRadius: 10,
@@ -628,7 +627,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
                     ),
-                    margin: EdgeInsets.all(15),
+                    margin: const EdgeInsets.all(15),
                     child: Column(
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -643,10 +642,9 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                     )));
                           },
                           child: Container(
-                            margin: EdgeInsets.only(top: 12),
+                            margin: const EdgeInsets.only(top: 12),
                             height: 80.0.sp,
                             width: 80.0.sp,
-                            child: Image.asset("assets/vetservices.png"),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.sp),
 
@@ -656,6 +654,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                               //   fit: BoxFit.fill, //change image fill type
                               // ),
                             ),
+                            child: Image.asset("assets/vetservices.png"),
                           ),
                         ),
                         Padding(
@@ -664,7 +663,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                           child: Text(
                             'Microchip Details',
                             style: TextStyle(
-                                shadows: [
+                                shadows: const [
                                   Shadow(
                                     // blurRadius: 5.0, // shadow blur
                                     color: ui.Color.fromARGB(
@@ -699,7 +698,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                     height: 150.sp,
                     // width: double.infinity,
                     decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Color.fromARGB(255, 178, 177, 189),
                           blurRadius: 10,
@@ -716,7 +715,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
                     ),
-                    margin: EdgeInsets.all(15),
+                    margin: const EdgeInsets.all(15),
                     child: Column(
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -729,14 +728,14 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                                     )));
                           },
                           child: Container(
-                            margin: EdgeInsets.only(top: 12),
+                            margin: const EdgeInsets.only(top: 12),
                             height: 80.0.sp,
                             width: 80.0.sp,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.sp),
 
                               //set border radius to 50% of square height and width
-                              image: DecorationImage(
+                              image: const DecorationImage(
                                 image: AssetImage("assets/note.png"),
                                 fit: BoxFit.fill, //change image fill type
                               ),
@@ -749,7 +748,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                           child: Text(
                             ' Add Notes',
                             style: TextStyle(
-                                shadows: [
+                                shadows: const [
                                   Shadow(
                                     // blurRadius: 5.0, // shadow blur
                                     color: ui.Color.fromARGB(

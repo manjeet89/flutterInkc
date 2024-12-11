@@ -24,13 +24,13 @@ class KennelHistory {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['history_id'] = this.historyId;
-    data['kennel_id'] = this.kennelId;
-    data['kennel_club_name'] = this.kennelClubName;
-    data['kennel_club_comment'] = this.kennelClubComment;
-    data['kennel_club_status'] = this.kennelClubStatus;
-    data['history_created_on'] = this.historyCreatedOn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['history_id'] = historyId;
+    data['kennel_id'] = kennelId;
+    data['kennel_club_name'] = kennelClubName;
+    data['kennel_club_comment'] = kennelClubComment;
+    data['kennel_club_status'] = kennelClubStatus;
+    data['history_created_on'] = historyCreatedOn;
     return data;
   }
 }

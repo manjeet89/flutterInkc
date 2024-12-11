@@ -3,6 +3,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:sizer/sizer.dart';
 
 class StudsAvailable extends StatefulWidget {
+  const StudsAvailable({super.key});
+
   @override
   _StudsAvailableState createState() => _StudsAvailableState();
 }
@@ -29,14 +31,14 @@ class _StudsAvailableState extends State {
             appBar: AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back,
+                icon: const Icon(Icons.arrow_back,
                     color: Color.fromARGB(255, 223, 39, 39)),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text(
                 'Studs Available',
                 style: TextStyle(
-                    shadows: [
+                    shadows: const [
                       Shadow(
                         blurRadius: 10.0, // shadow blur
                         color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -46,20 +48,20 @@ class _StudsAvailableState extends State {
                     ],
                     fontSize: 18.sp,
                     decorationColor: Colors.red,
-                    color: Color.fromARGB(255, 194, 97, 33),
+                    color: const Color.fromARGB(255, 194, 97, 33),
                     // color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
               centerTitle: true,
             ),
             body: Container(
-              margin: EdgeInsets.all(6),
+              margin: const EdgeInsets.all(6),
               child: Stack(
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
                       url: WebUri.uri(
-                          Uri.parse("https://www.inkc.in/studs-available")),
+                          Uri.parse("https://new-demo.inkcdogs.org/studs-available")),
                     ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
@@ -73,7 +75,7 @@ class _StudsAvailableState extends State {
                   ),
                   // InAppWebView(
                   //   initialUrlRequest: URLRequest(
-                  //       url: Uri.parse("https://www.inkc.in/studs-available")),
+                  //       url: Uri.parse("https://new-demo.inkcdogs.org/studs-available")),
                   //   onWebViewCreated: (InAppWebViewController controller) {
                   //     inappwebview = controller;
                   //   },

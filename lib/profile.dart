@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/model/profilemodel.dart';
-import 'package:inkc/myhomepage.dart';
 import 'package:inkc/profile_update.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -17,9 +16,11 @@ import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
 class SettingsUI extends StatelessWidget {
+  const SettingsUI({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "profile UI",
       home: EditProfilePage(),
@@ -32,18 +33,20 @@ String token = "";
 String image = "";
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({super.key});
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  TextEditingController MyController = new TextEditingController();
-  TextEditingController First = new TextEditingController();
-  TextEditingController phonenumber = new TextEditingController();
-  TextEditingController email = new TextEditingController();
-  TextEditingController dateofbirth = new TextEditingController();
-  TextEditingController address = new TextEditingController();
-  TextEditingController personalid = new TextEditingController();
+  TextEditingController MyController = TextEditingController();
+  TextEditingController First = TextEditingController();
+  TextEditingController phonenumber = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController personalid = TextEditingController();
 
   FocusNode focusNode = FocusNode();
 
@@ -77,7 +80,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   //   var length = await images!.length();
 
-  //   var uri = Uri.parse("https://www.inkc.in/api/user/update_profile_image");
+  //   var uri = Uri.parse("https://new-demo.inkcdogs.org/api/user/update_profile_image");
 
   //   var request = new http.MultipartRequest("POST", uri);
 
@@ -115,7 +118,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://www.inkc.in/api/user/user_profile";
+  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
 
   XFile? pickerFiles;
   final _firstpicker = ImagePicker();
@@ -136,18 +139,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
       if (pickedFile != null) {
         FormData formData = FormData.fromMap({
           'user_profile_image': await MultipartFile.fromFile(pickedFile.path,
-              filename: now.second.toString() + ".jpg"),
+              filename: "${now.second}.jpg"),
         });
 
-        Response response =
-            await dio.post('https://www.inkc.in/api/user/update_profile_image',
-                data: formData,
-                options: Options(headers: {
-                  'Content-type': 'application/json',
-                  'Accept': 'application/json',
-                  'Usertoken': token,
-                  'Userid': userid
-                }));
+        Response response = await dio.post(
+            'https://new-demo.inkcdogs.org/api/user/update_profile_image',
+            data: formData,
+            options: Options(headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Usertoken': token,
+              'Userid': userid
+            }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -212,7 +215,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     // print('${userid} / ${token}');
 
-    final uri = "https://www.inkc.in/api/user/user_profile";
+    const uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -226,6 +229,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     var dataarray = data['data'];
 
     List<ProfileModel> dataload = [];
+
+    print(data['message']);
 
     if (data['code'].toString() == "200") {
       for (var jsondata in dataarray) {
@@ -245,7 +250,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         email.value = TextEditingValue(text: jsondata['user_email_id']);
         dateofbirth.value = TextEditingValue(text: jsondata['user_birth_date']);
         if (jsondata['user_address'].toString() == "null") {
-          address.value = TextEditingValue(text: "null");
+          address.value = const TextEditingValue(text: "null");
         } else {
           address.value = TextEditingValue(
               text: jsondata['user_address'] +
@@ -271,7 +276,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       await preferences.clear();
 
       Navigator.of(context, rootNavigator: true)
-          .push(MaterialPageRoute(builder: (_) => Login()));
+          .push(MaterialPageRoute(builder: (_) => const Login()));
     }
     return dataload;
   }
@@ -329,8 +334,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               // ),
 
               body: Container(
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
@@ -342,18 +347,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         style: TextStyle(
                             fontSize: 25.sp, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       if (address.text.toString() == "null")
                         Container(
-                          margin: EdgeInsets.only(top: 10, left: 20),
+                          margin: const EdgeInsets.only(top: 10, left: 20),
                           height: 100.0.sp,
                           width: 100.0.sp,
                           child: Icon(
                             Icons.person,
                             size: 45.0.sp,
-                            color: ui.Color.fromARGB(255, 141, 35, 35),
+                            color: const ui.Color.fromARGB(255, 141, 35, 35),
                           ),
                         )
                       else
@@ -373,12 +378,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         spreadRadius: 2,
                                         blurRadius: 10,
                                         color: Colors.black.withOpacity(0.1),
-                                        offset: Offset(0, 10))
+                                        offset: const Offset(0, 10))
                                   ],
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                        "https://www.inkc.in/${image}"),
+                                        "https://new-demo.inkcdogs.org/$image"),
                                     fit: BoxFit.cover, //change image fill type
                                   ),
                                 ),
@@ -403,7 +408,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         ),
                                         color: Colors.black,
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.person,
                                         color: Colors.white,
                                       ),
@@ -439,17 +444,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (BuildContext context) =>
                                           ProfileUpdate(
-                                            name: First.text.toString(),
-                                            lastname:
+                                            names: First.text.toString(),
+                                            lastnames:
                                                 MyController.text.toString(),
-                                            gender: gender,
-                                            dob: DOB,
-                                            phone: phonenumber.text,
-                                            email: email.text,
-                                            address: address.text,
+                                            genders: gender,
+                                            dobs: DOB,
+                                            phones: phonenumber.text,
+                                            emails: email.text,
+                                            addresss: address.text,
                                           )));
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.edit,
                                   color: Colors.white,
                                 ),
@@ -472,15 +477,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         height: 5.sp,
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 15),
+                          padding: const EdgeInsets.only(top: 15),
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: TextField(
-                                  style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 41, 2, 2),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   controller: First,
                                   enabled: false,
@@ -488,7 +492,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'First Name',
@@ -497,11 +501,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: TextField(
-                                  style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 41, 2, 2),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   controller: MyController,
                                   enabled: false,
@@ -510,7 +513,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Last Name',
@@ -519,20 +522,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: IntlPhoneField(
                                   enabled: false,
                                   controller: phonenumber,
                                   focusNode: focusNode,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Phone Number',
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide(),
                                     ),
                                   ),
-                                  style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 41, 2, 2),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   initialCountryCode: 'IN',
                                   onChanged: (phone) {
@@ -542,16 +544,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   },
                                   onCountryChanged: (country) {
                                     print(
-                                        'Country changed to: ' + country.name);
+                                        'Country changed to: ${country.name}');
                                   },
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: TextField(
-                                  style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 41, 2, 2),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   controller: email,
                                   enabled: false,
@@ -560,7 +561,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Email Address',
@@ -569,21 +570,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: TextField(
-                                  style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 41, 2, 2),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   controller: dateofbirth,
                                   enabled: false,
                                   // obscureText: true,
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.date_range),
+                                    prefixIcon: const Icon(Icons.date_range),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Date of Birth',
@@ -592,11 +592,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: TextField(
-                                  style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 41, 2, 2),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   maxLines: null,
                                   controller: address,
@@ -606,7 +605,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Address',
@@ -615,11 +614,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: TextField(
-                                  style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 41, 2, 2),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   maxLines: null,
                                   controller: personalid,
@@ -629,7 +627,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Personal ID',

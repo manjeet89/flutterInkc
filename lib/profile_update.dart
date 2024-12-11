@@ -1,23 +1,48 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inkc/profile.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
-// ignore: must_be_immutable
-class ProfileUpdate extends StatefulWidget {
-  String? name, lastname, gender, dob, phone, email, address;
+class ProfileUpdate extends StatelessWidget {
+  String? names, lastnames, genders, dobs, phones, emails, addresss;
   ProfileUpdate(
-      {required this.name,
+      {super.key, required this.names,
+      required this.lastnames,
+      required this.genders,
+      required this.dobs,
+      required this.phones,
+      required this.emails,
+      required this.addresss});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "profile UI",
+      home: ProfileUpdates(
+        name: names,
+        lastname: lastnames,
+        gender: genders,
+        dob: dobs,
+        phone: phones,
+        email: emails,
+        address: addresss,
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class ProfileUpdates extends StatefulWidget {
+  String? name, lastname, gender, dob, phone, email, address;
+  ProfileUpdates(
+      {super.key, required this.name,
       required this.lastname,
       required this.gender,
       required this.dob,
@@ -26,31 +51,31 @@ class ProfileUpdate extends StatefulWidget {
       required this.address});
 
   @override
-  State<ProfileUpdate> createState() => _ProfileUpdateState();
+  State<ProfileUpdates> createState() => _ProfileUpdatesState();
 }
 
-class _ProfileUpdateState extends State<ProfileUpdate> {
-  TextEditingController MyController = new TextEditingController();
-  TextEditingController First = new TextEditingController();
-  TextEditingController phonenumber = new TextEditingController();
-  TextEditingController email = new TextEditingController();
-  TextEditingController dateofbirth = new TextEditingController();
-  TextEditingController address = new TextEditingController();
-  TextEditingController personalid = new TextEditingController();
+class _ProfileUpdatesState extends State<ProfileUpdates> {
+  TextEditingController MyController = TextEditingController();
+  TextEditingController First = TextEditingController();
+  TextEditingController phonenumber = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController personalid = TextEditingController();
 
   // dialogbox
-  TextEditingController pincode = new TextEditingController();
-  TextEditingController state = new TextEditingController();
-  TextEditingController district = new TextEditingController();
-  final address1 = new TextEditingController();
-  TextEditingController address2 = new TextEditingController();
+  TextEditingController pincode = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController district = TextEditingController();
+  final address1 = TextEditingController();
+  TextEditingController address2 = TextEditingController();
 
   bool showSpinner = false;
   FocusNode focusNode = FocusNode();
-  final tenDigitsOnly = new RegExp(r'^\d{0,6}$');
+  final tenDigitsOnly = RegExp(r'^\d{0,6}$');
   dynamic valuechoose;
   String? gender;
-  TextEditingController lastname = new TextEditingController();
+  TextEditingController lastname = TextEditingController();
   bool addnull = false;
 
   @override
@@ -83,7 +108,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
           state.value = TextEditingValue(text: '${add[i]}');
         }
         if (i == 4) {
-          pincode.value = TextEditingValue(text: '${add[i].toString().trim()}');
+          pincode.value = TextEditingValue(text: add[i].toString().trim());
         }
         print(add[i]);
       }
@@ -102,8 +127,8 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   bool _validatepincode = false;
   bool _validatestate = false;
   bool _validatedistic = false;
-  bool _validatelocal = false;
-  bool _validateadd2 = false;
+  final bool _validatelocal = false;
+  final bool _validateadd2 = false;
 
   DateTime date = DateTime.now();
   void selectDatePicker() async {
@@ -117,11 +142,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
       setState(() {
         date = datepicker;
         dateofbirth.value = TextEditingValue(
-            text: date.day.toString() +
-                "-" +
-                date.month.toString() +
-                "-" +
-                date.year.toString());
+            text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -153,7 +174,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   style: TextStyle(
                       fontSize: 20.sp,
                       decorationColor: Colors.red,
-                      color: Color.fromARGB(255, 17, 17, 17),
+                      color: const Color.fromARGB(255, 17, 17, 17),
                       // color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
@@ -174,8 +195,8 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
               // ),
 
               body: Container(
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
@@ -193,7 +214,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       //   height: 15,
                       // ),
                       Padding(
-                          padding: EdgeInsets.only(top: 15),
+                          padding: const EdgeInsets.only(top: 15),
                           child: Column(
                             children: <Widget>[
                               Visibility(
@@ -201,7 +222,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: const EdgeInsets.all(10),
                                         child: TextField(
                                           controller: First,
                                           enabled: true,
@@ -209,7 +230,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                             border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(4.sp)),
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 1,
                                                   color: Colors.green),
                                             ),
@@ -219,7 +240,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.all(5),
+                                        padding: const EdgeInsets.all(5),
                                         child: TextField(
                                           controller: lastname,
                                           enabled: true,
@@ -228,7 +249,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                             border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(6.sp)),
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   width: 1,
                                                   color: Colors.green),
                                             ),
@@ -238,9 +259,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.all(5),
+                                        margin: const EdgeInsets.all(5),
                                         decoration: BoxDecoration(
-                                          boxShadow: [],
+                                          boxShadow: const [],
                                           border: Border.all(
                                             color: Colors.black,
                                             width: 0.5,
@@ -250,7 +271,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                           color: Colors.white,
                                         ),
                                         child: Padding(
-                                          padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
                                           child: Column(
                                             children: [
                                               Align(
@@ -319,15 +340,15 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: const EdgeInsets.all(10),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               width: 150.sp,
                                               child: TextField(
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Colors.black,
                                                     fontWeight:
                                                         FontWeight.w700),
@@ -345,13 +366,13 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                   //   },
                                                   // ),
                                                   prefixIcon:
-                                                      Icon(Icons.date_range),
+                                                      const Icon(Icons.date_range),
                                                   border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 4.sp)),
-                                                    borderSide: BorderSide(
+                                                    borderSide: const BorderSide(
                                                         width: 1,
                                                         color: Colors.green),
                                                   ),
@@ -367,7 +388,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor: Colors.blue,
                                                 ),
-                                                child: Text(
+                                                child: const Text(
                                                   'Pick date',
                                                   style: TextStyle(
                                                     color: Colors.white,
@@ -405,11 +426,11 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                               //   ),
                               // ),
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: TextField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color:
-                                          const Color.fromARGB(255, 41, 2, 2),
+                                          Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   controller: email,
                                   enabled: true,
@@ -418,7 +439,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Email Address',
@@ -427,14 +448,14 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: InkWell(
                                   onTap: () {
                                     showModalBottomSheet<void>(
                                       enableDrag: false,
                                       isScrollControlled: true,
                                       isDismissible: true,
-                                      shape: RoundedRectangleBorder(
+                                      shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(20),
                                         ),
@@ -460,7 +481,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                   Text(
                                                     'Address',
                                                     style: TextStyle(
-                                                        color: Color.fromARGB(
+                                                        color: const Color.fromARGB(
                                                             255, 95, 10, 10),
                                                         fontSize: 18.sp,
                                                         fontWeight:
@@ -515,10 +536,10 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                   //     ),
                                                   //   ),
                                                   // ),
-                                                  Divider(),
+                                                  const Divider(),
 
                                                   Padding(
-                                                    padding: EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
                                                       onChanged: (value) {
                                                         if (value.length == 6) {
@@ -535,8 +556,8 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                             6),
                                                       ],
                                                       maxLength: 6,
-                                                      style: TextStyle(
-                                                          color: const Color
+                                                      style: const TextStyle(
+                                                          color: Color
                                                               .fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
@@ -556,7 +577,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                                       .circular(
                                                                           4.sp)),
                                                           borderSide:
-                                                              BorderSide(
+                                                              const BorderSide(
                                                                   width: 1,
                                                                   color: Colors
                                                                       .green),
@@ -566,7 +587,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Divider(),
+                                                  const Divider(),
 
                                                   // Padding(
                                                   //   padding:
@@ -619,13 +640,13 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                   //           }),
                                                   // ),
                                                   Padding(
-                                                    padding: EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child:
                                                         DropdownButtonFormField(
                                                       decoration:
-                                                          InputDecoration(
+                                                          const InputDecoration(
                                                         contentPadding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                 .only(
                                                                 left: 10,
                                                                 right: 10),
@@ -636,11 +657,11 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                                         .circular(
                                                                             10))),
                                                       ),
-                                                      hint: Text(
+                                                      hint: const Text(
                                                           'Select locality'),
                                                       dropdownColor:
                                                           Colors.white,
-                                                      icon: Icon(Icons
+                                                      icon: const Icon(Icons
                                                           .arrow_drop_down),
                                                       value: valuechoose,
                                                       onChanged: (newvalue) {
@@ -660,8 +681,8 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                                     .all(2.0),
                                                             child: Text(
                                                               value.toString(),
-                                                              style: TextStyle(
-                                                                  color: const Color
+                                                              style: const TextStyle(
+                                                                  color: Color
                                                                       .fromARGB(
                                                                       255,
                                                                       41,
@@ -676,12 +697,12 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                       }).toList(),
                                                     ),
                                                   ),
-                                                  Divider(),
+                                                  const Divider(),
                                                   Padding(
-                                                    padding: EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
-                                                      style: TextStyle(
-                                                          color: const Color
+                                                      style: const TextStyle(
+                                                          color: Color
                                                               .fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
@@ -698,7 +719,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                                       .circular(
                                                                           4.sp)),
                                                           borderSide:
-                                                              BorderSide(
+                                                              const BorderSide(
                                                                   width: 1,
                                                                   color: Colors
                                                                       .green),
@@ -711,12 +732,12 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Divider(),
+                                                  const Divider(),
                                                   Padding(
-                                                    padding: EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
-                                                      style: TextStyle(
-                                                          color: const Color
+                                                      style: const TextStyle(
+                                                          color: Color
                                                               .fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
@@ -733,7 +754,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                                       .circular(
                                                                           4.sp)),
                                                           borderSide:
-                                                              BorderSide(
+                                                              const BorderSide(
                                                                   width: 1,
                                                                   color: Colors
                                                                       .green),
@@ -747,12 +768,12 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Divider(),
+                                                  const Divider(),
                                                   Padding(
-                                                    padding: EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
-                                                      style: TextStyle(
-                                                          color: const Color
+                                                      style: const TextStyle(
+                                                          color: Color
                                                               .fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
@@ -770,7 +791,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                                       .circular(
                                                                           4.sp)),
                                                           borderSide:
-                                                              BorderSide(
+                                                              const BorderSide(
                                                                   width: 1,
                                                                   color: Colors
                                                                       .green),
@@ -785,12 +806,12 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Divider(),
+                                                  const Divider(),
                                                   Padding(
-                                                    padding: EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
-                                                      style: TextStyle(
-                                                          color: const Color
+                                                      style: const TextStyle(
+                                                          color: Color
                                                               .fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
@@ -808,7 +829,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                                       .circular(
                                                                           4.sp)),
                                                           borderSide:
-                                                              BorderSide(
+                                                              const BorderSide(
                                                                   width: 1,
                                                                   color: Colors
                                                                       .green),
@@ -820,22 +841,23 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Divider(),
+                                                  const Divider(),
                                                   Center(
                                                     child: ElevatedButton(
                                                         style: ElevatedButton
                                                             .styleFrom(
-                                                          primary: const Color
-                                                              .fromARGB(
-                                                              255,
-                                                              80,
-                                                              3,
-                                                              3), // Background color
+                                                          backgroundColor:
+                                                              const Color
+                                                                  .fromARGB(
+                                                                  255,
+                                                                  80,
+                                                                  3,
+                                                                  3), // Background color
                                                         ),
                                                         onPressed: () {
                                                           insertData();
                                                         },
-                                                        child: Row(
+                                                        child: const Row(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .center,
@@ -862,9 +884,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                     );
                                   },
                                   child: TextField(
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color:
-                                            const Color.fromARGB(255, 41, 2, 2),
+                                            Color.fromARGB(255, 41, 2, 2),
                                         fontWeight: FontWeight.w600),
                                     maxLines: null,
                                     controller: address,
@@ -874,7 +896,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(4.sp)),
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                             width: 1, color: Colors.green),
                                       ),
                                       labelText: 'Address',
@@ -886,7 +908,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor:
-                                          Color.fromRGBO(85, 2, 11, 0.957)),
+                                          const Color.fromRGBO(85, 2, 11, 0.957)),
                                   onPressed: () async {
                                     SharedPreferences sharedprefrence =
                                         await SharedPreferences.getInstance();
@@ -901,8 +923,8 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                     await fulladdress.setString(
                                         "fulladdress", address.text.toString());
 
-                                    final uri =
-                                        "https://www.inkc.in/api/user/update_profile";
+                                    const uri =
+                                        "https://new-demo.inkcdogs.org/api/user/update_profile";
 
                                     Map<String, String> requestHeaders = {
                                       'Accept': 'application/json',
@@ -910,21 +932,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                       'Userid': userid
                                     };
 
-                                    print(email.text.toString() +
-                                        " " +
-                                        valuechoose.toString() +
-                                        " " +
-                                        state.text.toString() +
-                                        " " +
-                                        pincode.text.toString() +
-                                        " " +
-                                        address1.text.toString() +
-                                        " " +
-                                        address2.text.toString() +
-                                        " " +
-                                        district.text.toString() +
-                                        " " +
-                                        phonenumber.text.toString());
+                                    print("${email.text} $valuechoose ${state.text} ${pincode.text} ${address1.text} ${address2.text} ${district.text} ${phonenumber.text}");
 
                                     final responce = await http.post(
                                       Uri.parse(uri),
@@ -958,7 +966,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  SettingsUI()));
+                                                  const SettingsUI()));
                                     } else {
                                       print(data);
                                       ScaffoldMessenger.of(context)
@@ -967,7 +975,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                                   'Something went wrong')));
                                     }
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Submit',
                                     style: TextStyle(
                                         color:
@@ -994,7 +1002,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
     String token = sharedprefrence.getString("Token")!;
     EasyLoading.showToast('Please Wait...');
 
-    final uri = "https://www.inkc.in/api/user/get_city_data_from_pincode";
+    const uri = "https://new-demo.inkcdogs.org/api/user/get_city_data_from_pincode";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -1060,17 +1068,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
     } else if (stat.isEmpty) {
     } else {
       address.value = TextEditingValue(
-          text: add1 +
-              " " +
-              add2 +
-              " " +
-              local +
-              " " +
-              dis +
-              " " +
-              stat +
-              " " +
-              pin);
+          text: "$add1 $add2 $local $dis $stat $pin");
       Navigator.pop(context);
     }
 

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'otp.dart';
 
 class Register extends StatefulWidget {
+  const Register({super.key});
+
   // const Register({Key key}) : super(key: key);
 
   @override
@@ -20,24 +22,24 @@ class _RegisterState extends State<Register> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xffc0fcf7),
+        backgroundColor: const Color(0xffc0fcf7),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
             child: Column(
               children: [
                 Align(
                   alignment: Alignment.topLeft,
                   child: GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back,
                       size: 32,
                       color: Colors.black54,
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 18,
                 ),
                 Container(
@@ -51,20 +53,20 @@ class _RegisterState extends State<Register> {
                     'assets/images/shital123.png',
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
-                Text(
+                const Text(
                   'Sign Up to Explore The Doggy Locker',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   "Add your phone number. We'll send you a verification code.",
                   style: TextStyle(
                     fontSize: 14,
@@ -73,11 +75,11 @@ class _RegisterState extends State<Register> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 28,
                 ),
                 Container(
-                  padding: EdgeInsets.all(28),
+                  padding: const EdgeInsets.all(28),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
@@ -86,18 +88,18 @@ class _RegisterState extends State<Register> {
                     children: [
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black12),
+                              borderSide: const BorderSide(color: Colors.black12),
                               borderRadius: BorderRadius.circular(10)),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black12),
+                              borderSide: const BorderSide(color: Colors.black12),
                               borderRadius: BorderRadius.circular(10)),
-                          prefix: Padding(
+                          prefix: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
                               '(+91)',
@@ -107,14 +109,14 @@ class _RegisterState extends State<Register> {
                               ),
                             ),
                           ),
-                          suffixIcon: Icon(
+                          suffixIcon: const Icon(
                             Icons.check_circle,
                             color: Colors.green,
                             size: 32,
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 22,
                       ),
                       SizedBox(
@@ -122,22 +124,22 @@ class _RegisterState extends State<Register> {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => Otp()),
+                              MaterialPageRoute(builder: (context) => const Otp()),
                             );
                           },
                           style: ButtonStyle(
                             foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
+                                WidgetStateProperty.all<Color>(Colors.white),
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.black),
-                            shape: MaterialStateProperty.all<
+                                WidgetStateProperty.all<Color>(Colors.black),
+                            shape: WidgetStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24.0),
                               ),
                             ),
                           ),
-                          child: Padding(
+                          child: const Padding(
                             padding: EdgeInsets.all(14.0),
                             child: Text(
                               'Get OTP',

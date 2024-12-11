@@ -1,12 +1,9 @@
 import 'dart:convert';
 
 import 'package:draggable_fab/draggable_fab.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkc/KennelClub/addkennelname.dart';
 import 'package:inkc/KennelClub/kennelnamehistory.dart';
-import 'package:inkc/bottom_nav_pages/bar.dart';
-import 'package:inkc/bottom_nav_pages/home.dart';
 import 'package:inkc/model/kennelNames/kennel_history.dart';
 import 'package:inkc/model/kennelNames/kennel_second_owner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,7 +48,7 @@ class _KennelClubNameState extends State<KennelClubName> {
   bool _isSetStateCalled = false;
   bool _isSetKennelNameHistory = false;
   bool _onlyonetime = false;
-  bool _last = false;
+  final bool _last = false;
   int j = 0;
 
   @override
@@ -70,9 +67,9 @@ class _KennelClubNameState extends State<KennelClubName> {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
-    print(token + "- " + userid);
+    print("$token- $userid");
 
-    final uri = "https://www.inkc.in/api/user/kennel_details";
+    const uri = "https://new-demo.inkcdogs.org/api/user/kennel_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -148,7 +145,7 @@ class _KennelClubNameState extends State<KennelClubName> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   color: Color.fromARGB(255, 223, 39, 39)),
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -160,7 +157,7 @@ class _KennelClubNameState extends State<KennelClubName> {
                   style: TextStyle(
                       fontSize: 15.sp,
                       decorationColor: Colors.red,
-                      color: Color.fromARGB(255, 17, 11, 7),
+                      color: const Color.fromARGB(255, 17, 11, 7),
                       // color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
@@ -222,7 +219,7 @@ class _KennelClubNameState extends State<KennelClubName> {
                     ],
                   ),
                 if (kennel_name.toString() == "null")
-                  Center(
+                  const Center(
                     child: Text(" "),
                   )
                 else
@@ -358,7 +355,7 @@ class _KennelClubNameState extends State<KennelClubName> {
                             },
                           );
                         } else {
-                          return Center(
+                          return const Center(
                             child: Text(""),
                           );
                         }
@@ -375,8 +372,8 @@ class _KennelClubNameState extends State<KennelClubName> {
                       const EdgeInsets.only(bottom: 50, right: 8, left: 28),
                   child: DraggableFab(
                     child: FloatingActionButton.extended(
-                      backgroundColor: Color.fromARGB(255, 21, 49, 29),
-                      foregroundColor: Color.fromARGB(255, 247, 240, 240),
+                      backgroundColor: const Color.fromARGB(255, 21, 49, 29),
+                      foregroundColor: const Color.fromARGB(255, 247, 240, 240),
                       onPressed: () async {
                         // Navigator.of(context, rootNavigator: true).push(
                         //     MaterialPageRoute(builder: (_) => AddKennelName()));
@@ -389,7 +386,7 @@ class _KennelClubNameState extends State<KennelClubName> {
                         'Add Kennel Name',
                         style: TextStyle(fontSize: 10.sp),
                       ),
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                     ),
                   ),
                 ),
@@ -399,8 +396,8 @@ class _KennelClubNameState extends State<KennelClubName> {
                     padding: const EdgeInsets.only(bottom: 50, right: 8),
                     child: DraggableFab(
                       child: FloatingActionButton.extended(
-                        backgroundColor: Color.fromARGB(255, 231, 236, 233),
-                        foregroundColor: Color.fromARGB(255, 247, 240, 240),
+                        backgroundColor: const Color.fromARGB(255, 231, 236, 233),
+                        foregroundColor: const Color.fromARGB(255, 247, 240, 240),
                         onPressed: () async {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) =>
@@ -414,7 +411,7 @@ class _KennelClubNameState extends State<KennelClubName> {
                           style:
                               TextStyle(fontSize: 10.sp, color: Colors.black),
                         ),
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.holiday_village_outlined,
                           color: Color.fromARGB(255, 24, 5, 235),
                         ),

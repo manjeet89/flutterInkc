@@ -1,23 +1,11 @@
 import 'dart:convert';
 
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:inkc/adddoginfo.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/inkcstore.dart';
-import 'package:inkc/litternumber.dart';
-import 'package:inkc/main.dart';
 import 'package:inkc/model/cartlist.dart';
-import 'package:inkc/payment/upi_integrate.dart';
-import 'package:inkc/payment/upi_pay.dart';
 import 'package:inkc/paymentcart/finalcart.dart';
-import 'package:inkc/profile.dart';
 // import 'package:quantupi/quantupi.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
@@ -32,9 +20,9 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return MaterialApp(
+        return const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const Searchpage(),
+          home: Searchpage(),
         );
       },
     );
@@ -93,7 +81,7 @@ class _SearchpageState extends State<Searchpage> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/cart/cartready";
+    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -110,12 +98,12 @@ class _SearchpageState extends State<Searchpage> {
       // showSpinner = false;
     });
 
-    print(responce.body + " Refresh");
+    print("${responce.body} Refresh");
     // SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     // userid = sharedprefrence.getString("Userid")!;
     // token = sharedprefrence.getString("Token")!;
 
-    // final uri = "https://www.inkc.in/api/cart/cartready";
+    // final uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
 
     // Map<String, String> requestHeaders = {
     //   // 'Accept': 'application/json',
@@ -135,15 +123,6 @@ class _SearchpageState extends State<Searchpage> {
   Check() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    if (check != null) {
-    } else {
-      setState(() async {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context, rootNavigator: true)
-            .push(MaterialPageRoute(builder: (_) => Login()));
-      });
-    }
   }
 
   List<CartList> dataload = [];
@@ -183,7 +162,7 @@ class _SearchpageState extends State<Searchpage> {
             style: TextStyle(
                 fontSize: 20.sp,
                 decorationColor: Colors.red,
-                color: Color.fromARGB(255, 22, 22, 21),
+                color: const Color.fromARGB(255, 22, 22, 21),
                 // color: Colors.black,
                 fontWeight: FontWeight.bold),
           ),
@@ -192,7 +171,7 @@ class _SearchpageState extends State<Searchpage> {
         body: RefreshIndicator(
           onRefresh: () {
             return Future.delayed(
-              Duration(seconds: 1),
+              const Duration(seconds: 1),
               () {
                 setState(() {
                   RefreshCart();
@@ -217,7 +196,8 @@ class _SearchpageState extends State<Searchpage> {
                               child: Text(
                                 "Cart is empty.",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 177, 43, 10),
+                                    color:
+                                        const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -230,10 +210,11 @@ class _SearchpageState extends State<Searchpage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => INKCStore()),
+                                            builder: (context) =>
+                                                const INKCStore()),
                                       );
                                     },
-                                    child: Text('Go to INKC Store')),
+                                    child: const Text('Go to INKC Store')),
                               ),
                             ),
                           ],
@@ -399,22 +380,22 @@ class _SearchpageState extends State<Searchpage> {
                           } else {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    INKCStore()));
+                                    const INKCStore()));
                           }
                           // cart_data_product.add(map);
                           // print(map);
 
                           return Card(
                             elevation: 5,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            margin: EdgeInsets.all(5),
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            margin: const EdgeInsets.all(5),
                             child: Container(
                               // height: 140.sp,
-                              constraints: BoxConstraints.tightFor(),
+                              constraints: const BoxConstraints.tightFor(),
 
                               // width: double.infinity,
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 7,
                                     offset: Offset(
@@ -430,7 +411,7 @@ class _SearchpageState extends State<Searchpage> {
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.white,
                               ),
-                              margin: EdgeInsets.all(5),
+                              margin: const EdgeInsets.all(5),
                               child: Row(
                                 // crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -441,9 +422,9 @@ class _SearchpageState extends State<Searchpage> {
                                     //           INKCDogRegistration()));
                                     // },
                                     child: Container(
-                                      constraints: BoxConstraints.tightFor(),
-                                      child: Image.asset('assets/INKCLogo.png'),
-                                      margin: EdgeInsets.only(
+                                      constraints:
+                                          const BoxConstraints.tightFor(),
+                                      margin: const EdgeInsets.only(
                                           top: 12, left: 12, bottom: 12),
                                       height: 100.0.sp,
                                       width: 90.0.sp,
@@ -458,6 +439,7 @@ class _SearchpageState extends State<Searchpage> {
                                         //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMq7svXemr7fVP-3Z5Qvb-TFj5LW4zscRvEGgZnVuXe0N9J6Y7iWm6adhgcxmQJPdyqpw&usqp=CAU"),
                                         // fit: BoxFit.fill, //change image fill type
                                       ),
+                                      child: Image.asset('assets/INKCLogo.png'),
                                     ),
                                   ),
                                   // ),
@@ -470,13 +452,15 @@ class _SearchpageState extends State<Searchpage> {
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             top: 30.0, left: 15, right: 20),
-                                        child: Container(
+                                        child: SizedBox(
                                           width: 150.sp,
                                           child: Text(
-                                            '${p_name.toString().replaceAll("<br>", " ")}',
+                                            p_name
+                                                .toString()
+                                                .replaceAll("<br>", " "),
                                             maxLines: 5,
                                             style: TextStyle(
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 19, 11, 10),
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12.sp),
@@ -487,9 +471,9 @@ class _SearchpageState extends State<Searchpage> {
                                         padding: const EdgeInsets.only(
                                             top: 15.0, left: 15, right: 20),
                                         child: Text(
-                                          ' Quantity : ${p_quantity}',
+                                          ' Quantity : $p_quantity',
                                           style: TextStyle(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 53, 52, 52),
                                               fontWeight: FontWeight.bold,
                                               fontSize: 12.sp),
@@ -504,9 +488,9 @@ class _SearchpageState extends State<Searchpage> {
                                                 right: 20,
                                                 bottom: 20),
                                             child: Text(
-                                              '₹  ${p_charges}',
+                                              '₹  $p_charges',
                                               style: TextStyle(
-                                                  shadows: [
+                                                  shadows: const [
                                                     Shadow(
                                                       blurRadius:
                                                           10.0, // shadow blur
@@ -519,7 +503,7 @@ class _SearchpageState extends State<Searchpage> {
                                                           2.0), // how much shadow will be shown
                                                     ),
                                                   ],
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 223, 71, 45),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 12.sp),
@@ -532,9 +516,6 @@ class _SearchpageState extends State<Searchpage> {
                                                 right: 20,
                                                 bottom: 20),
                                             child: ElevatedButton(
-                                              child: Text('Delete',
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
                                               onPressed: () async {
                                                 // print(dataload[position].cartId);
                                                 Map<String, String>
@@ -544,8 +525,8 @@ class _SearchpageState extends State<Searchpage> {
                                                   'Userid': userid
                                                 };
 
-                                                final uri =
-                                                    "https://www.inkc.in/api/cart/remove_cart_item";
+                                                const uri =
+                                                    "https://new-demo.inkcdogs.org/api/cart/remove_cart_item";
 
                                                 final responce = await http
                                                     .post(Uri.parse(uri),
@@ -576,8 +557,9 @@ class _SearchpageState extends State<Searchpage> {
                                                 //             Search()));
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Color.fromARGB(
-                                                      255, 231, 25, 25),
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
                                                       color:
@@ -588,6 +570,9 @@ class _SearchpageState extends State<Searchpage> {
                                                               236),
                                                       fontWeight:
                                                           FontWeight.bold)),
+                                              child: const Text('Delete',
+                                                  style: TextStyle(
+                                                      color: Colors.white)),
                                             ),
                                           ),
                                         ],
@@ -608,7 +593,7 @@ class _SearchpageState extends State<Searchpage> {
                       SUBTOTAL = 0;
                       DELEVRY = 0;
                       CHECKTOTAL = 0;
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -622,8 +607,8 @@ class _SearchpageState extends State<Searchpage> {
             padding: const EdgeInsets.only(bottom: 50, right: 18),
             child: DraggableFab(
               child: FloatingActionButton.extended(
-                backgroundColor: Color.fromARGB(255, 29, 184, 76),
-                foregroundColor: Color.fromARGB(255, 247, 240, 240),
+                backgroundColor: const Color.fromARGB(255, 29, 184, 76),
+                foregroundColor: const Color.fromARGB(255, 247, 240, 240),
                 onPressed: () async {
                   String userId,
                       empFullName,
@@ -699,7 +684,7 @@ class _SearchpageState extends State<Searchpage> {
                   showModalBottomSheet<void>(
                     enableDrag: false,
                     isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(20),
                       ),
@@ -720,11 +705,12 @@ class _SearchpageState extends State<Searchpage> {
                               Text(
                                 'CART TOTAL',
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 95, 10, 10),
+                                    color:
+                                        const Color.fromARGB(255, 95, 10, 10),
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Divider(),
+                              const Divider(),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -737,7 +723,7 @@ class _SearchpageState extends State<Searchpage> {
                                         fontWeight: FontWeight.w900),
                                   ),
                                   Text(
-                                    '₹ ' + SUBTOTAL.toString(),
+                                    '₹ $SUBTOTAL',
                                     style: TextStyle(
                                         color: const Color.fromARGB(
                                             255, 68, 16, 16),
@@ -749,7 +735,7 @@ class _SearchpageState extends State<Searchpage> {
                               SizedBox(
                                 height: 10.sp,
                               ),
-                              Divider(),
+                              const Divider(),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -762,9 +748,10 @@ class _SearchpageState extends State<Searchpage> {
                                         fontWeight: FontWeight.w900),
                                   ),
                                   Text(
-                                    'Courier ₹   ' + DELEVRY.toString(),
+                                    'Courier ₹   $DELEVRY',
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 12, 9, 56),
+                                        color: const Color.fromARGB(
+                                            255, 12, 9, 56),
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w700),
                                   ),
@@ -773,7 +760,7 @@ class _SearchpageState extends State<Searchpage> {
                               SizedBox(
                                 height: 10.sp,
                               ),
-                              Divider(),
+                              const Divider(),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -786,7 +773,7 @@ class _SearchpageState extends State<Searchpage> {
                                         fontWeight: FontWeight.w900),
                                   ),
                                   Text(
-                                    '₹ ' + (SUBTOTAL + DELEVRY).toString(),
+                                    '₹ ${SUBTOTAL + DELEVRY}',
                                     style: TextStyle(
                                         color: const Color.fromARGB(
                                             255, 68, 16, 16),
@@ -798,11 +785,11 @@ class _SearchpageState extends State<Searchpage> {
                               SizedBox(
                                 height: 10.sp,
                               ),
-                              Divider(),
+                              const Divider(),
                               Center(
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: const Color.fromARGB(
+                                      backgroundColor: const Color.fromARGB(
                                           255, 80, 3, 3), // Background color
                                     ),
                                     onPressed: () {
@@ -818,7 +805,7 @@ class _SearchpageState extends State<Searchpage> {
                                                         .toString(),
                                                   )));
                                     },
-                                    child: Row(
+                                    child: const Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
@@ -885,7 +872,7 @@ class _SearchpageState extends State<Searchpage> {
 
     // print(token);
 
-    final uri = "https://www.inkc.in/api/cart";
+    const uri = "https://new-demo.inkcdogs.org/api/cart";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -898,6 +885,18 @@ class _SearchpageState extends State<Searchpage> {
       headers: requestHeaders,
     );
     var data = json.decode(responce.body);
+
+    print(data.toString() + 'check');
+
+    var message = data['message'];
+
+    if (message.toString() == "Invalid user request") {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.clear();
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+    }
+
     var dataarray = data['data'];
     access_type = data['access_module'];
     dataload.clear();
@@ -1036,8 +1035,8 @@ class _SearchpageState extends State<Searchpage> {
     } else {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) => Login()));
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => const Login()));
       return dataload;
     }
   }

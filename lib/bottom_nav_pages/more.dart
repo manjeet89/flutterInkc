@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:inkc/animation/progress_bar_stepper.dart';
+import 'package:inkc/bottom_nav_pages/home.dart';
 import 'package:inkc/credential/login.dart';
-import 'package:inkc/main.dart';
 import 'package:inkc/myhomepage.dart';
 import 'package:inkc/other/contactus.dart';
 import 'package:inkc/other/overview.dart';
@@ -12,7 +9,6 @@ import 'package:inkc/other/privacy_policies.dart';
 import 'package:inkc/other/refunds.dart';
 import 'package:inkc/other/social.dart';
 import 'package:inkc/other/terms.dart';
-import 'package:inkc/profile_update.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -30,7 +26,7 @@ class More extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primaryColor: Colors.white),
-        home: MorePage(),
+        home: const MorePage(),
       );
       // return Container(
       //   margin: EdgeInsets.all(30),
@@ -86,13 +82,16 @@ class _MorePageState extends State<MorePage> {
   Checklogin() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    if (check != null) {
+    print(check.toString() + "with me");
+    if (check.toString() == "null") {
       setState(() {
-        _isShow = true;
+        _isShow = false;
+        _isShowoff = true;
       });
     } else {
       setState(() {
-        _isShowoff = true;
+        _isShow = true;
+        _isShowoff = false;
       });
     }
   }
@@ -105,6 +104,12 @@ class _MorePageState extends State<MorePage> {
     //       statusBarColor: Colors.white, statusBarBrightness: Brightness.dark),
     // );
     return WillPopScope(
+      onWillPop: () async {
+        // Prevent the back button from doing anything on the home page.
+        // Navigator.of(context, rootNavigator: true)
+        //     .push(MaterialPageRoute(builder: (_) => const MyApp()));
+        return false;
+      },
       child: Scaffold(
         // appBar: AppBar(
         // title: Title(
@@ -137,7 +142,7 @@ class _MorePageState extends State<MorePage> {
               Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 50.0, left: 30),
+                    margin: const EdgeInsets.only(top: 50.0, left: 30),
                     child: Text(
                       'More',
                       style: TextStyle(
@@ -174,13 +179,13 @@ class _MorePageState extends State<MorePage> {
                     children: [
                       if (UserprofileImage == "null")
                         Container(
-                          margin: EdgeInsets.only(top: 30, left: 20),
+                          margin: const EdgeInsets.only(top: 30, left: 20),
                           height: 70.0.sp,
                           width: 70.0.sp,
                           child: Icon(
                             Icons.person,
                             size: 25.0.sp,
-                            color: ui.Color.fromARGB(255, 141, 35, 35),
+                            color: const ui.Color.fromARGB(255, 141, 35, 35),
                           ),
                           // decoration: BoxDecoration(
                           //   borderRadius: BorderRadius.circular(50.sp),
@@ -193,7 +198,7 @@ class _MorePageState extends State<MorePage> {
                         )
                       else
                         Container(
-                          margin: EdgeInsets.only(top: 30, left: 20),
+                          margin: const EdgeInsets.only(top: 30, left: 20),
                           height: 70.0.sp,
                           width: 70.0.sp,
                           decoration: BoxDecoration(
@@ -201,7 +206,7 @@ class _MorePageState extends State<MorePage> {
                             //set border radius to 50% of square height and width
                             image: DecorationImage(
                               image: NetworkImage(
-                                  "https://www.inkc.in/${UserprofileImage}"),
+                                  "https://new-demo.inkcdogs.org/$UserprofileImage"),
                               fit: BoxFit.cover, //change image fill type
                             ),
                           ),
@@ -219,14 +224,14 @@ class _MorePageState extends State<MorePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${First}${" "}${Last} ',
+                                '$First${" "}$Last ',
                                 style: TextStyle(
                                     fontSize: 17.sp,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                '${phone}',
+                                '$phone',
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   color: Colors.black,
@@ -286,13 +291,13 @@ class _MorePageState extends State<MorePage> {
                 child: Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 20, left: 20),
+                      margin: const EdgeInsets.only(top: 20, left: 20),
                       height: 70.0.sp,
                       width: 70.0.sp,
                       child: Icon(
                         Icons.person,
                         size: 25.0.sp,
-                        color: ui.Color.fromARGB(255, 141, 35, 35),
+                        color: const ui.Color.fromARGB(255, 141, 35, 35),
                       ),
                       // decoration: BoxDecoration(
                       //   borderRadius: BorderRadius.circular(50.sp),
@@ -309,12 +314,13 @@ class _MorePageState extends State<MorePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          new GestureDetector(
+                          GestureDetector(
                             onTap: () {
                               Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(builder: (_) => Login()));
+                                  MaterialPageRoute(
+                                      builder: (_) => const Login()));
                             },
-                            child: new Text(
+                            child: Text(
                               "Hi there!",
                               style: TextStyle(
                                   fontSize: 20.sp,
@@ -330,12 +336,13 @@ class _MorePageState extends State<MorePage> {
                           //       color: Colors.black,
                           //       fontWeight: FontWeight.bold),
                           // ),
-                          new GestureDetector(
+                          GestureDetector(
                             onTap: () {
                               Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(builder: (_) => Login()));
+                                  MaterialPageRoute(
+                                      builder: (_) => const Login()));
                             },
-                            child: new Text(
+                            child: Text(
                               "Log In",
                               style: TextStyle(
                                   decoration: TextDecoration.underline,
@@ -530,7 +537,7 @@ class _MorePageState extends State<MorePage> {
               //   ),
               // ),
 
-              Divider(),
+              const Divider(),
 
               Row(
                 children: [
@@ -552,10 +559,10 @@ class _MorePageState extends State<MorePage> {
               // About
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60.sp,
                     height: 40.sp,
-                    child: Icon(Icons.admin_panel_settings_sharp),
+                    child: const Icon(Icons.admin_panel_settings_sharp),
                   ),
                   InkWell(
                     onTap: () {
@@ -578,7 +585,7 @@ class _MorePageState extends State<MorePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.sp,
-                              color: Color.fromARGB(255, 1, 6, 83),
+                              color: const Color.fromARGB(255, 1, 6, 83),
                             ),
                           ),
                         ],
@@ -591,15 +598,16 @@ class _MorePageState extends State<MorePage> {
               // Digital Presence
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60.sp,
                     height: 40.sp,
-                    child: Icon(Icons.perm_media_rounded),
+                    child: const Icon(Icons.perm_media_rounded),
                   ),
                   InkWell(
                     onTap: () {
                       Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(builder: (_) => SocialMedia()));
+                          MaterialPageRoute(
+                              builder: (_) => const SocialMedia()));
                     },
                     child: Container(
                       child: Column(
@@ -617,7 +625,7 @@ class _MorePageState extends State<MorePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.sp,
-                              color: Color.fromARGB(255, 1, 6, 83),
+                              color: const Color.fromARGB(255, 1, 6, 83),
                             ),
                           ),
                         ],
@@ -630,15 +638,15 @@ class _MorePageState extends State<MorePage> {
               // Contact
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60.sp,
                     height: 40.sp,
-                    child: Icon(Icons.admin_panel_settings_sharp),
+                    child: const Icon(Icons.admin_panel_settings_sharp),
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context, rootNavigator: true)
-                          .push(MaterialPageRoute(builder: (_) => ContactUS()));
+                      Navigator.of(context, rootNavigator: true).push(
+                          MaterialPageRoute(builder: (_) => const ContactUS()));
                     },
                     child: Container(
                       child: Column(
@@ -656,7 +664,7 @@ class _MorePageState extends State<MorePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.sp,
-                              color: Color.fromARGB(255, 1, 6, 83),
+                              color: const Color.fromARGB(255, 1, 6, 83),
                             ),
                           ),
                         ],
@@ -668,10 +676,10 @@ class _MorePageState extends State<MorePage> {
               // Privacy Policy
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60.sp,
                     height: 40.sp,
-                    child: Icon(Icons.admin_panel_settings_sharp),
+                    child: const Icon(Icons.admin_panel_settings_sharp),
                   ),
                   InkWell(
                     onTap: () {
@@ -695,7 +703,7 @@ class _MorePageState extends State<MorePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.sp,
-                              color: Color.fromARGB(255, 1, 6, 83),
+                              color: const Color.fromARGB(255, 1, 6, 83),
                             ),
                           ),
                         ],
@@ -707,10 +715,10 @@ class _MorePageState extends State<MorePage> {
               // Terms and conditions
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60.sp,
                     height: 40.sp,
-                    child: Icon(Icons.terminal_sharp),
+                    child: const Icon(Icons.terminal_sharp),
                   ),
                   InkWell(
                     onTap: () {
@@ -730,7 +738,7 @@ class _MorePageState extends State<MorePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.sp,
-                              color: Color.fromARGB(255, 1, 6, 83),
+                              color: const Color.fromARGB(255, 1, 6, 83),
                             ),
                           ),
                         ],
@@ -744,10 +752,10 @@ class _MorePageState extends State<MorePage> {
               Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 7),
+                    margin: const EdgeInsets.only(top: 7),
                     width: 60.sp,
                     height: 40.sp,
-                    child: Icon(Icons.cancel_presentation_outlined),
+                    child: const Icon(Icons.cancel_presentation_outlined),
                   ),
                   InkWell(
                     onTap: () {
@@ -770,7 +778,7 @@ class _MorePageState extends State<MorePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.sp,
-                              color: Color.fromARGB(255, 1, 6, 83),
+                              color: const Color.fromARGB(255, 1, 6, 83),
                             ),
                           ),
                         ],
@@ -782,10 +790,10 @@ class _MorePageState extends State<MorePage> {
               //Share
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60.sp,
                     height: 40.sp,
-                    child: Icon(Icons.ios_share),
+                    child: const Icon(Icons.ios_share),
                   ),
                   InkWell(
                     onTap: () {
@@ -808,7 +816,49 @@ class _MorePageState extends State<MorePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.sp,
-                              color: Color.fromARGB(255, 1, 6, 83),
+                              color: const Color.fromARGB(255, 1, 6, 83),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+
+              Row(
+                children: [
+                  SizedBox(
+                    width: 60.sp,
+                    height: 60.sp,
+                    child: const Icon(Icons.delivery_dining),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      await preferences.clear();
+
+                      print(preferences.toString());
+
+                      Navigator.of(context, rootNavigator: true).push(
+                          MaterialPageRoute(
+                              builder: (_) => const ProgressBarStepper()));
+                    },
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  top: 0.sp, right: 5, left: 5, bottom: 5)),
+                          Text(
+                            'Navigation',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.sp,
+                              color: const Color.fromARGB(255, 1, 6, 83),
                             ),
                           ),
                         ],
@@ -822,10 +872,10 @@ class _MorePageState extends State<MorePage> {
                 visible: _isShow,
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 60.sp,
                       height: 60.sp,
-                      child: Icon(Icons.logout),
+                      child: const Icon(Icons.logout),
                     ),
                     InkWell(
                       onTap: () async {
@@ -833,8 +883,10 @@ class _MorePageState extends State<MorePage> {
                             await SharedPreferences.getInstance();
                         await preferences.clear();
 
-                        Navigator.of(context, rootNavigator: true)
-                            .push(MaterialPageRoute(builder: (_) => MyApp()));
+                        print(preferences.toString());
+
+                        Navigator.of(context, rootNavigator: true).push(
+                            MaterialPageRoute(builder: (_) => const MyApp()));
                       },
                       child: Container(
                         child: Column(
@@ -849,7 +901,7 @@ class _MorePageState extends State<MorePage> {
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14.sp,
-                                color: Color.fromARGB(255, 1, 6, 83),
+                                color: const Color.fromARGB(255, 1, 6, 83),
                               ),
                             ),
                           ],
@@ -863,9 +915,6 @@ class _MorePageState extends State<MorePage> {
           ),
         ),
       ),
-      onWillPop: () async {
-        return false;
-      },
     );
   }
 

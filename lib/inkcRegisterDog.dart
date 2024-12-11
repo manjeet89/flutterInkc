@@ -3,17 +3,12 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:inkc/dropdownmodel/drop_down_second_owner_kennel_name.dart';
 import 'package:inkc/model/InkcRegisterDogmodel.dart';
 import 'package:inkc/second_owner/second_owner_dog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
-import 'inkcstoreproductdetails.dart';
-import 'model/storelistmodel.dart';
 import 'non_inkc_registor_dog_details.dart';
 
 class INKCDogRegistration extends StatefulWidget {
@@ -48,8 +43,8 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
 
     // print('${userid} / ${token}');
 
-    final uri =
-        "https://www.inkc.in/api/dog/inkc_kci_registered_dog_second_own";
+    const uri =
+        "https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog_second_own";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -80,9 +75,9 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    print('${userid} / ${token}');
+    print('$userid / $token');
 
-    final uri = "https://www.inkc.in/api/dog/inkc_kci_registered_dog";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -138,7 +133,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                   Text(
                     'INKC Registered Dogs',
                     style: TextStyle(
-                        shadows: [
+                        shadows: const [
                           Shadow(
                             blurRadius: 10.0, // shadow blur
                             color:
@@ -149,7 +144,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                         ],
                         fontSize: 20.sp,
                         decorationColor: Colors.red,
-                        color: Color.fromARGB(255, 194, 97, 33),
+                        color: const Color.fromARGB(255, 194, 97, 33),
                         // color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
@@ -183,7 +178,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                               child: Text(
                                 "No Dog Registered yet.",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 177, 43, 10),
+                                    color: const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -212,12 +207,12 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                       itemBuilder: (context, position) {
                         return Card(
                           elevation: 10,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          margin: EdgeInsets.all(5),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          margin: const EdgeInsets.all(5),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [
                                   Color.fromARGB(255, 255, 255, 255),
                                   Color.fromARGB(255, 255, 255, 255),
@@ -240,7 +235,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                                     height: 150.0.sp,
                                     width: 180.0.sp,
                                     decoration: BoxDecoration(
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                           color: Color.fromARGB(
                                               255, 178, 177, 189),
@@ -256,14 +251,14 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                                       //set border radius to 50% of square height and width
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                            "https://www.inkc.in/${dataload[position].petImage}"),
+                                            "https://new-demo.inkcdogs.org/${dataload[position].petImage}"),
                                         fit: BoxFit
                                             .cover, //change image fill type
                                       ),
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 5),
+                                    margin: const EdgeInsets.only(left: 5),
                                     // width: double.infinity,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -300,7 +295,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Color.fromARGB(
+                                                  backgroundColor: const Color.fromARGB(
                                                       255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
@@ -346,7 +341,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                                                                 .colorMarking
                                                                 .toString())));
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 "Details",
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -358,7 +353,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                                                 const EdgeInsets.only(left: 30),
                                             child: Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Registration Number - ',
                                                   style: TextStyle(
                                                       color: Colors.black,
@@ -391,7 +386,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                     );
                   } else {
                     // print("dataloadlength");
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -401,8 +396,8 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                 visible: secondowenerhide,
                 child: DraggableFab(
                   child: FloatingActionButton.extended(
-                    backgroundColor: Color.fromARGB(255, 21, 49, 29),
-                    foregroundColor: Color.fromARGB(255, 247, 240, 240),
+                    backgroundColor: const Color.fromARGB(255, 21, 49, 29),
+                    foregroundColor: const Color.fromARGB(255, 247, 240, 240),
                     onPressed: () async {
                       // Navigator.of(context, rootNavigator: true).push(
                       //     MaterialPageRoute(builder: (_) => AddKennelName()));
@@ -415,7 +410,7 @@ class _INKCDogRegistrationState extends State<INKCDogRegistration> {
                       'Co-owned Dogs',
                       style: TextStyle(fontSize: 10.sp),
                     ),
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                   ),
                 ),
               ),

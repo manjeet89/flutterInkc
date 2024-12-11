@@ -2,16 +2,10 @@ import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
-import 'package:get/get.dart';
 import 'package:inkc/bottom_nav_pages/home.dart';
 import 'package:inkc/credential/signup.dart';
 import 'package:inkc/firebase_messagign/fire_base_message.dart';
-import 'package:inkc/main.dart';
 import 'package:inkc/myhomepage.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:quickalert/models/quickalert_type.dart';
@@ -45,7 +39,7 @@ class HomeLogin extends StatefulWidget {
 }
 
 class _HomeLogin extends State<HomeLogin> {
-  final tenDigitsOnly = new RegExp(r'^\d{0,10}$');
+  final tenDigitsOnly = RegExp(r'^\d{0,10}$');
   TextEditingController number = TextEditingController();
   TextEditingController password = TextEditingController();
   FocusNode focusNode = FocusNode();
@@ -61,39 +55,41 @@ class _HomeLogin extends State<HomeLogin> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pop(context);
-        return false; // Prevent default behavior
-      },
-      child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.white,
-        //   leading: IconButton(
-        //     icon:
-        //         Icon(Icons.arrow_back, color: Color.fromARGB(255, 243, 242, 242)),
-        //     onPressed: () => Navigator.of(context).push(
-        //         MaterialPageRoute(builder: (BuildContext context) => MyApp())),
-        //   ),
-        //   title: Text(
-        //     '',
-        //     style: TextStyle(
-        //         shadows: [
-        //           Shadow(
-        //             blurRadius: 10.0, // shadow blur
-        //             color: Color.fromARGB(255, 223, 71, 45), // shadow color
-        //             offset: Offset(2.0, 2.0), // how much shadow will be shown
-        //           ),
-        //         ],
-        //         fontSize: 20.sp,
-        //         decorationColor: Colors.red,
-        //         color: Color.fromARGB(255, 194, 97, 33),
-        //         // color: Colors.black,
-        //         fontWeight: FontWeight.bold),
-        //   ),
-        //   centerTitle: true,
-        // ),
-        body: SingleChildScrollView(
+    return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   leading: IconButton(
+      //     icon:
+      //         Icon(Icons.arrow_back, color: Color.fromARGB(255, 243, 242, 242)),
+      //     onPressed: () => Navigator.of(context).push(
+      //         MaterialPageRoute(builder: (BuildContext context) => MyApp())),
+      //   ),
+      //   title: Text(
+      //     '',
+      //     style: TextStyle(
+      //         shadows: [
+      //           Shadow(
+      //             blurRadius: 10.0, // shadow blur
+      //             color: Color.fromARGB(255, 223, 71, 45), // shadow color
+      //             offset: Offset(2.0, 2.0), // how much shadow will be shown
+      //           ),
+      //         ],
+      //         fontSize: 20.sp,
+      //         decorationColor: Colors.red,
+      //         color: Color.fromARGB(255, 194, 97, 33),
+      //         // color: Colors.black,
+      //         fontWeight: FontWeight.bold),
+      //   ),
+      //   centerTitle: true,
+      // ),
+      body: WillPopScope(
+        onWillPop: () async {
+          // Navigator.pop(context);
+          Navigator.of(context, rootNavigator: true)
+              .push(MaterialPageRoute(builder: (_) => const HomePages()));
+          return false; // Prevent default behavior
+        },
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 50.0),
             child: Container(
@@ -101,8 +97,8 @@ class _HomeLogin extends State<HomeLogin> {
                 children: [
                   Center(
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 8, 8, 8),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 8, 8, 8),
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                       // color: Colors.black,
@@ -119,7 +115,7 @@ class _HomeLogin extends State<HomeLogin> {
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 2
-                        ..color = Color.fromARGB(255, 22, 22, 22),
+                        ..color = const Color.fromARGB(255, 22, 22, 22),
                     ),
                   ),
                   Container(
@@ -141,8 +137,10 @@ class _HomeLogin extends State<HomeLogin> {
                                         const Offset(0, 20),
                                         const Offset(150, 20),
                                         <Color>[
-                                          Color.fromARGB(255, 235, 15, 15),
-                                          Color.fromARGB(255, 22, 26, 226),
+                                          const Color.fromARGB(
+                                              255, 235, 15, 15),
+                                          const Color.fromARGB(
+                                              255, 22, 26, 226),
                                         ],
                                       )),
                               ),
@@ -166,7 +164,7 @@ class _HomeLogin extends State<HomeLogin> {
                             keyboardType: TextInputType.number,
                             controller: number,
                             focusNode: focusNode,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Phone Number',
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(),
@@ -177,7 +175,7 @@ class _HomeLogin extends State<HomeLogin> {
                               print(phone.completeNumber);
                             },
                             onCountryChanged: (country) {
-                              print('Country changed to: ' + country.name);
+                              print('Country changed to: ${country.name}');
                             },
                           ),
                         ],
@@ -201,8 +199,8 @@ class _HomeLogin extends State<HomeLogin> {
                                       const Offset(0, 20),
                                       const Offset(150, 20),
                                       <Color>[
-                                        Color.fromARGB(255, 235, 15, 15),
-                                        Color.fromARGB(255, 22, 26, 226),
+                                        const Color.fromARGB(255, 235, 15, 15),
+                                        const Color.fromARGB(255, 22, 26, 226),
                                       ],
                                     )),
                             ),
@@ -224,8 +222,8 @@ class _HomeLogin extends State<HomeLogin> {
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4.sp)),
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.green),
+                              borderSide: const BorderSide(
+                                  width: 1, color: Colors.green),
                             ),
                             hintText: "Password",
                             labelText: "Password",
@@ -259,7 +257,7 @@ class _HomeLogin extends State<HomeLogin> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.black,
+                            backgroundColor: Colors.black,
                             minimumSize: const Size.fromHeight(40), // NEW
                           ),
                           onPressed: () async {
@@ -268,7 +266,8 @@ class _HomeLogin extends State<HomeLogin> {
 
                             EasyLoading.showToast('Please Wait...');
 
-                            final uri = "https://www.inkc.in/api/login";
+                            const uri =
+                                "https://new-demo.inkcdogs.org/api/login";
 
                             final responce = await http.post(
                               Uri.parse(uri),
@@ -286,7 +285,7 @@ class _HomeLogin extends State<HomeLogin> {
                               // );
 
                               EasyLoading.dismiss();
-                              // print(data['data']['first_name']);
+                              print(data['data']['user_token']);
 
                               print("1st");
                               if (data['data']['user_address'].toString() ==
@@ -464,7 +463,8 @@ class _HomeLogin extends State<HomeLogin> {
                               await FireBaseApi().initNotification();
 
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (BuildContext context) => MyApp()));
+                                  builder: (BuildContext context) =>
+                                      const MyApp()));
 
                               // Navigator.of(context, rootNavigator: true).push(
                               //     MaterialPageRoute(builder: (_) => MyApp()));
@@ -490,7 +490,7 @@ class _HomeLogin extends State<HomeLogin> {
                             // Navigator.of(context, rootNavigator: true)
                             //     .push(MaterialPageRoute(builder: (_) => MyApp()));
                           },
-                          child: Text(
+                          child: const Text(
                             'Login',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -514,12 +514,13 @@ class _HomeLogin extends State<HomeLogin> {
                                   onTap: () {
                                     Navigator.of(context, rootNavigator: true)
                                         .push(MaterialPageRoute(
-                                            builder: (_) => SignUP()));
+                                            builder: (_) => const SignUP()));
                                   },
                                   child: Text(
                                     'Sign up here ',
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 223, 18, 18),
+                                        color: const Color.fromARGB(
+                                            255, 223, 18, 18),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20.sp),
                                   ),

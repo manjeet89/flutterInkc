@@ -3,11 +3,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter/cupertino.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/events/eventsModel.dart';
 import 'package:inkc/events/events_details.dart';
-import 'package:inkc/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
@@ -26,7 +24,7 @@ class _EventsState extends State<Events> {
   String close = "";
 
   Future<List<EventsModel>> FetchData() async {
-    final uri = "https://www.inkc.in/api/home/event";
+    const uri = "https://new-demo.inkcdogs.org/api/home/event";
 
     final responce = await http.post(Uri.parse(uri));
     var data = json.decode(responce.body);
@@ -50,14 +48,14 @@ class _EventsState extends State<Events> {
         return dataload;
       } else {
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (BuildContext context) => Login()));
+            MaterialPageRoute(builder: (BuildContext context) => const Login()));
         return dataload;
       }
     } else {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) => Login()));
+          .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
       return dataload;
     }
   }
@@ -86,7 +84,7 @@ class _EventsState extends State<Events> {
                   Text(
                     'Events',
                     style: TextStyle(
-                        shadows: [
+                        shadows: const [
                           Shadow(
                             blurRadius: 10.0, // shadow blur
                             color: Color.fromARGB(
@@ -97,7 +95,7 @@ class _EventsState extends State<Events> {
                         ],
                         fontSize: 20.sp,
                         decorationColor: Colors.red,
-                        color: Color.fromARGB(255, 194, 97, 33),
+                        color: const Color.fromARGB(255, 194, 97, 33),
                         // color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
@@ -122,7 +120,7 @@ class _EventsState extends State<Events> {
                               child: Text(
                                 "No Events.",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 177, 43, 10),
+                                    color: const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -193,34 +191,28 @@ class _EventsState extends State<Events> {
                         String timeStamp24HRend = dataload[position]
                             .eventEndDateTime
                             .toString(); //"2020-07-20T18:15:12";
-                        String endtime = new DateFormat.jm()
+                        String endtime = DateFormat.jm()
                             .format(DateTime.parse(timeStamp24HRend));
 
                         String timeStamp24HR = dataload[position]
                             .eventStartDateTime
                             .toString(); //"2020-07-20T18:15:12";
-                        String time = new DateFormat.jm()
+                        String time = DateFormat.jm()
                             .format(DateTime.parse(timeStamp24HR));
 
                         // print(new DateFormat.jm()
                         //     .format(DateTime.parse(timeStamp24HR)));
 
-                        print(close +
-                            " - " +
-                            dateset +
-                            " - " +
-                            time +
-                            " - " +
-                            endtime);
+                        print("$close - $dateset - $time - $endtime");
 
                         return Card(
                           elevation: 10,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          margin: EdgeInsets.all(5),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          margin: const EdgeInsets.all(5),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [
                                   Color.fromARGB(255, 255, 255, 255),
                                   Color.fromARGB(255, 255, 255, 255),
@@ -242,7 +234,7 @@ class _EventsState extends State<Events> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Image.network(
-                                        "https://www.inkc.in/${dataload[position].eventImage}"),
+                                        "https://new-demo.inkcdogs.org/${dataload[position].eventImage}"),
                                   ),
 
                                   // Container(
@@ -264,14 +256,14 @@ class _EventsState extends State<Events> {
                                   //     //set border radius to 50% of square height and width
                                   //     image: DecorationImage(
                                   //       image: NetworkImage(
-                                  //           "https://www.inkc.in/${dataload[position].eventImage}"),
+                                  //           "https://new-demo.inkcdogs.org/${dataload[position].eventImage}"),
                                   //       fit:
                                   //           BoxFit.cover, //change image fill type
                                   //     ),
                                   //   ),
                                   // ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 5),
+                                    margin: const EdgeInsets.only(left: 5),
                                     // width: double.infinity,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -302,14 +294,10 @@ class _EventsState extends State<Events> {
                                           Padding(
                                             padding: const EdgeInsets.all(5.0),
                                             child: Text(
-                                              "( " +
-                                                  dateset +
-                                                  " )  \n    " +
-                                                  dataload[position]
-                                                      .eventLocation
-                                                      .toString(),
+                                              "( $dateset )  \n    ${dataload[position]
+                                                      .eventLocation}",
                                               style: TextStyle(
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 110, 3, 3),
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.bold,
@@ -320,13 +308,9 @@ class _EventsState extends State<Events> {
                                           Padding(
                                             padding: const EdgeInsets.all(5.0),
                                             child: Text(
-                                              "( " +
-                                                  time +
-                                                  " ) - ( " +
-                                                  endtime +
-                                                  " )",
+                                              "( $time ) - ( $endtime )",
                                               style: TextStyle(
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 71, 2, 2),
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.bold,
@@ -347,7 +331,7 @@ class _EventsState extends State<Events> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Color.fromARGB(
+                                                  backgroundColor: const Color.fromARGB(
                                                       255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
@@ -484,13 +468,13 @@ class _EventsState extends State<Events> {
                                                                 //         position]
                                                                 //     .eventEntryClosedOn
                                                                 //     .toString(),
-                                                                EventTime: "Time: " + time + " " + endtime,
-                                                                Eventjudge: dataload[position].lastName.toString() == "null" ? dataload[position].firstName.toString() : dataload[position].firstName.toString() + " " + dataload[position].lastName.toString(),
+                                                                EventTime: "Time: $time $endtime",
+                                                                Eventjudge: dataload[position].lastName.toString() == "null" ? dataload[position].firstName.toString() : "${dataload[position].firstName} ${dataload[position].lastName}",
                                                                 Eventstall: eventstalAC,
                                                                 EventType: dataload[position].eventType.toString(),
                                                                 event_stall: dataload[position].eventStall.toString())));
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 "Events Details",
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -535,7 +519,7 @@ class _EventsState extends State<Events> {
                     );
                   } else {
                     //print("dataloadlength");
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }

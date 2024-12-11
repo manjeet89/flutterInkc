@@ -30,7 +30,7 @@ class _ContactUSState extends State<ContactUS> {
             title: Text(
               'Contact Us',
               style: TextStyle(
-                  shadows: [
+                  shadows: const [
                     Shadow(
                       blurRadius: 10.0, // shadow blur
                       color: Color.fromARGB(255, 223, 71, 45), // shadow color
@@ -39,7 +39,7 @@ class _ContactUSState extends State<ContactUS> {
                   ],
                   fontSize: 20.sp,
                   decorationColor: Colors.red,
-                  color: Color.fromARGB(255, 194, 97, 33),
+                  color: const Color.fromARGB(255, 194, 97, 33),
                   // color: Colors.black,
                   fontWeight: FontWeight.bold),
             ),
@@ -69,7 +69,7 @@ class _ContactUSState extends State<ContactUS> {
                         fontWeight: FontWeight.w400),
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -84,7 +84,7 @@ class _ContactUSState extends State<ContactUS> {
                       ),
                       InkWell(
                         onTap: () async {
-                          var url = Uri.parse("https://www.inkc.in");
+                          var url = Uri.parse("https://new-demo.inkcdogs.org");
                           if (await canLaunchUrl(url)) {
                             await launchUrl(url);
                           } else {
@@ -102,7 +102,7 @@ class _ContactUSState extends State<ContactUS> {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -115,7 +115,7 @@ class _ContactUSState extends State<ContactUS> {
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w600),
                       ),
-                      Container(
+                      SizedBox(
                         width: 120.sp,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -123,7 +123,7 @@ class _ContactUSState extends State<ContactUS> {
                             Text(
                               "2nd Floor,\nBelvedere Court,\nOpposite Oval Maidan,\n148 Maharshi Karve Road,\nChurchgate,\n Mumbai – 400020",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 29, 11, 11),
+                                  color: const Color.fromARGB(255, 29, 11, 11),
                                   fontSize: 11.sp,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -134,7 +134,7 @@ class _ContactUSState extends State<ContactUS> {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, left: 8, bottom: 8),
                   child: Row(
@@ -151,7 +151,7 @@ class _ContactUSState extends State<ContactUS> {
                         child: Text(
                           "Monday - Friday - 9AM to 5PM\nSaturday - 9AM to 2PM\nSunday - Closed",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 29, 11, 11),
+                              color: const Color.fromARGB(255, 29, 11, 11),
                               fontSize: 11.sp,
                               fontWeight: FontWeight.w600),
                         ),
@@ -159,7 +159,7 @@ class _ContactUSState extends State<ContactUS> {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -184,7 +184,7 @@ class _ContactUSState extends State<ContactUS> {
                         child: Text(
                           "+912222029106",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 113, 10, 230),
+                              color: const Color.fromARGB(255, 113, 10, 230),
                               fontSize: 11.sp,
                               fontWeight: FontWeight.w600),
                         ),
@@ -192,7 +192,7 @@ class _ContactUSState extends State<ContactUS> {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -217,7 +217,7 @@ class _ContactUSState extends State<ContactUS> {
                         child: Text(
                           "+919920864080",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 113, 10, 230),
+                              color: const Color.fromARGB(255, 113, 10, 230),
                               fontSize: 11.sp,
                               fontWeight: FontWeight.w600),
                         ),
@@ -225,7 +225,7 @@ class _ContactUSState extends State<ContactUS> {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -250,7 +250,7 @@ class _ContactUSState extends State<ContactUS> {
                         child: Text(
                           "+919820141328",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 113, 10, 230),
+                              color: const Color.fromARGB(255, 113, 10, 230),
                               fontSize: 11.sp,
                               fontWeight: FontWeight.w600),
                         ),
@@ -258,7 +258,7 @@ class _ContactUSState extends State<ContactUS> {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -284,7 +284,7 @@ class _ContactUSState extends State<ContactUS> {
                         child: Text(
                           "office@inkc.in",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 230, 10, 10),
+                              color: const Color.fromARGB(255, 230, 10, 10),
                               fontSize: 11.sp,
                               fontWeight: FontWeight.w600),
                         ),
@@ -292,7 +292,7 @@ class _ContactUSState extends State<ContactUS> {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
               ],
             ),
           ),

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -9,8 +8,8 @@ import 'package:http/http.dart' as http;
 
 class FinalCartPrice extends StatefulWidget {
   final String jsonMap, SUBTOTAL, DELEVRY, TOTAL;
-  FinalCartPrice(
-      {required this.jsonMap,
+  const FinalCartPrice(
+      {super.key, required this.jsonMap,
       required this.SUBTOTAL,
       required this.DELEVRY,
       required this.TOTAL});
@@ -20,8 +19,8 @@ class FinalCartPrice extends StatefulWidget {
 }
 
 class _FinalCartPriceState extends State<FinalCartPrice> {
-  TextEditingController email = new TextEditingController();
-  TextEditingController address = new TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController address = TextEditingController();
   String? FontPhoneNumber;
 
   insert() async {
@@ -57,7 +56,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
     var res = await http.post(Uri.https("api.razorpay.com", "v1/orders"),
         headers: requestHeaders, body: jsonEncode(oder));
     if (res.statusCode == 200) {
-      print(" i amw wating" + res.body.toString());
+      print(" i amw wating${res.body}");
       RazorpayRun(jsonDecode(res.body)['id']);
     } else {
       print(" i amw wating");
@@ -83,7 +82,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
     _razorpay.open(options);
   }
 
-  var _razorpay = Razorpay();
+  final _razorpay = Razorpay();
 
   @override
   void initState() {
@@ -99,12 +98,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
     // Do something when payment succeeds
 
-    print("payment done     " +
-        response.orderId.toString() +
-        " - " +
-        response.paymentId.toString() +
-        " - " +
-        response.signature.toString());
+    print("payment done     ${response.orderId} - ${response.paymentId} - ${response.signature}");
 
     var ordertotal = {
       'razorpay_payment_id': response.paymentId.toString(),
@@ -124,12 +118,9 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
       'Userid': userid
     };
 
-    print("Toal Check Data" +
-        widget.jsonMap.toString() +
-        "Ring " +
-        Orders.toString());
+    print("Toal Check Data${widget.jsonMap}Ring $Orders");
 
-    final uri = "https://www.inkc.in/api/store/success_fullpayment";
+    const uri = "https://new-demo.inkcdogs.org/api/store/success_fullpayment";
 
     final responce = await http.post(Uri.parse(uri),
         body: {
@@ -183,7 +174,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
-            title: Text(
+            title: const Text(
               'Billing Details',
               style: TextStyle(
                 fontSize: 20,
@@ -206,7 +197,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: TextField(
                         style: TextStyle(
                             color: Colors.black,
@@ -220,7 +211,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(4.sp)),
                             borderSide:
-                                BorderSide(width: 1, color: Colors.green),
+                                const BorderSide(width: 1, color: Colors.green),
                           ),
                           labelText: 'Email Address',
                           hintText: 'Rajbhar',
@@ -228,7 +219,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: TextField(
                         style: TextStyle(
                             color: Colors.black,
@@ -243,7 +234,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(4.sp)),
                             borderSide:
-                                BorderSide(width: 1, color: Colors.green),
+                                const BorderSide(width: 1, color: Colors.green),
                           ),
                           labelText: ' Address',
                           hintText: 'Rajbhar',
@@ -254,12 +245,12 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                       child: Text(
                         'CART TOTAL',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 8, 83, 1),
+                            color: const Color.fromARGB(255, 8, 83, 1),
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w900),
                       ),
                     ),
-                    Divider(),
+                    const Divider(),
                     Padding(
                       padding:
                           const EdgeInsets.only(left: 28.0, right: 48, top: 10),
@@ -269,12 +260,12 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                           Text(
                             "SubTotal",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 153, 4, 4),
+                                color: const Color.fromARGB(255, 153, 4, 4),
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w900),
                           ),
                           Text(
-                            '₹ ' + widget.SUBTOTAL,
+                            '₹ ${widget.SUBTOTAL}',
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 153, 4, 4),
                                 fontSize: 13.sp,
@@ -286,7 +277,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                     SizedBox(
                       height: 10.sp,
                     ),
-                    Divider(),
+                    const Divider(),
                     Padding(
                       padding: const EdgeInsets.only(left: 28.0, top: 5),
                       child: Row(
@@ -300,9 +291,9 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                                 fontWeight: FontWeight.w900),
                           ),
                           Text(
-                            'Courier ₹ ' + widget.DELEVRY.toString(),
+                            'Courier ₹ ${widget.DELEVRY}',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 153, 4, 4),
+                                color: const Color.fromARGB(255, 153, 4, 4),
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w700),
                           ),
@@ -312,7 +303,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                     SizedBox(
                       height: 10.sp,
                     ),
-                    Divider(),
+                    const Divider(),
                     Padding(
                       padding:
                           const EdgeInsets.only(left: 28.0, top: 5, right: 48),
@@ -327,9 +318,9 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                                 fontWeight: FontWeight.w900),
                           ),
                           Text(
-                            '₹ ' + widget.TOTAL.toString(),
+                            '₹ ${widget.TOTAL}',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 153, 4, 4),
+                                color: const Color.fromARGB(255, 153, 4, 4),
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w700),
                           ),
@@ -339,17 +330,17 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                     SizedBox(
                       height: 10.sp,
                     ),
-                    Divider(),
+                    const Divider(),
                     Center(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: const Color.fromARGB(
+                            backgroundColor: const Color.fromARGB(
                                 255, 8, 83, 1), // Background color
                           ),
                           onPressed: () {
                             create_order_id();
                           },
-                          child: Row(
+                          child: const Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

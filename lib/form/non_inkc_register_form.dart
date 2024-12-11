@@ -6,19 +6,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:inkc/dropdownmodel/drop_down_breed_list.dart';
 import 'package:inkc/dropdownmodel/drop_down_color_and_making_list.dart';
 import 'package:inkc/dropdownmodel/drop_down_model_kennel_name.dart';
-import 'package:inkc/model/profilemodel.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
 class NonInkcRegistrationForm extends StatelessWidget {
+  const NonInkcRegistrationForm({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,12 +39,12 @@ class _NonInkcRegisterFormState extends StatefulWidget {
 }
 
 class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
-  TextEditingController Registornumber = new TextEditingController();
-  TextEditingController Dogname = new TextEditingController();
-  TextEditingController email = new TextEditingController();
-  TextEditingController dateofbirth = new TextEditingController();
-  TextEditingController address = new TextEditingController();
-  TextEditingController personalid = new TextEditingController();
+  TextEditingController Registornumber = TextEditingController();
+  TextEditingController Dogname = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController dateofbirth = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController personalid = TextEditingController();
 
   FocusNode focusNode = FocusNode();
 
@@ -72,11 +71,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
       setState(() {
         date = datepicker;
         dateofbirth.value = TextEditingValue(
-            text: date.day.toString() +
-                "-" +
-                date.month.toString() +
-                "-" +
-                date.year.toString());
+            text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -136,7 +131,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
   // drop - down list
   // kennel name
   List data = [];
-  int _value = 1;
+  final int _value = 1;
   var selectedvalue;
   var selectedid;
 
@@ -159,7 +154,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://www.inkc.in/api/dog/kennel_list_for_non_inkc"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/kennel_list_for_non_inkc"),
           headers: requestHeaders);
       // var data = json.decode(res.body);
       // var dataarray = data['data'];
@@ -205,7 +200,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://www.inkc.in/api/dog/dog_breed_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -269,12 +264,12 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
 
       FormData formData = FormData.fromMap({
         'pet_image': await MultipartFile.fromFile(firstImage!.path,
-            filename: now.second.toString() + ".jpg"),
+            filename: "${now.second}.jpg"),
         'front_side_certificate': await MultipartFile.fromFile(
             secondImage!.path,
-            filename: now.second.toString() + ".jpg"),
+            filename: "${now.second}.jpg"),
         'back_side_certificate': await MultipartFile.fromFile(thiredImage!.path,
-            filename: now.second.toString() + ".jpg"),
+            filename: "${now.second}.jpg"),
         'pet_sub_category_id': Breed,
         'kennel_club_prefix': KennelId,
         'pet_gender': Gender,
@@ -286,7 +281,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
       });
 
       Response response =
-          await dio.post('https://www.inkc.in/api/dog/non_inkc_registration',
+          await dio.post('https://new-demo.inkcdogs.org/api/dog/non_inkc_registration',
               data: formData,
               options: Options(headers: {
                 'Content-type': 'application/json',
@@ -353,7 +348,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
     // var lengthsecond = await secondimages!.length();
     // var lengththired = await thiredimages!.length();
 
-    // var uri = Uri.parse("https://www.inkc.in/api/dog/non_inkc_registration");
+    // var uri = Uri.parse("https://new-demo.inkcdogs.org/api/dog/non_inkc_registration");
 
     // var request = new http.MultipartRequest("POST", uri);
 
@@ -426,7 +421,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://www.inkc.in/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -456,7 +451,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
   }
 
 // Country
-  TextEditingController counrty = new TextEditingController();
+  TextEditingController counrty = TextEditingController();
   bool countryvalidate = false;
 
   //RefreshCart
@@ -465,7 +460,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/cart/cartready";
+    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -482,7 +477,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
     //   showSpinner = false;
     // });
 
-    print(responce.body + " Refresh");
+    print("${responce.body} Refresh");
   }
 
   @override
@@ -505,7 +500,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                 //       color: Color.fromARGB(255, 223, 39, 39)),
                 //   onPressed: () => Navigator.pop(context),
                 // ),
-                title: Text(
+                title: const Text(
                   'Non-INKC Registration',
                   style: TextStyle(
                       shadows: [
@@ -526,8 +521,8 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                 centerTitle: true,
               ),
               body: Container(
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.only(left: 16, top: 5, right: 16),
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(left: 16, top: 5, right: 16),
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
@@ -541,14 +536,14 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                             Text(
                               "Your dog’s photograph ",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 22, 21, 21),
+                                  color: const Color.fromARGB(255, 22, 21, 21),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13.sp),
                             ),
                             Text(
                               "*",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 231, 11, 11),
+                                  color: const Color.fromARGB(255, 231, 11, 11),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15.sp),
                             ),
@@ -562,12 +557,12 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                     EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color.fromARGB(255, 187, 4, 4),
+                                    backgroundColor: const Color.fromARGB(255, 187, 4, 4),
                                   ),
                                   onPressed: () async {
                                     getfirstImage();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Pick Image',
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -593,10 +588,10 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                                 blurRadius: 10,
                                                 color: Colors.black
                                                     .withOpacity(0.1),
-                                                offset: Offset(0, 10))
+                                                offset: const Offset(0, 10))
                                           ],
                                           shape: BoxShape.circle,
-                                          image: new DecorationImage(
+                                          image: DecorationImage(
                                             image: FileImage(
                                                 File(firstImage!.path)
                                                     .absolute),
@@ -604,19 +599,19 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                           )
                                           // image: DecorationImage(
                                           //   image: NetworkImage(
-                                          //       "https://www.inkc.in/${image}"),
+                                          //       "https://new-demo.inkcdogs.org/${image}"),
                                           //   fit: BoxFit.cover, //change image fill type
                                           // ),
                                           ),
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        primary: Color.fromARGB(255, 199, 7, 7),
+                                        backgroundColor: const Color.fromARGB(255, 199, 7, 7),
                                       ),
                                       onPressed: () async {
                                         getfirstImage();
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Pick Image',
                                         style: TextStyle(color: Colors.white),
                                       ),
@@ -632,14 +627,14 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                             Text(
                               "Front side of the certificate ",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 73, 72, 72),
+                                  color: const Color.fromARGB(255, 73, 72, 72),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13.sp),
                             ),
                             Text(
                               "*",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 231, 11, 11),
+                                  color: const Color.fromARGB(255, 231, 11, 11),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15.sp),
                             ),
@@ -653,12 +648,12 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                     EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color.fromARGB(255, 197, 4, 4),
+                                    backgroundColor: const Color.fromARGB(255, 197, 4, 4),
                                   ),
                                   onPressed: () async {
                                     getsecondImage();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Pick Image',
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -684,10 +679,10 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                                 blurRadius: 10,
                                                 color: Colors.black
                                                     .withOpacity(0.1),
-                                                offset: Offset(0, 10))
+                                                offset: const Offset(0, 10))
                                           ],
                                           shape: BoxShape.circle,
-                                          image: new DecorationImage(
+                                          image: DecorationImage(
                                             image: FileImage(
                                                 File(secondImage!.path)
                                                     .absolute),
@@ -695,20 +690,20 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                           )
                                           // image: DecorationImage(
                                           //   image: NetworkImage(
-                                          //       "https://www.inkc.in/${image}"),
+                                          //       "https://new-demo.inkcdogs.org/${image}"),
                                           //   fit: BoxFit.cover, //change image fill type
                                           // ),
                                           ),
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        primary:
-                                            Color.fromARGB(255, 199, 13, 13),
+                                        backgroundColor:
+                                            const Color.fromARGB(255, 199, 13, 13),
                                       ),
                                       onPressed: () async {
                                         getsecondImage();
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Pick Image',
                                         style: TextStyle(color: Colors.white),
                                       ),
@@ -724,14 +719,14 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                             Text(
                               "Back side of the certificate ",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 22, 21, 21),
+                                  color: const Color.fromARGB(255, 22, 21, 21),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13.sp),
                             ),
                             Text(
                               "*",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 231, 11, 11),
+                                  color: const Color.fromARGB(255, 231, 11, 11),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15.sp),
                             ),
@@ -745,12 +740,12 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                     EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color.fromARGB(255, 199, 13, 13),
+                                    backgroundColor: const Color.fromARGB(255, 199, 13, 13),
                                   ),
                                   onPressed: () async {
                                     getthardImage();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Pick Image',
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -776,10 +771,10 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                                 blurRadius: 10,
                                                 color: Colors.black
                                                     .withOpacity(0.1),
-                                                offset: Offset(0, 10))
+                                                offset: const Offset(0, 10))
                                           ],
                                           shape: BoxShape.circle,
-                                          image: new DecorationImage(
+                                          image: DecorationImage(
                                             image: FileImage(
                                                 File(thiredImage!.path)
                                                     .absolute),
@@ -787,19 +782,19 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                           )
                                           // image: DecorationImage(
                                           //   image: NetworkImage(
-                                          //       "https://www.inkc.in/${image}"),
+                                          //       "https://new-demo.inkcdogs.org/${image}"),
                                           //   fit: BoxFit.cover, //change image fill type
                                           // ),
                                           ),
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        primary: Color.fromARGB(255, 187, 9, 9),
+                                        backgroundColor: const Color.fromARGB(255, 187, 9, 9),
                                       ),
                                       onPressed: () async {
                                         getthardImage();
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Pick Image',
                                         style: TextStyle(color: Colors.white),
                                       ),
@@ -815,14 +810,14 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                             Text(
                               "Registration Number ",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 22, 21, 21),
+                                  color: const Color.fromARGB(255, 22, 21, 21),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13.sp),
                             ),
                             Text(
                               "*",
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 231, 11, 11),
+                                  color: const Color.fromARGB(255, 231, 11, 11),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15.sp),
                             ),
@@ -830,18 +825,18 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                         ),
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.only(top: 5),
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   controller: Registornumber,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Registration Number',
@@ -861,7 +856,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "Kennel Club ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -869,7 +864,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -883,7 +878,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           decoration: BoxDecoration(
                                             border: Border.all(
@@ -901,19 +896,19 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                                   selectedid = value;
                                                 });
                                               },
-                                              hint: Text('Select value'),
+                                              hint: const Text('Select value'),
                                               items: snapshot.data!.map((e) {
                                                 return DropdownMenuItem<String>(
                                                   value:
                                                       e.kennelClubId.toString(),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: double
                                                         .infinity, // Auto size based on content
                                                     child: Text(
                                                       e.kennelClubName
                                                           .toString(),
                                                       style: TextStyle(
-                                                          color: Color.fromARGB(
+                                                          color: const Color.fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -958,7 +953,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                         //     }),
                                       );
                                     } else {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     }
                                   }),
                               // Padding(
@@ -990,7 +985,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "Name of the dog ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -998,7 +993,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1006,7 +1001,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   controller: Dogname,
                                   // obscureText: true,
@@ -1014,7 +1009,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Name of the dog',
@@ -1034,7 +1029,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "Date of Birth ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1042,7 +1037,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1050,14 +1045,14 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Row(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.all(8),
+                                      margin: const EdgeInsets.all(8),
                                       width: 160.sp,
                                       child: TextField(
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w600),
                                         onTap: () {},
@@ -1073,11 +1068,11 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon: Icon(Icons.date_range),
+                                          prefixIcon: const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.sp)),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
@@ -1089,7 +1084,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            primary: Color.fromARGB(
+                                            backgroundColor: const Color.fromARGB(
                                                 255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
@@ -1099,7 +1094,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                         onPressed: () {
                                           selectDatePicker();
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Pick date',
                                           style: TextStyle(
                                             color: Colors.white,
@@ -1117,7 +1112,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "Breed ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1125,7 +1120,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1140,7 +1135,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       return Padding(
                                         padding: const EdgeInsets.all(5.0),
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           decoration: BoxDecoration(
                                             border: Border.all(
@@ -1158,18 +1153,18 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                                   selectedbreedid = value;
                                                 });
                                               },
-                                              hint: Text('Select value'),
+                                              hint: const Text('Select value'),
                                               items: snapshot.data!.map((e) {
                                                 return DropdownMenuItem<String>(
                                                   value: e.subCatId.toString(),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: double
                                                         .infinity, // Auto size based on content
                                                     child: Text(
                                                       e.subCategoryName
                                                           .toString(),
                                                       style: TextStyle(
-                                                          color: Color.fromARGB(
+                                                          color: const Color.fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -1213,7 +1208,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                         //     }),
                                       );
                                     } else {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     }
                                   }),
 
@@ -1226,7 +1221,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "Color and Marking ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1234,7 +1229,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1248,7 +1243,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       return Padding(
                                         padding: const EdgeInsets.all(5.0),
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           decoration: BoxDecoration(
                                             border: Border.all(
@@ -1267,17 +1262,17 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                                   selectcolormakingid = value;
                                                 });
                                               },
-                                              hint: Text('Select value'),
+                                              hint: const Text('Select value'),
                                               items: snapshot.data!.map((e) {
                                                 return DropdownMenuItem<String>(
                                                   value: e.colourId.toString(),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: double
                                                         .infinity, // Auto size based on content
                                                     child: Text(
                                                       e.colourName.toString(),
                                                       style: TextStyle(
-                                                          color: Color.fromARGB(
+                                                          color: const Color.fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -1321,7 +1316,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                         //     }),
                                       );
                                     } else {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     }
                                   }),
                               Padding(
@@ -1333,7 +1328,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "Gender ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1341,7 +1336,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "*",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 231, 11, 11),
+                                              const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1349,9 +1344,9 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.all(5),
+                                margin: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  boxShadow: [],
+                                  boxShadow: const [],
                                   border: Border.all(
                                     color: Colors.black,
                                     width: 0.5,
@@ -1360,7 +1355,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                   color: Colors.white,
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   child: Column(
                                     children: [
                                       Row(
@@ -1421,7 +1416,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                       "Country Bred In ",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 22, 21, 21),
+                                              const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1429,14 +1424,14 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   controller: counrty,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.sp)),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Country Bred in',
@@ -1572,19 +1567,7 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
                                     // String Gender = gender.toString();
                                     // String color = selectcolormakingid.toString();
 
-                                    print(Registornumber.text.toString() +
-                                        " - " +
-                                        selectedid.toString() +
-                                        " - " +
-                                        Dogname.text.toString() +
-                                        " - " +
-                                        dateofbirth.text.toString() +
-                                        " - " +
-                                        selectedbreedid.toString() +
-                                        " - " +
-                                        gender.toString() +
-                                        " - " +
-                                        selectcolormakingid.toString());
+                                    print("${Registornumber.text} - $selectedid - ${Dogname.text} - ${dateofbirth.text} - $selectedbreedid - $gender - $selectcolormakingid");
 
                                     // if (dog.toString().isEmpty) {
                                     //   setState(() {
@@ -1619,19 +1602,19 @@ class __NonInkcRegisterFormStateState extends State<_NonInkcRegisterFormState> {
 
                                     //uploadData();
                                   },
-                                  child: Text(
-                                    'Submit',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
                                   style: ElevatedButton.styleFrom(
-                                      primary: Color.fromARGB(255, 46, 6, 155),
+                                      backgroundColor: const Color.fromARGB(255, 46, 6, 155),
                                       textStyle: TextStyle(
                                           fontSize: 10.sp,
                                           color: const Color.fromARGB(
                                               255, 241, 236, 236),
                                           fontWeight: FontWeight.bold)),
+                                  child: const Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               )
                             ],

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:inkc/events/obidient.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
@@ -11,7 +10,7 @@ import 'package:sizer/sizer.dart';
 class INKCEventsDropdown extends StatefulWidget {
   String eventid, eventname, eventtype, eventstal;
   INKCEventsDropdown(
-      {required this.eventid,
+      {super.key, required this.eventid,
       required this.eventname,
       required this.eventtype,
       required this.eventstal});
@@ -39,7 +38,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
   //   print('${userid} / ${token}');
 
   //   final uri =
-  //       "https://www.inkc.in/api/event/obidence_class_and_price_list";
+  //       "https://new-demo.inkcdogs.org/api/event/obidence_class_and_price_list";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',
@@ -99,7 +98,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
     try {
       final res = await http.post(
           Uri.parse(
-              "https://www.inkc.in/api/dog/inkc_kci_registered_dog_second_own"),
+              "https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog_second_own"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -123,7 +122,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
       }
 
       final ress = await http.post(
-          Uri.parse("https://www.inkc.in/api/dog/inkc_kci_registered_dog"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog"),
           headers: requestHeaders);
 
       final bodys = json.decode(ress.body);
@@ -153,7 +152,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    final uri = "https://www.inkc.in/api/cart/cartready";
+    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -170,7 +169,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
     //   showSpinner = false;
     // });
 
-    print(responce.body + " Refresh");
+    print("${responce.body} Refresh");
   }
 
   @override
@@ -213,7 +212,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                   Text(
                     'Event Participate',
                     style: TextStyle(
-                        shadows: [
+                        shadows: const [
                           Shadow(
                             blurRadius: 10.0, // shadow blur
                             color: Color.fromARGB(
@@ -224,7 +223,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                         ],
                         fontSize: 20.sp,
                         decorationColor: Colors.red,
-                        color: Color.fromARGB(255, 194, 97, 33),
+                        color: const Color.fromARGB(255, 194, 97, 33),
                         // color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
@@ -245,7 +244,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.blueGrey),
                                   borderRadius: BorderRadius.circular(5),
@@ -259,7 +258,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                         selectedValue = value;
                                       });
                                     },
-                                    hint: Text('Select value'),
+                                    hint: const Text('Select value'),
                                     items: keyValueList
                                         .map<DropdownMenuItem<String>>(
                                             (Map<String, String> pair) {
@@ -267,13 +266,13 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                       final String value = pair.values.first;
                                       return DropdownMenuItem<String>(
                                         value: key,
-                                        child: Container(
+                                        child: SizedBox(
                                           width: double
                                               .infinity, // Auto size based on content
                                           child: Text(
-                                            '$value'.toString(),
+                                            value.toString(),
                                             style: TextStyle(
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 95, 46, 46),
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.bold),
@@ -335,7 +334,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                           child: Text(
                             "Class (Select at least two option.)",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 22, 21, 21),
+                                color: const Color.fromARGB(255, 22, 21, 21),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.sp),
                           ),
@@ -346,22 +345,22 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                           children: [
                             Row(
                               children: <Widget>[
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ), //SizedBox
-                                Text(
+                                const Text(
                                   'Pre-Beginner ',
                                   style: TextStyle(fontSize: 15.0),
                                 ), //Text
-                                SizedBox(width: 10), //SizedBox
+                                const SizedBox(width: 10), //SizedBox
                                 /** Checkbox Widget **/
                                 Checkbox(
-                                  value: this.prebigner,
+                                  value: prebigner,
                                   onChanged: (value) {
                                     setState(() {
-                                      this.prebigner = value!;
+                                      prebigner = value!;
                                       // obidient.add(value);
-                                      print(this.prebigner);
+                                      print(prebigner);
                                     });
                                   },
                                 ), //Checkbox
@@ -369,20 +368,20 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                             ),
                             Row(
                               children: <Widget>[
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ), //SizedBox
-                                Text(
+                                const Text(
                                   'Beginner ',
                                   style: TextStyle(fontSize: 15.0),
                                 ), //Text
-                                SizedBox(width: 10), //SizedBox
+                                const SizedBox(width: 10), //SizedBox
                                 /** Checkbox Widget **/
                                 Checkbox(
-                                  value: this.bigner,
+                                  value: bigner,
                                   onChanged: (value) {
                                     setState(() {
-                                      this.bigner = value!;
+                                      bigner = value!;
                                       // obidient.add(value);
                                     });
                                   },
@@ -399,20 +398,20 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                             children: [
                               Row(
                                 children: <Widget>[
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ), //SizedBox
-                                  Text(
+                                  const Text(
                                     'Novice ',
                                     style: TextStyle(fontSize: 15.0),
                                   ), //Text
-                                  SizedBox(width: 10), //SizedBox
+                                  const SizedBox(width: 10), //SizedBox
                                   /** Checkbox Widget **/
                                   Checkbox(
-                                    value: this.novic,
+                                    value: novic,
                                     onChanged: (value) {
                                       setState(() {
-                                        this.novic = value!;
+                                        novic = value!;
                                         // obidient.add(value);
                                       });
                                     },
@@ -421,20 +420,20 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ), //SizedBox
-                                  Text(
+                                  const Text(
                                     'Test-A ',
                                     style: TextStyle(fontSize: 15.0),
                                   ), //Text
-                                  SizedBox(width: 10), //SizedBox
+                                  const SizedBox(width: 10), //SizedBox
                                   /** Checkbox Widget **/
                                   Checkbox(
-                                    value: this.Texta,
+                                    value: Texta,
                                     onChanged: (value) {
                                       setState(() {
-                                        this.Texta = value!;
+                                        Texta = value!;
                                         //obidient.add(value);
                                       });
                                     },
@@ -452,20 +451,20 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                             children: [
                               Row(
                                 children: <Widget>[
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ), //SizedBox
-                                  Text(
+                                  const Text(
                                     'Test-B ',
                                     style: TextStyle(fontSize: 15.0),
                                   ), //Text
-                                  SizedBox(width: 10), //SizedBox
+                                  const SizedBox(width: 10), //SizedBox
                                   /** Checkbox Widget **/
                                   Checkbox(
-                                    value: this.Textb,
+                                    value: Textb,
                                     onChanged: (value) {
                                       setState(() {
-                                        this.Textb = value!;
+                                        Textb = value!;
                                         // obidient.add(value);
                                       });
                                     },
@@ -474,20 +473,20 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ), //SizedBox
-                                  Text(
+                                  const Text(
                                     'Test-C ',
                                     style: TextStyle(fontSize: 15.0),
                                   ), //Text
-                                  SizedBox(width: 10), //SizedBox
+                                  const SizedBox(width: 10), //SizedBox
                                   /** Checkbox Widget **/
                                   Checkbox(
-                                    value: this.Textc,
+                                    value: Textc,
                                     onChanged: (value) {
                                       setState(() {
-                                        this.Textc = value!;
+                                        Textc = value!;
                                         //  obidient.add(value);
                                       });
                                     },
@@ -597,12 +596,12 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                               Text(
                                 "Do you need stall              ",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 22, 21, 21),
+                                    color: const Color.fromARGB(255, 22, 21, 21),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp),
                               ),
                               Container(
-                                margin: EdgeInsets.only(top: 0),
+                                margin: const EdgeInsets.only(top: 0),
                                 // decoration: BoxDecoration(
                                 //   boxShadow: [],
                                 //   border: Border.all(
@@ -613,7 +612,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                 //   color: Colors.white,
                                 // ),
                                 child: Padding(
-                                  padding: EdgeInsets.only(top: 0),
+                                  padding: const EdgeInsets.only(top: 0),
                                   child: Column(
                                     children: [
                                       Row(
@@ -684,7 +683,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   Text(
                                     "stall Day          ",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
+                                        color: const Color.fromARGB(255, 22, 21, 21),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12.sp),
                                   ),
@@ -784,12 +783,12 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   Text(
                                     "Stall Type             ",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 22, 21, 21),
+                                        color: const Color.fromARGB(255, 22, 21, 21),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12.sp),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(top: 0),
+                                    margin: const EdgeInsets.only(top: 0),
                                     // decoration: BoxDecoration(
                                     //   boxShadow: [],
                                     //   border: Border.all(
@@ -800,7 +799,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                     //   color: Colors.white,
                                     // ),
                                     child: Padding(
-                                      padding: EdgeInsets.only(top: 0),
+                                      padding: const EdgeInsets.only(top: 0),
                                       child: Column(
                                         children: [
                                           Row(
@@ -867,7 +866,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 231, 25, 25),
+                              backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                               textStyle: TextStyle(
                                   fontSize: 10.sp,
                                   color:
@@ -927,19 +926,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   text: 'Please Select atlest 2 box',
                                 );
                               } else {
-                                print(selectedValue.toString() +
-                                    "-" +
-                                    Day +
-                                    " - " +
-                                    Type +
-                                    " - " +
-                                    obidient.toString() +
-                                    " - " +
-                                    stallReq.toString() +
-                                    " - " +
-                                    widget.eventid +
-                                    widget.eventtype +
-                                    widget.eventstal);
+                                print("$selectedValue-$Day - $Type - $obidient - $stallReq - ${widget.eventid}${widget.eventtype}${widget.eventstal}");
 
                                 SharedPreferences sharedprefrence =
                                     await SharedPreferences.getInstance();
@@ -954,8 +941,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   'Userid': userid
                                 };
 
-                                final uri =
-                                    "https://www.inkc.in/api/event/participate";
+                                const uri =
+                                    "https://new-demo.inkcdogs.org/api/event/participate";
 
                                 final responce = await http.post(Uri.parse(uri),
                                     body: {
@@ -985,7 +972,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                               // print(data['message']);
                             }
                           },
-                          child: Text(
+                          child: const Text(
                             "Submit",
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
