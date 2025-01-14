@@ -10,7 +10,8 @@ import 'package:sizer/sizer.dart';
 class INKCEventsDropdown extends StatefulWidget {
   String eventid, eventname, eventtype, eventstal;
   INKCEventsDropdown(
-      {super.key, required this.eventid,
+      {super.key,
+      required this.eventid,
       required this.eventname,
       required this.eventtype,
       required this.eventstal});
@@ -122,7 +123,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
       }
 
       final ress = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog"),
+          Uri.parse(
+              "https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog"),
           headers: requestHeaders);
 
       final bodys = json.decode(ress.body);
@@ -244,7 +246,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.blueGrey),
                                   borderRadius: BorderRadius.circular(5),
@@ -596,7 +599,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                               Text(
                                 "Do you need stall              ",
                                 style: TextStyle(
-                                    color: const Color.fromARGB(255, 22, 21, 21),
+                                    color:
+                                        const Color.fromARGB(255, 22, 21, 21),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp),
                               ),
@@ -683,7 +687,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   Text(
                                     "stall Day          ",
                                     style: TextStyle(
-                                        color: const Color.fromARGB(255, 22, 21, 21),
+                                        color: const Color.fromARGB(
+                                            255, 22, 21, 21),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12.sp),
                                   ),
@@ -783,7 +788,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   Text(
                                     "Stall Type             ",
                                     style: TextStyle(
-                                        color: const Color.fromARGB(255, 22, 21, 21),
+                                        color: const Color.fromARGB(
+                                            255, 22, 21, 21),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12.sp),
                                   ),
@@ -866,7 +872,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 231, 25, 25),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 231, 25, 25),
                               textStyle: TextStyle(
                                   fontSize: 10.sp,
                                   color:
@@ -926,7 +933,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   text: 'Please Select atlest 2 box',
                                 );
                               } else {
-                                print("$selectedValue-$Day - $Type - $obidient - $stallReq - ${widget.eventid}${widget.eventtype}${widget.eventstal}");
+                                print(
+                                    "$selectedValue-$Day - $Type - $obidient - $stallReq - ${widget.eventid}${widget.eventtype}${widget.eventstal}");
 
                                 SharedPreferences sharedprefrence =
                                     await SharedPreferences.getInstance();

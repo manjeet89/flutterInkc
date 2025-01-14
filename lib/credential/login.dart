@@ -431,6 +431,18 @@ class _HomeLogin extends State<HomeLogin> {
                                     "UserProfileImage",
                                     data['data']['user_profile_image']);
                               }
+                              // card code with id card
+                              if (data['data']['card_code'].toString() ==
+                                  "null") {
+                                SharedPreferences card_code =
+                                    await SharedPreferences.getInstance();
+                                await card_code.setString("card_code", "null");
+                              } else {
+                                SharedPreferences card_code =
+                                    await SharedPreferences.getInstance();
+                                await card_code.setString(
+                                    "card_code", data['data']['card_code']);
+                              }
 
                               SharedPreferences UserName =
                                   await SharedPreferences.getInstance();

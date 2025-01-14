@@ -60,8 +60,8 @@ class _StudsAvailableState extends State {
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
-                      url: WebUri.uri(
-                          Uri.parse("https://new-demo.inkcdogs.org/studs-available")),
+                      url: WebUri.uri(Uri.parse(
+                          "https://new-demo.inkcdogs.org/studs-available")),
                     ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;

@@ -15,7 +15,8 @@ class INKCDetails extends StatefulWidget {
       prductdescription,
       productId;
   INKCDetails(
-      {super.key, required this.image,
+      {super.key,
+      required this.image,
       required this.productName,
       required this.productfacePrice,
       required this.productactualPrice,
@@ -208,8 +209,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                                           body: {
                                             "product_id":
                                                 widget.productId.toString(),
-                                            "product_quantity":
-                                                i.toString()
+                                            "product_quantity": i.toString()
                                           },
                                         );
 
@@ -251,8 +251,8 @@ class _INKCDetailsState extends State<INKCDetails> {
                                         // That's it to display an alert, use other properties to customize.
                                       },
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              const Color.fromARGB(255, 231, 25, 25),
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 231, 25, 25),
                                           textStyle: TextStyle(
                                               fontSize: 10.sp,
                                               color: const Color.fromARGB(

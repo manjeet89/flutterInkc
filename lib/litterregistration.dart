@@ -13,7 +13,8 @@ import 'package:http/http.dart' as http;
 
 class LitterRegistration extends StatefulWidget {
   String value, dob;
-  LitterRegistration({super.key, 
+  LitterRegistration({
+    super.key,
     required this.value,
     required this.dob,
   });
@@ -256,8 +257,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value = TextEditingValue(
-            text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value =
+            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -302,7 +303,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse(
+              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -375,15 +377,15 @@ class _LitterRegistrationState extends State<LitterRegistration> {
         'kennel_name_pre': prifixdata,
       });
 
-      Response response =
-          await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration',
-              data: formDatas,
-              options: Options(headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-                'Usertoken': token,
-                'Userid': userid
-              }));
+      Response response = await dio.post(
+          'https://new-demo.inkcdogs.org/api/dog/litter_registration',
+          data: formDatas,
+          options: Options(headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Usertoken': token,
+            'Userid': userid
+          }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -432,10 +434,10 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                       shadows: [
                         Shadow(
                           blurRadius: 10.0.sp, // shadow blur
-                          color:
-                              const Color.fromARGB(255, 223, 71, 45), // shadow color
-                          offset:
-                              const Offset(2.0, 2.0), // how much shadow will be shown
+                          color: const Color.fromARGB(
+                              255, 223, 71, 45), // shadow color
+                          offset: const Offset(
+                              2.0, 2.0), // how much shadow will be shown
                         ),
                       ],
                       fontSize: 23.sp,
@@ -464,8 +466,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                       Text(
                                         "Sire's INKC Registration Number ",
                                         style: TextStyle(
-                                            color:
-                                                const Color.fromARGB(255, 22, 21, 21),
+                                            color: const Color.fromARGB(
+                                                255, 22, 21, 21),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13.sp),
                                       ),
@@ -509,8 +511,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                     padding: const EdgeInsets.all(8),
                                     child: Text(
                                       sireString.toString(),
-                                      style:
-                                          const TextStyle(color: Colors.deepOrange),
+                                      style: const TextStyle(
+                                          color: Colors.deepOrange),
                                     ),
                                   ),
                                 ),
@@ -523,8 +525,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                       Text(
                                         "Upload Litter's Photograph with mother ",
                                         style: TextStyle(
-                                            color:
-                                                const Color.fromARGB(255, 22, 21, 21),
+                                            color: const Color.fromARGB(
+                                                255, 22, 21, 21),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13.sp),
                                       ),
@@ -547,15 +549,15 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                               left: 60.sp, right: 60.sp),
                                           child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: const Color.fromARGB(
-                                                  255, 173, 4, 4),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                      255, 173, 4, 4),
                                             ),
                                             onPressed: () async {
                                               getfirstImage();
                                             },
                                             child: const Padding(
-                                              padding:
-                                                  EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
                                                 'Pick Image',
                                                 style: TextStyle(
@@ -584,7 +586,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                                           blurRadius: 10,
                                                           color: Colors.black
                                                               .withOpacity(0.1),
-                                                          offset: const Offset(0, 10))
+                                                          offset: const Offset(
+                                                              0, 10))
                                                     ],
                                                     shape: BoxShape.circle,
                                                     image: DecorationImage(
@@ -602,8 +605,9 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                               ),
                                               ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                  backgroundColor: const Color.fromARGB(
-                                                      255, 223, 20, 20),
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 223, 20, 20),
                                                 ),
                                                 onPressed: () async {
                                                   getfirstImage();
@@ -657,7 +661,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               DropdownButtonFormField<String>(
-                                                decoration: const InputDecoration(
+                                                decoration:
+                                                    const InputDecoration(
                                                   contentPadding:
                                                       EdgeInsets.only(
                                                           left: 30, right: 10),
@@ -667,12 +672,14 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                                               Radius.circular(
                                                                   10))),
                                                 ),
-                                                hint: const Text("selected value"),
+                                                hint: const Text(
+                                                    "selected value"),
                                                 value: selectedValue,
                                                 onChanged: (String? newValue) {
                                                   setState(() {
                                                     selectedValue = newValue;
-                                                    print("$newValue new values");
+                                                    print(
+                                                        "$newValue new values");
                                                   });
                                                   // if (newValue != null) {
                                                   //   //Handle dropdown value change
@@ -696,7 +703,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                                     child: Text(
                                                       value.toString(),
                                                       style: TextStyle(
-                                                          color: const Color.fromARGB(
+                                                          color: const Color
+                                                              .fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -1003,8 +1011,7 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                                           decoration:
                                                               const InputDecoration(
                                                             contentPadding:
-                                                                EdgeInsets
-                                                                    .only(
+                                                                EdgeInsets.only(
                                                                     left: 30,
                                                                     right: 10),
                                                             border: OutlineInputBorder(
@@ -1027,7 +1034,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                                                   e.colourName
                                                                       .toString(),
                                                                   style: TextStyle(
-                                                                      color: const Color.fromARGB(
+                                                                      color: const Color
+                                                                          .fromARGB(
                                                                           255,
                                                                           95,
                                                                           46,
@@ -1073,8 +1081,8 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                   ),
                                 ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color.fromARGB(255, 14, 41, 163),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 14, 41, 163),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
                                             color: const Color.fromARGB(

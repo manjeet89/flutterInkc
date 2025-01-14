@@ -31,7 +31,8 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
 
     print('$userid / $token');
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/non_inkc_kci_registered_dog";
+    const uri =
+        "https://new-demo.inkcdogs.org/api/dog/non_inkc_kci_registered_dog";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -133,7 +134,8 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                               child: Text(
                                 "No Dog Registered yet.",
                                 style: TextStyle(
-                                    color: const Color.fromARGB(255, 177, 43, 10),
+                                    color:
+                                        const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -250,8 +252,9 @@ class _NonInkcRegistrationDogState extends State<NonInkcRegistrationDog> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  backgroundColor: const Color.fromARGB(
-                                                      255, 231, 25, 25),
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
                                                       color:

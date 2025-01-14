@@ -148,8 +148,9 @@ class _INKCStoreState extends State<INKCStore> {
                                           padding: const EdgeInsets.all(5.0),
                                           child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                                backgroundColor: const Color.fromARGB(
-                                                    255, 231, 25, 25),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 231, 25, 25),
                                                 textStyle: TextStyle(
                                                     fontSize: 10.sp,
                                                     color: const Color.fromARGB(

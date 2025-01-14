@@ -47,15 +47,15 @@ class _EventsState extends State<Events> {
         }
         return dataload;
       } else {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (BuildContext context) => const Login()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => const Login()));
         return dataload;
       }
     } else {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => const Login()));
       return dataload;
     }
   }
@@ -120,7 +120,8 @@ class _EventsState extends State<Events> {
                               child: Text(
                                 "No Events.",
                                 style: TextStyle(
-                                    color: const Color.fromARGB(255, 177, 43, 10),
+                                    color:
+                                        const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -294,8 +295,7 @@ class _EventsState extends State<Events> {
                                           Padding(
                                             padding: const EdgeInsets.all(5.0),
                                             child: Text(
-                                              "( $dateset )  \n    ${dataload[position]
-                                                      .eventLocation}",
+                                              "( $dateset )  \n    ${dataload[position].eventLocation}",
                                               style: TextStyle(
                                                 color: const Color.fromARGB(
                                                     255, 110, 3, 3),
@@ -331,8 +331,9 @@ class _EventsState extends State<Events> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  backgroundColor: const Color.fromARGB(
-                                                      255, 231, 25, 25),
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
                                                       color:

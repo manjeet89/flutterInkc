@@ -50,6 +50,9 @@ class _OtherClubRegistrationFromState extends State<OtherClubRegistrationFrom> {
   File? _image;
   File? _frontside;
   File? _backside;
+  File? _Siretransferformcertificate;
+  File? siretranferform;
+
   TextEditingController sire = TextEditingController();
   TextEditingController dam = TextEditingController();
   TextEditingController Dogname = TextEditingController();
@@ -344,6 +347,10 @@ class _OtherClubRegistrationFromState extends State<OtherClubRegistrationFrom> {
           'sire_back_side_certificate': await MultipartFile.fromFile(
               _backside!.path,
               filename: "${now.second}.jpg"),
+          if (_Siretransferformcertificate.toString() != "null")
+            'other_club_transfer_form_sire': await MultipartFile.fromFile(
+                _Siretransferformcertificate!.path,
+                filename: "${now.second}.jpg"),
         });
 
         Response response = await dio.post(
@@ -363,6 +370,8 @@ class _OtherClubRegistrationFromState extends State<OtherClubRegistrationFrom> {
           var responseData = jsonDecode(response.data);
           var sirefront = responseData['data']['sire_front_side_certificate'];
           var sireback = responseData['data']['sire_back_side_certificate'];
+          var siretranferform =
+              responseData['data']['other_club_transfer_form_sire'];
 
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => LitterPuppyRegistration(
@@ -374,9 +383,12 @@ class _OtherClubRegistrationFromState extends State<OtherClubRegistrationFrom> {
                     image: _image.toString(),
                     sirebackcerificate: sireback,
                     sirefrontcerificate: sirefront,
-                     dambackcerificate: damback,
+                    dambackcerificate: damback,
                     damfrontcerificate: damfront,
                     petcolordid: breedid.toString(),
+                    siretranferform: siretranferform.toString(),
+                    siretranform: "",
+                    damtranform: "",
                   )));
         } else {
           setState(() {
@@ -423,6 +435,8 @@ class _OtherClubRegistrationFromState extends State<OtherClubRegistrationFrom> {
           var studAgreementForm = responseData['data']['stud_agreement_form'];
           var sirefront = responseData['data']['sire_front_side_certificate'];
           var sireback = responseData['data']['sire_back_side_certificate'];
+          var siretranferform =
+              responseData['data']['other_club_transfer_form_sire'];
           print(studAgreementForm);
 
           Navigator.of(context).push(MaterialPageRoute(
@@ -435,9 +449,12 @@ class _OtherClubRegistrationFromState extends State<OtherClubRegistrationFrom> {
                     image: studAgreementForm.toString(),
                     sirebackcerificate: sireback.toString(),
                     sirefrontcerificate: sirefront.toString(),
-                     dambackcerificate: damback,
+                    siretranferform: siretranferform.toString(),
+                    dambackcerificate: damback,
                     damfrontcerificate: damfront,
                     petcolordid: breedid.toString(),
+                    siretranform: "",
+                    damtranform: "",
                   )));
         } else {
           setState(() {
@@ -777,6 +794,65 @@ class _OtherClubRegistrationFromState extends State<OtherClubRegistrationFrom> {
                         ],
                       ),
                       Padding(
+                        padding: const EdgeInsets.only(top: 20.0, left: 12),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Sire's Transfer Form",
+                              style: TextStyle(
+                                  color: const Color.fromARGB(255, 22, 21, 21),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.sp),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          FittedBox(
+                            fit: BoxFit.fill,
+                            child: CircleAvatar(
+                              backgroundColor: const Color(0xEBA020F0),
+                              radius: 64,
+                              foregroundImage:
+                                  _Siretransferformcertificate != null
+                                      ? FileImage(_Siretransferformcertificate!)
+                                      : null,
+                              child: const Text(
+                                "Select image",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 199, 7, 7),
+                            ),
+                            onPressed: () async {
+                              final files = await imagehelper.PickImage();
+                              if (files.isNotEmpty) {
+                                final cropperFile = await imagehelper.crop(
+                                    file: files.first,
+                                    cropStyle: CropStyle.circle);
+                                if (cropperFile != null) {
+                                  setState(() => _Siretransferformcertificate =
+                                      File(cropperFile.path));
+                                  print(
+                                      "justcheck$_Siretransferformcertificate");
+                                }
+                              }
+                            },
+                            child: const Text(
+                              'Pick Image',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: Column(
                             children: <Widget>[
@@ -890,8 +966,7 @@ class _OtherClubRegistrationFromState extends State<OtherClubRegistrationFrom> {
                                         if (cropperFile != null) {
                                           setState(() =>
                                               _image = File(cropperFile.path));
-                                          print(
-                                              "justcheck$_image");
+                                          print("justcheck$_image");
                                         }
                                       }
                                     },

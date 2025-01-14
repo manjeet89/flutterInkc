@@ -124,8 +124,8 @@ class VerificationOtp extends StatelessWidget {
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.green),
+                                  borderSide: const BorderSide(
+                                      width: 1, color: Colors.green),
                                 ),
                                 hintText: "0"),
                             // style: Theme.of(context).textTheme.headline6,
@@ -152,8 +152,8 @@ class VerificationOtp extends StatelessWidget {
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.green),
+                                  borderSide: const BorderSide(
+                                      width: 1, color: Colors.green),
                                 ),
                                 hintText: "0"),
                             // style: Theme.of(context).textTheme.headline6,
@@ -180,8 +180,8 @@ class VerificationOtp extends StatelessWidget {
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.green),
+                                  borderSide: const BorderSide(
+                                      width: 1, color: Colors.green),
                                 ),
                                 hintText: "0"),
                             // style: Theme.of(context).textTheme.headline6,
@@ -208,8 +208,8 @@ class VerificationOtp extends StatelessWidget {
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.green),
+                                  borderSide: const BorderSide(
+                                      width: 1, color: Colors.green),
                                 ),
                                 hintText: "0"),
                             // style: Theme.of(context).textTheme.headline6,
@@ -232,7 +232,8 @@ class VerificationOtp extends StatelessWidget {
                     onPressed: () async {
                       EasyLoading.showToast('Please Wait...');
 
-                      const uri = "https://new-demo.inkcdogs.org/api/login/verification";
+                      const uri =
+                          "https://new-demo.inkcdogs.org/api/login/verification";
 
                       final responce = await http.post(
                         Uri.parse(uri),

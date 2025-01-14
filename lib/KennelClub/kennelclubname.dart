@@ -396,8 +396,10 @@ class _KennelClubNameState extends State<KennelClubName> {
                     padding: const EdgeInsets.only(bottom: 50, right: 8),
                     child: DraggableFab(
                       child: FloatingActionButton.extended(
-                        backgroundColor: const Color.fromARGB(255, 231, 236, 233),
-                        foregroundColor: const Color.fromARGB(255, 247, 240, 240),
+                        backgroundColor:
+                            const Color.fromARGB(255, 231, 236, 233),
+                        foregroundColor:
+                            const Color.fromARGB(255, 247, 240, 240),
                         onPressed: () async {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) =>

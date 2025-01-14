@@ -47,8 +47,8 @@ class _KennelNumberState extends State<KennelNumber> {
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value = TextEditingValue(
-            text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value =
+            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
 
         final birthday = DateTime(int.parse(date.year.toString()),
             int.parse(date.month.toString()), int.parse(date.day.toString()));
@@ -199,9 +199,10 @@ class _KennelNumberState extends State<KennelNumber> {
                     shadows: [
                       Shadow(
                         blurRadius: 10.0.sp, // shadow blur
-                        color: const Color.fromARGB(255, 223, 71, 45), // shadow color
-                        offset:
-                            const Offset(2.0, 2.0), // how much shadow will be shown
+                        color: const Color.fromARGB(
+                            255, 223, 71, 45), // shadow color
+                        offset: const Offset(
+                            2.0, 2.0), // how much shadow will be shown
                       ),
                     ],
                     fontSize: 23.sp,
@@ -258,8 +259,8 @@ class _KennelNumberState extends State<KennelNumber> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
                         ],
-                        keyboardType:
-                            const TextInputType.numberWithOptions(decimal: false),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: false),
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -291,8 +292,8 @@ class _KennelNumberState extends State<KennelNumber> {
                           maxLines: 1,
                           controller: avalable,
                           enabled: false,
-                          keyboardType:
-                              const TextInputType.numberWithOptions(decimal: false),
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: false),
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
@@ -313,7 +314,8 @@ class _KennelNumberState extends State<KennelNumber> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.blueGrey),
                                     borderRadius: BorderRadius.circular(5),
@@ -427,8 +429,8 @@ class _KennelNumberState extends State<KennelNumber> {
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.green),
+                                  borderSide: const BorderSide(
+                                      width: 1, color: Colors.green),
                                 ),
                                 labelText: 'Date of Birth',
                                 hintText: '',
@@ -496,7 +498,8 @@ class _KennelNumberState extends State<KennelNumber> {
                     Center(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 43, 9, 168),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 43, 9, 168),
                               textStyle: TextStyle(
                                   fontSize: 10.sp,
                                   color:

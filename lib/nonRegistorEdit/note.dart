@@ -34,7 +34,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
   Check() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    }
+  }
 
   List<NoteList> dataload = [];
 
@@ -119,7 +119,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                         String time =
                             "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
                         // print("$fdate $time");
-                                              return Card(
+                        return Card(
                           elevation: 10,
                           color: const Color.fromARGB(255, 255, 255, 255),
                           margin: const EdgeInsets.all(5),
@@ -355,7 +355,8 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4.sp)),
-                        borderSide: const BorderSide(width: 1, color: Colors.green),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.green),
                       ),
                       labelText: 'Note',
                       hintText: '',
@@ -377,7 +378,8 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
                           EasyLoading.showToast('Please Wait...');
 
-                          const uri = "https://new-demo.inkcdogs.org/api/dog/add_note";
+                          const uri =
+                              "https://new-demo.inkcdogs.org/api/dog/add_note";
 
                           Map<String, String> requestHeaders = {
                             'Accept': 'application/json',

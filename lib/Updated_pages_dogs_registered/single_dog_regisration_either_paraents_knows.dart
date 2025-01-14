@@ -29,7 +29,24 @@ import 'dart:async';
 // }
 
 class SingleDogRegisrationEitherParaentsKnows extends StatefulWidget {
-  const SingleDogRegisrationEitherParaentsKnows({super.key});
+  String participate_event_id,
+      is_participate_with_event,
+      register_with_event,
+      eventname,
+      eventtype,
+      eventstal,
+      pariticaipate_for_event,
+      register_for_event;
+  SingleDogRegisrationEitherParaentsKnows(
+      {required this.participate_event_id,
+      required this.is_participate_with_event,
+      required this.register_with_event,
+      required this.eventname,
+      required this.eventtype,
+      required this.eventstal,
+      required this.pariticaipate_for_event,
+      required this.register_for_event,
+      super.key});
 
   @override
   State<SingleDogRegisrationEitherParaentsKnows> createState() =>
@@ -81,7 +98,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const PedigreeDogRegistration()));
+                                      PedigreeDogRegistration(
+                                          participate_event_id:
+                                              widget.participate_event_id,
+                                          is_participate_with_event:
+                                              widget.is_participate_with_event,
+                                          register_with_event:
+                                              widget.register_with_event,
+                                          eventname: widget.eventname,
+                                          eventtype: widget.eventtype,
+                                          eventstal: widget.eventstal,
+                                          register_for_event:
+                                              widget.register_for_event,
+                                          pariticaipate_for_event:
+                                              widget.pariticaipate_for_event)));
                             },
                             child: Container(
                               height: 120.sp,
@@ -113,10 +143,22 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  const PedigreeDogRegistration()));
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              PedigreeDogRegistration(
+                                                  participate_event_id: widget
+                                                      .participate_event_id,
+                                                  is_participate_with_event: widget
+                                                      .is_participate_with_event,
+                                                  register_with_event: widget
+                                                      .register_with_event,
+                                                  eventname: widget.eventname,
+                                                  eventtype: widget.eventtype,
+                                                  eventstal: widget.eventstal,
+                                                  register_for_event:
+                                                      widget.register_for_event,
+                                                  pariticaipate_for_event: widget
+                                                      .pariticaipate_for_event)));
                                     },
                                     child: Container(
                                       margin: const EdgeInsets.only(top: 12),
@@ -161,7 +203,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                             onTap: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const PedigreeDogRegistrationWithClub()));
+                                      PedigreeDogRegistrationWithClub(
+                                          participate_event_id:
+                                              widget.participate_event_id,
+                                          is_participate_with_event:
+                                              widget.is_participate_with_event,
+                                          register_with_event:
+                                              widget.register_with_event,
+                                          eventname: widget.eventname,
+                                          eventtype: widget.eventtype,
+                                          eventstal: widget.eventstal,
+                                          register_for_event:
+                                              widget.register_for_event,
+                                          pariticaipate_for_event:
+                                              widget.pariticaipate_for_event)));
                             },
                             child: Container(
                               height: 120.sp,
@@ -193,7 +248,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                                     onTap: () async {
                                       Navigator.of(context).push(MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              const PedigreeDogRegistrationWithClub()));
+                                              PedigreeDogRegistrationWithClub(
+                                                  participate_event_id: widget
+                                                      .participate_event_id,
+                                                  is_participate_with_event: widget
+                                                      .is_participate_with_event,
+                                                  register_with_event: widget
+                                                      .register_with_event,
+                                                  eventname: widget.eventname,
+                                                  eventtype: widget.eventtype,
+                                                  eventstal: widget.eventstal,
+                                                  register_for_event:
+                                                      widget.register_for_event,
+                                                  pariticaipate_for_event: widget
+                                                      .pariticaipate_for_event)));
                                       // Navigator.of(context).push(MaterialPageRoute(
                                       //     builder: (BuildContext context) =>
                                       //         PedigreeDogRegistrationRegistrationWithOtherClubForm()));
@@ -251,7 +319,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                             onTap: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const SireRegistrationWithInkc()));
+                                      SireRegistrationWithInkc(
+                                          participate_event_id:
+                                              widget.participate_event_id,
+                                          is_participate_with_event:
+                                              widget.is_participate_with_event,
+                                          register_with_event:
+                                              widget.register_with_event,
+                                          eventname: widget.eventname,
+                                          eventtype: widget.eventtype,
+                                          eventstal: widget.eventstal,
+                                          register_for_event:
+                                              widget.register_for_event,
+                                          pariticaipate_for_event:
+                                              widget.pariticaipate_for_event)));
                             },
                             child: Container(
                               height: 120.sp,
@@ -283,10 +364,22 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  const SireRegistrationWithInkc()));
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              SireRegistrationWithInkc(
+                                                  participate_event_id: widget
+                                                      .participate_event_id,
+                                                  is_participate_with_event: widget
+                                                      .is_participate_with_event,
+                                                  register_with_event: widget
+                                                      .register_with_event,
+                                                  eventname: widget.eventname,
+                                                  eventtype: widget.eventtype,
+                                                  eventstal: widget.eventstal,
+                                                  register_for_event:
+                                                      widget.register_for_event,
+                                                  pariticaipate_for_event: widget
+                                                      .pariticaipate_for_event)));
                                       // Navigator.of(context).push(MaterialPageRoute(
                                       //     builder: (BuildContext context) =>
                                       //         PedigreeDogRegistrationRegistrationWithOtherClubForm()));
@@ -334,7 +427,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                             onTap: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const DamRegistrationWithInkc()));
+                                      DamRegistrationWithInkc(
+                                          participate_event_id:
+                                              widget.participate_event_id,
+                                          is_participate_with_event:
+                                              widget.is_participate_with_event,
+                                          register_with_event:
+                                              widget.register_with_event,
+                                          eventname: widget.eventname,
+                                          eventtype: widget.eventtype,
+                                          eventstal: widget.eventstal,
+                                          register_for_event:
+                                              widget.register_for_event,
+                                          pariticaipate_for_event:
+                                              widget.pariticaipate_for_event)));
                             },
                             child: Container(
                               height: 120.sp,
@@ -364,10 +470,22 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  const DamRegistrationWithInkc()));
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              DamRegistrationWithInkc(
+                                                  participate_event_id: widget
+                                                      .participate_event_id,
+                                                  is_participate_with_event: widget
+                                                      .is_participate_with_event,
+                                                  register_with_event: widget
+                                                      .register_with_event,
+                                                  eventname: widget.eventname,
+                                                  eventtype: widget.eventtype,
+                                                  eventstal: widget.eventstal,
+                                                  register_for_event:
+                                                      widget.register_for_event,
+                                                  pariticaipate_for_event: widget
+                                                      .pariticaipate_for_event)));
                                       // Navigator.of(context).push(MaterialPageRoute(
                                       //     builder: (BuildContext context) =>
                                       //         PedigreeDogRegistrationRegistrationWithOtherClubForm()));
@@ -426,7 +544,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                             onTap: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const SireRegistrationWithInkcDamUnknown()));
+                                      SireRegistrationWithInkcDamUnknown(
+                                          participate_event_id:
+                                              widget.participate_event_id,
+                                          is_participate_with_event:
+                                              widget.is_participate_with_event,
+                                          register_with_event:
+                                              widget.register_with_event,
+                                          eventname: widget.eventname,
+                                          eventtype: widget.eventtype,
+                                          eventstal: widget.eventstal,
+                                          register_for_event:
+                                              widget.register_for_event,
+                                          pariticaipate_for_event:
+                                              widget.pariticaipate_for_event)));
                               // Navigator.of(context).push(MaterialPageRoute(
                               //     builder: (BuildContext context) =>
                               //         PedigreeDogRegistrationRegistrationWithOtherClubForm()));
@@ -463,7 +594,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                                     onTap: () async {
                                       Navigator.of(context).push(MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              const SireRegistrationWithInkcDamUnknown()));
+                                              SireRegistrationWithInkcDamUnknown(
+                                                  participate_event_id: widget
+                                                      .participate_event_id,
+                                                  is_participate_with_event: widget
+                                                      .is_participate_with_event,
+                                                  register_with_event: widget
+                                                      .register_with_event,
+                                                  eventname: widget.eventname,
+                                                  eventtype: widget.eventtype,
+                                                  eventstal: widget.eventstal,
+                                                  register_for_event:
+                                                      widget.register_for_event,
+                                                  pariticaipate_for_event: widget
+                                                      .pariticaipate_for_event)));
                                       // Navigator.of(context).push(MaterialPageRoute(
                                       //     builder: (BuildContext context) =>
                                       //         PedigreeDogRegistrationRegistrationWithOtherClubForm()));
@@ -511,7 +655,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                             onTap: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const DamRegistrationWithInkcSireUnknown()));
+                                      DamRegistrationWithInkcSireUnknown(
+                                          participate_event_id:
+                                              widget.participate_event_id,
+                                          is_participate_with_event:
+                                              widget.is_participate_with_event,
+                                          register_with_event:
+                                              widget.register_with_event,
+                                          eventname: widget.eventname,
+                                          eventtype: widget.eventtype,
+                                          eventstal: widget.eventstal,
+                                          register_for_event:
+                                              widget.register_for_event,
+                                          pariticaipate_for_event:
+                                              widget.pariticaipate_for_event)));
                               // Navigator.of(context).push(MaterialPageRoute(
                               //     builder: (BuildContext context) =>
                               //         PedigreeDogRegistrationRegistrationWithOtherClubForm()));
@@ -601,7 +758,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                             onTap: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const SireRegistrationWithOtherClubDamUnknown()));
+                                      SireRegistrationWithOtherClubDamUnknown(
+                                          participate_event_id:
+                                              widget.participate_event_id,
+                                          is_participate_with_event:
+                                              widget.is_participate_with_event,
+                                          register_with_event:
+                                              widget.register_with_event,
+                                          eventname: widget.eventname,
+                                          eventtype: widget.eventtype,
+                                          eventstal: widget.eventstal,
+                                          register_for_event:
+                                              widget.register_for_event,
+                                          pariticaipate_for_event:
+                                              widget.pariticaipate_for_event)));
                               // Navigator.of(context).push(MaterialPageRoute(
                               //     builder: (BuildContext context) =>
                               //         PedigreeDogRegistrationRegistrationWithOtherClubForm()));
@@ -655,7 +825,7 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 10),
                                       child: Text(
-                                        'Sire Registered With INKC dam unknown',
+                                        'Sire Registered With Other Club dam unknown',
                                         style: TextStyle(
                                             shadows: const [
                                               Shadow(
@@ -683,7 +853,20 @@ class _SingleDogRegisrationEitherParaentsKnowsState
                             onTap: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const DamRegistrationWithOtherClubSireUnkown()));
+                                      DamRegistrationWithOtherClubSireUnkown(
+                                          participate_event_id:
+                                              widget.participate_event_id,
+                                          is_participate_with_event:
+                                              widget.is_participate_with_event,
+                                          register_with_event:
+                                              widget.register_with_event,
+                                          eventname: widget.eventname,
+                                          eventtype: widget.eventtype,
+                                          eventstal: widget.eventstal,
+                                          register_for_event:
+                                              widget.register_for_event,
+                                          pariticaipate_for_event:
+                                              widget.pariticaipate_for_event)));
                               // Navigator.of(context).push(MaterialPageRoute(
                               //     builder: (BuildContext context) =>
                               //         PedigreeDogRegistrationRegistrationWithOtherClubForm()));

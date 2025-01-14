@@ -39,7 +39,8 @@ String image = "";
 class IHaveCertificate extends StatefulWidget {
   String eventid, eventname, eventtype, eventstal;
   IHaveCertificate(
-      {super.key, required this.eventid,
+      {super.key,
+      required this.eventid,
       required this.eventname,
       required this.eventtype,
       required this.eventstal});
@@ -77,7 +78,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse(
+              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -130,8 +132,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value = TextEditingValue(
-            text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value =
+            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -221,7 +223,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/kennel_list_for_non_inkc"),
+          Uri.parse(
+              "https://new-demo.inkcdogs.org/api/dog/kennel_list_for_non_inkc"),
           headers: requestHeaders);
       // var data = json.decode(res.body);
       // var dataarray = data['data'];
@@ -347,7 +350,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
       Type = StallType;
     }
 
-    print("$selectedid - ${Registornumber.text} - ${sire.text} - ${dam.text} - ${Dogname.text} - ${dateofbirth.text} - $selectedbreedid - $selectcolormakingid - $gender - ${counrty.text}-$Day - $Type - $obidient - $stallReq - ${widget.eventid} - ${widget.eventtype} - ${widget.eventstal}");
+    print(
+        "$selectedid - ${Registornumber.text} - ${sire.text} - ${dam.text} - ${Dogname.text} - ${dateofbirth.text} - $selectedbreedid - $selectcolormakingid - $gender - ${counrty.text}-$Day - $Type - $obidient - $stallReq - ${widget.eventid} - ${widget.eventtype} - ${widget.eventstal}");
 
     String sires = sire.text.toString();
     String dams = dam.text.toString();
@@ -634,7 +638,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color.fromARGB(255, 187, 4, 4),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 187, 4, 4),
                                   ),
                                   onPressed: () async {
                                     getfirstImage();
@@ -683,7 +688,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 199, 7, 7),
                                       ),
                                       onPressed: () async {
                                         getfirstImage();
@@ -725,7 +731,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color.fromARGB(255, 197, 4, 4),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 197, 4, 4),
                                   ),
                                   onPressed: () async {
                                     getsecondImage();
@@ -774,8 +781,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color.fromARGB(255, 199, 13, 13),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 199, 13, 13),
                                       ),
                                       onPressed: () async {
                                         getsecondImage();
@@ -817,7 +824,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color.fromARGB(255, 199, 13, 13),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 199, 13, 13),
                                   ),
                                   onPressed: () async {
                                     getthardImage();
@@ -866,7 +874,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(255, 187, 9, 9),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 187, 9, 9),
                                       ),
                                       onPressed: () async {
                                         getthardImage();
@@ -908,7 +917,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.blueGrey),
                                     borderRadius: BorderRadius.circular(5),
@@ -1030,8 +1040,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     Text(
                                       "Sire's INKC Registration Number ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1073,8 +1083,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     Text(
                                       "Dam's INKC Registration Number ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1136,16 +1146,16 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     Text(
                                       "Name of the dog ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1180,16 +1190,16 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1220,7 +1230,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon: const Icon(Icons.date_range),
+                                          prefixIcon:
+                                              const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.sp)),
@@ -1236,8 +1247,9 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color.fromARGB(
-                                                255, 231, 25, 25),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
                                                 color: const Color.fromARGB(
@@ -1263,16 +1275,16 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     Text(
                                       "Breed ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1332,7 +1344,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                       e.subCategoryName
                                                           .toString(),
                                                       style: TextStyle(
-                                                          color: const Color.fromARGB(
+                                                          color: const Color
+                                                              .fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -1388,16 +1401,16 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     Text(
                                       "Color and Marking ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1439,7 +1452,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                     child: Text(
                                                       e.colourName.toString(),
                                                       style: TextStyle(
-                                                          color: const Color.fromARGB(
+                                                          color: const Color
+                                                              .fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -1494,16 +1508,16 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     Text(
                                       "Sex of the dog ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1581,8 +1595,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1618,8 +1632,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       Text(
                                         "EVENT DETAILS",
                                         style: TextStyle(
-                                            color:
-                                                const Color.fromARGB(255, 22, 21, 21),
+                                            color: const Color.fromARGB(
+                                                255, 22, 21, 21),
                                             fontWeight: FontWeight.w800,
                                             fontSize: 17.sp),
                                       ),
@@ -1636,8 +1650,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       child: Text(
                                         "Class (Select at least two option.)",
                                         style: TextStyle(
-                                            color:
-                                                const Color.fromARGB(255, 22, 21, 21),
+                                            color: const Color.fromARGB(
+                                                255, 22, 21, 21),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12.sp),
                                       ),
@@ -1656,7 +1670,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               'Pre-Beginner ',
                                               style: TextStyle(fontSize: 15.0),
                                             ), //Text
-                                            const SizedBox(width: 10), //SizedBox
+                                            const SizedBox(
+                                                width: 10), //SizedBox
                                             /** Checkbox Widget **/
                                             Checkbox(
                                               value: prebigner,
@@ -1679,7 +1694,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               'Beginner ',
                                               style: TextStyle(fontSize: 15.0),
                                             ), //Text
-                                            const SizedBox(width: 10), //SizedBox
+                                            const SizedBox(
+                                                width: 10), //SizedBox
                                             /** Checkbox Widget **/
                                             Checkbox(
                                               value: bigner,
@@ -1712,7 +1728,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                 style:
                                                     TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(width: 10), //SizedBox
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: novic,
@@ -1735,7 +1752,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                 style:
                                                     TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(width: 10), //SizedBox
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Texta,
@@ -1769,7 +1787,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                 style:
                                                     TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(width: 10), //SizedBox
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Textb,
@@ -1792,7 +1811,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                 style:
                                                     TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(width: 10), //SizedBox
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Textc,
@@ -1915,7 +1935,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                 fontSize: 12.sp),
                                           ),
                                           Container(
-                                            margin: const EdgeInsets.only(top: 0),
+                                            margin:
+                                                const EdgeInsets.only(top: 0),
                                             // decoration: BoxDecoration(
                                             //   boxShadow: [],
                                             //   border: Border.all(
@@ -1926,7 +1947,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                             //   color: Colors.white,
                                             // ),
                                             child: Padding(
-                                              padding: const EdgeInsets.only(top: 0),
+                                              padding:
+                                                  const EdgeInsets.only(top: 0),
                                               child: Column(
                                                 children: [
                                                   Row(
@@ -2137,7 +2159,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                     fontSize: 12.sp),
                                               ),
                                               Container(
-                                                margin: const EdgeInsets.only(top: 0),
+                                                margin: const EdgeInsets.only(
+                                                    top: 0),
                                                 // decoration: BoxDecoration(
                                                 //   boxShadow: [],
                                                 //   border: Border.all(
@@ -2149,7 +2172,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                 // ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsets.only(top: 0),
+                                                      const EdgeInsets.only(
+                                                          top: 0),
                                                   child: Column(
                                                     children: [
                                                       Row(
@@ -2417,7 +2441,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     //uploadData();
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromARGB(255, 46, 6, 155),
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 46, 6, 155),
                                       textStyle: TextStyle(
                                           fontSize: 10.sp,
                                           color: const Color.fromARGB(

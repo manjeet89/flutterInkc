@@ -9,7 +9,8 @@ import 'package:http/http.dart' as http;
 class FinalCartPrice extends StatefulWidget {
   final String jsonMap, SUBTOTAL, DELEVRY, TOTAL;
   const FinalCartPrice(
-      {super.key, required this.jsonMap,
+      {super.key,
+      required this.jsonMap,
       required this.SUBTOTAL,
       required this.DELEVRY,
       required this.TOTAL});
@@ -98,7 +99,8 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
     // Do something when payment succeeds
 
-    print("payment done     ${response.orderId} - ${response.paymentId} - ${response.signature}");
+    print(
+        "payment done     ${response.orderId} - ${response.paymentId} - ${response.signature}");
 
     var ordertotal = {
       'razorpay_payment_id': response.paymentId.toString(),

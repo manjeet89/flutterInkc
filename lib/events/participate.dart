@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inkc/Updated_pages_dogs_registered/single_dog_registration_process.dart';
 import 'package:inkc/events/dont_have.dart';
 import 'package:inkc/events/i_have_certificate.dart';
 import 'package:inkc/events/inkc_events.dart';
@@ -7,7 +8,8 @@ import 'package:sizer/sizer.dart';
 class Participatent extends StatefulWidget {
   String eventid, eventname, eventType, eventstall;
   Participatent(
-      {super.key, required this.eventid,
+      {super.key,
+      required this.eventid,
       required this.eventname,
       required this.eventType,
       required this.eventstall});
@@ -111,7 +113,8 @@ class _ParticipatentState extends State<Participatent> {
                                 'INKC Registered Dog',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: const Color.fromARGB(255, 206, 26, 26),
+                                    color:
+                                        const Color.fromARGB(255, 206, 26, 26),
                                     fontSize: 11.sp),
                               )
                             ],
@@ -143,67 +146,69 @@ class _ParticipatentState extends State<Participatent> {
                     ],
                   ),
                 ),
-                Visibility(
-                  visible: hide,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Row(
-                              children: [
-                                Radio(
-                                  value: "1",
-                                  groupValue: certificae,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      certificae = value.toString();
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'I have certificate',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: const Color.fromARGB(255, 206, 26, 26),
-                                      fontSize: 10.sp),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                  value: "0",
-                                  groupValue: certificae,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      certificae = value.toString();
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  "I don't have certificate",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: const Color.fromARGB(
-                                          255, 190, 26, 26),
-                                      fontSize: 10.sp),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // Visibility(
+                //   visible: hide,
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(left: 18.0),
+                //     child: Column(
+                //       children: [
+                //         Row(
+                //           children: [
+                //             Row(
+                //               children: [
+                //                 Radio(
+                //                   value: "1",
+                //                   groupValue: certificae,
+                //                   onChanged: (value) {
+                //                     setState(() {
+                //                       certificae = value.toString();
+                //                     });
+                //                   },
+                //                 ),
+                //                 Text(
+                //                   'I have certificate',
+                //                   style: TextStyle(
+                //                       fontWeight: FontWeight.bold,
+                //                       color: const Color.fromARGB(255, 206, 26, 26),
+                //                       fontSize: 10.sp),
+                //                 )
+                //               ],
+                //             ),
+                //             Row(
+                //               children: [
+                //                 Radio(
+                //                   value: "0",
+                //                   groupValue: certificae,
+                //                   onChanged: (value) {
+                //                     setState(() {
+                //                       certificae = value.toString();
+                //                     });
+                //                   },
+                //                 ),
+                //                 Text(
+                //                   "I don't have certificate",
+                //                   style: TextStyle(
+                //                       fontWeight: FontWeight.bold,
+                //                       color: const Color.fromARGB(
+                //                           255, 190, 26, 26),
+                //                       fontSize: 10.sp),
+                //                 ),
+                //               ],
+                //             ),
+                //           ],
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
+                            backgroundColor:
+                                const Color.fromARGB(255, 231, 25, 25),
                             textStyle: TextStyle(
                                 fontSize: 10.sp,
                                 color: const Color.fromARGB(255, 241, 236, 236),
@@ -217,24 +222,38 @@ class _ParticipatentState extends State<Participatent> {
                                         eventname: widget.eventname.toString(),
                                         eventtype: widget.eventType.toString(),
                                         eventstal: widget.eventstall)));
-                          } else if (certificae == "1") {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    IHaveCertificate(
-                                        eventid: widget.eventid,
-                                        eventname: widget.eventname.toString(),
-                                        eventtype: widget.eventType.toString(),
-                                        eventstal: widget.eventstall)));
                           } else {
-                            print("inkc non register");
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    IDontHaveCertificate(
-                                        eventid: widget.eventid,
+                                    SingleDogRegistrationProcess(
+                                        participate_event_id: widget.eventid,
                                         eventname: widget.eventname.toString(),
                                         eventtype: widget.eventType.toString(),
-                                        eventstal: widget.eventstall)));
+                                        eventstal: widget.eventstall,
+                                        is_participate_with_event: "1",
+                                        register_with_event: "1",
+                                        register_for_event: "1",
+                                        pariticaipate_for_event: "1")));
                           }
+
+                          // if (certificae == "1") {
+                          //   Navigator.of(context).push(MaterialPageRoute(
+                          //       builder: (BuildContext context) =>
+                          //           IHaveCertificate(
+                          //               eventid: widget.eventid,
+                          //               eventname: widget.eventname.toString(),
+                          //               eventtype: widget.eventType.toString(),
+                          //               eventstal: widget.eventstall)));
+                          // } else {
+                          //   print("inkc non register");
+                          //   Navigator.of(context).push(MaterialPageRoute(
+                          //       builder: (BuildContext context) =>
+                          //           IDontHaveCertificate(
+                          //               eventid: widget.eventid,
+                          //               eventname: widget.eventname.toString(),
+                          //               eventtype: widget.eventType.toString(),
+                          //               eventstal: widget.eventstall)));
+                          // }
                         },
                         child: const Text(
                           "Submit",

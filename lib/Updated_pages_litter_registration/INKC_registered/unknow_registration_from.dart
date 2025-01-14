@@ -327,20 +327,20 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
       String damback = "";
 
       if (_image.toString() == "null") {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => LitterPuppyRegistration(
-                  sire: "",
-                  dam: DAM,
-                  dob: DOB,
-                  country: counrty.text.toString(),
-                  puppy: numbers.text.toString(),
-                  image: _image.toString(),
-                  sirebackcerificate: sirebackcerificate.toString(),
-                  sirefrontcerificate: sirefrontcerificate.toString(),
-                   dambackcerificate: damback,
-                  damfrontcerificate: damfront,
-                  petcolordid: "",
-                )));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (BuildContext context) => LitterPuppyRegistration(
+        //           sire: "",
+        //           dam: DAM,
+        //           dob: DOB,
+        //           country: counrty.text.toString(),
+        //           puppy: numbers.text.toString(),
+        //           image: _image.toString(),
+        //           sirebackcerificate: sirebackcerificate.toString(),
+        //           sirefrontcerificate: sirefrontcerificate.toString(),
+        //            dambackcerificate: damback,
+        //           damfrontcerificate: damfront,
+        //           petcolordid: "",
+        //         )));
       } else {
         SharedPreferences sharedprefrence =
             await SharedPreferences.getInstance();
@@ -372,19 +372,19 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
           var studAgreementForm = responseData['data']['stud_agreement_form'];
           print(studAgreementForm);
 
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => LitterPuppyRegistration(
-                  sire: "",
-                  dam: DAM,
-                  dob: DOB,
-                  country: counrty.text.toString(),
-                  puppy: numbers.text.toString(),
-                  image: studAgreementForm.toString(),
-                  sirebackcerificate: sirebackcerificate.toString(),
-                  sirefrontcerificate: sirefrontcerificate.toString(),
-                   dambackcerificate: damback,
-                  damfrontcerificate: damfront,
-                  petcolordid: "")));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (BuildContext context) => LitterPuppyRegistration(
+          //         sire: "",
+          //         dam: DAM,
+          //         dob: DOB,
+          //         country: counrty.text.toString(),
+          //         puppy: numbers.text.toString(),
+          //         image: studAgreementForm.toString(),
+          //         sirebackcerificate: sirebackcerificate.toString(),
+          //         sirefrontcerificate: sirefrontcerificate.toString(),
+          //          dambackcerificate: damback,
+          //         damfrontcerificate: damfront,
+          //         petcolordid: "")));
         } else {
           setState(() {
             showSpinner = false;
@@ -658,8 +658,7 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                         if (cropperFile != null) {
                                           setState(() =>
                                               _image = File(cropperFile.path));
-                                          print(
-                                              "justcheck$_image");
+                                          print("justcheck$_image");
                                         }
                                       }
                                     },

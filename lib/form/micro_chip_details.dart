@@ -74,7 +74,8 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/implemented_by_list"),
+          Uri.parse(
+              "https://new-demo.inkcdogs.org/api/dog/implemented_by_list"),
           headers: requestHeaders);
       // var data = json.decode(res.body);
       // var dataarray = data['data'];

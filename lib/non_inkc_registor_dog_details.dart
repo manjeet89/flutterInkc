@@ -20,7 +20,8 @@ class NonInkcDogDetails extends StatefulWidget {
       breed,
       colorandmaking;
 
-  NonInkcDogDetails({super.key, 
+  NonInkcDogDetails({
+    super.key,
     required this.id,
     required this.image,
     required this.petnames,

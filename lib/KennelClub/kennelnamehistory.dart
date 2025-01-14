@@ -208,7 +208,8 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
                                   child: Text(
                                     "You don't have History.",
                                     style: TextStyle(
-                                        color: const Color.fromARGB(255, 177, 43, 10),
+                                        color: const Color.fromARGB(
+                                            255, 177, 43, 10),
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w900),
                                   ),

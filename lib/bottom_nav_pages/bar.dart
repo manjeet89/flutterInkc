@@ -194,7 +194,16 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
 
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        const SingleDogRegistrationProcess()));
+                                        SingleDogRegistrationProcess(
+                                          participate_event_id: '',
+                                          is_participate_with_event: '',
+                                          register_with_event: '',
+                                          eventname: '',
+                                          eventtype: '',
+                                          eventstal: '',
+                                          pariticaipate_for_event: '0',
+                                          register_for_event: '0',
+                                        )));
                                 // Navigator.of(context).push(MaterialPageRoute(
                                 //     builder: (BuildContext context) =>
                                 //         AddDogInfo()));

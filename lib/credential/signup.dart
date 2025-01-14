@@ -63,8 +63,8 @@ class _SignUpHereState extends State<SignUpHere> {
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value = TextEditingValue(
-            text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value =
+            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -315,7 +315,8 @@ class _SignUpHereState extends State<SignUpHere> {
                                         //     );
                                         //   },
                                         // ),
-                                        prefixIcon: const Icon(Icons.date_range),
+                                        prefixIcon:
+                                            const Icon(Icons.date_range),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(4.sp)),
@@ -359,7 +360,8 @@ class _SignUpHereState extends State<SignUpHere> {
                                   labelText: "Password",
                                   helperText:
                                       "Password must contain special character",
-                                  helperStyle: const TextStyle(color: Colors.green),
+                                  helperStyle:
+                                      const TextStyle(color: Colors.green),
                                   suffixIcon: IconButton(
                                     icon: Icon(passwordVisible
                                         ? Icons.visibility

@@ -113,7 +113,8 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                               child: Text(
                                 "No Dog Registered yet.",
                                 style: TextStyle(
-                                    color: const Color.fromARGB(255, 177, 43, 10),
+                                    color:
+                                        const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -230,8 +231,9 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  backgroundColor: const Color.fromARGB(
-                                                      255, 231, 25, 25),
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
                                                       color:

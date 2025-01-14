@@ -179,46 +179,46 @@ class _LitterRegistrationHomePageState
                       ),
                     ),
                   ),
-                  Card(
-                    color: Colors.white,
-                    elevation: 5,
-                    child: Container(
-                      color: Colors.white,
-                      margin: const EdgeInsets.all(5),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Row(
-                                children: [
-                                  Radio(
-                                    value: "3",
-                                    groupValue: gender,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        gender = value.toString();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    'Please register the Dam before proceeding further')));
-                                      });
-                                    },
-                                  ),
-                                  Text(
-                                    'Unknown',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 13.sp),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Card(
+                  //   color: Colors.white,
+                  //   elevation: 5,
+                  //   child: Container(
+                  //     color: Colors.white,
+                  //     margin: const EdgeInsets.all(5),
+                  //     child: Column(
+                  //       children: [
+                  //         Row(
+                  //           children: [
+                  //             Row(
+                  //               children: [
+                  //                 Radio(
+                  //                   value: "3",
+                  //                   groupValue: gender,
+                  //                   onChanged: (value) {
+                  //                     setState(() {
+                  //                       gender = value.toString();
+                  //                       ScaffoldMessenger.of(context)
+                  //                           .showSnackBar(const SnackBar(
+                  //                               content: Text(
+                  //                                   'Please register the Dam before proceeding further')));
+                  //                     });
+                  //                   },
+                  //                 ),
+                  //                 Text(
+                  //                   'Unknown',
+                  //                   style: TextStyle(
+                  //                       fontWeight: FontWeight.bold,
+                  //                       color: Colors.black,
+                  //                       fontSize: 13.sp),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   const Divider(),
                   if (gender == "1")
                     Column(
@@ -327,50 +327,50 @@ class _LitterRegistrationHomePageState
                             ),
                           ),
                         ),
-                        Card(
-                          color: const ui.Color.fromARGB(255, 226, 69, 69),
-                          elevation: 5,
-                          child: Container(
-                            color: const ui.Color.fromARGB(255, 226, 69, 69),
-                            margin: const EdgeInsets.all(5),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Radio(
-                                          value: "3",
-                                          activeColor: Colors.white,
-                                          hoverColor: Colors.white,
-                                          groupValue: inkcregistraionradio,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              inkcregistraionradio =
-                                                  value.toString();
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          const UnknowRegistrationFrom()));
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          'Unknown',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                              fontSize: 13.sp),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        // Card(
+                        //   color: const ui.Color.fromARGB(255, 226, 69, 69),
+                        //   elevation: 5,
+                        //   child: Container(
+                        //     color: const ui.Color.fromARGB(255, 226, 69, 69),
+                        //     margin: const EdgeInsets.all(5),
+                        //     child: Column(
+                        //       children: [
+                        //         Row(
+                        //           children: [
+                        //             Row(
+                        //               children: [
+                        //                 Radio(
+                        //                   value: "3",
+                        //                   activeColor: Colors.white,
+                        //                   hoverColor: Colors.white,
+                        //                   groupValue: inkcregistraionradio,
+                        //                   onChanged: (value) {
+                        //                     setState(() {
+                        //                       inkcregistraionradio =
+                        //                           value.toString();
+                        //                       Navigator.of(context).push(
+                        //                           MaterialPageRoute(
+                        //                               builder: (BuildContext
+                        //                                       context) =>
+                        //                                   const UnknowRegistrationFrom()));
+                        //                     });
+                        //                   },
+                        //                 ),
+                        //                 Text(
+                        //                   'Unknown',
+                        //                   style: TextStyle(
+                        //                       fontWeight: FontWeight.bold,
+                        //                       color: Colors.white,
+                        //                       fontSize: 13.sp),
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),   
                       ],
                     ),
                   if (gender == "2")
@@ -484,51 +484,51 @@ class _LitterRegistrationHomePageState
                             ),
                           ),
                         ),
-                        Card(
-                          color: const ui.Color.fromARGB(255, 39, 112, 223),
-                          elevation: 5,
-                          child: Container(
-                            color: const ui.Color.fromARGB(255, 39, 112, 223),
-                            margin: const EdgeInsets.all(5),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Radio(
-                                          activeColor: Colors.white,
-                                          hoverColor: Colors.white,
-                                          value: "6",
-                                          groupValue:
-                                              otherclubregistrationradio,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              otherclubregistrationradio =
-                                                  value.toString();
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          const UnknownFormOtherClub()));
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          'Unknown',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                              fontSize: 13.sp),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        // Card(
+                        //   color: const ui.Color.fromARGB(255, 39, 112, 223),
+                        //   elevation: 5,
+                        //   child: Container(
+                        //     color: const ui.Color.fromARGB(255, 39, 112, 223),
+                        //     margin: const EdgeInsets.all(5),
+                        //     child: Column(
+                        //       children: [
+                        //         Row(
+                        //           children: [
+                        //             Row(
+                        //               children: [
+                        //                 Radio(
+                        //                   activeColor: Colors.white,
+                        //                   hoverColor: Colors.white,
+                        //                   value: "6",
+                        //                   groupValue:
+                        //                       otherclubregistrationradio,
+                        //                   onChanged: (value) {
+                        //                     setState(() {
+                        //                       otherclubregistrationradio =
+                        //                           value.toString();
+                        //                       Navigator.of(context).push(
+                        //                           MaterialPageRoute(
+                        //                               builder: (BuildContext
+                        //                                       context) =>
+                        //                                   const UnknownFormOtherClub()));
+                        //                     });
+                        //                   },
+                        //                 ),
+                        //                 Text(
+                        //                   'Unknown',
+                        //                   style: TextStyle(
+                        //                       fontWeight: FontWeight.bold,
+                        //                       color: Colors.white,
+                        //                       fontSize: 13.sp),
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     )
                 ],

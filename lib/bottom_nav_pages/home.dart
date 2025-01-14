@@ -75,17 +75,17 @@ class Home extends StatefulWidget {
 }
 
 final List<String> imgList = [
-  'https://www.inkc.in/assets/front/img/inkc/puli.jpg',
-  'https://www.inkc.in/assets/front/img/inkc/bi.jpg',
-  'https://www.inkc.in/assets/front/img/inkc/52.webp',
-  'https://www.inkc.in/assets/front/img/inkc/53.webp',
+  'https://new-demo.inkcdogs.org/assets/front/img/inkc/puli.jpg',
+  'https://new-demo.inkcdogs.org/assets/front/img/inkc/bi.jpg',
+  'https://new-demo.inkcdogs.org/assets/front/img/inkc/52.webp',
+  'https://new-demo.inkcdogs.org/assets/front/img/inkc/53.webp',
 ];
 
 final myItems = [
-  Image.network('https://www.inkc.in/assets/front/img/inkc/puli.jpg'),
-  Image.network('https://www.inkc.in/assets/front/img/inkc/bi.jpg'),
-  Image.network('https://www.inkc.in/assets/front/img/inkc/52.webp'),
-  Image.network('https://www.inkc.in/assets/front/img/inkc/53.webp'),
+  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/puli.jpg'),
+  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/bi.jpg'),
+  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/52.webp'),
+  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/53.webp'),
 ];
 
 List mydogname = [
@@ -147,7 +147,7 @@ class _HomeState extends State<Home> {
       _storeshow = false;
       _storehide = true;
     });
-    }
+  }
 
   String? First;
   String? Last;
@@ -171,7 +171,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _isShow = true;
     });
-    }
+  }
 
   @override
   @override
@@ -760,8 +760,8 @@ class _HomeState extends State<Home> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        var url =
-                            Uri.parse("https://new-demo.inkcdogs.org/puppies-available");
+                        var url = Uri.parse(
+                            "https://new-demo.inkcdogs.org/puppies-available");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {
@@ -906,7 +906,8 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.of(context, rootNavigator: true).push(
                             MaterialPageRoute(
-                                builder: (_) => const DogLitterTransferOverView()));
+                                builder: (_) =>
+                                    const DogLitterTransferOverView()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -978,7 +979,8 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.of(context, rootNavigator: true).push(
                             MaterialPageRoute(
-                                builder: (_) => const AssosicateMemberOverView()));
+                                builder: (_) =>
+                                    const AssosicateMemberOverView()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -1046,8 +1048,8 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context, rootNavigator: true)
-                            .push(MaterialPageRoute(builder: (_) => const Wallet()));
+                        Navigator.of(context, rootNavigator: true).push(
+                            MaterialPageRoute(builder: (_) => const Wallet()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -1172,7 +1174,8 @@ class _HomeState extends State<Home> {
                           color: const ui.Color.fromARGB(207, 240, 234, 234),
                           width: 1,
                         ),
-                        borderRadius: const BorderRadius.all(Radius.circular(15)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
                       ),
                       child: Column(
                         children: [

@@ -13,7 +13,8 @@ import 'package:http/http.dart' as http;
 class ProfileUpdate extends StatelessWidget {
   String? names, lastnames, genders, dobs, phones, emails, addresss;
   ProfileUpdate(
-      {super.key, required this.names,
+      {super.key,
+      required this.names,
       required this.lastnames,
       required this.genders,
       required this.dobs,
@@ -42,7 +43,8 @@ class ProfileUpdate extends StatelessWidget {
 class ProfileUpdates extends StatefulWidget {
   String? name, lastname, gender, dob, phone, email, address;
   ProfileUpdates(
-      {super.key, required this.name,
+      {super.key,
+      required this.name,
       required this.lastname,
       required this.gender,
       required this.dob,
@@ -141,8 +143,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value = TextEditingValue(
-            text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value =
+            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -365,16 +367,18 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   //     );
                                                   //   },
                                                   // ),
-                                                  prefixIcon:
-                                                      const Icon(Icons.date_range),
+                                                  prefixIcon: const Icon(
+                                                      Icons.date_range),
                                                   border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 4.sp)),
-                                                    borderSide: const BorderSide(
-                                                        width: 1,
-                                                        color: Colors.green),
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.green),
                                                   ),
                                                   labelText: 'Date of Birth',
                                                   hintText: '1-1-2000',
@@ -429,8 +433,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                 padding: const EdgeInsets.all(10),
                                 child: TextField(
                                   style: const TextStyle(
-                                      color:
-                                          Color.fromARGB(255, 41, 2, 2),
+                                      color: Color.fromARGB(255, 41, 2, 2),
                                       fontWeight: FontWeight.w600),
                                   controller: email,
                                   enabled: true,
@@ -481,7 +484,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   Text(
                                                     'Address',
                                                     style: TextStyle(
-                                                        color: const Color.fromARGB(
+                                                        color: const Color
+                                                            .fromARGB(
                                                             255, 95, 10, 10),
                                                         fontSize: 18.sp,
                                                         fontWeight:
@@ -539,7 +543,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   const Divider(),
 
                                                   Padding(
-                                                    padding: const EdgeInsets.all(5),
+                                                    padding:
+                                                        const EdgeInsets.all(5),
                                                     child: TextField(
                                                       onChanged: (value) {
                                                         if (value.length == 6) {
@@ -557,8 +562,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                       ],
                                                       maxLength: 6,
                                                       style: const TextStyle(
-                                                          color: Color
-                                                              .fromARGB(
+                                                          color: Color.fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
                                                               FontWeight.w600),
@@ -640,14 +644,14 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   //           }),
                                                   // ),
                                                   Padding(
-                                                    padding: const EdgeInsets.all(5),
+                                                    padding:
+                                                        const EdgeInsets.all(5),
                                                     child:
                                                         DropdownButtonFormField(
                                                       decoration:
                                                           const InputDecoration(
                                                         contentPadding:
-                                                            EdgeInsets
-                                                                .only(
+                                                            EdgeInsets.only(
                                                                 left: 10,
                                                                 right: 10),
                                                         border: OutlineInputBorder(
@@ -684,10 +688,10 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                               style: const TextStyle(
                                                                   color: Color
                                                                       .fromARGB(
-                                                                      255,
-                                                                      41,
-                                                                      2,
-                                                                      2),
+                                                                          255,
+                                                                          41,
+                                                                          2,
+                                                                          2),
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600),
@@ -699,11 +703,11 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   ),
                                                   const Divider(),
                                                   Padding(
-                                                    padding: const EdgeInsets.all(5),
+                                                    padding:
+                                                        const EdgeInsets.all(5),
                                                     child: TextField(
                                                       style: const TextStyle(
-                                                          color: Color
-                                                              .fromARGB(
+                                                          color: Color.fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
                                                               FontWeight.w600),
@@ -734,11 +738,11 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   ),
                                                   const Divider(),
                                                   Padding(
-                                                    padding: const EdgeInsets.all(5),
+                                                    padding:
+                                                        const EdgeInsets.all(5),
                                                     child: TextField(
                                                       style: const TextStyle(
-                                                          color: Color
-                                                              .fromARGB(
+                                                          color: Color.fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
                                                               FontWeight.w600),
@@ -770,11 +774,11 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   ),
                                                   const Divider(),
                                                   Padding(
-                                                    padding: const EdgeInsets.all(5),
+                                                    padding:
+                                                        const EdgeInsets.all(5),
                                                     child: TextField(
                                                       style: const TextStyle(
-                                                          color: Color
-                                                              .fromARGB(
+                                                          color: Color.fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
                                                               FontWeight.w600),
@@ -808,11 +812,11 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   ),
                                                   const Divider(),
                                                   Padding(
-                                                    padding: const EdgeInsets.all(5),
+                                                    padding:
+                                                        const EdgeInsets.all(5),
                                                     child: TextField(
                                                       style: const TextStyle(
-                                                          color: Color
-                                                              .fromARGB(
+                                                          color: Color.fromARGB(
                                                               255, 41, 2, 2),
                                                           fontWeight:
                                                               FontWeight.w600),
@@ -885,8 +889,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                   },
                                   child: TextField(
                                     style: const TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 41, 2, 2),
+                                        color: Color.fromARGB(255, 41, 2, 2),
                                         fontWeight: FontWeight.w600),
                                     maxLines: null,
                                     controller: address,
@@ -907,8 +910,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                               ),
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromRGBO(85, 2, 11, 0.957)),
+                                      backgroundColor: const Color.fromRGBO(
+                                          85, 2, 11, 0.957)),
                                   onPressed: () async {
                                     SharedPreferences sharedprefrence =
                                         await SharedPreferences.getInstance();
@@ -932,7 +935,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                       'Userid': userid
                                     };
 
-                                    print("${email.text} $valuechoose ${state.text} ${pincode.text} ${address1.text} ${address2.text} ${district.text} ${phonenumber.text}");
+                                    print(
+                                        "${email.text} $valuechoose ${state.text} ${pincode.text} ${address1.text} ${address2.text} ${district.text} ${phonenumber.text}");
 
                                     final responce = await http.post(
                                       Uri.parse(uri),
@@ -1002,7 +1006,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
     String token = sharedprefrence.getString("Token")!;
     EasyLoading.showToast('Please Wait...');
 
-    const uri = "https://new-demo.inkcdogs.org/api/user/get_city_data_from_pincode";
+    const uri =
+        "https://new-demo.inkcdogs.org/api/user/get_city_data_from_pincode";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -1067,8 +1072,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
     } else if (dis.isEmpty) {
     } else if (stat.isEmpty) {
     } else {
-      address.value = TextEditingValue(
-          text: "$add1 $add2 $local $dis $stat $pin");
+      address.value =
+          TextEditingValue(text: "$add1 $add2 $local $dis $stat $pin");
       Navigator.pop(context);
     }
 

@@ -51,6 +51,9 @@ class _InkcRegisteredFromOtherclubState
   File? _image;
   File? _frontside;
   File? _backside;
+  File? siretranferform;
+  File? damtranferform;
+
   TextEditingController sire = TextEditingController();
   TextEditingController dam = TextEditingController();
   TextEditingController Dogname = TextEditingController();
@@ -346,6 +349,10 @@ class _InkcRegisteredFromOtherclubState
           'dam_back_side_certificate': await MultipartFile.fromFile(
               _backside!.path,
               filename: "${now.second}.jpg"),
+          if (damtranferform.toString() != "null")
+            'other_club_transfer_form_dam': await MultipartFile.fromFile(
+                damtranferform!.path,
+                filename: "${now.second}.jpg"),
         });
 
         Response response = await dio.post(
@@ -365,6 +372,8 @@ class _InkcRegisteredFromOtherclubState
           var responseData = jsonDecode(response.data);
           var damfront = responseData['data']['dam_front_side_certificate'];
           var damback = responseData['data']['dam_back_side_certificate'];
+          var damfransferform =
+              responseData['data']['other_club_transfer_form_dam'];
 
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => LitterPuppyRegistration(
@@ -376,9 +385,12 @@ class _InkcRegisteredFromOtherclubState
                     image: _image.toString(),
                     sirebackcerificate: sireback,
                     sirefrontcerificate: sirefront,
+                    siretranferform: siretranferform.toString(),
                     damfrontcerificate: damfront,
                     dambackcerificate: damback,
+                    damtranform: damfransferform,
                     petcolordid: breedid.toString(),
+                    siretranform: "",
                   )));
         } else {
           setState(() {
@@ -405,6 +417,10 @@ class _InkcRegisteredFromOtherclubState
           'dam_back_side_certificate': await MultipartFile.fromFile(
               _backside!.path,
               filename: "${now.second}.jpg"),
+          if (damtranferform.toString() != "null")
+            'other_club_transfer_form_dam': await MultipartFile.fromFile(
+                damtranferform!.path,
+                filename: "${now.second}.jpg"),
         });
 
         Response response = await dio.post(
@@ -425,6 +441,8 @@ class _InkcRegisteredFromOtherclubState
           var studAgreementForm = responseData['data']['stud_agreement_form'];
           var damfront = responseData['data']['dam_front_side_certificate'];
           var damback = responseData['data']['dam_back_side_certificate'];
+          var damfransferform =
+              responseData['data']['other_club_transfer_form_dam'];
           print(studAgreementForm);
 
           Navigator.of(context).push(MaterialPageRoute(
@@ -439,7 +457,10 @@ class _InkcRegisteredFromOtherclubState
                     sirefrontcerificate: sirefront,
                     damfrontcerificate: damfront,
                     dambackcerificate: damback,
+                    damtranform: damfransferform,
                     petcolordid: breedid.toString(),
+                    siretranferform: siretranferform.toString(),
+                    siretranform: "",
                   )));
         } else {
           setState(() {
@@ -653,7 +674,7 @@ class _InkcRegisteredFromOtherclubState
                         child: Row(
                           children: [
                             Text(
-                              "Sire's KCI front side of the certificate",
+                              "Dam's front side of the certificate",
                               style: TextStyle(
                                   color: const Color.fromARGB(255, 22, 21, 21),
                                   fontWeight: FontWeight.bold,
@@ -717,7 +738,7 @@ class _InkcRegisteredFromOtherclubState
                         child: Row(
                           children: [
                             Text(
-                              "Sire's KCI back side of the certificate ",
+                              "Dam's back side of the certificate ",
                               style: TextStyle(
                                   color: const Color.fromARGB(255, 22, 21, 21),
                                   fontWeight: FontWeight.bold,
@@ -766,6 +787,63 @@ class _InkcRegisteredFromOtherclubState
                                   setState(
                                       () => _backside = File(cropperFile.path));
                                   print("justcheck$_backside");
+                                }
+                              }
+                            },
+                            child: const Text(
+                              'Pick Image',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0, left: 12),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Dam's Transfer Form",
+                              style: TextStyle(
+                                  color: const Color.fromARGB(255, 22, 21, 21),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.sp),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          FittedBox(
+                            fit: BoxFit.fill,
+                            child: CircleAvatar(
+                              backgroundColor: const Color(0xEBA020F0),
+                              radius: 64,
+                              foregroundImage: damtranferform != null
+                                  ? FileImage(damtranferform!)
+                                  : null,
+                              child: const Text(
+                                "Select image",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 199, 7, 7),
+                            ),
+                            onPressed: () async {
+                              final files = await imagehelper.PickImage();
+                              if (files.isNotEmpty) {
+                                final cropperFile = await imagehelper.crop(
+                                    file: files.first,
+                                    cropStyle: CropStyle.circle);
+                                if (cropperFile != null) {
+                                  setState(() =>
+                                      damtranferform = File(cropperFile.path));
+                                  print("justcheck$damtranferform");
                                 }
                               }
                             },
@@ -830,8 +908,7 @@ class _InkcRegisteredFromOtherclubState
                                         if (cropperFile != null) {
                                           setState(() =>
                                               _image = File(cropperFile.path));
-                                          print(
-                                              "justcheck$_image");
+                                          print("justcheck$_image");
                                         }
                                       }
                                     },
@@ -1244,7 +1321,6 @@ class _InkcRegisteredFromOtherclubState
                                         } else {
                                           UploadImage();
                                         }
-
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(

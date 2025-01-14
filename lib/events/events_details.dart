@@ -28,7 +28,8 @@ class EventsDetails extends StatefulWidget {
       Eventstall,
       event_stall;
 
-  EventsDetails({super.key, 
+  EventsDetails({
+    super.key,
     required this.EventId,
     required this.EventNumber,
     required this.EventStuff,
@@ -653,7 +654,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                 Text(
                   'Event Details',
                   style: TextStyle(
-                      shadows: const [
+                      shadows: const [ 
                         Shadow(
                           blurRadius: 10.0, // shadow blur
                           color:
@@ -752,7 +753,8 @@ class _EventsDetailsState extends State<EventsDetails> {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
+                            backgroundColor:
+                                const Color.fromARGB(255, 231, 25, 25),
                             textStyle: TextStyle(
                                 fontSize: 10.sp,
                                 color: const Color.fromARGB(255, 241, 236, 236),
@@ -762,14 +764,14 @@ class _EventsDetailsState extends State<EventsDetails> {
                               await SharedPreferences.getInstance();
                           String? check = sharedprefrence.getString("Token");
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  Participatent(
+                              builder: (BuildContext context) => Participatent(
                                     eventid: widget.EventId,
-                                    eventname: "${widget.EventStuff} ${widget.EventName}",
+                                    eventname:
+                                        "${widget.EventStuff} ${widget.EventName}",
                                     eventType: widget.EventType,
                                     eventstall: widget.event_stall,
                                   )));
-                                                },
+                        },
                         child: const Text(
                           'Enter in this show',
                           style: TextStyle(
@@ -868,23 +870,44 @@ class _EventsDetailsState extends State<EventsDetails> {
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          color: Colors.white,
-                          child: Center(
-                            child: AutoSizeText(
-                              widget.Eventjudge.toString(),
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: const Color.fromARGB(255, 133, 13, 13),
-                                  fontWeight: FontWeight.w600),
-                              maxLines:
-                                  6, // Adjust the maximum number of lines as needed
-                              overflow: TextOverflow.ellipsis,
+                      if (widget.Eventjudge.toString() == "null")
+                        Expanded(
+                          child: Container(
+                            color: Colors.white,
+                            child: Center(
+                              child: AutoSizeText(
+                                "To Be Announced Soon",
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color:
+                                        const Color.fromARGB(255, 133, 13, 13),
+                                    fontWeight: FontWeight.w600),
+                                maxLines:
+                                    6, // Adjust the maximum number of lines as needed
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        )
+                      else
+                        Expanded(
+                          child: Container(
+                            color: Colors.white,
+                            child: Center(
+                              child: AutoSizeText(
+                                widget.Eventjudge.toString(),
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color:
+                                        const Color.fromARGB(255, 133, 13, 13),
+                                    fontWeight: FontWeight.w600),
+                                maxLines:
+                                    6, // Adjust the maximum number of lines as needed
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ),
                         ),
-                      ),
                       // Container(
                       //   width: 150.sp,
                       //   child: FittedBox(

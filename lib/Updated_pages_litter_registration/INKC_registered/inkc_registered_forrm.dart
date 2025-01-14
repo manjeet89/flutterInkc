@@ -45,6 +45,7 @@ class _InkcRegisteredForrmState extends State<InkcRegisteredForrm> {
   File? _image;
   File? sirefrontcerificate;
   File? sirebackcerificate;
+  File? siretranferform;
   TextEditingController sire = TextEditingController();
   TextEditingController dam = TextEditingController();
   TextEditingController Dogname = TextEditingController();
@@ -180,9 +181,12 @@ class _InkcRegisteredForrmState extends State<InkcRegisteredForrm> {
                   image: _image.toString(),
                   sirebackcerificate: sirebackcerificate.toString(),
                   sirefrontcerificate: sirefrontcerificate.toString(),
+                  siretranferform: siretranferform.toString(),
                   dambackcerificate: damback,
                   damfrontcerificate: damfront,
                   petcolordid: "",
+                  siretranform: "",
+                  damtranform: "",
                 )));
       } else {
         SharedPreferences sharedprefrence =
@@ -225,9 +229,12 @@ class _InkcRegisteredForrmState extends State<InkcRegisteredForrm> {
                     image: studAgreementForm.toString(),
                     sirebackcerificate: sirebackcerificate.toString(),
                     sirefrontcerificate: sirefrontcerificate.toString(),
+                    siretranferform: siretranferform.toString(),
                     dambackcerificate: damback,
                     damfrontcerificate: damfront,
                     petcolordid: "",
+                    siretranform: "",
+                    damtranform: "",
                   )));
         } else {
           setState(() {
@@ -561,8 +568,7 @@ class _InkcRegisteredForrmState extends State<InkcRegisteredForrm> {
                                         if (cropperFile != null) {
                                           setState(() =>
                                               _image = File(cropperFile.path));
-                                          print(
-                                              "justcheck$_image");
+                                          print("justcheck$_image");
                                         }
                                       }
                                     },

@@ -367,20 +367,20 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
           var damfront = responseData['data']['dam_front_side_certificate'];
           var damback = responseData['data']['dam_back_side_certificate'];
 
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => LitterPuppyRegistration(
-                    sire: "",
-                    dam: "",
-                    dob: DOB,
-                    country: counrty.text.toString(),
-                    puppy: numbers.text.toString(),
-                    image: _image.toString(),
-                    sirebackcerificate: sireback,
-                    sirefrontcerificate: sirefront,
-                    damfrontcerificate: damfront,
-                    dambackcerificate: damback,
-                    petcolordid: breedid.toString(),
-                  )));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (BuildContext context) => LitterPuppyRegistration(
+          //           sire: "",
+          //           dam: "",
+          //           dob: DOB,
+          //           country: counrty.text.toString(),
+          //           puppy: numbers.text.toString(),
+          //           image: _image.toString(),
+          //           sirebackcerificate: sireback,
+          //           sirefrontcerificate: sirefront,
+          //           damfrontcerificate: damfront,
+          //           dambackcerificate: damback,
+          //           petcolordid: breedid.toString(),
+          //         )));
         } else {
           setState(() {
             showSpinner = false;
@@ -428,20 +428,20 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
           var damback = responseData['data']['dam_back_side_certificate'];
           print(studAgreementForm);
 
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => LitterPuppyRegistration(
-                    sire: "",
-                    dam: "",
-                    dob: DOB,
-                    country: counrty.text.toString(),
-                    puppy: numbers.text.toString(),
-                    image: _image.toString(),
-                    sirebackcerificate: sireback,
-                    sirefrontcerificate: sirefront,
-                    damfrontcerificate: damfront,
-                    dambackcerificate: damback,
-                    petcolordid: breedid.toString(),
-                  )));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (BuildContext context) => LitterPuppyRegistration(
+          //           sire: "",
+          //           dam: "",
+          //           dob: DOB,
+          //           country: counrty.text.toString(),
+          //           puppy: numbers.text.toString(),
+          //           image: _image.toString(),
+          //           sirebackcerificate: sireback,
+          //           sirefrontcerificate: sirefront,
+          //           damfrontcerificate: damfront,
+          //           dambackcerificate: damback,
+          //           petcolordid: breedid.toString(),
+          //         )));
         } else {
           setState(() {
             showSpinner = false;
@@ -831,8 +831,7 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                         if (cropperFile != null) {
                                           setState(() =>
                                               _image = File(cropperFile.path));
-                                          print(
-                                              "justcheck$_image");
+                                          print("justcheck$_image");
                                         }
                                       }
                                     },
@@ -1170,7 +1169,8 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                       if (numbers.text.toString().isNotEmpty &&
                                           int.parse(numbers.text.toString()) <=
                                               10) {
-                                        if (_damfrontside.toString() == "null") {
+                                        if (_damfrontside.toString() ==
+                                            "null") {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(const SnackBar(
                                                   content: Text(

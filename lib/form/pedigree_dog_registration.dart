@@ -59,8 +59,8 @@ class __PedigreeDogRegistrationFormState
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value = TextEditingValue(
-            text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value =
+            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -106,7 +106,8 @@ class __PedigreeDogRegistrationFormState
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse(
+              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -182,8 +183,8 @@ class __PedigreeDogRegistrationFormState
         'sire_reg_number': SIRE,
         'breded_country': counrty.text.toString(),
       });
-      print("${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" +
-          selectcolormakingid}-$DAM-$SIRE");
+      print(
+          "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
 
       Response response = await dio.post(
           'https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
@@ -483,7 +484,8 @@ class __PedigreeDogRegistrationFormState
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     sireString.toString(),
-                                    style: const TextStyle(color: Colors.deepOrange),
+                                    style: const TextStyle(
+                                        color: Colors.deepOrange),
                                   ),
                                 ),
                               ),
@@ -495,16 +497,16 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Dam's INKC Registration Number ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -539,7 +541,8 @@ class __PedigreeDogRegistrationFormState
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     DamString.toString(),
-                                    style: const TextStyle(color: Colors.deepOrange),
+                                    style: const TextStyle(
+                                        color: Colors.deepOrange),
                                   ),
                                 ),
                               ),
@@ -551,16 +554,16 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Add Co Owner ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -693,16 +696,16 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Name of the dog ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -737,16 +740,16 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -777,7 +780,8 @@ class __PedigreeDogRegistrationFormState
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon: const Icon(Icons.date_range),
+                                          prefixIcon:
+                                              const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.sp)),
@@ -793,8 +797,9 @@ class __PedigreeDogRegistrationFormState
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color.fromARGB(
-                                                255, 231, 25, 25),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
                                                 color: const Color.fromARGB(
@@ -820,16 +825,16 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Color and Marking ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -872,7 +877,8 @@ class __PedigreeDogRegistrationFormState
                                                     child: Text(
                                                       e.colourName.toString(),
                                                       style: TextStyle(
-                                                          color: const Color.fromARGB(
+                                                          color: const Color
+                                                              .fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -927,16 +933,16 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Sex of the dog ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1014,8 +1020,8 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1048,16 +1054,16 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Your dog’s photograph ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1072,7 +1078,8 @@ class __PedigreeDogRegistrationFormState
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                const Color.fromARGB(255, 182, 6, 6),
+                                                const Color.fromARGB(
+                                                    255, 182, 6, 6),
                                           ),
                                           onPressed: () async {
                                             getfirstImage();
@@ -1104,7 +1111,8 @@ class __PedigreeDogRegistrationFormState
                                                         blurRadius: 10,
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: const Offset(0, 10))
+                                                        offset:
+                                                            const Offset(0, 10))
                                                   ],
                                                   shape: BoxShape.circle,
                                                   image: DecorationImage(
@@ -1122,8 +1130,9 @@ class __PedigreeDogRegistrationFormState
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: const Color.fromARGB(
-                                                    255, 196, 3, 3),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 196, 3, 3),
                                               ),
                                               onPressed: () async {
                                                 getfirstImage();
@@ -1146,16 +1155,16 @@ class __PedigreeDogRegistrationFormState
                                     Text(
                                       "Microchip required ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1231,8 +1240,8 @@ class __PedigreeDogRegistrationFormState
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color.fromARGB(255, 23, 4, 190),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 23, 4, 190),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
                                             color: const Color.fromARGB(
@@ -1246,7 +1255,8 @@ class __PedigreeDogRegistrationFormState
                                       String Gender = gender.toString();
                                       String AddCoowner = AddCoOwner.toString();
                                       String MICRO = MicroRequired.toString();
-                                      print("$SIRE - $DAM - $DogName - $DOB - $Gender - $AddCoowner - $MICRO");
+                                      print(
+                                          "$SIRE - $DAM - $DogName - $DOB - $Gender - $AddCoowner - $MICRO");
 
                                       if (SIRE == "") {
                                         QuickAlert.show(

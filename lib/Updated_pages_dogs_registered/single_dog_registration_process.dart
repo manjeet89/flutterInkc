@@ -23,7 +23,25 @@ import 'dart:async';
 // }
 
 class SingleDogRegistrationProcess extends StatefulWidget {
-  const SingleDogRegistrationProcess({super.key});
+  String participate_event_id,
+      is_participate_with_event,
+      register_with_event,
+      eventname,
+      eventtype,
+      eventstal,
+      pariticaipate_for_event,
+      register_for_event;
+
+  SingleDogRegistrationProcess(
+      {required this.participate_event_id,
+      required this.is_participate_with_event,
+      required this.register_with_event,
+      required this.eventname,
+      required this.eventtype,
+      required this.eventstal,
+      required this.pariticaipate_for_event,
+      required this.register_for_event,
+      super.key});
 
   @override
   State<SingleDogRegistrationProcess> createState() =>
@@ -151,7 +169,20 @@ class _SingleDogRegistrationProcessState
                                     //             const MyDogInfo()));
                                     Navigator.of(context).push(MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            const PedigreeDogRegistrationRegistrationWithOtherClubForm()));
+                                            PedigreeDogRegistrationRegistrationWithOtherClubForm(
+                                                participate_event_id:
+                                                    widget.participate_event_id,
+                                                is_participate_with_event: widget
+                                                    .is_participate_with_event,
+                                                register_with_event:
+                                                    widget.register_with_event,
+                                                eventname: widget.eventname,
+                                                eventtype: widget.eventtype,
+                                                eventstal: widget.eventstal,
+                                                register_for_event:
+                                                    widget.register_for_event,
+                                                pariticaipate_for_event: widget
+                                                    .pariticaipate_for_event)));
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.only(top: 12),
@@ -331,7 +362,20 @@ class _SingleDogRegistrationProcessState
                                     onTap: () async {
                                       Navigator.of(context).push(MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              const SingleDogRegisrationEitherParaentsKnows()));
+                                              SingleDogRegisrationEitherParaentsKnows(
+                                                  participate_event_id: widget
+                                                      .participate_event_id,
+                                                  is_participate_with_event: widget
+                                                      .is_participate_with_event,
+                                                  register_with_event: widget
+                                                      .register_with_event,
+                                                  eventname: widget.eventname,
+                                                  eventtype: widget.eventtype,
+                                                  eventstal: widget.eventstal,
+                                                  register_for_event:
+                                                      widget.register_for_event,
+                                                  pariticaipate_for_event: widget
+                                                      .pariticaipate_for_event)));
                                     },
                                     child: Container(
                                       margin: const EdgeInsets.only(top: 12),
@@ -516,7 +560,20 @@ class _SingleDogRegistrationProcessState
                                       //     sharedprefrence.getString("Token");
                                       Navigator.of(context).push(MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              const UnknownDogRegistrationMoreThanSixMonth()));
+                                              UnknownDogRegistrationMoreThanSixMonth(
+                                                  participate_event_id: widget
+                                                      .participate_event_id,
+                                                  is_participate_with_event: widget
+                                                      .is_participate_with_event,
+                                                  register_with_event: widget
+                                                      .register_with_event,
+                                                  eventname: widget.eventname,
+                                                  eventtype: widget.eventtype,
+                                                  eventstal: widget.eventstal,
+                                                  register_for_event:
+                                                      widget.register_for_event,
+                                                  pariticaipate_for_event: widget
+                                                      .pariticaipate_for_event)));
                                     },
                                     child: Container(
                                       margin: const EdgeInsets.only(top: 12),

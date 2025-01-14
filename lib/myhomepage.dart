@@ -9,8 +9,12 @@ import 'package:inkc/bottom_nav_pages/bar.dart';
 import 'package:inkc/bottom_nav_pages/more.dart';
 import 'package:inkc/bottom_nav_pages/search.dart';
 import 'package:inkc/model/cartlist.dart';
+import 'package:inkc/version_check/VersionChecker.dart';
+import 'package:inkc/version_check/version.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import 'bottom_nav_pages/home.dart';
 import 'bottom_nav_pages/notification.dart';
@@ -86,6 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+
+    _checkForUpdate();
     FetchData();
 
     EasyLoading.addStatusCallback((status) {
@@ -114,6 +120,67 @@ class _MyHomePageState extends State<MyHomePage> {
       currnetIndec = index;
       _selectedIndex = index;
     });
+  }
+
+  bool _hasShownUpdateDialog = false;
+
+  Future<void> _checkForUpdate() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    final currentVersion = packageInfo.version;
+
+    // Fetch latest version from Play Store
+    final latestVersion =
+        await VersionChecker.getAndroidVersionFromGooglePlay();
+
+    if (latestVersion != null) {
+      final current = Version.parse(currentVersion);
+      final latest = Version.parse(latestVersion);
+
+      print("${currentVersion}nothing");
+      print(latestVersion.toString());
+
+      if (current < latest) {
+        _showUpdateDialog();
+      }
+    }
+  }
+
+  void _showUpdateDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Update Available',
+            style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        content: const Text(
+          'A newer version is available. Please update your app.',
+          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _hasShownUpdateDialog = true; // Ensure dialog is shown only once
+            },
+            child: const Text('Close',
+                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+          ),
+          TextButton(
+            onPressed: () async {
+              var url = Uri.parse(
+                  "https://play.google.com/store/apps/details?id=net.inkcdogs.doggylocker");
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
+              } else {
+                throw 'Could not launch $url';
+              } // Ensure dialog is shown only once
+            },
+            child: const Text('Update',
+                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<bool> _onWillPop() async {
@@ -182,7 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    print(token);
+    print(token + " --- " + userid);
 
     const uri = "https://new-demo.inkcdogs.org/api/cart";
 

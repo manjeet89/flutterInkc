@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inkc/credential/login.dart';
+import 'package:inkc/id_cart.dart';
 import 'package:inkc/model/profilemodel.dart';
 import 'package:inkc/profile_update.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
@@ -425,41 +426,130 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             style: TextStyle(
                                 fontSize: 20.sp, fontWeight: FontWeight.bold),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 18.0),
-                            child: Container(
-                              height: 40.sp,
-                              width: 40.sp,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 4,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 18.0),
+                                child: Container(
+                                  height: 40.sp,
+                                  width: 40.sp,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      width: 4,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                    ),
+                                    color: const Color.fromARGB(
+                                        255, 148, 145, 145),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  ProfileUpdate(
+                                                    names:
+                                                        First.text.toString(),
+                                                    lastnames: MyController.text
+                                                        .toString(),
+                                                    genders: gender,
+                                                    dobs: DOB,
+                                                    phones: phonenumber.text,
+                                                    emails: email.text,
+                                                    addresss: address.text,
+                                                  )));
+                                    },
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
-                                color: const Color.fromARGB(255, 148, 145, 145),
                               ),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          ProfileUpdate(
-                                            names: First.text.toString(),
-                                            lastnames:
-                                                MyController.text.toString(),
-                                            genders: gender,
-                                            dobs: DOB,
-                                            phones: phonenumber.text,
-                                            emails: email.text,
-                                            addresss: address.text,
-                                          )));
-                                },
-                                child: const Icon(
-                                  Icons.edit,
-                                  color: Colors.white,
+                              Padding(
+                                padding: const EdgeInsets.only(right: 18.0),
+                                child: ElevatedButton(
+                                  // height: 40.sp,
+                                  // width: 40.sp,
+                                  // decoration: BoxDecoration(
+                                  //   shape: BoxShape.circle,
+                                  //   border: Border.all(
+                                  //     width: 4,
+                                  //     color: Theme.of(context)
+                                  //         .scaffoldBackgroundColor,
+                                  //   ),
+                                  //   color: const Color.fromARGB(
+                                  //       255, 148, 145, 145),
+                                  // ),
+
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 223, 71, 45),
+                                      textStyle: const TextStyle(
+                                          fontSize: 10,
+                                          color:
+                                              Color.fromARGB(255, 223, 71, 45),
+                                          fontWeight: FontWeight.bold)),
+
+                                  onPressed: () async {
+                                    SharedPreferences sharedprefrence =
+                                        await SharedPreferences.getInstance();
+                                    String card_code =
+                                        sharedprefrence.getString("card_code")!;
+
+                                    // print(card_code
+                                    //     .replaceAll("{", "")
+                                    //     .replaceAll("\"", "")
+                                    //     .replaceAll("}", "")
+                                    //     .replaceAll(",", ":"));
+
+                                    String value = card_code
+                                        .replaceAll("{", "")
+                                        .replaceAll("\"", "")
+                                        .replaceAll("}", "")
+                                        .replaceAll(",", ":");
+
+                                    List<String> parts = value.split(':');
+
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                IdCard(
+                                                  firstname:
+                                                      First.text.toString(),
+                                                  lastname: MyController.text
+                                                      .toString(),
+                                                  number: phonenumber.text,
+                                                  email: email.text,
+                                                  Fulladdress: address.text,
+                                                  gender: gender.toString(),
+                                                  dob: DOB.toString(),
+                                                  image: image,
+                                                  country: '',
+                                                  city: '',
+                                                  state: '',
+                                                  Countrygetdata: '',
+                                                  Stategetdata: '',
+                                                  Districtgetdata: '',
+                                                  pincode: '',
+                                                  countryid: '',
+                                                  stateid: '',
+                                                  district: '',
+                                                  userid: personalid.text,
+                                                  card_code: parts,
+                                                  card_expiry_date: '',
+                                                )));
+                                  },
+                                  child: Text(
+                                    "ID Card",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ),

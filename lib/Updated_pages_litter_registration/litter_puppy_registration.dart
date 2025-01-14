@@ -23,7 +23,10 @@ class LitterPuppyRegistration extends StatefulWidget {
 
   String damfrontcerificate;
   String dambackcerificate;
+  String siretranferform;
 
+  String siretranform;
+  String damtranform;
 
   LitterPuppyRegistration({
     super.key,
@@ -38,6 +41,9 @@ class LitterPuppyRegistration extends StatefulWidget {
     required this.sirebackcerificate,
     required this.damfrontcerificate,
     required this.dambackcerificate,
+    required this.siretranferform,
+    required this.siretranform,
+    required this.damtranform,
   });
 
   @override
@@ -159,7 +165,6 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
   //   SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
   //   String userid = sharedprefrence.getString("Userid")!;
   //   String token = sharedprefrence.getString("Token")!;
-
   //   Map<String, String> requestHeaders = {
   //     // 'Content-type': 'application/json',
   //     // 'Accept': 'application/json',
@@ -355,7 +360,8 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
     String sir = SireNumber.text;
     String dam = DamNumber.text;
 
-    print("$firstImage--${widget.image}--${widget.sirefrontcerificate}--${widget.sirebackcerificate}");
+    print(
+        "$firstImage--${widget.image}--${widget.sirefrontcerificate}--${widget.sirebackcerificate}");
 
     List thik = [];
     List ok = [];
@@ -525,7 +531,8 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                     FittedBox(
                                       fit: BoxFit.fill,
                                       child: CircleAvatar(
-                                        backgroundColor: const Color(0xEBA020F0),
+                                        backgroundColor:
+                                            const Color(0xEBA020F0),
                                         radius: 64,
                                         foregroundImage: firstImage != null
                                             ? FileImage(firstImage!)

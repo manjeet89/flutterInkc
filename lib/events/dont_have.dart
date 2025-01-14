@@ -37,7 +37,8 @@ String image = "";
 class IDontHaveCertificate extends StatefulWidget {
   String eventid, eventname, eventtype, eventstal;
   IDontHaveCertificate(
-      {super.key, required this.eventid,
+      {super.key,
+      required this.eventid,
       required this.eventname,
       required this.eventtype,
       required this.eventstal});
@@ -71,8 +72,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value = TextEditingValue(
-            text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value =
+            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -199,7 +200,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse(
+              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -466,16 +468,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Name of the dog ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -510,16 +512,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -547,7 +549,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon: const Icon(Icons.date_range),
+                                          prefixIcon:
+                                              const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.sp)),
@@ -563,8 +566,9 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color.fromARGB(
-                                                255, 231, 25, 25),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
                                                 color: const Color.fromARGB(
@@ -591,16 +595,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Breed ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -660,7 +664,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                       e.subCategoryName
                                                           .toString(),
                                                       style: TextStyle(
-                                                          color: const Color.fromARGB(
+                                                          color: const Color
+                                                              .fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -715,16 +720,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Color and Marking ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -766,7 +771,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                     child: Text(
                                                       e.colourName.toString(),
                                                       style: TextStyle(
-                                                          color: const Color.fromARGB(
+                                                          color: const Color
+                                                              .fromARGB(
                                                               255, 95, 46, 46),
                                                           fontSize: 12.sp,
                                                           fontWeight:
@@ -821,16 +827,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Sex of the dog ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -908,8 +914,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -942,16 +948,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Upload your dog’s best photograph ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -966,7 +972,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                const Color.fromARGB(255, 199, 5, 5),
+                                                const Color.fromARGB(
+                                                    255, 199, 5, 5),
                                           ),
                                           onPressed: () async {
                                             getfirstImage();
@@ -998,7 +1005,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                         blurRadius: 10,
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: const Offset(0, 10))
+                                                        offset:
+                                                            const Offset(0, 10))
                                                   ],
                                                   shape: BoxShape.circle,
                                                   image: DecorationImage(
@@ -1016,8 +1024,9 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: const Color.fromARGB(
-                                                    255, 179, 3, 3),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 179, 3, 3),
                                               ),
                                               onPressed: () async {
                                                 getfirstImage();
@@ -1041,16 +1050,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Height (in inches) ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1085,16 +1094,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Photograph of the dog's height ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 73, 72, 72),
+                                          color: const Color.fromARGB(
+                                              255, 73, 72, 72),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1109,7 +1118,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                const Color.fromARGB(255, 182, 5, 5),
+                                                const Color.fromARGB(
+                                                    255, 182, 5, 5),
                                           ),
                                           onPressed: () async {
                                             getsecondImage();
@@ -1141,7 +1151,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                         blurRadius: 10,
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: const Offset(0, 10))
+                                                        offset:
+                                                            const Offset(0, 10))
                                                   ],
                                                   shape: BoxShape.circle,
                                                   image: DecorationImage(
@@ -1159,8 +1170,9 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: const Color.fromARGB(
-                                                    255, 180, 5, 5),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 180, 5, 5),
                                               ),
                                               onPressed: () async {
                                                 getsecondImage();
@@ -1182,16 +1194,16 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                     Text(
                                       "Photograph of the dog from one side ",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 22, 21, 21),
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color:
-                                              const Color.fromARGB(255, 231, 11, 11),
+                                          color: const Color.fromARGB(
+                                              255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1206,7 +1218,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                const Color.fromARGB(255, 168, 3, 3),
+                                                const Color.fromARGB(
+                                                    255, 168, 3, 3),
                                           ),
                                           onPressed: () async {
                                             getthardImage();
@@ -1238,7 +1251,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                         blurRadius: 10,
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: const Offset(0, 10))
+                                                        offset:
+                                                            const Offset(0, 10))
                                                   ],
                                                   shape: BoxShape.circle,
                                                   image: DecorationImage(
@@ -1256,8 +1270,9 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: const Color.fromARGB(
-                                                    255, 153, 2, 2),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 153, 2, 2),
                                               ),
                                               onPressed: () async {
                                                 getthardImage();
@@ -1283,8 +1298,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                       Text(
                                         "EVENT DETAILS",
                                         style: TextStyle(
-                                            color:
-                                                const Color.fromARGB(255, 22, 21, 21),
+                                            color: const Color.fromARGB(
+                                                255, 22, 21, 21),
                                             fontWeight: FontWeight.w800,
                                             fontSize: 17.sp),
                                       ),
@@ -1301,8 +1316,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                       child: Text(
                                         "Class (Select at least two option.)",
                                         style: TextStyle(
-                                            color:
-                                                const Color.fromARGB(255, 22, 21, 21),
+                                            color: const Color.fromARGB(
+                                                255, 22, 21, 21),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12.sp),
                                       ),
@@ -1321,7 +1336,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                               'Pre-Beginner ',
                                               style: TextStyle(fontSize: 15.0),
                                             ), //Text
-                                            const SizedBox(width: 10), //SizedBox
+                                            const SizedBox(
+                                                width: 10), //SizedBox
                                             /** Checkbox Widget **/
                                             Checkbox(
                                               value: prebigner,
@@ -1344,7 +1360,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                               'Beginner ',
                                               style: TextStyle(fontSize: 15.0),
                                             ), //Text
-                                            const SizedBox(width: 10), //SizedBox
+                                            const SizedBox(
+                                                width: 10), //SizedBox
                                             /** Checkbox Widget **/
                                             Checkbox(
                                               value: bigner,
@@ -1377,7 +1394,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                 style:
                                                     TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(width: 10), //SizedBox
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: novic,
@@ -1400,7 +1418,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                 style:
                                                     TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(width: 10), //SizedBox
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Texta,
@@ -1434,7 +1453,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                 style:
                                                     TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(width: 10), //SizedBox
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Textb,
@@ -1457,7 +1477,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                 style:
                                                     TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(width: 10), //SizedBox
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Textc,
@@ -1580,7 +1601,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                 fontSize: 12.sp),
                                           ),
                                           Container(
-                                            margin: const EdgeInsets.only(top: 0),
+                                            margin:
+                                                const EdgeInsets.only(top: 0),
                                             // decoration: BoxDecoration(
                                             //   boxShadow: [],
                                             //   border: Border.all(
@@ -1591,7 +1613,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                             //   color: Colors.white,
                                             // ),
                                             child: Padding(
-                                              padding: const EdgeInsets.only(top: 0),
+                                              padding:
+                                                  const EdgeInsets.only(top: 0),
                                               child: Column(
                                                 children: [
                                                   Row(
@@ -1802,7 +1825,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                     fontSize: 12.sp),
                                               ),
                                               Container(
-                                                margin: const EdgeInsets.only(top: 0),
+                                                margin: const EdgeInsets.only(
+                                                    top: 0),
                                                 // decoration: BoxDecoration(
                                                 //   boxShadow: [],
                                                 //   border: Border.all(
@@ -1814,7 +1838,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                                 // ),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsets.only(top: 0),
+                                                      const EdgeInsets.only(
+                                                          top: 0),
                                                   child: Column(
                                                     children: [
                                                       Row(
@@ -1893,8 +1918,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color.fromARGB(255, 15, 50, 70),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 15, 50, 70),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
                                             color: const Color.fromARGB(
@@ -2017,7 +2042,8 @@ class _IDontHaveCertificateState extends State<IDontHaveCertificate> {
                                           }
                                         }
                                       }
-                                      print("${Dogname.text} - ${dateofbirth.text} - $selectedbreedid - $selectcolormakingid - $gender - ${counrty.text} - ${widget.eventstal}");
+                                      print(
+                                          "${Dogname.text} - ${dateofbirth.text} - $selectedbreedid - $selectcolormakingid - $gender - ${counrty.text} - ${widget.eventstal}");
 
                                       // uploadData();
                                     },

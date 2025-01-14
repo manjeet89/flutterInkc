@@ -7,6 +7,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inkc/dropdownmodel/drop_down_breed_list.dart';
 import 'package:inkc/dropdownmodel/drop_down_color_and_making_list.dart';
+import 'package:inkc/events/obidient.dart';
 import 'package:inkc/image_helper.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -37,7 +38,24 @@ String token = "";
 String image = "";
 
 class DamRegistrationWithInkc extends StatefulWidget {
-  const DamRegistrationWithInkc({super.key});
+  String participate_event_id,
+      is_participate_with_event,
+      register_with_event,
+      eventname,
+      eventtype,
+      eventstal,
+      pariticaipate_for_event,
+      register_for_event;
+  DamRegistrationWithInkc(
+      {required this.participate_event_id,
+      required this.is_participate_with_event,
+      required this.register_with_event,
+      required this.eventname,
+      required this.eventtype,
+      required this.eventstal,
+      required this.pariticaipate_for_event,
+      required this.register_for_event,
+      super.key});
 
   @override
   _DamRegistrationWithInkcState createState() =>
@@ -49,12 +67,31 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
 
   File? _dambacksidecertificate;
   File? _studcertificate;
+  File? _Siretransferformcertificate;
 
   TextEditingController sire = TextEditingController();
   TextEditingController dam = TextEditingController();
   TextEditingController Dogname = TextEditingController();
   TextEditingController dateofbirth = TextEditingController();
   TextEditingController cowner = TextEditingController();
+
+// events
+
+  bool checkvisible = true;
+  String? stallReq = "0";
+  bool stall_day_type = false;
+  String StallDay = "1";
+  String StallType = "0";
+
+  List<Obideint> dataload = [];
+  bool prebigner = false;
+  bool bigner = false;
+  bool novic = false;
+  bool Texta = false;
+  bool Textb = false;
+  bool Textc = false;
+
+  List obidient = [];
 
   FocusNode focusNode = FocusNode();
 
@@ -161,7 +198,8 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
   bool damvalide = false;
   String? DamString;
 
-  uploadData() async {
+  uploadData(
+      String obidientq, String stallReqq, String Dayq, String Typeq) async {
     setState(() {
       showSpinner = true;
     });
@@ -190,6 +228,10 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
         'sire_back_side_certificate': await MultipartFile.fromFile(
             _studcertificate!.path,
             filename: "${now.second}.jpg"),
+        if (_Siretransferformcertificate.toString() != "null")
+          'other_club_transfer_form_sire': await MultipartFile.fromFile(
+              _Siretransferformcertificate!.path,
+              filename: "${now.second}.jpg"),
         'pet_gender': Gender,
         'birth_date': DOB,
         'pet_name': DogName,
@@ -201,6 +243,13 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
         'pet_category_id': petsubcatid,
         'pet_sub_category_id': petcatid,
         'breded_country': counrty.text.toString(),
+        "participate_event_id": widget.participate_event_id.toString(),
+        "class_and_price[]": obidientq.toString(),
+        "is_stall_required": stallReqq,
+        "event_stall_day": Dayq,
+        "event_stall_type": Typeq,
+        "register_with_event": widget.register_for_event,
+        "is_participate_with_event": widget.pariticaipate_for_event
       });
       print(
           "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
@@ -532,7 +581,8 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                           setState(() =>
                                               _dambacksidecertificate =
                                                   File(cropperFile.path));
-                                          print("justcheck$_dambacksidecertificate");
+                                          print(
+                                              "justcheck$_dambacksidecertificate");
                                         }
                                       }
                                     },
@@ -603,6 +653,72 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                           setState(() => _studcertificate =
                                               File(cropperFile.path));
                                           print("justcheck$_studcertificate");
+                                        }
+                                      }
+                                    },
+                                    child: const Text(
+                                      'Pick Image',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Sire's Transfer Form",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(
+                                              255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: CircleAvatar(
+                                      backgroundColor: const Color(0xEBA020F0),
+                                      radius: 64,
+                                      foregroundImage:
+                                          _Siretransferformcertificate != null
+                                              ? FileImage(
+                                                  _Siretransferformcertificate!)
+                                              : null,
+                                      child: const Text(
+                                        "Select image",
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 199, 7, 7),
+                                    ),
+                                    onPressed: () async {
+                                      final files =
+                                          await imagehelper.PickImage();
+                                      if (files.isNotEmpty) {
+                                        final cropperFile =
+                                            await imagehelper.crop(
+                                                file: files.first,
+                                                cropStyle: CropStyle.circle);
+                                        if (cropperFile != null) {
+                                          setState(() =>
+                                              _Siretransferformcertificate =
+                                                  File(cropperFile.path));
+                                          print(
+                                              "justcheck$_Siretransferformcertificate");
                                         }
                                       }
                                     },
@@ -1328,8 +1444,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                         if (cropperFile != null) {
                                           setState(() =>
                                               _image = File(cropperFile.path));
-                                          print(
-                                              "justcheck$_image");
+                                          print("justcheck$_image");
                                         }
                                       }
                                     },
@@ -1429,6 +1544,8 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                   ),
                                 ),
                               ),
+                              if (widget.participate_event_id != "")
+                                EventDetails(context),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
@@ -1523,10 +1640,217 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                             text: 'Please Enter co owner Id',
                                           );
                                         } else {
-                                          uploadData();
+                                          String Day = "1";
+                                          String Type = "0";
+                                          obidient.clear();
+
+                                          if (prebigner == true) {
+                                            obidient.add("1");
+                                          }
+                                          if (bigner == true) {
+                                            obidient.add("2");
+                                          }
+                                          if (novic == true) {
+                                            obidient.add("3");
+                                          }
+                                          if (Texta == true) {
+                                            obidient.add("4");
+                                          }
+                                          if (Textb == true) {
+                                            obidient.add("5");
+                                          }
+                                          if (Textc == true) {
+                                            obidient.add("6");
+                                          }
+
+                                          print(obidient);
+
+                                          {
+                                            if (stallReq == "0") {
+                                              //  print("sukriya");
+                                              Day = "";
+                                              Type = "";
+                                            } else {
+                                              Day = StallDay;
+                                              Type = StallType;
+                                            }
+
+                                            //obidient.length;
+                                            if (obidient.length <= 1 &&
+                                                widget.eventtype.toString() ==
+                                                    "2") {
+                                              QuickAlert.show(
+                                                context: context,
+                                                type: QuickAlertType.error,
+                                                title: 'Oops...',
+                                                text:
+                                                    'Please Select atlest 2 box',
+                                              );
+                                            } else {
+                                              // print(
+                                              //     "$selectedValue-$Day - $Type - $obidient - $stallReq - ${widget.eventid}${widget.eventtype}${widget.eventstal}");
+
+                                              // SharedPreferences sharedprefrence =
+                                              //     await SharedPreferences.getInstance();
+                                              // String userid = sharedprefrence.getString("Userid")!;
+                                              // String token = sharedprefrence.getString("Token")!;
+
+                                              // Map<String, String> requestHeaders = {
+                                              //   // 'Accept': 'application/json',
+                                              //   'Usertoken': token,
+                                              //   'Userid': userid
+                                              // };
+
+                                              // const uri =
+                                              //     "https://new-demo.inkcdogs.org/api/event/participate";
+
+                                              // final responce = await http.post(Uri.parse(uri),
+                                              //     body: {
+                                              //       "event_id": widget
+                                              //           .eventid
+                                              //           .toString(),
+                                              //       "pet_id":
+                                              //           selectedValue
+                                              //               .toString(),
+                                              //       "class_and_price[]":
+                                              //           obidient
+                                              //               .toString(),
+                                              //       "is_stall_required":
+                                              //           stallReq,
+                                              //       "event_stall_day":
+                                              //           Day,
+                                              //       "event_stall_type":
+                                              //           Type,
+                                              //       "register_with_event":
+                                              //           "1"
+                                              //     },
+                                              uploadData(
+                                                  obidient.toString(),
+                                                  stallReq.toString(),
+                                                  Day,
+                                                  Type);
+                                              //       headers: requestHeaders);
+                                              //   var data = json.decode(responce.body);
+                                              //   if (data['code'].toString() == "200") {
+                                              //     QuickAlert.show(
+                                              //       context: context,
+                                              //       type: QuickAlertType.success,
+                                              //       title: 'Success...',
+                                              //       text: 'Please Check your cart',
+                                              //     );
+                                              //     setState(() {
+                                              //       RefreshCart();
+                                              //     });
+                                              //   }
+                                            }
+
+                                            // print(data['message']);
+                                          }
                                         }
                                       } else {
-                                        uploadData();
+                                        String Day = "1";
+                                        String Type = "0";
+                                        obidient.clear();
+
+                                        if (prebigner == true) {
+                                          obidient.add("1");
+                                        }
+                                        if (bigner == true) {
+                                          obidient.add("2");
+                                        }
+                                        if (novic == true) {
+                                          obidient.add("3");
+                                        }
+                                        if (Texta == true) {
+                                          obidient.add("4");
+                                        }
+                                        if (Textb == true) {
+                                          obidient.add("5");
+                                        }
+                                        if (Textc == true) {
+                                          obidient.add("6");
+                                        }
+
+                                        print(obidient);
+
+                                        {
+                                          if (stallReq == "0") {
+                                            //  print("sukriya");
+                                            Day = "";
+                                            Type = "";
+                                          } else {
+                                            Day = StallDay;
+                                            Type = StallType;
+                                          }
+
+                                          //obidient.length;
+                                          if (obidient.length <= 1 &&
+                                              widget.eventtype.toString() ==
+                                                  "2") {
+                                            QuickAlert.show(
+                                              context: context,
+                                              type: QuickAlertType.error,
+                                              title: 'Oops...',
+                                              text:
+                                                  'Please Select atlest 2 box',
+                                            );
+                                          } else {
+                                            // print(
+                                            //     "$selectedValue-$Day - $Type - $obidient - $stallReq - ${widget.eventid}${widget.eventtype}${widget.eventstal}");
+
+                                            // SharedPreferences sharedprefrence =
+                                            //     await SharedPreferences.getInstance();
+                                            // String userid = sharedprefrence.getString("Userid")!;
+                                            // String token = sharedprefrence.getString("Token")!;
+
+                                            // Map<String, String> requestHeaders = {
+                                            //   // 'Accept': 'application/json',
+                                            //   'Usertoken': token,
+                                            //   'Userid': userid
+                                            // };
+
+                                            // const uri =
+                                            //     "https://new-demo.inkcdogs.org/api/event/participate";
+
+                                            // final responce = await http.post(Uri.parse(uri),
+                                            //     body: {
+                                            //       "event_id": widget
+                                            //           .eventid
+                                            //           .toString(),
+                                            //       "pet_id":
+                                            //           selectedValue
+                                            //               .toString(),
+                                            //       "class_and_price[]":
+                                            //           obidient
+                                            //               .toString(),
+                                            //       "is_stall_required":
+                                            //           stallReq,
+                                            //       "event_stall_day":
+                                            //           Day,
+                                            //       "event_stall_type":
+                                            //           Type,
+                                            //       "register_with_event":
+                                            //           "1"
+                                            //     },
+                                            uploadData(obidient.toString(),
+                                                stallReq.toString(), Day, Type);
+                                            //       headers: requestHeaders);
+                                            //   var data = json.decode(responce.body);
+                                            //   if (data['code'].toString() == "200") {
+                                            //     QuickAlert.show(
+                                            //       context: context,
+                                            //       type: QuickAlertType.success,
+                                            //       title: 'Success...',
+                                            //       text: 'Please Check your cart',
+                                            //     );
+                                            //     setState(() {
+                                            //       RefreshCart();
+                                            //     });
+                                            //   }
+                                          }
+
+                                          // print(data['message']);
+                                        }
                                       }
                                       // uploadData();
                                     },
@@ -1546,6 +1870,572 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Visibility EventDetails(BuildContext context) {
+    return Visibility(
+      visible: checkvisible,
+      child: Column(
+        children: [
+          if (widget.eventtype.toString() == "2")
+            Visibility(
+                child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Class (Select at least two option.)",
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 22, 21, 21),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.sp),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      children: <Widget>[
+                        const SizedBox(
+                          width: 10,
+                        ), //SizedBox
+                        const Text(
+                          'Pre-Beginner ',
+                          style: TextStyle(fontSize: 15.0),
+                        ), //Text
+                        const SizedBox(width: 10), //SizedBox
+                        /** Checkbox Widget **/
+                        Checkbox(
+                          value: prebigner,
+                          onChanged: (value) {
+                            setState(() {
+                              prebigner = value!;
+                              // obidient.add(value);
+                              print(prebigner);
+                            });
+                          },
+                        ), //Checkbox
+                      ], //<Widget>[]
+                    ),
+                    Row(
+                      children: <Widget>[
+                        const SizedBox(
+                          width: 10,
+                        ), //SizedBox
+                        const Text(
+                          'Beginner ',
+                          style: TextStyle(fontSize: 15.0),
+                        ), //Text
+                        const SizedBox(width: 10), //SizedBox
+                        /** Checkbox Widget **/
+                        Checkbox(
+                          value: bigner,
+                          onChanged: (value) {
+                            setState(() {
+                              bigner = value!;
+                              // obidient.add(value);
+                            });
+                          },
+                        ), //Checkbox
+                      ], //<Widget>[]
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 35.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        children: <Widget>[
+                          const SizedBox(
+                            width: 10,
+                          ), //SizedBox
+                          const Text(
+                            'Novice ',
+                            style: TextStyle(fontSize: 15.0),
+                          ), //Text
+                          const SizedBox(width: 10), //SizedBox
+                          /** Checkbox Widget **/
+                          Checkbox(
+                            value: novic,
+                            onChanged: (value) {
+                              setState(() {
+                                novic = value!;
+                                // obidient.add(value);
+                              });
+                            },
+                          ), //Checkbox
+                        ], //<Widget>[]
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const SizedBox(
+                            width: 10,
+                          ), //SizedBox
+                          const Text(
+                            'Test-A ',
+                            style: TextStyle(fontSize: 15.0),
+                          ), //Text
+                          const SizedBox(width: 10), //SizedBox
+                          /** Checkbox Widget **/
+                          Checkbox(
+                            value: Texta,
+                            onChanged: (value) {
+                              setState(() {
+                                Texta = value!;
+                                //obidient.add(value);
+                              });
+                            },
+                          ), //Checkbox
+                        ], //<Widget>[]
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 35.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        children: <Widget>[
+                          const SizedBox(
+                            width: 10,
+                          ), //SizedBox
+                          const Text(
+                            'Test-B ',
+                            style: TextStyle(fontSize: 15.0),
+                          ), //Text
+                          const SizedBox(width: 10), //SizedBox
+                          /** Checkbox Widget **/
+                          Checkbox(
+                            value: Textb,
+                            onChanged: (value) {
+                              setState(() {
+                                Textb = value!;
+                                // obidient.add(value);
+                              });
+                            },
+                          ), //Checkbox
+                        ], //<Widget>[]
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const SizedBox(
+                            width: 10,
+                          ), //SizedBox
+                          const Text(
+                            'Test-C ',
+                            style: TextStyle(fontSize: 15.0),
+                          ), //Text
+                          const SizedBox(width: 10), //SizedBox
+                          /** Checkbox Widget **/
+                          Checkbox(
+                            value: Textc,
+                            onChanged: (value) {
+                              setState(() {
+                                Textc = value!;
+                                //  obidient.add(value);
+                              });
+                            },
+                          ), //Checkbox
+                        ], //<Widget>[]
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )),
+          if (widget.eventstal.toString() == "1")
+            Visibility(
+                child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0, left: 12),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Do you need stall              ",
+                        style: TextStyle(
+                            color: const Color.fromARGB(255, 22, 21, 21),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.sp),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 0),
+                        // decoration: BoxDecoration(
+                        //   boxShadow: [],
+                        //   border: Border.all(
+                        //     color: Colors.black,
+                        //     width: 0.5,
+                        //   ),
+                        //   borderRadius: BorderRadius.circular(4.sp),
+                        //   color: Colors.white,
+                        // ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 0),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Radio(
+                                        value: "0",
+                                        groupValue: stallReq,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            stall_day_type = false;
+                                            stallReq = value.toString();
+                                          });
+                                        },
+                                      ),
+                                      Text(
+                                        'No',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 11.sp),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Radio(
+                                        value: "1",
+                                        groupValue: stallReq,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            stall_day_type = true;
+                                            stallReq = value.toString();
+                                          });
+                                        },
+                                      ),
+                                      Text(
+                                        'Yes',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 11.sp),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )),
+          if (widget.eventstal.toString() == "1")
+            Visibility(
+                visible: stall_day_type,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0, left: 12),
+                      child: Row(
+                        children: [
+                          Text(
+                            "stall Day          ",
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 22, 21, 21),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12.sp),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Radio(
+                                      value: "1",
+                                      groupValue: StallDay,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          // _isShowOff = true;
+                                          StallDay = value.toString();
+                                        });
+                                      },
+                                    ),
+                                    Text(
+                                      'First Day',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 11.sp),
+                                    )
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 18.0),
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                        value: "2",
+                                        groupValue: StallDay,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            // _isShowOff = true;
+                                            StallDay = value.toString();
+                                          });
+                                        },
+                                      ),
+                                      Text(
+                                        'Second Day',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 11.sp),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                        value: "3",
+                                        groupValue: StallDay,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            // _isShowOff = true;
+                                            StallDay = value.toString();
+                                          });
+                                        },
+                                      ),
+                                      Text(
+                                        'Both Days',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 11.sp),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
+          if (widget.eventstal.toString() == "1")
+            Visibility(
+                visible: stall_day_type,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0, left: 12),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Stall Type             ",
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 22, 21, 21),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12.sp),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 0),
+                            // decoration: BoxDecoration(
+                            //   boxShadow: [],
+                            //   border: Border.all(
+                            //     color: Colors.black,
+                            //     width: 0.5,
+                            //   ),
+                            //   borderRadius: BorderRadius.circular(4.sp),
+                            //   color: Colors.white,
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Radio(
+                                            value: "0",
+                                            groupValue: StallType,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                // _isShowOff = false;
+                                                StallType = value.toString();
+                                              });
+                                            },
+                                          ),
+                                          Text(
+                                            'FAN',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontSize: 11.sp),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Radio(
+                                            value: "1",
+                                            groupValue: StallType,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                // _isShowOff = true;
+                                                StallType = value.toString();
+                                              });
+                                            },
+                                          ),
+                                          Text(
+                                            'AC',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontSize: 11.sp),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
+          // Center(
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: ElevatedButton(
+          //         style: ElevatedButton.styleFrom(
+          //             backgroundColor: const Color.fromARGB(255, 231, 25, 25),
+          //             textStyle: TextStyle(
+          //                 fontSize: 10.sp,
+          //                 color: const Color.fromARGB(255, 241, 236, 236),
+          //                 fontWeight: FontWeight.bold)),
+          //         onPressed: () async {
+          //           String Day = "1";
+          //           String Type = "0";
+          //           obidient.clear();
+
+          //           if (prebigner == true) {
+          //             obidient.add("1");
+          //           }
+          //           if (bigner == true) {
+          //             obidient.add("2");
+          //           }
+          //           if (novic == true) {
+          //             obidient.add("3");
+          //           }
+          //           if (Texta == true) {
+          //             obidient.add("4");
+          //           }
+          //           if (Textb == true) {
+          //             obidient.add("5");
+          //           }
+          //           if (Textc == true) {
+          //             obidient.add("6");
+          //           }
+
+          //           print(obidient);
+
+          //           {
+          //             if (stallReq == "0") {
+          //               //  print("sukriya");
+          //               Day = "";
+          //               Type = "";
+          //             } else {
+          //               Day = StallDay;
+          //               Type = StallType;
+          //             }
+
+          //             //obidient.length;
+          //             if (obidient.length <= 1 &&
+          //                 widget.eventtype.toString() == "2") {
+          //               QuickAlert.show(
+          //                 context: context,
+          //                 type: QuickAlertType.error,
+          //                 title: 'Oops...',
+          //                 text: 'Please Select atlest 2 box',
+          //               );
+          //             } else {
+          //               // print(
+          //               //     "$selectedValue-$Day - $Type - $obidient - $stallReq - ${widget.eventid}${widget.eventtype}${widget.eventstal}");
+
+          //               SharedPreferences sharedprefrence =
+          //                   await SharedPreferences.getInstance();
+          //               String userid = sharedprefrence.getString("Userid")!;
+          //               String token = sharedprefrence.getString("Token")!;
+
+          //               Map<String, String> requestHeaders = {
+          //                 // 'Accept': 'application/json',
+          //                 'Usertoken': token,
+          //                 'Userid': userid
+          //               };
+
+          //               const uri =
+          //                   "https://new-demo.inkcdogs.org/api/event/participate";
+
+          //               final responce = await http.post(Uri.parse(uri),
+          //                   body: {
+          //                     "event_id": widget
+          //                         .eventid
+          //                         .toString(),
+          //                     "pet_id":
+          //                         selectedValue
+          //                             .toString(),
+          //                     "class_and_price[]":
+          //                         obidient
+          //                             .toString(),
+          //                     "is_stall_required":
+          //                         stallReq,
+          //                     "event_stall_day":
+          //                         Day,
+          //                     "event_stall_type":
+          //                         Type,
+          //                     "register_with_event":
+          //                         "1"
+          //                   },
+          //                   headers: requestHeaders);
+          //               var data = json.decode(responce.body);
+          //               if (data['code'].toString() == "200") {
+          //                 QuickAlert.show(
+          //                   context: context,
+          //                   type: QuickAlertType.success,
+          //                   title: 'Success...',
+          //                   text: 'Please Check your cart',
+          //                 );
+          //                 setState(() {
+          //                   RefreshCart();
+          //                 });
+          //               }
+          //             }
+
+          //             // print(data['message']);
+          //           }
+          //         },
+          //         child: const Text(
+          //           "Submit",
+          //           style: TextStyle(
+          //               fontWeight: FontWeight.w700, color: Colors.white),
+          //         )),
+          //   ),
+          // ),
+        ],
       ),
     );
   }
