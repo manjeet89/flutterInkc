@@ -259,6 +259,7 @@
 //   }
 // }
 
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:inkc/adddoginfo.dart';
@@ -316,6 +317,8 @@ class IdCard extends StatefulWidget {
   State<IdCard> createState() => _IdCardState();
 }
 
+GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
+
 class _IdCardState extends State<IdCard> {
   @override
   Widget build(BuildContext context) {
@@ -352,10 +355,16 @@ class _IdCardState extends State<IdCard> {
         centerTitle: true,
       ),
       body: Sizer(builder: (context, orientation, deviceType) {
-        return SingleChildScrollView(
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.only(left: 10, right: 10,top: 10),
+        return Center(
+          child: FlipCard(
+            key: cardKey,
+            flipOnTouch: false,
+            fill: Fill
+                .fillBack, // Fill the back side of the card to make in the same size as the front.
+            direction: FlipDirection.HORIZONTAL, // default
+            side: CardSide.FRONT,
+            front: Container(
+              margin: EdgeInsets.only(left: 10, right: 10, top: 10),
               width: double.infinity,
               height: 550,
               // decoration: BoxDecoration(
@@ -406,8 +415,15 @@ class _IdCardState extends State<IdCard> {
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     // mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      FullScreenWidget(
-                        disposeLevel: DisposeLevel.High,
+                      // FullScreenWidget(
+                      //   disposeLevel: DisposeLevel.High,
+                      //   child:
+                      InkWell(
+                        onTap: () {
+                          cardKey.currentState!.toggleCard();
+                          // _controller.toggleCard();
+                          // cardKey.currentState.toggleCard(),
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             // border: Border.all(
@@ -424,13 +440,14 @@ class _IdCardState extends State<IdCard> {
                           width: 40,
                         ),
                       ),
+                      // ),
                       Text(
                         "click to QR code to expand",
                         style: TextStyle(fontSize: 7),
                       ),
                     ],
                   ),
-          
+
                   //  Text(
                   //   widget.firstname,
                   //   style: TextStyle(
@@ -445,13 +462,15 @@ class _IdCardState extends State<IdCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.firstname + " " + widget.lastname,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1),
-                          textAlign: TextAlign.center,
+                        Center(
+                          child: Text(
+                            widget.firstname + " " + widget.lastname,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                         SizedBox(height: 8),
                         Padding(
@@ -459,13 +478,13 @@ class _IdCardState extends State<IdCard> {
                           child: Row(
                             children: [
                               Text(
-                                "Member ID :",
+                                "Personal ID :",
                                 style: TextStyle(
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
-                                width: 15,
+                                width: 10,
                               ),
                               Text(
                                 widget.userid,
@@ -583,7 +602,7 @@ class _IdCardState extends State<IdCard> {
                       ],
                     ),
                   ),
-          
+
                   SizedBox(
                     height: 30,
                   ),
@@ -593,14 +612,15 @@ class _IdCardState extends State<IdCard> {
                       children: [
                         for (int i = 0; i < widget.card_code.length; i++)
                           if ((i % 2) == 0)
-                            buildBox(widget.card_code[i], widget.card_code[i + 1])
-          
+                            buildBox(
+                                widget.card_code[i], widget.card_code[i + 1])
+
                         //  else
                         //  buildBox(widget.card_code[i], widget.card_code[i])
                         // print(widget.card_code[i].toString());
-          
+
                         // Each box
-          
+
                         // buildBox('B', '37'),
                         // buildBox('S', '83'),
                         // buildBox('O', '16'),
@@ -617,6 +637,198 @@ class _IdCardState extends State<IdCard> {
                   //   height: 80,
                   //   width: 80,
                   // ),
+                  // const SizedBox(height: 16),
+                ],
+              ),
+            ),
+            back: Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              width: double.infinity,
+              height: 550,
+              // decoration: BoxDecoration(
+              //   color: Colors.yellow,
+              //   borderRadius: BorderRadius.circular(16),
+              //   boxShadow: [
+              //     BoxShadow(
+              //       color: Colors.grey.withOpacity(0.5),
+              //       spreadRadius: 5,
+              //       blurRadius: 7,
+              //       offset: const Offset(0, 3),
+              //     ),
+              //   ],
+              // ),
+              decoration: BoxDecoration(
+                color: Colors.yellow,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: Colors.black, // Black border color
+                  width: 4, // Border thickness
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 8),
+                  Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // FullScreenWidget(
+                      //   disposeLevel: DisposeLevel.High,
+                      //   child:
+                      InkWell(
+                        onTap: () {
+                          cardKey.currentState!.toggleCard();
+                        },
+                        child: Container(
+                          width: double.infinity, // Set container width
+                          height: 300, // Set container height
+
+                          child: Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: Image.asset(
+                              'assets/qrcode.png', // Replace with your image asset
+                              fit: BoxFit.cover, // Adjust image scaling
+                            ),
+                          ),
+                        ),
+                        //  Container(
+                        //   decoration: BoxDecoration(
+                        //     // border: Border.all(
+                        //     //   color: const Color.fromARGB(255, 24, 22, 26),
+                        //     // ),
+                        //     // borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        //     image: DecorationImage(
+                        //         image: AssetImage(
+                        //       "assets/qrcode.png",
+                        //     )),
+                        //   ),
+                        //   margin: const EdgeInsets.all(12),
+                        //   height: 300,
+                        //   width: 300,
+                        // ),
+                      ),
+                      // ),
+                    ],
+                  ),
+
+                  //  Text(
+                  //   widget.firstname,
+                  //   style: TextStyle(
+                  //     fontSize: 28,
+                  //     fontWeight: FontWeight.bold,
+                  //     fontFamily: 'Cursive',
+                  //   ),
+                  // ),
+                  const SizedBox(height: 10),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text(
+                  //         "Instructions",
+                  //         style: TextStyle(
+                  //             fontSize: 15,
+                  //             fontWeight: FontWeight.bold,
+                  //             letterSpacing: 1),
+                  //         textAlign: TextAlign.center,
+                  //       ),
+                  //       SizedBox(height: 5),
+                  //       Padding(
+                  //         padding: const EdgeInsets.all(4.0),
+                  //         child: Row(
+                  //           children: [
+                  //             Expanded(
+                  //               child: Text(
+                  //                 "1. This card is property of AFF and must be producted on demand",
+                  //                 style: TextStyle(
+                  //                   fontSize: 12,
+                  //                     color: Colors.black54,
+                  //                     fontWeight: FontWeight.bold),
+                  //               ),
+                  //             ),
+
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       Padding(
+                  //         padding: const EdgeInsets.all(4.0),
+                  //         child: Row(
+                  //           children: [
+                  //             Expanded(
+                  //               child: Text(
+
+                  //                 "2. Loss of card must be reported immediately to AFF.",
+                  //                 style: TextStyle(
+                  //                   fontSize: 12,
+                  //                     color: Colors.black54,
+                  //                     fontWeight: FontWeight.bold),
+                  //               ),
+                  //             ),
+
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       Padding(
+                  //         padding: const EdgeInsets.all(4.0),
+                  //         child: Row(
+                  //           children: [
+                  //             Expanded(
+                  //               child: Text(
+                  //                 "3. This card is non-transferable and must be surrendered immediately on cessation of membership",
+                  //                 style: TextStyle(
+                  //                   fontSize: 12,
+                  //                     color: Colors.black54,
+                  //                     fontWeight: FontWeight.bold),
+                  //               ),
+                  //             ),
+
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       Padding(
+                  //         padding: const EdgeInsets.all(4.0),
+                  //         child: Row(
+                  //           children: [
+                  //             Expanded(
+                  //               child: Text(
+                  //                 "4. If found, please return to address mentioned at the bottom of this card.",
+                  //                 style: TextStyle(
+                  //                   fontSize: 12,
+                  //                     color: Colors.black54,
+                  //                     fontWeight: FontWeight.bold),
+                  //               ),
+                  //             ),
+
+                  //           ],
+                  //         ),
+                  //       ),
+                  Divider(
+                    color: Colors.white,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "Note: This QR code works well for personal identification at all the offline events of the Indian National Kennel Club.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+
+                  //     ],
+                  //   ),
+                  // ),
+
                   // const SizedBox(height: 16),
                 ],
               ),
