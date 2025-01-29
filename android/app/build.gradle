@@ -87,8 +87,8 @@ android {
         //flutter.minSdkVersion
         targetSdkVersion 34
         //flutter.targetSdkVersion
-        versionCode 16 //flutterVersionCode.toInteger()
-        versionName '1.16.0'//flutterVersionName
+        versionCode 17 //flutterVersionCode.toInteger()
+        versionName '1.17.0'//flutterVersionName
     }
 
     signingConfigs {

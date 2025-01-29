@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inkc/animation/progress_bar_stepper.dart';
 import 'package:inkc/bottom_nav_pages/home.dart';
 import 'package:inkc/credential/login.dart';
+import 'package:inkc/my_transiction.dart';
 import 'package:inkc/myhomepage.dart';
 import 'package:inkc/other/contactus.dart';
 import 'package:inkc/other/overview.dart';
@@ -735,6 +736,42 @@ class _MorePageState extends State<MorePage> {
                                   top: 0.sp, right: 5, left: 5, bottom: 5)),
                           Text(
                             'Terms and Conditions',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.sp,
+                              color: const Color.fromARGB(255, 1, 6, 83),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+
+// Terms and conditions
+              Row(
+                children: [
+                  SizedBox(
+                    width: 60.sp,
+                    height: 40.sp,
+                    child: const Icon(Icons.terminal_sharp),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context, rootNavigator: true).push(
+                          MaterialPageRoute(builder: (_) => MyTransactions()));
+                    },
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  top: 0.sp, right: 5, left: 5, bottom: 5)),
+                          Text(
+                            'transactions',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.sp,
