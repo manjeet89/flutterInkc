@@ -5,6 +5,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inkc/dropdownmodel/drop_down_breed_list.dart';
 import 'package:inkc/dropdownmodel/drop_down_color_and_making_list.dart';
 import 'package:inkc/events/obidient.dart';
 import 'package:inkc/image_helper.dart';
@@ -58,8 +59,7 @@ class PedigreeDogRegistration extends StatefulWidget {
       super.key});
 
   @override
-  _PedigreeDogRegistrationState createState() =>
-      _PedigreeDogRegistrationState();
+  _PedigreeDogRegistrationState createState() => _PedigreeDogRegistrationState();
 }
 
 class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
@@ -95,16 +95,12 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -133,8 +129,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -163,6 +158,58 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
     throw Exception('Error fetch data');
   }
 
+  // Dog Breed
+  List breedlist = [];
+  var selectebreedvalue;
+  var selectedbreedid;
+
+  Future<List<DogBreedList>> getbreedlist() async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    userid = sharedprefrence.getString("Userid")!;
+    token = sharedprefrence.getString("Token")!;
+
+    Map<String, String> requestHeaders = {
+      // 'Content-type': 'application/json',
+      // 'Accept': 'application/json',
+      'Usertoken': token,
+      'Userid': userid
+    };
+
+    try {
+      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+          headers: requestHeaders);
+
+      final body = json.decode(res.body);
+      final list = body['data'] as List;
+
+      if (res.statusCode == 200) {
+        return list.map((e) {
+          final map = e as Map<String, dynamic>;
+          return DogBreedList(
+            subCatId: map['sub_cat_id'],
+            petCategoryId: map['pet_category_id'],
+            subCategoryName: map['sub_category_name'],
+            subCategoryCode: map['sub_category_code'],
+            subCatSlug: map['sub_cat_slug'],
+            subCatStudSlug: map['sub_cat_stud_slug'],
+            subCatImage: map['sub_cat_image'],
+            subIsDiscounted: map['sub_is_discounted'],
+            subCategoryStatus: map['sub_category_status'],
+            subCategoryUpdatedOn: map['sub_category_updated_on'],
+            subCategoryCreatedOn: map['sub_category_created_on'],
+          );
+        }).toList();
+      }
+
+      // var datas = jsonDecode(res.body.toString());
+      // data = datas['data'];
+      setState(() {});
+      print(list);
+    } catch (e) {}
+
+    throw Exception('Error fetch data');
+  }
+
   // validator
   bool regisvalidate = false;
   bool kennelvalidate = false;
@@ -176,8 +223,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
   bool damvalide = false;
   String? DamString;
 
-  uploadData(
-      String obidientq, String stallReqq, String Dayq, String Typeq) async {
+  uploadData(String obidientq, String stallReqq, String Dayq, String Typeq) async {
     // setState(() {
     //   showSpinner = true;
     // });
@@ -192,7 +238,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
     print(_image.toString());
 
     print(
-        "i am here  sire = ${SIRE}, dam = ${DAM}, Dogname =${DogName}, DOB = ${DOB}, gender = ${Gender},Addcowner= ${AddCoowner} ,secondowner = ${cowner.text.toString()},micro = ${MICRO} , colorand making = ${selectcolormakingid}");
+        "i am here  sire = $SIRE, dam = $DAM, Dogname =$DogName, DOB = $DOB, gender = $Gender,Addcowner= $AddCoowner ,secondowner = ${cowner.text.toString()},micro = $MICRO , colorand making = $selectcolormakingid");
     try {
       SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
       userid = sharedprefrence.getString("Userid")!;
@@ -201,13 +247,11 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
       DateTime now = DateTime.now();
 
       FormData formData = FormData.fromMap({
-        'pet_image': await MultipartFile.fromFile(_image!.path,
-            filename: "${now.second}.jpg"),
+        'pet_image': await MultipartFile.fromFile(_image!.path, filename: "${now.second}.jpg"),
         'pet_gender': Gender,
         'birth_date': DOB,
         'pet_name': DogName,
-        if (cowner.text.toString() != "")
-          'second_owner_id': cowner.text.toString(),
+        if (cowner.text.toString() != "") 'second_owner_id': cowner.text.toString(),
         'is_second_owner': AddCoOwner.toString(),
         'is_microchip_require': MICRO,
         'color_marking': selectcolormakingid,
@@ -225,15 +269,15 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
       print(
           "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
 
-      Response response = await dio.post(
-          'https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
-          data: formData,
-          options: Options(headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Usertoken': token,
-            'Userid': userid
-          }));
+      Response response =
+          await dio.post('https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
+              data: formData,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -248,20 +292,20 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
           title: 'Success...',
           text: 'SuccessFully Registered',
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('SuccessFully Registered')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
       } else {
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Something went wrong')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Something went wrong')));
         print('something worng');
       }
 
       // images = File(pickedFile.path);
     } catch (e) {
-      print(e.toString() + 'no image  selected false');
+      print('${e}no image  selected false');
     }
 
     // print(ResNum +
@@ -490,7 +534,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                         child: Row(
                           children: [
                             Text(
-                              "Sire's INKC Registration Number ",
+                              "Sire's(Father's) INKC Registration Number ",
                               style: TextStyle(
                                   color: const Color.fromARGB(255, 22, 21, 21),
                                   fontWeight: FontWeight.bold,
@@ -523,17 +567,13 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                     fillColor: Colors.white,
 
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     // labelText:
                                     //     "Sire's INKC Registration Number",
                                     hintText: "Sire's INKC Registration Number",
-                                    errorText: regisvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: regisvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -543,29 +583,25 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     sireString.toString(),
-                                    style: const TextStyle(
-                                        color: Colors.deepOrange),
+                                    style: const TextStyle(color: Colors.deepOrange),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Dam's INKC Registration Number ",
+                                      "Dam's(Mother's) INKC Registration Number ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -584,16 +620,12 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
 
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     // labelText: "Dam's INKC Registration Number",
                                     hintText: "Dam's INKC Registration Number",
-                                    errorText: regisvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: regisvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -603,29 +635,25 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     DamString.toString(),
-                                    style: const TextStyle(
-                                        color: Colors.deepOrange),
+                                    style: const TextStyle(color: Colors.deepOrange),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Add Co Owner ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -657,8 +685,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                                 onChanged: (value) {
                                                   setState(() {
                                                     _isShowOff = false;
-                                                    AddCoOwner =
-                                                        value.toString();
+                                                    AddCoOwner = value.toString();
                                                   });
                                                 },
                                               ),
@@ -679,8 +706,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                                 onChanged: (value) {
                                                   setState(() {
                                                     _isShowOff = true;
-                                                    AddCoOwner =
-                                                        value.toString();
+                                                    AddCoOwner = value.toString();
                                                   });
                                                 },
                                               ),
@@ -704,23 +730,20 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 20.0, left: 12),
+                                        padding: const EdgeInsets.only(top: 20.0, left: 12),
                                         child: Row(
                                           children: [
                                             Text(
                                               "Co Owner ID ",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 22, 21, 21),
+                                                  color: const Color.fromARGB(255, 22, 21, 21),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 12.sp),
                                             ),
                                             Text(
                                               "*",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 231, 11, 11),
+                                                  color: const Color.fromARGB(255, 231, 11, 11),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15.sp),
                                             ),
@@ -736,174 +759,34 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                             filled: true,
                                             fillColor: Colors.white,
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4.sp)),
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: Colors.green),
+                                              borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                              borderSide:
+                                                  const BorderSide(width: 1, color: Colors.green),
                                             ),
                                             labelText: 'Co Owner ID',
                                             hintText: 'Co Owner ID',
-                                            errorText: dogvalidate
-                                                ? "Value Can't Be Empty"
-                                                : null,
+                                            errorText: dogvalidate ? "Value Can't Be Empty" : null,
                                           ),
                                         ),
                                       ),
                                     ],
                                   )),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Name of the dog ",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: TextField(
-                                  controller: Dogname,
-                                  // obscureText: true,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
-                                    ),
-                                    labelText: 'Name of the dog',
-                                    hintText: 'Eg.Bruno',
-                                    errorText: dogvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Date of Birth ",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.all(8),
-                                      width: 160.sp,
-                                      child: TextField(
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                        onTap: () {},
-                                        controller: dateofbirth,
-                                        enabled: false,
-                                        // obscureText: true,
-                                        decoration: InputDecoration(
-                                          filled: true,
 
-                                          fillColor: Colors.white,
-                                          // suffixIcon: IconButton(
-                                          //   icon: Icon(Icons.date_range),
-                                          //   onPressed: () {
-                                          //     setState(
-                                          //       () {},
-                                          //     );
-                                          //   },
-                                          // ),
-                                          prefixIcon:
-                                              const Icon(Icons.date_range),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.sp)),
-                                            borderSide: const BorderSide(
-                                                width: 1, color: Colors.green),
-                                          ),
-                                          labelText: 'Date of Birth',
-                                          errorText: datevalidate
-                                              ? "Value Can't Be Empty"
-                                              : null,
-                                        ),
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 231, 25, 25),
-                                            textStyle: TextStyle(
-                                                fontSize: 10.sp,
-                                                color: const Color.fromARGB(
-                                                    255, 241, 236, 236),
-                                                fontWeight: FontWeight.bold)),
-                                        onPressed: () {
-                                          selectDatePicker();
-                                        },
-                                        child: const Text(
-                                          'Pick date',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ))
-                                  ],
-                                ),
-                              ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Color and Marking ",
+                                      "Breed of the dog",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -911,42 +794,32 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                 ),
                               ),
 
-                              FutureBuilder<List<ColorAndMaking>>(
-                                  future: getColorAndMaking(),
+                              FutureBuilder<List<DogBreedList>>(
+                                  future: getbreedlist(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
                                     } else {
                                       // DropDownKennelName? selectedItem =
                                       //     findItemById(snapshot.data!, selectedId);
 
                                       return Container(
                                         margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
-                                          child: DropdownSearch<ColorAndMaking>(
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                          child: DropdownSearch<DogBreedList>(
                                             items: snapshot.data!,
-                                            itemAsString:
-                                                (ColorAndMaking? model) =>
-                                                    model?.colourName ?? "",
+                                            itemAsString: (DogBreedList? model) =>
+                                                model?.subCategoryName ?? "",
                                             // selectedItem:
                                             //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (ColorAndMaking? selectedItem) {
+                                            onChanged: (DogBreedList? selectedItem) {
                                               setState(() {
-                                                selectcolormakingid =
-                                                    selectedItem?.colourId;
+                                                selectebreedvalue = selectedItem?.petCategoryId;
+                                                selectedbreedid = selectedItem?.petCategoryId;
                                               });
                                               // setState(() {
                                               //   countrybool = true;
@@ -966,10 +839,227 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                               //   });
                                               // });
                                             },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
+                                                // labelText: "Select Color/Pattern",
+                                                hintText: "Choose one",
+                                                border: OutlineInputBorder(),
+                                              ),
+                                            ),
+                                            popupProps: PopupProps.menu(
+                                              showSearchBox: true,
+                                              fit: FlexFit.loose,
+                                              itemBuilder: (context, item, isSelected) {
+                                                return ListTile(
+                                                  title: Text(
+                                                    item.subCategoryName ?? "",
+                                                    style: TextStyle(
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
+                                                        fontSize: 12.sp,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            dropdownBuilder: (context, selectedItem) {
+                                              return Text(
+                                                selectedItem?.subCategoryName ?? "",
+                                                style: TextStyle(
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.bold),
+                                              ); // Display the selected item's name
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  }),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Name of the dog ",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: TextField(
+                                  controller: Dogname,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Name of the dog',
+                                    hintText: 'Eg.Bruno',
+                                    errorText: dogvalidate ? "Value Can't Be Empty" : null,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Date of Birth ",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.all(8),
+                                      width: 160.sp,
+                                      child: TextField(
+                                        style: const TextStyle(
+                                            color: Colors.black, fontWeight: FontWeight.w600),
+                                        onTap: () {},
+                                        controller: dateofbirth,
+                                        enabled: false,
+                                        // obscureText: true,
+                                        decoration: InputDecoration(
+                                          filled: true,
+
+                                          fillColor: Colors.white,
+                                          // suffixIcon: IconButton(
+                                          //   icon: Icon(Icons.date_range),
+                                          //   onPressed: () {
+                                          //     setState(
+                                          //       () {},
+                                          //     );
+                                          //   },
+                                          // ),
+                                          prefixIcon: const Icon(Icons.date_range),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                            borderSide:
+                                                const BorderSide(width: 1, color: Colors.green),
+                                          ),
+                                          labelText: 'Date of Birth',
+                                          errorText: datevalidate ? "Value Can't Be Empty" : null,
+                                        ),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
+                                            textStyle: TextStyle(
+                                                fontSize: 10.sp,
+                                                color: const Color.fromARGB(255, 241, 236, 236),
+                                                fontWeight: FontWeight.bold)),
+                                        onPressed: () {
+                                          selectDatePicker();
+                                        },
+                                        child: const Text(
+                                          'Pick date',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Color and Marking ",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              FutureBuilder<List<ColorAndMaking>>(
+                                  future: getColorAndMaking(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
+                                    } else {
+                                      // DropDownKennelName? selectedItem =
+                                      //     findItemById(snapshot.data!, selectedId);
+
+                                      return Container(
+                                        margin: const EdgeInsets.only(
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                          child: DropdownSearch<ColorAndMaking>(
+                                            items: snapshot.data!,
+                                            itemAsString: (ColorAndMaking? model) =>
+                                                model?.colourName ?? "",
+                                            // selectedItem:
+                                            //     snapshot.data![getcountry],
+                                            onChanged: (ColorAndMaking? selectedItem) {
+                                              setState(() {
+                                                selectcolormakingid = selectedItem?.colourId;
+                                              });
+                                              // setState(() {
+                                              //   countrybool = true;
+                                              //   widget.Stategetdata = "";
+                                              //   widget.Districtgetdata = "";
+                                              //   getcountry = int.parse(
+                                              //           "${selectedItem?.countryId}") -
+                                              //       1;
+
+                                              //   setState(() {
+                                              //     selectebreedvalue =
+                                              //         selectedItem?.countryId;
+                                              //     selectedbreedid =
+                                              //         selectedItem?.countryId;
+
+                                              //     _changeId(selectedbreedid);
+                                              //   });
+                                              // });
+                                            },
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
                                                 filled: true,
 
                                                 fillColor: Colors.white,
@@ -981,32 +1071,26 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                             popupProps: PopupProps.menu(
                                               showSearchBox: true,
                                               fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
+                                              itemBuilder: (context, item, isSelected) {
                                                 return ListTile(
                                                   title: Text(
                                                     item.colourName ?? "",
                                                     style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 46, 46),
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
                                                         fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                        fontWeight: FontWeight.bold),
                                                   ),
                                                 );
                                               },
                                             ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
+                                            dropdownBuilder: (context, selectedItem) {
                                               return Text(
                                                 selectedItem?.colourName ?? "",
                                                 style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 95, 46, 46),
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
                                                     fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    fontWeight: FontWeight.bold),
                                               ); // Display the selected item's name
                                             },
                                           ),
@@ -1100,23 +1184,20 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                               //       }
                               //     }),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Sex of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1187,15 +1268,13 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1210,16 +1289,12 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Country Bred in',
                                     hintText: 'Eg.India',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -1230,16 +1305,14 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                     Text(
                                       "Your dog’s photograph ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1247,48 +1320,108 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: _image != null
-                                          ? FileImage(_image!)
-                                          : null,
+                                      foregroundImage: _image != null ? FileImage(_image!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _image = File(cropperFile.path));
-                                          print("justcheck$_image");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _image = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() =>
+                                          //         _image = File(cropperFile.path));
+                                          //     print("justcheck$_image");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _image = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -1370,23 +1503,20 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                               //         ),
                               // ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Microchip required ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1417,8 +1547,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                                 groupValue: MicroRequired,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    MicroRequired =
-                                                        value.toString();
+                                                    MicroRequired = value.toString();
                                                   });
                                                 },
                                               ),
@@ -1438,8 +1567,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                                 groupValue: MicroRequired,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    MicroRequired =
-                                                        value.toString();
+                                                    MicroRequired = value.toString();
                                                   });
                                                 },
                                               ),
@@ -1459,19 +1587,16 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                 ),
                               ),
 
-                              if (widget.participate_event_id != "")
-                                EventDetails(context),
+                              if (widget.participate_event_id != "") EventDetails(context),
 
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 23, 4, 190),
+                                        backgroundColor: const Color.fromARGB(255, 23, 4, 190),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
-                                            color: const Color.fromARGB(
-                                                255, 241, 236, 236),
+                                            color: const Color.fromARGB(255, 241, 236, 236),
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
                                       String SIRE = sire.text.toString();
@@ -1489,8 +1614,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              'Please Enter SIRE Registration Number',
+                                          text: 'Please Enter SIRE Registration Number',
                                         );
                                       } else {
                                         if (DAM == "") {
@@ -1498,8 +1622,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                             context: context,
                                             type: QuickAlertType.error,
                                             title: 'Oops...',
-                                            text:
-                                                'Please Enter DAM Registration Number',
+                                            text: 'Please Enter DAM Registration Number',
                                           );
                                         } else {
                                           if (DogName == "") {
@@ -1515,8 +1638,7 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                                 context: context,
                                                 type: QuickAlertType.error,
                                                 title: 'Oops...',
-                                                text:
-                                                    'Please Select Date of birth',
+                                                text: 'Please Select Date of birth',
                                               );
                                             } else {
                                               if (_image.toString() == "null") {
@@ -1584,35 +1706,25 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
 
                                                     //obidient.length;
                                                     if (obidient.length <= 1 &&
-                                                        widget.eventtype
-                                                                .toString() ==
-                                                            "2") {
+                                                        widget.eventtype.toString() == "2") {
                                                       QuickAlert.show(
                                                         context: context,
-                                                        type: QuickAlertType
-                                                            .error,
+                                                        type: QuickAlertType.error,
                                                         title: 'Oops...',
-                                                        text:
-                                                            'Please Select atlest 2 box',
+                                                        text: 'Please Select atlest 2 box',
                                                       );
                                                     } else {
-                                                      uploadData(
-                                                          obidient.toString(),
-                                                          stallReq.toString(),
-                                                          Day,
-                                                          Type);
+                                                      uploadData(obidient.toString(),
+                                                          stallReq.toString(), Day, Type);
                                                     }
                                                   }
                                                 } else {
-                                                  if (cowner.text.toString() ==
-                                                      "") {
+                                                  if (cowner.text.toString() == "") {
                                                     QuickAlert.show(
                                                       context: context,
-                                                      type:
-                                                          QuickAlertType.error,
+                                                      type: QuickAlertType.error,
                                                       title: 'Oops...',
-                                                      text:
-                                                          'Please Enter Co owner Id',
+                                                      text: 'Please Enter Co owner Id',
                                                     );
                                                   } else {
                                                     String Day = "1";
@@ -1651,25 +1763,17 @@ class _PedigreeDogRegistrationState extends State<PedigreeDogRegistration> {
                                                       }
 
                                                       //obidient.length;
-                                                      if (obidient.length <=
-                                                              1 &&
-                                                          widget.eventtype
-                                                                  .toString() ==
-                                                              "2") {
+                                                      if (obidient.length <= 1 &&
+                                                          widget.eventtype.toString() == "2") {
                                                         QuickAlert.show(
                                                           context: context,
-                                                          type: QuickAlertType
-                                                              .error,
+                                                          type: QuickAlertType.error,
                                                           title: 'Oops...',
-                                                          text:
-                                                              'Please Select atlest 2 box',
+                                                          text: 'Please Select atlest 2 box',
                                                         );
                                                       } else {
-                                                        uploadData(
-                                                            obidient.toString(),
-                                                            stallReq.toString(),
-                                                            Day,
-                                                            Type);
+                                                        uploadData(obidient.toString(),
+                                                            stallReq.toString(), Day, Type);
                                                       }
                                                     }
                                                     // uploadData();

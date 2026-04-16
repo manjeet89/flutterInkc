@@ -51,8 +51,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back,
-                  color: Color.fromARGB(255, 223, 39, 39)),
+              icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text(
@@ -108,8 +107,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                           'Sunday',
                         ];
 
-                        final dateTimeObj =
-                            DateTime.parse(dataload[position].noteCreatedOn);
+                        final dateTimeObj = DateTime.parse(dataload[position].noteCreatedOn);
 
                         // date format
                         String fdate =
@@ -355,8 +353,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4.sp)),
-                        borderSide:
-                            const BorderSide(width: 1, color: Colors.green),
+                        borderSide: const BorderSide(width: 1, color: Colors.green),
                       ),
                       labelText: 'Note',
                       hintText: '',
@@ -364,8 +361,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(
-                      top: 20.sp, left: 20.sp, right: 20, bottom: 0),
+                  margin: EdgeInsets.only(top: 20.sp, left: 20.sp, right: 20, bottom: 0),
                   child: Column(
                     children: [
                       ElevatedButton(
@@ -378,8 +374,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
                           EasyLoading.showToast('Please Wait...');
 
-                          const uri =
-                              "https://new-demo.inkcdogs.org/api/dog/add_note";
+                          const uri = "https://new-demo.inkcdogs.org/api/dog/add_note";
 
                           Map<String, String> requestHeaders = {
                             'Accept': 'application/json',
@@ -390,10 +385,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                           final responce = await http.post(
                             Uri.parse(uri),
                             headers: requestHeaders,
-                            body: {
-                              "note_pet_id": widget.id,
-                              "note_message": Notes
-                            },
+                            body: {"note_pet_id": widget.id, "note_message": Notes},
                           );
                           var data = json.decode(responce.body);
 
@@ -403,8 +395,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      NonRegisterNote(id: widget.id)),
+                                  builder: (context) => NonRegisterNote(id: widget.id)),
                               (Route<dynamic> route) => false,
                             );
 
@@ -433,16 +424,13 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                NonRegisterNote(id: widget.id)),
+                        MaterialPageRoute(builder: (context) => NonRegisterNote(id: widget.id)),
                         (Route<dynamic> route) => false,
                       );
                     },
                     child: Text(
                       'Add Note',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15.sp),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
                     ),
                   ),
                 )

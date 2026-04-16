@@ -39,14 +39,13 @@ class FireBaseApi {
         // }
         );
 
-    final Platform = _localnotifications.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+    final Platform = _localnotifications
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
     await Platform?.createNotificationChannel(_androidChannel);
   }
 
   Future initPushNotification() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
@@ -64,10 +63,8 @@ class FireBaseApi {
           notification.title,
           notification.body,
           NotificationDetails(
-            android: AndroidNotificationDetails(
-                _androidChannel.id, _androidChannel.name,
-                channelDescription: _androidChannel.description,
-                icon: '@drawable/ic_launcher'),
+            android: AndroidNotificationDetails(_androidChannel.id, _androidChannel.name,
+                channelDescription: _androidChannel.description, icon: '@drawable/ic_launcher'),
           ),
           payload: jsonEncode(message.toMap()));
     });
@@ -99,8 +96,7 @@ class FireBaseApi {
       'Userid': userid
     };
 
-    const uri =
-        "https://new-demo.inkcdogs.org/api/login/update_firebase_user_token";
+    const uri = "https://new-demo.inkcdogs.org/api/login/update_firebase_user_token";
 
     final responce = await http.post(Uri.parse(uri),
         body: {

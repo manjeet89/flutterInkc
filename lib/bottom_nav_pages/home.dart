@@ -231,8 +231,7 @@ class _HomeState extends State<Home> {
                             child: Container(
                               decoration: const BoxDecoration(
                                 color: ui.Color.fromARGB(255, 85, 70, 218),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
+                                borderRadius: BorderRadius.all(Radius.circular(15)),
                               ),
 
                               // color: Colors.black,
@@ -272,10 +271,8 @@ class _HomeState extends State<Home> {
                               shadows: const [
                                 Shadow(
                                   blurRadius: 10.0, // shadow blur
-                                  color: Color.fromARGB(
-                                      255, 85, 70, 218), // shadow color
-                                  offset: Offset(
-                                      1.0, .0), // how much shadow will be shown
+                                  color: Color.fromARGB(255, 85, 70, 218), // shadow color
+                                  offset: Offset(1.0, .0), // how much shadow will be shown
                                 ),
                               ],
                               fontSize: 18.sp,
@@ -316,8 +313,7 @@ class _HomeState extends State<Home> {
                         children: [
                           InkWell(
                             onTap: () async {
-                              var url = Uri.parse(
-                                  "https://new-demo.inkcdogs.org/studs-available");
+                              var url = Uri.parse("https://new-demo.inkcdogs.org/studs-available");
                               if (await canLaunchUrl(url)) {
                                 await launchUrl(url);
                               } else {
@@ -330,8 +326,7 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color:
-                                        ui.Color.fromARGB(255, 195, 192, 226),
+                                    color: ui.Color.fromARGB(255, 195, 192, 226),
                                     blurRadius: 10,
                                     offset: Offset(
                                       5,
@@ -354,8 +349,7 @@ class _HomeState extends State<Home> {
                           const SizedBox(
                             width: 100,
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 10.0, left: 25, right: 5, bottom: 10),
+                              padding: EdgeInsets.only(top: 10.0, left: 25, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -392,10 +386,8 @@ class _HomeState extends State<Home> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          const SingleDogRegistrationOverView()));
+                              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                                  builder: (_) => const SingleDogRegistrationOverView()));
                             },
                             child: Container(
                               height: 45.0.sp,
@@ -403,8 +395,7 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color:
-                                        ui.Color.fromARGB(255, 186, 183, 214),
+                                    color: ui.Color.fromARGB(255, 186, 183, 214),
                                     blurRadius: 10,
                                     offset: Offset(
                                       5,
@@ -421,15 +412,13 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
-                              child: Image.asset(
-                                  "assets/singledogregistration.png"),
+                              child: Image.asset("assets/singledogregistration.png"),
                             ),
                           ),
                           const SizedBox(
                             width: 100,
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 10.0, left: 20, right: 5, bottom: 10),
+                              padding: EdgeInsets.only(top: 10.0, left: 20, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -466,10 +455,8 @@ class _HomeState extends State<Home> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          const UnKnowPadigreeOverView()));
+                              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                                  builder: (_) => const UnKnowPadigreeOverView()));
                             },
                             child: Container(
                               height: 45.0.sp,
@@ -477,8 +464,7 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color:
-                                        ui.Color.fromARGB(255, 202, 200, 221),
+                                    color: ui.Color.fromARGB(255, 202, 200, 221),
                                     blurRadius: 10,
                                     offset: Offset(
                                       5,
@@ -495,15 +481,13 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
-                              child: Image.asset(
-                                  "assets/unknownpedigreeregistration.png"),
+                              child: Image.asset("assets/unknownpedigreeregistration.png"),
                             ),
                           ),
                           const SizedBox(
                             width: 100,
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 10.0, left: 30, right: 5, bottom: 10),
+                              padding: EdgeInsets.only(top: 10.0, left: 30, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -611,10 +595,8 @@ class _HomeState extends State<Home> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          const LitterRegistrationOverView()));
+                              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                                  builder: (_) => const LitterRegistrationOverView()));
                             },
                             child: Container(
                               margin: EdgeInsets.all(5.sp),
@@ -623,8 +605,7 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color:
-                                        ui.Color.fromARGB(255, 208, 207, 226),
+                                    color: ui.Color.fromARGB(255, 208, 207, 226),
                                     blurRadius: 5,
                                     offset: Offset(
                                       5,
@@ -640,15 +621,13 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
-                              child: Image.asset(
-                                  "assets/litterregistrationservices.png"),
+                              child: Image.asset("assets/litterregistrationservices.png"),
                             ),
                           ),
                           const SizedBox(
                             width: 120,
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 10.0, left: 35, right: 5, bottom: 10),
+                              padding: EdgeInsets.only(top: 10.0, left: 35, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -684,9 +663,8 @@ class _HomeState extends State<Home> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(
-                                      builder: (_) => const Vetservices()));
+                              Navigator.of(context, rootNavigator: true)
+                                  .push(MaterialPageRoute(builder: (_) => const Vetservices()));
                             },
                             child: Container(
                               margin: EdgeInsets.all(5.sp),
@@ -695,8 +673,7 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color:
-                                        ui.Color.fromARGB(255, 208, 207, 226),
+                                    color: ui.Color.fromARGB(255, 208, 207, 226),
                                     blurRadius: 5,
                                     offset: Offset(
                                       5,
@@ -718,8 +695,7 @@ class _HomeState extends State<Home> {
                           const SizedBox(
                             width: 120,
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 10.0, left: 35, right: 5, bottom: 10),
+                              padding: EdgeInsets.only(top: 10.0, left: 35, right: 5, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -760,8 +736,7 @@ class _HomeState extends State<Home> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        var url = Uri.parse(
-                            "https://new-demo.inkcdogs.org/puppies-available");
+                        var url = Uri.parse("https://new-demo.inkcdogs.org/puppies-available");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {
@@ -778,8 +753,7 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color:
-                                        ui.Color.fromARGB(255, 224, 222, 241),
+                                    color: ui.Color.fromARGB(255, 224, 222, 241),
                                     blurRadius: 5,
                                     offset: Offset(
                                       5,
@@ -800,8 +774,7 @@ class _HomeState extends State<Home> {
                             const SizedBox(
                               width: 120,
                               child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 10.0, left: 35, right: 5, bottom: 10),
+                                padding: EdgeInsets.only(top: 10.0, left: 35, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -833,10 +806,8 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    const KennelNameRegistrationOverView()));
+                        Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                            builder: (_) => const KennelNameRegistrationOverView()));
                       },
                       child: Container(
                         child: Column(
@@ -848,8 +819,7 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color:
-                                        ui.Color.fromARGB(255, 226, 225, 243),
+                                    color: ui.Color.fromARGB(255, 226, 225, 243),
                                     blurRadius: 5,
                                     offset: Offset(
                                       5,
@@ -865,14 +835,12 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
-                              child: Image.asset(
-                                  "assets/kennelnameregistrationservices.png"),
+                              child: Image.asset("assets/kennelnameregistrationservices.png"),
                             ),
                             const SizedBox(
                               width: 120,
                               child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 10.0, left: 25, right: 5, bottom: 10),
+                                padding: EdgeInsets.only(top: 10.0, left: 25, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -905,9 +873,7 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    const DogLitterTransferOverView()));
+                            MaterialPageRoute(builder: (_) => const DogLitterTransferOverView()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -921,8 +887,7 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color:
-                                        ui.Color.fromARGB(255, 222, 221, 238),
+                                    color: ui.Color.fromARGB(255, 222, 221, 238),
                                     blurRadius: 5,
                                     offset: Offset(
                                       5,
@@ -938,14 +903,12 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
-                              child:
-                                  Image.asset("assets/doglittertransfer.png"),
+                              child: Image.asset("assets/doglittertransfer.png"),
                             ),
                             const SizedBox(
                               width: 100,
                               child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 10.0, left: 25, right: 5, bottom: 10),
+                                padding: EdgeInsets.only(top: 10.0, left: 25, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -978,9 +941,7 @@ class _HomeState extends State<Home> {
                     InkWell(
                       onTap: () {
                         Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    const AssosicateMemberOverView()));
+                            MaterialPageRoute(builder: (_) => const AssosicateMemberOverView()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -1010,14 +971,12 @@ class _HomeState extends State<Home> {
                                 //   fit: BoxFit.cover, //change image fill type
                                 // ),
                               ),
-                              child:
-                                  Image.asset("assets/associatemembership.png"),
+                              child: Image.asset("assets/associatemembership.png"),
                             ),
                             const SizedBox(
                               width: 120,
                               child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 10.0, left: 25, right: 5, bottom: 10),
+                                padding: EdgeInsets.only(top: 10.0, left: 25, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1048,8 +1007,8 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(builder: (_) => const Wallet()));
+                        Navigator.of(context, rootNavigator: true)
+                            .push(MaterialPageRoute(builder: (_) => const Wallet()));
                       },
                       child: Container(
                         margin: EdgeInsets.all(5.sp),
@@ -1084,8 +1043,7 @@ class _HomeState extends State<Home> {
                             const SizedBox(
                               width: 120,
                               child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 10.0, left: 25, right: 5, bottom: 10),
+                                padding: EdgeInsets.only(top: 10.0, left: 25, right: 5, bottom: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1132,8 +1090,7 @@ class _HomeState extends State<Home> {
                         shadows: const [
                           Shadow(
                             // blurRadius: 10.0, // shadow blur
-                            color: ui.Color.fromARGB(
-                                255, 19, 1, 1), // shadow color
+                            color: ui.Color.fromARGB(255, 19, 1, 1), // shadow color
                             // offset: Offset(
                             //     2.0, 2.0), // how much shadow will be shown
                           ),
@@ -1174,8 +1131,7 @@ class _HomeState extends State<Home> {
                           color: const ui.Color.fromARGB(207, 240, 234, 234),
                           width: 1,
                         ),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
+                        borderRadius: const BorderRadius.all(Radius.circular(15)),
                       ),
                       child: Column(
                         children: [
@@ -1185,8 +1141,7 @@ class _HomeState extends State<Home> {
                               autoPlay: true,
                               height: 180.sp,
                               autoPlayCurve: Curves.fastOutSlowIn,
-                              autoPlayAnimationDuration:
-                                  const Duration(milliseconds: 800),
+                              autoPlayAnimationDuration: const Duration(milliseconds: 800),
                               autoPlayInterval: const Duration(seconds: 2),
                               enlargeCenterPage: true,
                               aspectRatio: 3.0,
@@ -1322,8 +1277,7 @@ class _HomeState extends State<Home> {
                         shadows: const [
                           Shadow(
                             // blurRadius: 10.0, // shadow blur
-                            color:
-                                ui.Color.fromARGB(255, 7, 1, 1), // shadow color
+                            color: ui.Color.fromARGB(255, 7, 1, 1), // shadow color
                             // offset: Offset(
                             //     2.0, 2.0), // how much shadow will be shown
                           ),
@@ -1381,8 +1335,7 @@ class _HomeState extends State<Home> {
                             InkWell(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const INKCStore()));
+                                    builder: (BuildContext context) => const INKCStore()));
                               },
                               child: Container(
                                 margin: const EdgeInsets.all(12),
@@ -1402,16 +1355,14 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 30.0, left: 10),
+                              padding: const EdgeInsets.only(top: 30.0, left: 10),
                               child: Text(
                                 'INKC Store',
                                 style: TextStyle(
                                     shadows: const [
                                       Shadow(
                                         // blurRadius: 5.0, // shadow blur
-                                        color: ui.Color.fromARGB(
-                                            255, 2, 1, 10), // shadow color
+                                        color: ui.Color.fromARGB(255, 2, 1, 10), // shadow color
                                         // offset: Offset(2.0,
                                         //     2.0), // how much shadow will be shown
                                       ),
@@ -1468,8 +1419,7 @@ class _HomeState extends State<Home> {
                             InkWell(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const Events()));
+                                    builder: (BuildContext context) => const Events()));
                               },
                               child: Container(
                                 margin: const EdgeInsets.all(12),
@@ -1489,16 +1439,14 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 30.0, left: 10),
+                              padding: const EdgeInsets.only(top: 30.0, left: 10),
                               child: Text(
                                 'Events',
                                 style: TextStyle(
                                     shadows: const [
                                       Shadow(
                                         // blurRadius: 5.0, // shadow blur
-                                        color: ui.Color.fromARGB(
-                                            255, 7, 7, 14), // shadow color
+                                        color: ui.Color.fromARGB(255, 7, 7, 14), // shadow color
                                         // offset: Offset(2.0,
                                         //     2.0), // how much shadow will be shown
                                       ),
@@ -1962,8 +1910,7 @@ class _HomeState extends State<Home> {
                                 //     name: 'Inkc_Store',
                                 //     parameters: {'note': 'go to inkc store'});
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const INKCStore()));
+                                    builder: (BuildContext context) => const INKCStore()));
                               },
                               child: Container(
                                 margin: const EdgeInsets.all(12),
@@ -1983,16 +1930,14 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 30.0, left: 10),
+                              padding: const EdgeInsets.only(top: 30.0, left: 10),
                               child: Text(
                                 'INKC Store',
                                 style: TextStyle(
                                     shadows: const [
                                       Shadow(
                                         // blurRadius: 5.0, // shadow blur
-                                        color: ui.Color.fromARGB(
-                                            255, 2, 1, 10), // shadow color
+                                        color: ui.Color.fromARGB(255, 2, 1, 10), // shadow color
                                         // offset: Offset(2.0,
                                         //     2.0), // how much shadow will be shown
                                       ),
@@ -2120,8 +2065,7 @@ class _HomeState extends State<Home> {
                                 //         Events()));
 
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const Events()));
+                                    builder: (BuildContext context) => const Events()));
                               },
                               child: Container(
                                 margin: const EdgeInsets.all(12),
@@ -2141,16 +2085,14 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 30.0, left: 10),
+                              padding: const EdgeInsets.only(top: 30.0, left: 10),
                               child: Text(
                                 'Events',
                                 style: TextStyle(
                                     shadows: const [
                                       Shadow(
                                         // blurRadius: 5.0, // shadow blur
-                                        color: ui.Color.fromARGB(
-                                            255, 7, 7, 14), // shadow color
+                                        color: ui.Color.fromARGB(255, 7, 7, 14), // shadow color
                                         // offset: Offset(2.0,
                                         //     2.0), // how much shadow will be shown
                                       ),

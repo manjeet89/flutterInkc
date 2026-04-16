@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/id_cart.dart';
+import 'package:inkc/main.dart';
 import 'package:inkc/model/profilemodel.dart';
 import 'package:inkc/profile_update.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
@@ -56,6 +57,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? gender;
   String? DOB;
 
+  bool addresscheck = false;
+
+  checkLogin() async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    String? check = sharedprefrence.getString("fulladdress");
+    print(check);
+
+    if (check != "null") {
+      setState(() {
+        addresscheck = true;
+        print(check);
+      });
+    } else {
+      setState(() {
+        addresscheck = false;
+      });
+    }
+  }
   // Future getImage() async {
   //   final pickedFile = await _firstpicker.pickImage(
   //       source: ImageSource.gallery, imageQuality: 80);
@@ -125,8 +144,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _firstpicker = ImagePicker();
 
   Future getImagedata() async {
-    final pickedFile = await _firstpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFile = await _firstpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
     setState(() {
       showSpinner = true;
     });
@@ -139,19 +157,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       if (pickedFile != null) {
         FormData formData = FormData.fromMap({
-          'user_profile_image': await MultipartFile.fromFile(pickedFile.path,
-              filename: "${now.second}.jpg"),
+          'user_profile_image':
+              await MultipartFile.fromFile(pickedFile.path, filename: "${now.second}.jpg"),
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/user/update_profile_image',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://new-demo.inkcdogs.org/api/user/update_profile_image',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -235,8 +253,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     if (data['code'].toString() == "200") {
       for (var jsondata in dataarray) {
-        ProfileModel profileModel = ProfileModel(
-            firstname: jsondata['first_name'], lastname: jsondata['last_name']);
+        ProfileModel profileModel =
+            ProfileModel(firstname: jsondata['first_name'], lastname: jsondata['last_name']);
         dataload.add(profileModel);
 
         print(token);
@@ -246,8 +264,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
         First.value = TextEditingValue(text: jsondata['first_name']);
         MyController.value = TextEditingValue(text: jsondata['last_name']);
-        phonenumber.value =
-            TextEditingValue(text: jsondata['user_phone_number']);
+        phonenumber.value = TextEditingValue(text: jsondata['user_phone_number']);
         email.value = TextEditingValue(text: jsondata['user_email_id']);
         dateofbirth.value = TextEditingValue(text: jsondata['user_birth_date']);
         if (jsondata['user_address'].toString() == "null") {
@@ -267,8 +284,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         personalid.value = TextEditingValue(text: jsondata['user_id']);
 
         image = jsondata['user_profile_image'];
-        SharedPreferences UserProfileImage =
-            await SharedPreferences.getInstance();
+        SharedPreferences UserProfileImage = await SharedPreferences.getInstance();
         await UserProfileImage.setString("UserProfileImage", image);
         print(image);
       }
@@ -301,6 +317,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     //     profileadd.addAll(value);
     //   });
     // });
+    if (addresscheck == false) checkLogin();
     future:
     getalldata();
   }
@@ -336,7 +353,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               body: Container(
                 margin: const EdgeInsets.only(top: 10),
-                padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
+                padding: const EdgeInsets.only(left: 16, top: 10, right: 16),
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
@@ -345,8 +362,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     children: [
                       Text(
                         "My Profile",
-                        style: TextStyle(
-                            fontSize: 25.sp, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 15,
@@ -367,13 +383,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           child: Stack(
                             children: [
                               Container(
-                                width: 130.sp,
-                                height: 130.sp,
+                                width: 100.sp,
+                                height: 100.sp,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      width: 4,
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor),
+                                      width: 4, color: Theme.of(context).scaffoldBackgroundColor),
                                   boxShadow: [
                                     BoxShadow(
                                         spreadRadius: 2,
@@ -383,8 +397,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ],
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://new-demo.inkcdogs.org/$image"),
+                                    image: NetworkImage("https://new-demo.inkcdogs.org/$image"),
                                     fit: BoxFit.cover, //change image fill type
                                   ),
                                 ),
@@ -398,14 +411,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       getImagedata();
                                     },
                                     child: Container(
-                                      height: 40.sp,
-                                      width: 40.sp,
+                                      height: 30.sp,
+                                      width: 30.sp,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(
                                           width: 4,
-                                          color: Theme.of(context)
-                                              .scaffoldBackgroundColor,
+                                          color: Theme.of(context).scaffoldBackgroundColor,
                                         ),
                                         color: Colors.black,
                                       ),
@@ -419,50 +431,54 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            "Personal",
-                            style: TextStyle(
-                                fontSize: 20.sp, fontWeight: FontWeight.bold),
-                          ),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: Container(
-                                  height: 40.sp,
-                                  width: 40.sp,
+                                  height: 30.sp,
+                                  width: 30.sp,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      width: 4,
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
+                                      width: 3,
+                                      color: Theme.of(context).scaffoldBackgroundColor,
                                     ),
-                                    color: const Color.fromARGB(
-                                        255, 148, 145, 145),
+                                    color: const Color.fromARGB(255, 148, 145, 145),
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  ProfileUpdate(
-                                                    names:
-                                                        First.text.toString(),
-                                                    lastnames: MyController.text
-                                                        .toString(),
-                                                    genders: gender,
-                                                    dobs: DOB,
-                                                    phones: phonenumber.text,
-                                                    emails: email.text,
-                                                    addresss: address.text,
-                                                  )));
+                                      print(First.text.toString());
+                                      navigatorKey.currentState
+                                          ?.pushNamed('/Updateprofile', arguments: {
+                                        'names': "manjees",
+                                        'lastnames': MyController.text.toString(),
+                                        'genders': gender,
+                                        'dobs': DOB,
+                                        'phones': phonenumber.text,
+                                        'emails': email.text,
+                                        'addresss': address.text,
+                                      });
+
+                                      // Navigator.of(context).push(MaterialPageRoute(
+                                      //     builder: (BuildContext context) => ProfileUpdate(
+                                      //           names: First.text.toString(),
+                                      //           lastnames: MyController.text.toString(),
+                                      //           genders: gender,
+                                      //           dobs: DOB,
+                                      //           phones: phonenumber.text,
+                                      //           emails: email.text,
+                                      //           addresss: address.text,
+                                      //         )));
                                     },
                                     child: const Icon(
                                       Icons.edit,
                                       color: Colors.white,
+                                      size: 15,
                                     ),
                                   ),
                                 ),
@@ -484,74 +500,77 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   // ),
 
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Color.fromARGB(255, 223, 71, 45),
+                                      backgroundColor: const Color.fromARGB(255, 223, 71, 45),
                                       textStyle: const TextStyle(
                                           fontSize: 10,
-                                          color:
-                                              Color.fromARGB(255, 223, 71, 45),
+                                          color: Color.fromARGB(255, 223, 71, 45),
                                           fontWeight: FontWeight.bold)),
 
                                   onPressed: () async {
-                                    SharedPreferences sharedprefrence =
-                                        await SharedPreferences.getInstance();
-                                    String card_code =
-                                        sharedprefrence.getString("card_code")!;
+                                    if (addresscheck == true) {
+                                      SharedPreferences sharedprefrence =
+                                          await SharedPreferences.getInstance();
+                                      String cardCode = sharedprefrence.getString("card_code")!;
 
-                                    // print(card_code
-                                    //     .replaceAll("{", "")
-                                    //     .replaceAll("\"", "")
-                                    //     .replaceAll("}", "")
-                                    //     .replaceAll(",", ":"));
+                                      // print(card_code
+                                      //     .replaceAll("{", "")
+                                      //     .replaceAll("\"", "")
+                                      //     .replaceAll("}", "")
+                                      //     .replaceAll(",", ":"));
 
-                                    String value = card_code
-                                        .replaceAll("{", "")
-                                        .replaceAll("\"", "")
-                                        .replaceAll("}", "")
-                                        .replaceAll(",", ":");
+                                      String value = cardCode
+                                          .replaceAll("{", "")
+                                          .replaceAll("\"", "")
+                                          .replaceAll("}", "")
+                                          .replaceAll(",", ":");
 
-                                    List<String> parts = value.split(':');
+                                      List<String> parts = value.split(':');
 
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                IdCard(
-                                                  firstname:
-                                                      First.text.toString(),
-                                                  lastname: MyController.text
-                                                      .toString(),
-                                                  number: phonenumber.text,
-                                                  email: email.text,
-                                                  Fulladdress: address.text,
-                                                  gender: gender.toString(),
-                                                  dob: DOB.toString(),
-                                                  image: image,
-                                                  country: '',
-                                                  city: '',
-                                                  state: '',
-                                                  Countrygetdata: '',
-                                                  Stategetdata: '',
-                                                  Districtgetdata: '',
-                                                  pincode: '',
-                                                  countryid: '',
-                                                  stateid: '',
-                                                  district: '',
-                                                  userid: personalid.text,
-                                                  card_code: parts,
-                                                  card_expiry_date: '',
-                                                )));
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (BuildContext context) => IdCard(
+                                                firstname: First.text.toString(),
+                                                lastname: MyController.text.toString(),
+                                                number: phonenumber.text,
+                                                email: email.text,
+                                                Fulladdress: address.text,
+                                                gender: gender.toString(),
+                                                dob: DOB.toString(),
+                                                image: image,
+                                                country: '',
+                                                city: '',
+                                                state: '',
+                                                Countrygetdata: '',
+                                                Stategetdata: '',
+                                                Districtgetdata: '',
+                                                pincode: '',
+                                                countryid: '',
+                                                stateid: '',
+                                                district: '',
+                                                userid: personalid.text,
+                                                card_code: parts,
+                                                card_expiry_date: '',
+                                              )));
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                          content: Text(
+                                              'Please update your profile - First Name, Last Name and Full Address')));
+                                    }
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "ID Card",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ],
+                      ),
+                      Text(
+                        "Personal Details",
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.bold, color: Colors.deepPurple),
                       ),
                       // ElevatedButton(
                       //     onPressed: () {
@@ -580,10 +599,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   enabled: false,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'First Name',
                                     hintText: 'Manjeet',
@@ -601,10 +618,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   // obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Last Name',
                                     hintText: 'Rajbhar',
@@ -633,8 +648,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     );
                                   },
                                   onCountryChanged: (country) {
-                                    print(
-                                        'Country changed to: ${country.name}');
+                                    print('Country changed to: ${country.name}');
                                   },
                                 ),
                               ),
@@ -649,10 +663,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   // obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Email Address',
                                     hintText: 'Rajbhar',
@@ -671,10 +683,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   decoration: InputDecoration(
                                     prefixIcon: const Icon(Icons.date_range),
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Date of Birth',
                                     hintText: 'Rajbhar',
@@ -693,10 +703,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   // obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Address',
                                     hintText: 'Rajbhar',
@@ -715,10 +723,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   // obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Personal ID',
                                     hintText: 'Rajbhar',

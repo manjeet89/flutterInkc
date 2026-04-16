@@ -4,32 +4,62 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:inkc/VerificationOtpController/OtpController.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 import 'package:quickalert/quickalert.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
-class VerificationOtp extends StatelessWidget {
+class VerificationOtp extends StatefulWidget {
   final String userid, number;
   VerificationOtp({super.key, required this.userid, required this.number});
 
-//   @override
-//   State<VerificationOtp> createState() =>
-//       _VerificationOtpState(userid.toString(), number.toString());
-// }
+  @override
+  State<VerificationOtp> createState() => _VerificationOtpState();
+}
 
-// // String mobileNumber = userid;
+class _VerificationOtpState extends State<VerificationOtp> with CodeAutoFill {
+  String? appSignature;
+  String? otpCode;
+// CountdownController countdowncontroller = CountdownController();
+  TextEditingController textEditingController = TextEditingController();
+  var messageOtpCode = "".obs;
 
-// class _VerificationOtpState extends State<VerificationOtp> {
-  // String afterHide = mobileNumber.replaceRange(2, 8, '******');
+  @override
+  void codeUpdated() {
+    setState(() {
+      otpCode = code!;
+      textEditingController.text = code!;
+    });
+  }
 
-  TextEditingController first = TextEditingController();
-  TextEditingController second = TextEditingController();
-  TextEditingController thired = TextEditingController();
-  TextEditingController fourth = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    listenForCode();
+
+    SmsAutoFill().getAppSignature.then((signature) {
+      setState(() {
+        appSignature = signature;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    // final Otpcontroller controller = Get.put(Otpcontroller());
+
     return WillPopScope(
       onWillPop: () async {
         // Handle Android hardware back button press
@@ -79,7 +109,7 @@ class VerificationOtp extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          '+91 ${number.replaceRange(2, 8, '******')} ',
+                          '+91 ${widget.number.replaceRange(2, 8, '******')} ',
                           style: TextStyle(
                             color: const Color.fromARGB(255, 10, 10, 10),
                             fontSize: 13.sp,
@@ -103,126 +133,39 @@ class VerificationOtp extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Visibility(
+                    visible: false,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
+                      child: Text(
+                        "This is the current app signature: $appSignature",
+                      ),
+                    ),
+                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 10.sp),
-                    child: Form(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          height: 68.sp,
-                          width: 64.sp,
-                          child: TextFormField(
-                            controller: first,
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            onSaved: (pin1) {},
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide: const BorderSide(
-                                      width: 1, color: Colors.green),
-                                ),
-                                hintText: "0"),
-                            // style: Theme.of(context).textTheme.headline6,
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
+                    margin: EdgeInsets.only(top: 10.sp, bottom: 10),
+                    child: Obx(() => PinFieldAutoFill(
+                          codeLength: 4,
+                          controller: textEditingController,
+                          currentCode: messageOtpCode.value,
+                          onCodeChanged: (code) {
+                            if (code != null && code.length == 4) {
+                              FocusScope.of(context).unfocus(); // Close keyboard
+                              messageOtpCode.value = code;
+                              Submit(context);
+                              // controller.countdowncontroller.pause();
+                            }
+                          },
+                          onCodeSubmitted: (code) {
+                            print("Code submitted: $code");
+                          },
+                          decoration: UnderlineDecoration(
+                            textStyle: TextStyle(fontSize: 20, color: Colors.white),
+                            colorBuilder: FixedColorBuilder(Colors.deepOrange),
+                            bgColorBuilder:
+                                FixedColorBuilder(const Color.fromARGB(255, 40, 67, 83)),
                           ),
-                        ),
-                        SizedBox(
-                          height: 68.sp,
-                          width: 64.sp,
-                          child: TextFormField(
-                            controller: second,
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            onSaved: (pin2) {},
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide: const BorderSide(
-                                      width: 1, color: Colors.green),
-                                ),
-                                hintText: "0"),
-                            // style: Theme.of(context).textTheme.headline6,
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68.sp,
-                          width: 64.sp,
-                          child: TextFormField(
-                            controller: thired,
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            onSaved: (pin3) {},
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide: const BorderSide(
-                                      width: 1, color: Colors.green),
-                                ),
-                                hintText: "0"),
-                            // style: Theme.of(context).textTheme.headline6,
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68.sp,
-                          width: 64.sp,
-                          child: TextFormField(
-                            controller: fourth,
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            onSaved: (pin4) {},
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide: const BorderSide(
-                                      width: 1, color: Colors.green),
-                                ),
-                                hintText: "0"),
-                            // style: Theme.of(context).textTheme.headline6,
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
+                        )),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -230,55 +173,7 @@ class VerificationOtp extends StatelessWidget {
                       minimumSize: const Size.fromHeight(40), // NEW
                     ),
                     onPressed: () async {
-                      EasyLoading.showToast('Please Wait...');
-
-                      const uri =
-                          "https://new-demo.inkcdogs.org/api/login/verification";
-
-                      final responce = await http.post(
-                        Uri.parse(uri),
-                        body: {
-                          "user_id": userid,
-                          "user_otp": first.text +
-                              second.text +
-                              thired.text +
-                              fourth.text,
-                        },
-                      );
-
-                      var data = json.decode(responce.body);
-                      if (data['code'] == 200) {
-                        //   print(data['message']);
-
-                        QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.success,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content:
-                                    Text('SuccessFully user registered...')));
-                        // print(data['data']['user_id']);
-
-                        EasyLoading.dismiss();
-
-                        // Get.to(MyApp());
-
-                        Timer(
-                            const Duration(seconds: 2),
-                            () => Navigator.of(context, rootNavigator: true)
-                                .push(MaterialPageRoute(
-                                    builder: (_) => const Login())));
-                      } else {
-                        QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.error,
-                          title: 'Oops...',
-                          text: 'Sorry, Invalid OTP.',
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Invalid Otp')));
-                      }
+                      Submit(context);
                     },
                     child: const Text(
                       'Submit',
@@ -292,5 +187,53 @@ class VerificationOtp extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Submit(BuildContext context) async {
+    // final Otpcontroller controller = Get.put(Otpcontroller());
+
+    EasyLoading.showToast('Please Wait...');
+    print(textEditingController.value);
+
+    const uri = "https://new-demo.inkcdogs.org/api/login/verification";
+
+    final responce = await http.post(
+      Uri.parse(uri),
+      body: {
+        "user_id": widget.userid,
+        "user_otp": textEditingController.text.toString()
+        // first.text + second.text + thired.text + fourth.text,
+      },
+    );
+
+    var data = json.decode(responce.body);
+    if (data['code'].toString() == "200") {
+      //   print(data['message']);
+
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.success,
+      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('SuccessFully user registered...')));
+      // print(data['data']['user_id']);
+
+      EasyLoading.dismiss();
+
+      // Get.to(MyApp());
+
+      Timer(
+          const Duration(seconds: 2),
+          () => Navigator.of(context, rootNavigator: true)
+              .push(MaterialPageRoute(builder: (_) => const Login())));
+    } else {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        title: 'Oops...',
+        text: 'Sorry, Invalid OTP.',
+      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid Otp')));
+    }
   }
 }

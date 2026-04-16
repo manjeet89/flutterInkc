@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:inkc/Updated_pages_litter_registration/litter_puppy_registration.dart';
 import 'package:inkc/dropdownmodel/drop_down_breed_list.dart';
 import 'package:inkc/dropdownmodel/drop_down_color_and_making_list.dart';
 import 'package:inkc/image_helper.dart';
@@ -66,16 +65,12 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -88,8 +83,8 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
   final _firstpicker = ImagePicker();
 
   Future getfirstImage() async {
-    final pickedFilefirst = await _firstpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilefirst =
+        await _firstpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilefirst != null) {
       firstImage = File(pickedFilefirst.path);
@@ -121,8 +116,7 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -185,8 +179,7 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
       DateTime now = DateTime.now();
 
       FormData formData = FormData.fromMap({
-        'pet_image': await MultipartFile.fromFile(firstImage!.path,
-            filename: "${now.second}.jpg"),
+        'pet_image': await MultipartFile.fromFile(firstImage!.path, filename: "${now.second}.jpg"),
         'pet_gender': Gender,
         'birth_date': DOB,
         'pet_name': DogName,
@@ -201,15 +194,15 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
       print(
           "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
 
-      Response response = await dio.post(
-          'https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
-          data: formData,
-          options: Options(headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Usertoken': token,
-            'Userid': userid
-          }));
+      Response response =
+          await dio.post('https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
+              data: formData,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -224,14 +217,14 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
           title: 'Success...',
           text: 'SuccessFully Registered',
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('SuccessFully Registered')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
       } else {
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Something went wrong')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Something went wrong')));
         print('something worng');
       }
 
@@ -333,31 +326,28 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
       String sireback = "";
 
       if (_image.toString() == "null") {
-        SharedPreferences sharedprefrence =
-            await SharedPreferences.getInstance();
+        SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
         userid = sharedprefrence.getString("Userid")!;
         token = sharedprefrence.getString("Token")!;
         Dio dio = Dio();
         DateTime now = DateTime.now();
 
         FormData formData = FormData.fromMap({
-          'dam_front_side_certificate': await MultipartFile.fromFile(
-              _damfrontside!.path,
-              filename: "${now.second}.jpg"),
-          'dam_back_side_certificate': await MultipartFile.fromFile(
-              _dambackside!.path,
-              filename: "${now.second}.jpg"),
+          'dam_front_side_certificate':
+              await MultipartFile.fromFile(_damfrontside!.path, filename: "${now.second}.jpg"),
+          'dam_back_side_certificate':
+              await MultipartFile.fromFile(_dambackside!.path, filename: "${now.second}.jpg"),
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         print(response);
 
@@ -385,38 +375,35 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
           setState(() {
             showSpinner = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Something went wrong')));
           print('something worng');
         }
       } else {
-        SharedPreferences sharedprefrence =
-            await SharedPreferences.getInstance();
+        SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
         userid = sharedprefrence.getString("Userid")!;
         token = sharedprefrence.getString("Token")!;
         Dio dio = Dio();
         DateTime now = DateTime.now();
 
         FormData formData = FormData.fromMap({
-          'stud_agreement_form': await MultipartFile.fromFile(_image!.path,
-              filename: "${now.second}.jpg"),
-          'dam_front_side_certificate': await MultipartFile.fromFile(
-              _damfrontside!.path,
-              filename: "${now.second}.jpg"),
-          'dam_back_side_certificate': await MultipartFile.fromFile(
-              _dambackside!.path,
-              filename: "${now.second}.jpg"),
+          'stud_agreement_form':
+              await MultipartFile.fromFile(_image!.path, filename: "${now.second}.jpg"),
+          'dam_front_side_certificate':
+              await MultipartFile.fromFile(_damfrontside!.path, filename: "${now.second}.jpg"),
+          'dam_back_side_certificate':
+              await MultipartFile.fromFile(_dambackside!.path, filename: "${now.second}.jpg"),
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         print(response);
 
@@ -446,8 +433,8 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
           setState(() {
             showSpinner = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Something went wrong')));
           print('something worng');
         }
       }
@@ -557,8 +544,7 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -678,30 +664,25 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                             child: CircleAvatar(
                               backgroundColor: const Color(0xEBA020F0),
                               radius: 64,
-                              foregroundImage: _damfrontside != null
-                                  ? FileImage(_damfrontside!)
-                                  : null,
+                              foregroundImage:
+                                  _damfrontside != null ? FileImage(_damfrontside!) : null,
                               child: const Text(
                                 "Select image",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 199, 7, 7),
+                              backgroundColor: const Color.fromARGB(255, 199, 7, 7),
                             ),
                             onPressed: () async {
                               final files = await imagehelper.PickImage();
                               if (files.isNotEmpty) {
                                 final cropperFile = await imagehelper.crop(
-                                    file: files.first,
-                                    cropStyle: CropStyle.circle);
+                                    file: files.first, cropStyle: CropStyle.circle);
                                 if (cropperFile != null) {
-                                  setState(() =>
-                                      _damfrontside = File(cropperFile.path));
+                                  setState(() => _damfrontside = File(cropperFile.path));
                                   print("justcheck$_damfrontside");
                                 }
                               }
@@ -742,30 +723,25 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                             child: CircleAvatar(
                               backgroundColor: const Color(0xEBA020F0),
                               radius: 64,
-                              foregroundImage: _dambackside != null
-                                  ? FileImage(_dambackside!)
-                                  : null,
+                              foregroundImage:
+                                  _dambackside != null ? FileImage(_dambackside!) : null,
                               child: const Text(
                                 "Select image",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 199, 7, 7),
+                              backgroundColor: const Color.fromARGB(255, 199, 7, 7),
                             ),
                             onPressed: () async {
                               final files = await imagehelper.PickImage();
                               if (files.isNotEmpty) {
                                 final cropperFile = await imagehelper.crop(
-                                    file: files.first,
-                                    cropStyle: CropStyle.circle);
+                                    file: files.first, cropStyle: CropStyle.circle);
                                 if (cropperFile != null) {
-                                  setState(() =>
-                                      _dambackside = File(cropperFile.path));
+                                  setState(() => _dambackside = File(cropperFile.path));
                                   print("justcheck$_dambackside");
                                 }
                               }
@@ -788,8 +764,7 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                     Text(
                                       "Stud agreement form ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -797,40 +772,31 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: _image != null
-                                          ? FileImage(_image!)
-                                          : null,
+                                      foregroundImage: _image != null ? FileImage(_image!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
+                                      backgroundColor: const Color.fromARGB(255, 199, 7, 7),
                                     ),
                                     onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
+                                      final files = await imagehelper.PickImage();
                                       if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
+                                        final cropperFile = await imagehelper.crop(
+                                            file: files.first, cropStyle: CropStyle.circle);
                                         if (cropperFile != null) {
-                                          setState(() =>
-                                              _image = File(cropperFile.path));
+                                          setState(() => _image = File(cropperFile.path));
                                           print("justcheck$_image");
                                         }
                                       }
@@ -843,23 +809,20 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -875,8 +838,7 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                       width: 160.sp,
                                       child: TextField(
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
+                                            color: Colors.black, fontWeight: FontWeight.w600),
                                         onTap: () {},
                                         controller: dateofbirth,
                                         enabled: false,
@@ -893,30 +855,23 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon:
-                                              const Icon(Icons.date_range),
+                                          prefixIcon: const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.sp)),
-                                            borderSide: const BorderSide(
-                                                width: 1, color: Colors.green),
+                                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                            borderSide:
+                                                const BorderSide(width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
-                                          errorText: datevalidate
-                                              ? "Value Can't Be Empty"
-                                              : null,
+                                          errorText: datevalidate ? "Value Can't Be Empty" : null,
                                         ),
                                       ),
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 231, 25, 25),
+                                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
-                                                color: const Color.fromARGB(
-                                                    255, 241, 236, 236),
+                                                color: const Color.fromARGB(255, 241, 236, 236),
                                                 fontWeight: FontWeight.bold)),
                                         onPressed: () {
                                           selectDatePicker();
@@ -931,23 +886,20 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Breed of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -958,39 +910,27 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                   future: getbreedlist(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
                                     } else {
                                       // DropDownKennelName? selectedItem =
                                       //     findItemById(snapshot.data!, selectedId);
 
                                       return Container(
                                         margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
                                           child: DropdownSearch<DogBreedList>(
                                             items: snapshot.data!,
-                                            itemAsString:
-                                                (DogBreedList? model) =>
-                                                    model?.subCategoryName ??
-                                                    "",
+                                            itemAsString: (DogBreedList? model) =>
+                                                model?.subCategoryName ?? "",
                                             // selectedItem:
                                             //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (DogBreedList? selectedItem) {
+                                            onChanged: (DogBreedList? selectedItem) {
                                               setState(() {
-                                                breedid =
-                                                    selectedItem?.subCatId;
+                                                breedid = selectedItem?.subCatId;
                                                 print(breedid.toString());
                                               });
                                               // setState(() {
@@ -1011,10 +951,8 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                               //   });
                                               // });
                                             },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
                                                 // labelText: "Select Color/Pattern",
                                                 hintText: "Choose one",
                                                 border: OutlineInputBorder(),
@@ -1023,33 +961,26 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                             popupProps: PopupProps.menu(
                                               showSearchBox: true,
                                               fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
+                                              itemBuilder: (context, item, isSelected) {
                                                 return ListTile(
                                                   title: Text(
                                                     item.subCategoryName ?? "",
                                                     style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 46, 46),
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
                                                         fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                        fontWeight: FontWeight.bold),
                                                   ),
                                                 );
                                               },
                                             ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
+                                            dropdownBuilder: (context, selectedItem) {
                                               return Text(
-                                                selectedItem?.subCategoryName ??
-                                                    "",
+                                                selectedItem?.subCategoryName ?? "",
                                                 style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 95, 46, 46),
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
                                                     fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    fontWeight: FontWeight.bold),
                                               ); // Display the selected item's name
                                             },
                                           ),
@@ -1058,15 +989,13 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                     }
                                   }),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1081,36 +1010,29 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     hintText: 'Eg.India',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Number of puppies in the litter ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1123,26 +1045,20 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                   maxLines: 1,
                                   enabled: true,
                                   inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9,]')),
+                                    FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
                                   ],
                                   keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          decimal: false),
+                                      const TextInputType.numberWithOptions(decimal: false),
                                   controller: numbers,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     hintText: 'Number of litter',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -1150,12 +1066,10 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 23, 4, 190),
+                                        backgroundColor: const Color.fromARGB(255, 23, 4, 190),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
-                                            color: const Color.fromARGB(
-                                                255, 241, 236, 236),
+                                            color: const Color.fromARGB(255, 241, 236, 236),
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
                                       String SIRE = sire.text.toString();
@@ -1167,28 +1081,21 @@ class _UnknownFormOtherClubState extends State<UnknownFormOtherClub> {
                                       String MICRO = MicroRequired.toString();
 
                                       if (numbers.text.toString().isNotEmpty &&
-                                          int.parse(numbers.text.toString()) <=
-                                              10) {
-                                        if (_damfrontside.toString() ==
-                                            "null") {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "Please Select Dam's KCI front side of the certificate")));
-                                        } else if (_dambackside.toString() ==
-                                            "null") {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "Please Select Dam's KCI back side of the certificate")));
+                                          int.parse(numbers.text.toString()) <= 10) {
+                                        if (_damfrontside.toString() == "null") {
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Please Select Dam's KCI front side of the certificate")));
+                                        } else if (_dambackside.toString() == "null") {
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Please Select Dam's KCI back side of the certificate")));
                                         } else {
                                           UploadImage();
                                         }
                                       } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    'Please enter puppy 0 to 10 only')));
+                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                            content: Text('Please enter puppy 0 to 10 only')));
                                       }
                                     },
                                     child: const Text(

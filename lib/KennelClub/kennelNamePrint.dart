@@ -50,8 +50,7 @@ class _KennelNameShowState extends State<KennelNameShow> {
       final Map<String, dynamic> kennelInfo = jsonData['data']['kennel_info'];
 
       // Extract kennel second owner info
-      final List<dynamic> kennelSecondOwnerList =
-          jsonData['data']['kennel_second_owner'];
+      final List<dynamic> kennelSecondOwnerList = jsonData['data']['kennel_second_owner'];
 
       setState(() {
         kennels = [kennelInfo, ...kennelSecondOwnerList];
@@ -82,8 +81,8 @@ class _KennelNameShowState extends State<KennelNameShow> {
                   });
                 }
               },
-              items: kennels.map<DropdownMenuItem<Map<String, dynamic>>>(
-                  (Map<String, dynamic> kennel) {
+              items: kennels
+                  .map<DropdownMenuItem<Map<String, dynamic>>>((Map<String, dynamic> kennel) {
                 return DropdownMenuItem<Map<String, dynamic>>(
                   value: kennel,
                   child: Text(kennel['kennel_name']),

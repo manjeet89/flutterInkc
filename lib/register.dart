@@ -94,10 +94,12 @@ class _RegisterState extends State<Register> {
                         ),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black12),
+                              borderSide:
+                                  const BorderSide(color: Colors.black12),
                               borderRadius: BorderRadius.circular(10)),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black12),
+                              borderSide:
+                                  const BorderSide(color: Colors.black12),
                               borderRadius: BorderRadius.circular(10)),
                           prefix: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
@@ -124,7 +126,8 @@ class _RegisterState extends State<Register> {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const Otp()),
+                              MaterialPageRoute(
+                                  builder: (context) => const Otp()),
                             );
                           },
                           style: ButtonStyle(

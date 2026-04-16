@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inkc/animation/progress_bar_stepper.dart';
-import 'package:inkc/bottom_nav_pages/home.dart';
 import 'package:inkc/credential/login.dart';
+import 'package:inkc/main.dart';
 import 'package:inkc/my_transiction.dart';
 import 'package:inkc/myhomepage.dart';
 import 'package:inkc/other/contactus.dart';
@@ -83,7 +83,7 @@ class _MorePageState extends State<MorePage> {
   Checklogin() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    print(check.toString() + "with me");
+    print("${check}with me");
     if (check.toString() == "null") {
       setState(() {
         _isShow = false;
@@ -104,12 +104,12 @@ class _MorePageState extends State<MorePage> {
     //   SystemUiOverlayStyle(
     //       statusBarColor: Colors.white, statusBarBrightness: Brightness.dark),
     // );
-    return WillPopScope(
-      onWillPop: () async {
-        // Prevent the back button from doing anything on the home page.
-        // Navigator.of(context, rootNavigator: true)
-        //     .push(MaterialPageRoute(builder: (_) => const MyApp()));
-        return false;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
       },
       child: Scaffold(
         // appBar: AppBar(
@@ -147,7 +147,7 @@ class _MorePageState extends State<MorePage> {
                     child: Text(
                       'More',
                       style: TextStyle(
-                        fontSize: 35.sp,
+                        fontSize: 30.sp,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -180,12 +180,12 @@ class _MorePageState extends State<MorePage> {
                     children: [
                       if (UserprofileImage == "null")
                         Container(
-                          margin: const EdgeInsets.only(top: 30, left: 20),
-                          height: 70.0.sp,
-                          width: 70.0.sp,
+                          margin: const EdgeInsets.only(top: 5, left: 20),
+                          height: 50.0.sp,
+                          width: 50.0.sp,
                           child: Icon(
                             Icons.person,
-                            size: 25.0.sp,
+                            size: 22.0.sp,
                             color: const ui.Color.fromARGB(255, 141, 35, 35),
                           ),
                           // decoration: BoxDecoration(
@@ -199,15 +199,15 @@ class _MorePageState extends State<MorePage> {
                         )
                       else
                         Container(
-                          margin: const EdgeInsets.only(top: 30, left: 20),
-                          height: 70.0.sp,
-                          width: 70.0.sp,
+                          margin: const EdgeInsets.only(top: 5, left: 20),
+                          height: 50.0.sp,
+                          width: 50.0.sp,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50.sp),
                             //set border radius to 50% of square height and width
                             image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://new-demo.inkcdogs.org/$UserprofileImage"),
+                              image:
+                                  NetworkImage("https://new-demo.inkcdogs.org/$UserprofileImage"),
                               fit: BoxFit.cover, //change image fill type
                             ),
                           ),
@@ -216,9 +216,9 @@ class _MorePageState extends State<MorePage> {
                         padding: const EdgeInsets.all(20.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    SettingsUI()));
+                            navigatorKey.currentState?.pushNamed('/profile');
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (BuildContext context) => const SettingsUI()));
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -227,14 +227,14 @@ class _MorePageState extends State<MorePage> {
                               Text(
                                 '$First${" "}$Last ',
                                 style: TextStyle(
-                                    fontSize: 17.sp,
+                                    fontSize: 15.sp,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 '$phone',
                                 style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 12.sp,
                                   color: Colors.black,
                                 ),
                               ),
@@ -258,19 +258,20 @@ class _MorePageState extends State<MorePage> {
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(10.0.sp),
                                   onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                SettingsUI()));
+                                    navigatorKey.currentState?.pushNamed(
+                                      '/profile',
+                                    );
+                                    // Navigator.of(context).push(MaterialPageRoute(
+                                    //     builder: (BuildContext context) => const SettingsUI()));
                                   },
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.all(10.0.sp),
                                         child: Icon(
                                           Icons.arrow_forward_ios,
-                                          size: 20.0.sp,
+                                          size: 15.0.sp,
                                           color: Colors.black,
                                         ),
                                       ),
@@ -317,9 +318,8 @@ class _MorePageState extends State<MorePage> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(
-                                      builder: (_) => const Login()));
+                              Navigator.of(context, rootNavigator: true)
+                                  .push(MaterialPageRoute(builder: (_) => const Login()));
                             },
                             child: Text(
                               "Hi there!",
@@ -339,9 +339,8 @@ class _MorePageState extends State<MorePage> {
                           // ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(
-                                      builder: (_) => const Login()));
+                              Navigator.of(context, rootNavigator: true)
+                                  .push(MaterialPageRoute(builder: (_) => const Login()));
                             },
                             child: Text(
                               "Log In",
@@ -568,7 +567,7 @@ class _MorePageState extends State<MorePage> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context, rootNavigator: true)
-                          .push(MaterialPageRoute(builder: (_) => OverView()));
+                          .push(MaterialPageRoute(builder: (_) => const OverView()));
                     },
                     child: Container(
                       child: Column(
@@ -595,7 +594,12 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
-
+            Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Divider(
+                  height: 2,
+                ),
+              ),
               // Digital Presence
               Row(
                 children: [
@@ -606,9 +610,8 @@ class _MorePageState extends State<MorePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(
-                              builder: (_) => const SocialMedia()));
+                      Navigator.of(context, rootNavigator: true)
+                          .push(MaterialPageRoute(builder: (_) => const SocialMedia()));
                     },
                     child: Container(
                       child: Column(
@@ -635,6 +638,10 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
+               Padding(
+                 padding: const EdgeInsets.only(left: 20.0,right: 20),
+                 child: Divider(height: 2,),
+               ),
 
               // Contact
               Row(
@@ -646,8 +653,8 @@ class _MorePageState extends State<MorePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(builder: (_) => const ContactUS()));
+                      Navigator.of(context, rootNavigator: true)
+                          .push(MaterialPageRoute(builder: (_) => const ContactUS()));
                     },
                     child: Container(
                       child: Column(
@@ -674,6 +681,12 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Divider(
+                  height: 2,
+                ),
+              ),
               // Privacy Policy
               Row(
                 children: [
@@ -684,9 +697,8 @@ class _MorePageState extends State<MorePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(
-                              builder: (_) => PrivacyAndPolicies()));
+                      Navigator.of(context, rootNavigator: true)
+                          .push(MaterialPageRoute(builder: (_) => const PrivacyAndPolicies()));
                     },
                     child: Container(
                       child: Column(
@@ -713,6 +725,12 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Divider(
+                  height: 2,
+                ),
+              ),
               // Terms and conditions
               Row(
                 children: [
@@ -724,7 +742,7 @@ class _MorePageState extends State<MorePage> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context, rootNavigator: true)
-                          .push(MaterialPageRoute(builder: (_) => Terms()));
+                          .push(MaterialPageRoute(builder: (_) => const Terms()));
                     },
                     child: Container(
                       child: Column(
@@ -732,8 +750,7 @@ class _MorePageState extends State<MorePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0.sp, right: 5, left: 5, bottom: 5)),
+                              padding: EdgeInsets.only(top: 0.sp, right: 5, left: 5, bottom: 5)),
                           Text(
                             'Terms and Conditions',
                             style: TextStyle(
@@ -748,7 +765,12 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
-
+Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Divider(
+                  height: 2,
+                ),
+              ),
 // Terms and conditions
               Row(
                 children: [
@@ -759,8 +781,8 @@ class _MorePageState extends State<MorePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(builder: (_) => MyTransactions()));
+                      Navigator.of(context, rootNavigator: true)
+                          .push(MaterialPageRoute(builder: (_) => const MyTransactions()));
                     },
                     child: Container(
                       child: Column(
@@ -768,8 +790,7 @@ class _MorePageState extends State<MorePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0.sp, right: 5, left: 5, bottom: 5)),
+                              padding: EdgeInsets.only(top: 0.sp, right: 5, left: 5, bottom: 5)),
                           Text(
                             'transactions',
                             style: TextStyle(
@@ -784,7 +805,12 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
-
+Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Divider(
+                  height: 2,
+                ),
+              ),
               // Refund
               Row(
                 children: [
@@ -797,7 +823,7 @@ class _MorePageState extends State<MorePage> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context, rootNavigator: true)
-                          .push(MaterialPageRoute(builder: (_) => Refunds()));
+                          .push(MaterialPageRoute(builder: (_) => const Refunds()));
                     },
                     child: Container(
                       child: Column(
@@ -824,6 +850,12 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Divider(
+                  height: 2,
+                ),
+              ),
               //Share
               Row(
                 children: [
@@ -846,8 +878,7 @@ class _MorePageState extends State<MorePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0.sp, right: 5, left: 5, bottom: 5)),
+                              padding: EdgeInsets.only(top: 0.sp, right: 5, left: 5, bottom: 5)),
                           Text(
                             'Share',
                             style: TextStyle(
@@ -863,48 +894,50 @@ class _MorePageState extends State<MorePage> {
                 ],
               ),
 
-              Row(
-                children: [
-                  SizedBox(
-                    width: 60.sp,
-                    height: 60.sp,
-                    child: const Icon(Icons.delivery_dining),
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      SharedPreferences preferences =
-                          await SharedPreferences.getInstance();
-                      await preferences.clear();
+              // Row(
+              //   children: [
+              //     SizedBox(
+              //       width: 60.sp,
+              //       height: 60.sp,
+              //       child: const Icon(Icons.delivery_dining),
+              //     ),
+              //     InkWell(
+              //       onTap: () async {
+              //         SharedPreferences preferences = await SharedPreferences.getInstance();
+              //         await preferences.clear();
 
-                      print(preferences.toString());
+              //         print(preferences.toString());
 
-                      Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(
-                              builder: (_) => const ProgressBarStepper()));
-                    },
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0.sp, right: 5, left: 5, bottom: 5)),
-                          Text(
-                            'Navigation',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14.sp,
-                              color: const Color.fromARGB(255, 1, 6, 83),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+              //         Navigator.of(context, rootNavigator: true)
+              //             .push(MaterialPageRoute(builder: (_) => const ProgressBarStepper()));
+              //       },
+              //       child: Container(
+              //         child: Column(
+              //           mainAxisAlignment: MainAxisAlignment.start,
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             Padding(
+              //                 padding: EdgeInsets.only(top: 0.sp, right: 5, left: 5, bottom: 5)),
+              //             Text(
+              //               'Navigation',
+              //               style: TextStyle(
+              //                 fontWeight: FontWeight.w600,
+              //                 fontSize: 14.sp,
+              //                 color: const Color.fromARGB(255, 1, 6, 83),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     )
+              //   ],
+              // ),
+Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Divider(
+                  height: 2,
+                ),
               ),
-
               Visibility(
                 visible: _isShow,
                 child: Row(
@@ -916,14 +949,15 @@ class _MorePageState extends State<MorePage> {
                     ),
                     InkWell(
                       onTap: () async {
-                        SharedPreferences preferences =
-                            await SharedPreferences.getInstance();
+                        SharedPreferences preferences = await SharedPreferences.getInstance();
                         await preferences.clear();
 
                         print(preferences.toString());
 
-                        Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(builder: (_) => const MyApp()));
+                        Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                            builder: (_) => const MyApp(
+                                  indexvalue: 0,
+                                )));
                       },
                       child: Container(
                         child: Column(
@@ -931,8 +965,7 @@ class _MorePageState extends State<MorePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                                padding: EdgeInsets.only(
-                                    top: 0.sp, right: 5, left: 5, bottom: 5)),
+                                padding: EdgeInsets.only(top: 0.sp, right: 5, left: 5, bottom: 5)),
                             Text(
                               'Logout',
                               style: TextStyle(

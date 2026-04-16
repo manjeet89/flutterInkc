@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inkc/Updated_pages_dogs_registered/single_dog_registration_process.dart';
-import 'package:inkc/events/dont_have.dart';
-import 'package:inkc/events/i_have_certificate.dart';
 import 'package:inkc/events/inkc_events.dart';
 import 'package:sizer/sizer.dart';
 

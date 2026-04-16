@@ -10,34 +10,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
-class ProfileUpdate extends StatelessWidget {
-  String? names, lastnames, genders, dobs, phones, emails, addresss;
-  ProfileUpdate(
-      {super.key,
-      required this.names,
-      required this.lastnames,
-      required this.genders,
-      required this.dobs,
-      required this.phones,
-      required this.emails,
-      required this.addresss});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "profile UI",
-      home: ProfileUpdates(
-        name: names,
-        lastname: lastnames,
-        gender: genders,
-        dob: dobs,
-        phone: phones,
-        email: emails,
-        address: addresss,
-      ),
-    );
-  }
-}
+// class ProfileUpdate extends StatelessWidget {
+//   // String? names, lastnames, genders, dobs, phones, emails, addresss;
+//   ProfileUpdate({
+//     super.key,
+//     // required this.names,
+//     // required this.lastnames,
+//     // required this.genders,
+//     // required this.dobs,
+//     // required this.phones,
+//     // required this.emails,
+//     // required this.addresss
+//   });
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: "profile UI",
+//       home: ProfileUpdates(
+//           // name: names,
+//           // lastname: lastnames,
+//           // gender: genders,
+//           // dob: dobs,
+//           // phone: phones,
+//           // email: emails,
+//           // address: addresss,
+//           ),
+//     );
+//   }
+// }
 
 // ignore: must_be_immutable
 class ProfileUpdates extends StatefulWidget {
@@ -84,39 +85,43 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //phonenumber.value = TextEditingValue(text: '${widget.phone}');
-    email.value = TextEditingValue(text: '${widget.email}');
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //phonenumber.value = TextEditingValue(text: '${widget.phone}');
+      final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    gender = widget.gender.toString();
-    First.value = TextEditingValue(text: widget.name.toString());
-    lastname.value = TextEditingValue(text: widget.lastname.toString());
-    dateofbirth.value = TextEditingValue(text: widget.dob.toString());
+      email.value = TextEditingValue(text: args["emails"] ?? "");
 
-    if (widget.address.toString() == "null") {
-      addnull = true;
-    } else {
-      List add = widget.address.toString().split(",");
-      for (int i = 0; i < add.length; i++) {
-        if (i == 0) {
-          address1.value = TextEditingValue(text: '${add[i]}');
+      gender = args["genders"] ?? "";
+      First.value = TextEditingValue(text: args["names"] ?? "");
+      lastname.value = TextEditingValue(text: args["lastnames"] ?? "");
+      dateofbirth.value = TextEditingValue(text: args["dobs"] ?? "");
+
+      if (args["addresss"].toString() == "null") {
+        addnull = true;
+      } else {
+        List add = args["addresss"].toString().split(",");
+        for (int i = 0; i < add.length; i++) {
+          if (i == 0) {
+            address1.value = TextEditingValue(text: '${add[i]}');
+          }
+          if (i == 1) {
+            //valuechoose = add[i];
+          }
+          if (i == 2) {
+            district.value = TextEditingValue(text: '${add[i]}');
+          }
+          if (i == 3) {
+            state.value = TextEditingValue(text: '${add[i]}');
+          }
+          if (i == 4) {
+            pincode.value = TextEditingValue(text: add[i].toString().trim());
+          }
+          print(add[i]);
         }
-        if (i == 1) {
-          //valuechoose = add[i];
-        }
-        if (i == 2) {
-          district.value = TextEditingValue(text: '${add[i]}');
-        }
-        if (i == 3) {
-          state.value = TextEditingValue(text: '${add[i]}');
-        }
-        if (i == 4) {
-          pincode.value = TextEditingValue(text: add[i].toString().trim());
-        }
-        print(add[i]);
+
+        address.value = TextEditingValue(text: args["addresss"] ?? "");
       }
-
-      address.value = TextEditingValue(text: '${widget.address}');
-    }
+    });
 
     // SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     // String Firstname = sharedprefrence.getString("Firstname")!;
@@ -135,16 +140,12 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -230,11 +231,9 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                           enabled: true,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4.sp)),
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: Colors.green),
+                                              borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                              borderSide:
+                                                  const BorderSide(width: 1, color: Colors.green),
                                             ),
                                             labelText: 'First Name',
                                             hintText: '',
@@ -249,11 +248,9 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                           // obscureText: true,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(6.sp)),
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: Colors.green),
+                                              borderRadius: BorderRadius.all(Radius.circular(6.sp)),
+                                              borderSide:
+                                                  const BorderSide(width: 1, color: Colors.green),
                                             ),
                                             labelText: 'Last Name',
                                             hintText: '',
@@ -268,8 +265,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                             color: Colors.black,
                                             width: 0.5,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(4.sp),
+                                          borderRadius: BorderRadius.circular(4.sp),
                                           color: Colors.white,
                                         ),
                                         child: Padding(
@@ -282,8 +278,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   child: Text(
                                                     'Gender',
                                                     style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
+                                                        fontWeight: FontWeight.w400,
                                                         color: Colors.black,
                                                         fontSize: 12.sp),
                                                   ),
@@ -298,16 +293,14 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                         groupValue: gender,
                                                         onChanged: (value) {
                                                           setState(() {
-                                                            gender = value
-                                                                .toString();
+                                                            gender = value.toString();
                                                           });
                                                         },
                                                       ),
                                                       Text(
                                                         'Male',
                                                         style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
+                                                            fontWeight: FontWeight.bold,
                                                             color: Colors.black,
                                                             fontSize: 11.sp),
                                                       )
@@ -320,16 +313,14 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                         groupValue: gender,
                                                         onChanged: (value) {
                                                           setState(() {
-                                                            gender = value
-                                                                .toString();
+                                                            gender = value.toString();
                                                           });
                                                         },
                                                       ),
                                                       Text(
                                                         'Female',
                                                         style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
+                                                            fontWeight: FontWeight.bold,
                                                             color: Colors.black,
                                                             fontSize: 11.sp),
                                                       )
@@ -344,16 +335,14 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                       Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
                                             SizedBox(
                                               width: 150.sp,
                                               child: TextField(
                                                 style: const TextStyle(
                                                     color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.w700),
+                                                    fontWeight: FontWeight.w700),
                                                 onTap: () {},
                                                 controller: dateofbirth,
                                                 enabled: false,
@@ -367,18 +356,12 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   //     );
                                                   //   },
                                                   // ),
-                                                  prefixIcon: const Icon(
-                                                      Icons.date_range),
+                                                  prefixIcon: const Icon(Icons.date_range),
                                                   border: OutlineInputBorder(
                                                     borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                4.sp)),
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            width: 1,
-                                                            color:
-                                                                Colors.green),
+                                                        BorderRadius.all(Radius.circular(4.sp)),
+                                                    borderSide: const BorderSide(
+                                                        width: 1, color: Colors.green),
                                                   ),
                                                   labelText: 'Date of Birth',
                                                   hintText: '1-1-2000',
@@ -440,10 +423,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                   // obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Email Address',
                                     hintText: 'example@01.caom',
@@ -471,25 +452,19 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                           child: SingleChildScrollView(
                                             child: Container(
                                               margin: EdgeInsets.only(
-                                                  left: 10.sp,
-                                                  top: 10.sp,
-                                                  right: 10.sp),
+                                                  left: 10.sp, top: 10.sp, right: 10.sp),
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
                                                     'Address',
                                                     style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 10, 10),
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 10, 10),
                                                         fontSize: 18.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                        fontWeight: FontWeight.bold),
                                                   ),
                                                   // Divider(),
                                                   SizedBox(
@@ -543,48 +518,33 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   const Divider(),
 
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
                                                       onChanged: (value) {
                                                         if (value.length == 6) {
-                                                          GetAllAddress(pincode
-                                                              .text
-                                                              .toString());
+                                                          GetAllAddress(pincode.text.toString());
                                                         }
                                                       },
                                                       inputFormatters: <TextInputFormatter>[
-                                                        FilteringTextInputFormatter
-                                                            .allow(RegExp(
-                                                                r'[0-9]')),
-                                                        LengthLimitingTextInputFormatter(
-                                                            6),
+                                                        FilteringTextInputFormatter.allow(
+                                                            RegExp(r'[0-9]')),
+                                                        LengthLimitingTextInputFormatter(6),
                                                       ],
                                                       maxLength: 6,
                                                       style: const TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 41, 2, 2),
-                                                          fontWeight:
-                                                              FontWeight.w600),
+                                                          color: Color.fromARGB(255, 41, 2, 2),
+                                                          fontWeight: FontWeight.w600),
                                                       controller: pincode,
                                                       enabled: true,
-                                                      decoration:
-                                                          InputDecoration(
+                                                      decoration: InputDecoration(
                                                         errorText: _validatepincode
                                                             ? 'Value Cant Be Empty'
                                                             : null,
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          4.sp)),
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .green),
+                                                        border: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.all(
+                                                              Radius.circular(4.sp)),
+                                                          borderSide: const BorderSide(
+                                                              width: 1, color: Colors.green),
                                                         ),
                                                         labelText: 'Pincode',
                                                         hintText: 'Eg.123456',
@@ -644,57 +604,35 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   //           }),
                                                   // ),
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    child:
-                                                        DropdownButtonFormField(
-                                                      decoration:
-                                                          const InputDecoration(
+                                                    padding: const EdgeInsets.all(5),
+                                                    child: DropdownButtonFormField(
+                                                      decoration: const InputDecoration(
                                                         contentPadding:
-                                                            EdgeInsets.only(
-                                                                left: 10,
-                                                                right: 10),
+                                                            EdgeInsets.only(left: 10, right: 10),
                                                         border: OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
+                                                            borderRadius: BorderRadius.all(
+                                                                Radius.circular(10))),
                                                       ),
-                                                      hint: const Text(
-                                                          'Select locality'),
-                                                      dropdownColor:
-                                                          Colors.white,
-                                                      icon: const Icon(Icons
-                                                          .arrow_drop_down),
+                                                      hint: const Text('Select locality'),
+                                                      dropdownColor: Colors.white,
+                                                      icon: const Icon(Icons.arrow_drop_down),
                                                       value: valuechoose,
                                                       onChanged: (newvalue) {
                                                         setState(() {
-                                                          valuechoose = newvalue
-                                                              as String?;
+                                                          valuechoose = newvalue as String?;
                                                         });
                                                       },
-                                                      items:
-                                                          Itemlist.map((value) {
+                                                      items: Itemlist.map((value) {
                                                         return DropdownMenuItem(
-                                                          value:
-                                                              value.toString(),
+                                                          value: value.toString(),
                                                           child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(2.0),
+                                                            padding: const EdgeInsets.all(2.0),
                                                             child: Text(
                                                               value.toString(),
                                                               style: const TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          41,
-                                                                          2,
-                                                                          2),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
+                                                                  color:
+                                                                      Color.fromARGB(255, 41, 2, 2),
+                                                                  fontWeight: FontWeight.w600),
                                                             ),
                                                           ),
                                                         );
@@ -703,30 +641,19 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   ),
                                                   const Divider(),
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
                                                       style: const TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 41, 2, 2),
-                                                          fontWeight:
-                                                              FontWeight.w600),
+                                                          color: Color.fromARGB(255, 41, 2, 2),
+                                                          fontWeight: FontWeight.w600),
                                                       controller: district,
                                                       enabled: true,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          4.sp)),
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .green),
+                                                      decoration: InputDecoration(
+                                                        border: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.all(
+                                                              Radius.circular(4.sp)),
+                                                          borderSide: const BorderSide(
+                                                              width: 1, color: Colors.green),
                                                         ),
                                                         labelText: 'District',
                                                         hintText: 'Eg.Indore',
@@ -738,142 +665,95 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                                   ),
                                                   const Divider(),
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
                                                       style: const TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 41, 2, 2),
-                                                          fontWeight:
-                                                              FontWeight.w600),
+                                                          color: Color.fromARGB(255, 41, 2, 2),
+                                                          fontWeight: FontWeight.w600),
                                                       controller: state,
                                                       enabled: true,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          4.sp)),
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .green),
+                                                      decoration: InputDecoration(
+                                                        border: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.all(
+                                                              Radius.circular(4.sp)),
+                                                          borderSide: const BorderSide(
+                                                              width: 1, color: Colors.green),
                                                         ),
                                                         errorText: _validatestate
                                                             ? 'Value Cant Be Empty'
                                                             : null,
                                                         labelText: 'State',
-                                                        hintText:
-                                                            'Eg.Madhya Pradesh',
+                                                        hintText: 'Eg.Madhya Pradesh',
                                                       ),
                                                     ),
                                                   ),
                                                   const Divider(),
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
                                                       style: const TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 41, 2, 2),
-                                                          fontWeight:
-                                                              FontWeight.w600),
+                                                          color: Color.fromARGB(255, 41, 2, 2),
+                                                          fontWeight: FontWeight.w600),
                                                       controller: address1,
                                                       enabled: true,
                                                       maxLines: null,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          4.sp)),
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .green),
+                                                      decoration: InputDecoration(
+                                                        border: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.all(
+                                                              Radius.circular(4.sp)),
+                                                          borderSide: const BorderSide(
+                                                              width: 1, color: Colors.green),
                                                         ),
                                                         errorText: _validateadd1
                                                             ? 'Value Cant Be Empty'
                                                             : null,
-                                                        labelText:
-                                                            'Address Line 1',
-                                                        hintText:
-                                                            'Eg.Vithalwadi...',
+                                                        labelText: 'Address Line 1',
+                                                        hintText: 'Eg.Vithalwadi...',
                                                       ),
                                                     ),
                                                   ),
                                                   const Divider(),
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
+                                                    padding: const EdgeInsets.all(5),
                                                     child: TextField(
                                                       style: const TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 41, 2, 2),
-                                                          fontWeight:
-                                                              FontWeight.w600),
+                                                          color: Color.fromARGB(255, 41, 2, 2),
+                                                          fontWeight: FontWeight.w600),
                                                       controller: address2,
                                                       enabled: true,
                                                       maxLines: null,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          4.sp)),
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .green),
+                                                      decoration: InputDecoration(
+                                                        border: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.all(
+                                                              Radius.circular(4.sp)),
+                                                          borderSide: const BorderSide(
+                                                              width: 1, color: Colors.green),
                                                         ),
-                                                        labelText:
-                                                            'Address Line 2',
-                                                        hintText:
-                                                            'Eg.Mumbai Central...',
+                                                        labelText: 'Address Line 2',
+                                                        hintText: 'Eg.Mumbai Central...',
                                                       ),
                                                     ),
                                                   ),
                                                   const Divider(),
                                                   Center(
                                                     child: ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              const Color
-                                                                  .fromARGB(
-                                                                  255,
-                                                                  80,
-                                                                  3,
-                                                                  3), // Background color
+                                                        style: ElevatedButton.styleFrom(
+                                                          backgroundColor: const Color.fromARGB(
+                                                              255, 80, 3, 3), // Background color
                                                         ),
                                                         onPressed: () {
                                                           insertData();
                                                         },
                                                         child: const Row(
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
+                                                              CrossAxisAlignment.center,
                                                           mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                              MainAxisAlignment.center,
                                                           children: [
                                                             Text(
                                                               'Submit',
                                                               style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
+                                                                color: Colors.white,
                                                               ),
                                                             ),
                                                           ],
@@ -897,10 +777,8 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                     // obscureText: true,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4.sp)),
-                                        borderSide: const BorderSide(
-                                            width: 1, color: Colors.green),
+                                        borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                        borderSide: const BorderSide(width: 1, color: Colors.green),
                                       ),
                                       labelText: 'Address',
                                       hintText: 'Rajbhar',
@@ -910,15 +788,12 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                               ),
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromRGBO(
-                                          85, 2, 11, 0.957)),
+                                      backgroundColor: const Color.fromRGBO(85, 2, 11, 0.957)),
                                   onPressed: () async {
                                     SharedPreferences sharedprefrence =
                                         await SharedPreferences.getInstance();
-                                    String userid =
-                                        sharedprefrence.getString("Userid")!;
-                                    String token =
-                                        sharedprefrence.getString("Token")!;
+                                    String userid = sharedprefrence.getString("Userid")!;
+                                    String token = sharedprefrence.getString("Token")!;
                                     EasyLoading.showToast('Please Wait...');
 
                                     SharedPreferences fulladdress =
@@ -944,19 +819,15 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                       body: {
                                         "first_name": First.text.toString(),
                                         "last_name": lastname.text.toString(),
-                                        "user_birth_date":
-                                            dateofbirth.text.toString(),
+                                        "user_birth_date": dateofbirth.text.toString(),
                                         "gender": gender.toString(),
                                         "user_email_id": email.text.toString(),
                                         "user_local": valuechoose.toString(),
                                         "user_state": state.text.toString(),
                                         "user_pincode": pincode.text.toString(),
-                                        "user_address":
-                                            address1.text.toString(),
-                                        "user_address2":
-                                            address2.text.toString(),
-                                        "user_district":
-                                            district.text.toString(),
+                                        "user_address": address1.text.toString(),
+                                        "user_address2": address2.text.toString(),
+                                        "user_district": district.text.toString(),
                                         "alternet_contact_number": " ",
                                         // phonenumber.text.toString(),
                                       },
@@ -967,23 +838,17 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
 
                                     if (data['code'] == 200) {
                                       print(data['data']);
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  const SettingsUI()));
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (BuildContext context) => const SettingsUI()));
                                     } else {
                                       print(data);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  'Something went wrong')));
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Something went wrong')));
                                     }
                                   },
                                   child: const Text(
                                     'Submit',
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 252, 250, 250)),
+                                    style: TextStyle(color: Color.fromARGB(255, 252, 250, 250)),
                                   ))
                             ],
                           ))
@@ -1006,8 +871,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
     String token = sharedprefrence.getString("Token")!;
     EasyLoading.showToast('Please Wait...');
 
-    const uri =
-        "https://new-demo.inkcdogs.org/api/user/get_city_data_from_pincode";
+    const uri = "https://new-demo.inkcdogs.org/api/user/get_city_data_from_pincode";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -1062,9 +926,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
       dis.toString().isEmpty ? _validatedistic = true : _validatedistic = false;
 
       stat.toString().isEmpty ? _validatestate = true : _validatestate = false;
-      pin.toString().isEmpty
-          ? _validatepincode = true
-          : _validatepincode = false;
+      pin.toString().isEmpty ? _validatepincode = true : _validatepincode = false;
     });
 
     if (add1.isEmpty) {
@@ -1072,8 +934,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
     } else if (dis.isEmpty) {
     } else if (stat.isEmpty) {
     } else {
-      address.value =
-          TextEditingValue(text: "$add1 $add2 $local $dis $stat $pin");
+      address.value = TextEditingValue(text: "$add1 $add2 $local $dis $stat $pin");
       Navigator.pop(context);
     }
 

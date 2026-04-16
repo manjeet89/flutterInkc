@@ -60,25 +60,25 @@ class MyTransactionModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['user_phone_number'] = this.userPhoneNumber;
-    data['payment_id'] = this.paymentId;
-    data['payment_user_id'] = this.paymentUserId;
-    data['payment_details'] = this.paymentDetails;
-    data['order_details'] = this.orderDetails;
-    data['order_comment'] = this.orderComment;
-    data['payment_transaction_details'] = this.paymentTransactionDetails;
-    data['affilate_code'] = this.affilateCode;
-    data['affilate_details'] = this.affilateDetails;
-    data['order_status'] = this.orderStatus;
-    data['is_api_used'] = this.isApiUsed;
-    data['payment_mode'] = this.paymentMode;
-    data['payment_created_on'] = this.paymentCreatedOn;
-    data['payment_updated_on'] = this.paymentUpdatedOn;
-    data['transaction_credit'] = this.transactionCredit;
-    data['option_name'] = this.optionName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['user_phone_number'] = userPhoneNumber;
+    data['payment_id'] = paymentId;
+    data['payment_user_id'] = paymentUserId;
+    data['payment_details'] = paymentDetails;
+    data['order_details'] = orderDetails;
+    data['order_comment'] = orderComment;
+    data['payment_transaction_details'] = paymentTransactionDetails;
+    data['affilate_code'] = affilateCode;
+    data['affilate_details'] = affilateDetails;
+    data['order_status'] = orderStatus;
+    data['is_api_used'] = isApiUsed;
+    data['payment_mode'] = paymentMode;
+    data['payment_created_on'] = paymentCreatedOn;
+    data['payment_updated_on'] = paymentUpdatedOn;
+    data['transaction_credit'] = transactionCredit;
+    data['option_name'] = optionName;
     return data;
   }
 }

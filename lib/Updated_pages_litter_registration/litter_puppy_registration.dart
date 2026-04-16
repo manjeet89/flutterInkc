@@ -47,8 +47,7 @@ class LitterPuppyRegistration extends StatefulWidget {
   });
 
   @override
-  State<LitterPuppyRegistration> createState() =>
-      _LitterPuppyRegistrationState();
+  State<LitterPuppyRegistration> createState() => _LitterPuppyRegistrationState();
 }
 
 var k = 1;
@@ -81,11 +80,8 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
   var Lakho = [];
 
   bool checkvisible = false;
-
   List<Map<String, String>> keyValueList = [];
-
   List products = [];
-
   String? selectedValue; // Initial selected value
 
   Future insertvalue() async {
@@ -108,7 +104,7 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
       final body = json.decode(res.body);
 
       keyValueList.clear();
-      products.clear();
+      // products.clear();
 
       if (body['data']['kennel_second_owner'].toString() == "false") {
         //checkvisible = false;
@@ -118,8 +114,7 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
         for (int i = 0; i < list.length; i++) {
           var productMap = {
             body['data']['kennel_second_owner'][i]['kennel_id'].toString():
-                body['data']['kennel_second_owner'][i]['kennel_name']
-                    .toString(),
+                body['data']['kennel_second_owner'][i]['kennel_name'].toString(),
           };
           keyValueList.add(productMap);
           // print(keyValueList);
@@ -276,16 +271,12 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -330,8 +321,7 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -394,8 +384,7 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
       DateTime now = DateTime.now();
 
       FormData formDatas = FormData.fromMap({
-        'pet_image': await MultipartFile.fromFile(firstImage!.path,
-            filename: "${now.second}.jpg"),
+        'pet_image': await MultipartFile.fromFile(firstImage!.path, filename: "${now.second}.jpg"),
         'sire_reg_number': widget.sire,
         'dam_reg_number': widget.dam.toString(),
         'pet_sub_category_id': widget.petcolordid.toString(),
@@ -405,7 +394,8 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
         'color_marking[]': colo,
         'sire_front_side_certificate': widget.sirefrontcerificate.toString(),
         'sire_back_side_certificate': widget.sirebackcerificate.toString(),
-        // if (widget.sirefrontcerificate.toString() != "null")
+        'kennel_name': selectedValue,
+        'kennel_name_pre': prifixdata, // if (widget.sirefrontcerificate.toString() != "null")
         // 'sire_front_side_certificate': await MultipartFile.fromFile(
         //     widget.sirefrontcerificate!.path,
         //     filename: "${now.second}.jpg"),
@@ -419,29 +409,28 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
         //       filename: "${now.second}.jpg"),
       });
 
-      Response response = await dio.post(
-          'https://new-demo.inkcdogs.org/api/dog/litter_registration_new',
-          data: formDatas,
-          options: Options(headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Usertoken': token,
-            'Userid': userid
-          }));
+      Response response =
+          await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_new',
+              data: formDatas,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
       if (response.statusCode == 200) {
         print(response.toString());
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Success')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Success')));
       } else {
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Something went wrong')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Something went wrong')));
         //print('something worng');
       }
 
@@ -466,8 +455,7 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: Color.fromARGB(255, 223, 39, 39)),
+                  icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
                   onPressed: () => Navigator.pop(context, true),
                 ),
                 title: Text(
@@ -476,10 +464,8 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                       shadows: [
                         Shadow(
                           blurRadius: 10.0.sp, // shadow blur
-                          color: const Color.fromARGB(
-                              255, 223, 71, 45), // shadow color
-                          offset: const Offset(
-                              2.0, 2.0), // how much shadow will be shown
+                          color: const Color.fromARGB(255, 223, 71, 45), // shadow color
+                          offset: const Offset(2.0, 2.0), // how much shadow will be shown
                         ),
                       ],
                       fontSize: 23.sp,
@@ -501,23 +487,20 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20.0, left: 12),
+                                  padding: const EdgeInsets.only(top: 20.0, left: 12),
                                   child: Row(
                                     children: [
                                       Text(
                                         "Upload Litter's Photograph with mother ",
                                         style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 22, 21, 21),
+                                            color: const Color.fromARGB(255, 22, 21, 21),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13.sp),
                                       ),
                                       Text(
                                         "*",
                                         style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 231, 11, 11),
+                                            color: const Color.fromARGB(255, 231, 11, 11),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       ),
@@ -525,42 +508,32 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                   ),
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     FittedBox(
                                       fit: BoxFit.fill,
                                       child: CircleAvatar(
-                                        backgroundColor:
-                                            const Color(0xEBA020F0),
+                                        backgroundColor: const Color(0xEBA020F0),
                                         radius: 64,
-                                        foregroundImage: firstImage != null
-                                            ? FileImage(firstImage!)
-                                            : null,
+                                        foregroundImage:
+                                            firstImage != null ? FileImage(firstImage!) : null,
                                         child: const Text(
                                           "Select image",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white),
+                                          style: TextStyle(fontSize: 20, color: Colors.white),
                                         ),
                                       ),
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 199, 7, 7),
+                                        backgroundColor: const Color.fromARGB(255, 199, 7, 7),
                                       ),
                                       onPressed: () async {
-                                        final files =
-                                            await imagehelper.PickImage();
+                                        final files = await imagehelper.PickImage();
                                         if (files.isNotEmpty) {
-                                          final cropperFile =
-                                              await imagehelper.crop(
-                                                  file: files.first,
-                                                  cropStyle: CropStyle.circle);
+                                          final cropperFile = await imagehelper.crop(
+                                              file: files.first, cropStyle: CropStyle.circle);
                                           if (cropperFile != null) {
-                                            setState(() => firstImage =
-                                                File(cropperFile.path));
+                                            setState(() => firstImage = File(cropperFile.path));
                                             print("justcheck$firstImage");
                                           }
                                         }
@@ -572,14 +545,181 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                     ),
                                   ],
                                 ),
+                                Visibility(
+                                  visible: checkvisible,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 20.0, left: 12),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Kennel Name ",
+                                          style: TextStyle(
+                                              color: const Color.fromARGB(255, 22, 21, 21),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13.sp),
+                                        ),
+                                        Text(
+                                          "*",
+                                          style: TextStyle(
+                                              color: const Color.fromARGB(255, 231, 11, 11),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15.sp),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: checkvisible,
+                                  child: FutureBuilder(
+                                      future: insertvalue(),
+                                      builder: (context, snapshot) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                DropdownButtonFormField<String>(
+                                                  decoration: const InputDecoration(
+                                                    contentPadding:
+                                                        EdgeInsets.only(left: 30, right: 10),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(Radius.circular(10))),
+                                                  ),
+                                                  hint: const Text("selected value"),
+                                                  value: selectedValue,
+                                                  onChanged: (String? newValue) {
+                                                    setState(() {
+                                                      selectedValue = newValue;
+                                                      print("$newValue new values");
+                                                    });
+                                                    // if (newValue != null) {
+                                                    //   //Handle dropdown value change
+                                                    //   print(newValue);
+                                                    //   selectedValue = newValue;
+                                                    // }
+                                                  },
+                                                  isExpanded: true,
+                                                  items: keyValueList.map<DropdownMenuItem<String>>(
+                                                      (Map<String, String> pair) {
+                                                    final String key = pair.keys.first;
+                                                    final String value = pair.values.first;
+
+                                                    return DropdownMenuItem<String>(
+                                                      value: key,
+                                                      child: Text(
+                                                        value.toString(),
+                                                        style: TextStyle(
+                                                            color: const Color.fromARGB(
+                                                                255, 95, 46, 46),
+                                                            fontSize: 12.sp,
+                                                            fontWeight: FontWeight.bold),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                ),
+                                Visibility(
+                                  visible: checkvisible,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Container(
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    'Dog name with kennel name',
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.black,
+                                                        fontSize: 14.sp),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                    top: 8.0,
+                                                  ),
+                                                  child: Text(
+                                                    '* ',
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.w500,
+                                                        color: const Color.fromARGB(255, 201, 9, 9),
+                                                        fontSize: 14.sp),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Radio(
+                                                  value: "0",
+                                                  groupValue: prifixdata.toString(),
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      prifixdata = value.toString();
+                                                      // = value.toString();
+                                                      // = value.toString();
+                                                    });
+                                                  },
+                                                ),
+                                                Text(
+                                                  'Prefix Kennel Name',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black,
+                                                      fontSize: 11.sp),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Radio(
+                                                  value: "1",
+                                                  groupValue: prifixdata.toString(),
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      // _gender[i] = value;
+                                                      prifixdata = value.toString();
+                                                    });
+                                                  },
+                                                ),
+                                                Text(
+                                                  'Without Kennel Name',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black,
+                                                      fontSize: 11.sp),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 for (int i = 0; i < _name.length; i++)
                                   Card(
                                     margin: EdgeInsets.only(top: 15.sp),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(4.0),
@@ -604,9 +744,7 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                             },
                                             decoration: InputDecoration(
                                                 border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8)),
+                                                    borderRadius: BorderRadius.circular(8)),
                                                 label: const Text("Name")),
                                           ),
                                         ),
@@ -620,8 +758,7 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                                   child: Text(
                                                     'Gender',
                                                     style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
+                                                        fontWeight: FontWeight.w500,
                                                         color: Colors.black,
                                                         fontSize: 12.sp),
                                                   ),
@@ -633,12 +770,10 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                                     children: [
                                                       Radio(
                                                         value: "1",
-                                                        groupValue: _gender[i]
-                                                            .toString(),
+                                                        groupValue: _gender[i].toString(),
                                                         onChanged: (value) {
                                                           setState(() {
-                                                            _gender[i] = value
-                                                                .toString();
+                                                            _gender[i] = value.toString();
                                                             // = value.toString();
                                                             // = value.toString();
                                                           });
@@ -647,8 +782,7 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                                       Text(
                                                         'Male',
                                                         style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
+                                                            fontWeight: FontWeight.bold,
                                                             color: Colors.black,
                                                             fontSize: 10.sp),
                                                       )
@@ -658,21 +792,18 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                                     children: [
                                                       Radio(
                                                         value: "0",
-                                                        groupValue: _gender[i]
-                                                            .toString(),
+                                                        groupValue: _gender[i].toString(),
                                                         onChanged: (value) {
                                                           setState(() {
                                                             // _gender[i] = value;
-                                                            _gender[i] = value
-                                                                .toString();
+                                                            _gender[i] = value.toString();
                                                           });
                                                         },
                                                       ),
                                                       Text(
                                                         'Female',
                                                         style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
+                                                            fontWeight: FontWeight.bold,
                                                             color: Colors.black,
                                                             fontSize: 10.sp),
                                                       )
@@ -714,56 +845,37 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                             builder: (context, snapshot) {
                                               if (snapshot.hasData) {
                                                 return Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child:
-                                                      DropdownButtonFormField(
-                                                          decoration:
-                                                              const InputDecoration(
-                                                            contentPadding:
-                                                                EdgeInsets.only(
-                                                                    left: 30,
-                                                                    right: 10),
-                                                            border: OutlineInputBorder(
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                          ),
-                                                          hint: const Text(
-                                                              'Select value'),
-                                                          isExpanded: true,
-                                                          // value: chinchan[i],
-                                                          items: snapshot.data!
-                                                              .map((e) {
-                                                            return DropdownMenuItem(
-                                                                value: e
-                                                                    .colourId
-                                                                    .toString(),
-                                                                child: Text(
-                                                                  e.colourName
-                                                                      .toString(),
-                                                                  style: TextStyle(
-                                                                      color: const Color
-                                                                          .fromARGB(
-                                                                          255,
-                                                                          95,
-                                                                          46,
-                                                                          46),
-                                                                      fontSize:
-                                                                          10.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ));
-                                                          }).toList(),
-                                                          onChanged: (value) {
-                                                            colorid = value;
-                                                            colorname = value;
-                                                            chinchan[i] = value;
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: DropdownButtonFormField(
+                                                      decoration: const InputDecoration(
+                                                        contentPadding:
+                                                            EdgeInsets.only(left: 30, right: 10),
+                                                        border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.all(
+                                                                Radius.circular(10))),
+                                                      ),
+                                                      hint: const Text('Select value'),
+                                                      isExpanded: true,
+                                                      // value: chinchan[i],
+                                                      items: snapshot.data!.map((e) {
+                                                        return DropdownMenuItem(
+                                                            value: e.colourId.toString(),
+                                                            child: Text(
+                                                              e.colourName.toString(),
+                                                              style: TextStyle(
+                                                                  color: const Color.fromARGB(
+                                                                      255, 95, 46, 46),
+                                                                  fontSize: 10.sp,
+                                                                  fontWeight: FontWeight.bold),
+                                                            ));
+                                                      }).toList(),
+                                                      onChanged: (value) {
+                                                        colorid = value;
+                                                        colorname = value;
+                                                        chinchan[i] = value;
 
-                                                            setState(() {});
-                                                          }),
+                                                        setState(() {});
+                                                      }),
                                                 );
                                               } else {
                                                 return const CircularProgressIndicator();
@@ -791,12 +903,10 @@ class _LitterPuppyRegistrationState extends State<LitterPuppyRegistration> {
                                   ),
                                 ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 14, 41, 163),
+                                        backgroundColor: const Color.fromARGB(255, 14, 41, 163),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
-                                            color: const Color.fromARGB(
-                                                255, 241, 236, 236),
+                                            color: const Color.fromARGB(255, 241, 236, 236),
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
                                       UpLoadData();

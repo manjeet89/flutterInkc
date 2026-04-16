@@ -47,15 +47,15 @@ class _EventsState extends State<Events> {
         }
         return dataload;
       } else {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => const Login()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
         return dataload;
       }
     } else {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
       return dataload;
     }
   }
@@ -87,10 +87,8 @@ class _EventsState extends State<Events> {
                         shadows: const [
                           Shadow(
                             blurRadius: 10.0, // shadow blur
-                            color: Color.fromARGB(
-                                255, 223, 71, 45), // shadow color
-                            offset: Offset(
-                                2.0, 2.0), // how much shadow will be shown
+                            color: Color.fromARGB(255, 223, 71, 45), // shadow color
+                            offset: Offset(2.0, 2.0), // how much shadow will be shown
                           ),
                         ],
                         fontSize: 20.sp,
@@ -120,8 +118,7 @@ class _EventsState extends State<Events> {
                               child: Text(
                                 "No Events.",
                                 style: TextStyle(
-                                    color:
-                                        const Color.fromARGB(255, 177, 43, 10),
+                                    color: const Color.fromARGB(255, 177, 43, 10),
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w900),
                               ),
@@ -161,14 +158,14 @@ class _EventsState extends State<Events> {
                           'Sunday',
                         ];
 
-                        final dateTimeObj = DateTime.parse(
-                            dataload[position].eventStartDateTime.toString());
+                        final dateTimeObj =
+                            DateTime.parse(dataload[position].eventStartDateTime.toString());
 
-                        final enddateTimeObj = DateTime.parse(
-                            dataload[position].eventEndDateTime.toString());
+                        final enddateTimeObj =
+                            DateTime.parse(dataload[position].eventEndDateTime.toString());
 
-                        final closeEvents = DateTime.parse(
-                            dataload[position].eventEntryClosedOn.toString());
+                        final closeEvents =
+                            DateTime.parse(dataload[position].eventEntryClosedOn.toString());
 
                         // print("Inteme" +
                         //     dataload[position].eventEntryClosedOn.toString());
@@ -189,17 +186,14 @@ class _EventsState extends State<Events> {
                         // String endtime =
                         //     "${(enddateTimeObj.hour > 12 ? enddateTimeObj.hour - 12 : enddateTimeObj.hour).abs()}:${enddateTimeObj.minute}${enddateTimeObj.hour >= 12 ? "PM" : "AM"}";
                         //print("$fdate $time");
-                        String timeStamp24HRend = dataload[position]
-                            .eventEndDateTime
-                            .toString(); //"2020-07-20T18:15:12";
-                        String endtime = DateFormat.jm()
-                            .format(DateTime.parse(timeStamp24HRend));
+                        String timeStamp24HRend =
+                            dataload[position].eventEndDateTime.toString(); //"2020-07-20T18:15:12";
+                        String endtime = DateFormat.jm().format(DateTime.parse(timeStamp24HRend));
 
                         String timeStamp24HR = dataload[position]
                             .eventStartDateTime
                             .toString(); //"2020-07-20T18:15:12";
-                        String time = DateFormat.jm()
-                            .format(DateTime.parse(timeStamp24HR));
+                        String time = DateFormat.jm().format(DateTime.parse(timeStamp24HR));
 
                         // print(new DateFormat.jm()
                         //     .format(DateTime.parse(timeStamp24HR)));
@@ -267,13 +261,11 @@ class _EventsState extends State<Events> {
                                     margin: const EdgeInsets.only(left: 5),
                                     // width: double.infinity,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10.0, left: 10, bottom: 5),
+                                      padding:
+                                          const EdgeInsets.only(top: 10.0, left: 10, bottom: 5),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           FittedBox(
                                             fit: BoxFit.contain,
@@ -282,9 +274,7 @@ class _EventsState extends State<Events> {
                                               //         .eventNameSuff
                                               //         .toString() +
                                               //     " " +
-                                              dataload[position]
-                                                  .eventName
-                                                  .toString(),
+                                              dataload[position].eventName.toString(),
                                               style: TextStyle(
                                                   fontSize: 17.sp,
                                                   color: Colors.black,
@@ -297,8 +287,7 @@ class _EventsState extends State<Events> {
                                             child: Text(
                                               "( $dateset )  \n    ${dataload[position].eventLocation}",
                                               style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                    255, 110, 3, 3),
+                                                color: const Color.fromARGB(255, 110, 3, 3),
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -310,8 +299,7 @@ class _EventsState extends State<Events> {
                                             child: Text(
                                               "( $time ) - ( $endtime )",
                                               style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                    255, 71, 2, 2),
+                                                color: const Color.fromARGB(255, 71, 2, 2),
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -332,18 +320,12 @@ class _EventsState extends State<Events> {
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor:
-                                                      const Color.fromARGB(
-                                                          255, 231, 25, 25),
+                                                      const Color.fromARGB(255, 231, 25, 25),
                                                   textStyle: TextStyle(
                                                       fontSize: 10.sp,
                                                       color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              241,
-                                                              236,
-                                                              236),
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                                          const Color.fromARGB(255, 241, 236, 236),
+                                                      fontWeight: FontWeight.bold)),
                                               onPressed: () {
                                                 print(dateset);
                                                 // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>NonInkcRegistrationDog(imag dataload[position].petImage,dataload[position].petName,dataload[position].birthDate,dataload[position].petGender,dataload[position].petRegistrationNumber,dataload[position].subCategoryName,dataload[position].subCategoryName)));
@@ -391,94 +373,98 @@ class _EventsState extends State<Events> {
                                                 //         " - " +
                                                 //         dateset.toString());
                                                 String eventstalAC = "null";
-                                                if (dataload[position]
-                                                        .eventStall
-                                                        .toString() ==
+                                                if (dataload[position].eventStall.toString() ==
                                                     "0") {
                                                   eventstalAC = "null";
                                                 } else {
-                                                  String eventAC =
-                                                      dataload[position]
-                                                          .eventStallPriceAc
-                                                          .toString()
-                                                          .replaceAll("[", "")
-                                                          .replaceAll("\"", "")
-                                                          .replaceAll("]", ",");
+                                                  String eventAC = dataload[position]
+                                                      .eventStallPriceAc
+                                                      .toString()
+                                                      .replaceAll("[", "")
+                                                      .replaceAll("\"", "")
+                                                      .replaceAll("]", ",");
 
-                                                  String eventstalFan =
-                                                      dataload[position]
-                                                          .eventStallPriceFan
-                                                          .toString()
-                                                          .replaceAll("[", "")
-                                                          .replaceAll("\"", "")
-                                                          .replaceAll("]", "");
+                                                  String eventstalFan = dataload[position]
+                                                      .eventStallPriceFan
+                                                      .toString()
+                                                      .replaceAll("[", "")
+                                                      .replaceAll("\"", "")
+                                                      .replaceAll("]", "");
 
-                                                  eventstalAC =
-                                                      eventAC + eventstalFan;
+                                                  eventstalAC = eventAC + eventstalFan;
 
                                                   // print("tarak" + AC);
                                                 }
 
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext context) =>
-                                                            EventsDetails(
-                                                                EventId: dataload[position]
-                                                                    .eventId
-                                                                    .toString(),
-                                                                EventNumber: dataload[position]
-                                                                    .eventNumber
-                                                                    .toString(),
-                                                                EventStuff: dataload[position]
-                                                                    .eventNameSuff
-                                                                    .toString(),
-                                                                EventName: dataload[position]
-                                                                    .eventName
-                                                                    .toString(),
-                                                                EventSlug: dataload[position]
-                                                                    .eventSlug
-                                                                    .toString(),
-                                                                EventImage: dataload[position]
-                                                                    .eventImage
-                                                                    .toString(),
-                                                                EventDogPriceDiscound: dataload[position]
+                                                Navigator.of(context).push(MaterialPageRoute(
+                                                    builder: (BuildContext context) =>
+                                                        EventsDetails(
+                                                            EventId: dataload[position]
+                                                                .eventId
+                                                                .toString(),
+                                                            EventNumber: dataload[position]
+                                                                .eventNumber
+                                                                .toString(),
+                                                            EventStuff: dataload[position]
+                                                                .eventNameSuff
+                                                                .toString(),
+                                                            EventName: dataload[position]
+                                                                .eventName
+                                                                .toString(),
+                                                            EventSlug: dataload[position]
+                                                                .eventSlug
+                                                                .toString(),
+                                                            EventImage: dataload[position]
+                                                                .eventImage
+                                                                .toString(),
+                                                            EventDogPriceDiscound:
+                                                                dataload[position]
                                                                     .dogPriceDiscount
                                                                     .toString(),
-                                                                EventAddress: dataload[position]
-                                                                    .eventAddress
-                                                                    .toString(),
-                                                                EventLocation: dataload[position]
-                                                                    .eventLocation
-                                                                    .toString(),
-                                                                EventContactPerson: dataload[position]
-                                                                    .eventContactPerson
-                                                                    .toString(),
-                                                                EventStartDate: dateset
-                                                                    .toString()
+                                                            EventAddress: dataload[position]
+                                                                .eventAddress
+                                                                .toString(),
+                                                            EventLocation: dataload[position]
+                                                                .eventLocation
+                                                                .toString(),
+                                                            EventContactPerson: dataload[position]
+                                                                .eventContactPerson
+                                                                .toString(),
+                                                            EventStartDate: dateset.toString()
 
-                                                                // dataload[
-                                                                //         position]
-                                                                //     .eventStartDateTime
-                                                                //     .toString()
-                                                                ,
-                                                                EventEndDate: dataload[position]
-                                                                    .eventEndDateTime
-                                                                    .toString(),
-                                                                EventClossEntry: close,
-                                                                // dataload[
-                                                                //         position]
-                                                                //     .eventEntryClosedOn
-                                                                //     .toString(),
-                                                                EventTime: "Time: $time $endtime",
-                                                                Eventjudge: dataload[position].lastName.toString() == "null" ? dataload[position].firstName.toString() : "${dataload[position].firstName} ${dataload[position].lastName}",
-                                                                Eventstall: eventstalAC,
-                                                                EventType: dataload[position].eventType.toString(),
-                                                                event_stall: dataload[position].eventStall.toString())));
+                                                            // dataload[
+                                                            //         position]
+                                                            //     .eventStartDateTime
+                                                            //     .toString()
+                                                            ,
+                                                            EventEndDate: dataload[position]
+                                                                .eventEndDateTime
+                                                                .toString(),
+                                                            EventClossEntry: close,
+                                                            // dataload[
+                                                            //         position]
+                                                            //     .eventEntryClosedOn
+                                                            //     .toString(),
+                                                            EventTime: "Time: $time $endtime",
+                                                            Eventjudge: dataload[position]
+                                                                        .lastName
+                                                                        .toString() ==
+                                                                    "null"
+                                                                ? dataload[position]
+                                                                    .firstName
+                                                                    .toString()
+                                                                : "${dataload[position].firstName} ${dataload[position].lastName}",
+                                                            Eventstall: eventstalAC,
+                                                            EventType: dataload[position]
+                                                                .eventType
+                                                                .toString(),
+                                                            event_stall: dataload[position]
+                                                                .eventStall
+                                                                .toString())));
                                               },
                                               child: const Text(
                                                 "Events Details",
-                                                style: TextStyle(
-                                                    color: Colors.white),
+                                                style: TextStyle(color: Colors.white),
                                               ),
                                             ),
                                           ),

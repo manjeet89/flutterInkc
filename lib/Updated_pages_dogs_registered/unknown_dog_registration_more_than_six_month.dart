@@ -118,16 +118,12 @@ class _UnknownDogRegistrationMoreThanSixMonthState
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -140,8 +136,8 @@ class _UnknownDogRegistrationMoreThanSixMonthState
   final _firstpicker = ImagePicker();
 
   Future getfirstImage() async {
-    final pickedFilefirst = await _firstpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilefirst =
+        await _firstpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilefirst != null) {
       firstImage = File(pickedFilefirst.path);
@@ -157,8 +153,8 @@ class _UnknownDogRegistrationMoreThanSixMonthState
   final _secondpicker = ImagePicker();
 
   Future getsecondImage() async {
-    final pickedFilesecond = await _secondpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilesecond =
+        await _secondpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilesecond != null) {
       secondImage = File(pickedFilesecond.path);
@@ -173,8 +169,8 @@ class _UnknownDogRegistrationMoreThanSixMonthState
   File? thiredImage;
   final _thiredpicker = ImagePicker();
   Future getthardImage() async {
-    final pickedFilethired = await _thiredpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilethired =
+        await _thiredpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilethired != null) {
       thiredImage = File(pickedFilethired.path);
@@ -206,8 +202,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -250,13 +245,13 @@ class _UnknownDogRegistrationMoreThanSixMonthState
   bool damvalide = false;
   String? DamString;
 
-  uploadData(
-      String obidientq, String stallReqq, String Dayq, String Typeq) async {
+  uploadData(String obidientq, String stallReqq, String Dayq, String Typeq) async {
     setState(() {
       showSpinner = true;
     });
 
-    print(widget.participate_event_id + "- " + obidientq);
+    print(
+        "${widget.participate_event_id}- $obidientq   -$stallReqq  -$Dayq -$Typeq   -  ${widget.register_for_event} + ${widget.pariticaipate_for_event}");
 
     String DogName = Dogname.text.toString();
     String DOB = dateofbirth.text.toString();
@@ -274,12 +269,11 @@ class _UnknownDogRegistrationMoreThanSixMonthState
       DateTime now = DateTime.now();
 
       FormData formData = FormData.fromMap({
-        'pet_image': await MultipartFile.fromFile(firstImage!.path,
-            filename: "${now.second}.jpg"),
-        'pet_height_image': await MultipartFile.fromFile(secondImage!.path,
-            filename: "${now.second}.jpg"),
-        'pet_side_image': await MultipartFile.fromFile(thiredImage!.path,
-            filename: "${now.second}.jpg"),
+        'pet_image': await MultipartFile.fromFile(firstImage!.path, filename: "${now.second}.jpg"),
+        'pet_height_image':
+            await MultipartFile.fromFile(secondImage!.path, filename: "${now.second}.jpg"),
+        'pet_side_image':
+            await MultipartFile.fromFile(thiredImage!.path, filename: "${now.second}.jpg"),
         'pet_gender': Gender,
         'birth_date': DOB,
         'pet_name': DogName,
@@ -301,15 +295,15 @@ class _UnknownDogRegistrationMoreThanSixMonthState
       // print(
       //     "${Gender + "-" + DOB + "-" + DogName + "-" + cowner.text + "-" + AddCoowner.toString() + "-" + MICRO + "-" + selectcolormakingid}-$DAM-$SIRE");
 
-      Response response = await dio.post(
-          'https://new-demo.inkcdogs.org/api/dog/unknown_pedigree_dog_registration',
-          data: formData,
-          options: Options(headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Usertoken': token,
-            'Userid': userid
-          }));
+      Response response =
+          await dio.post('https://new-demo.inkcdogs.org/api/dog/unknown_pedigree_dog_registration',
+              data: formData,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -323,14 +317,14 @@ class _UnknownDogRegistrationMoreThanSixMonthState
           title: 'Success...',
           text: 'SuccessFully Registered',
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('SuccessFully Registered')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
       } else {
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Something went wrong')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Something went wrong')));
         print('something worng');
       }
 
@@ -437,8 +431,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -574,8 +567,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: Color.fromARGB(255, 223, 39, 39)),
+                  icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 title: const Column(
@@ -617,23 +609,20 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Add Co Owner ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -665,8 +654,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                 onChanged: (value) {
                                                   setState(() {
                                                     _isShowOff = false;
-                                                    AddCoOwner =
-                                                        value.toString();
+                                                    AddCoOwner = value.toString();
                                                   });
                                                 },
                                               ),
@@ -687,8 +675,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                 onChanged: (value) {
                                                   setState(() {
                                                     _isShowOff = true;
-                                                    AddCoOwner =
-                                                        value.toString();
+                                                    AddCoOwner = value.toString();
                                                   });
                                                 },
                                               ),
@@ -707,28 +694,26 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                   ),
                                 ),
                               ),
+
                               Visibility(
                                   visible: _isShowOff,
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 20.0, left: 12),
+                                        padding: const EdgeInsets.only(top: 20.0, left: 12),
                                         child: Row(
                                           children: [
                                             Text(
                                               "Co Owner ID ",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 22, 21, 21),
+                                                  color: const Color.fromARGB(255, 22, 21, 21),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 12.sp),
                                             ),
                                             Text(
                                               "*",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 231, 11, 11),
+                                                  color: const Color.fromARGB(255, 231, 11, 11),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15.sp),
                                             ),
@@ -742,170 +727,34 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                           // obscureText: true,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4.sp)),
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: Colors.green),
+                                              borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                              borderSide:
+                                                  const BorderSide(width: 1, color: Colors.green),
                                             ),
                                             labelText: 'Co Owner ID',
                                             hintText: 'Co Owner ID',
-                                            errorText: dogvalidate
-                                                ? "Value Can't Be Empty"
-                                                : null,
+                                            errorText: dogvalidate ? "Value Can't Be Empty" : null,
                                           ),
                                         ),
                                       ),
                                     ],
                                   )),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Name of the dog ",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: TextField(
-                                  controller: Dogname,
-                                  // obscureText: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
-                                    ),
-                                    labelText: 'Name of the dog',
-                                    hintText: 'Eg.Bruno',
-                                    errorText: dogvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Date of Birth ",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.all(8),
-                                      width: 160.sp,
-                                      child: TextField(
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black),
-                                        onTap: () {},
-                                        controller: dateofbirth,
-                                        enabled: false,
-                                        // obscureText: true,
-                                        decoration: InputDecoration(
-                                          // suffixIcon: IconButton(
-                                          //   icon: Icon(Icons.date_range),
-                                          //   onPressed: () {
-                                          //     setState(
-                                          //       () {},
-                                          //     );
-                                          //   },
-                                          // ),
-                                          prefixIcon:
-                                              const Icon(Icons.date_range),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.sp)),
-                                            borderSide: const BorderSide(
-                                                width: 1, color: Colors.green),
-                                          ),
-                                          labelText: 'Date of Birth',
-                                          errorText: datevalidate
-                                              ? "Value Can't Be Empty"
-                                              : null,
-                                        ),
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 231, 25, 25),
-                                            textStyle: TextStyle(
-                                                fontSize: 10.sp,
-                                                color: const Color.fromARGB(
-                                                    255, 241, 236, 236),
-                                                fontWeight: FontWeight.bold)),
-                                        onPressed: () {
-                                          selectDatePicker();
-                                        },
-                                        child: const Text(
-                                          'Pick date',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ))
-                                  ],
-                                ),
-                              ),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Breed ",
+                                      "Breed of the dog",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -917,41 +766,28 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                   future: getbreedlist(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
                                     } else {
                                       // DropDownKennelName? selectedItem =
                                       //     findItemById(snapshot.data!, selectedId);
 
                                       return Container(
                                         margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
                                           child: DropdownSearch<DogBreedList>(
                                             items: snapshot.data!,
-                                            itemAsString:
-                                                (DogBreedList? model) =>
-                                                    model?.subCategoryName ??
-                                                    "",
+                                            itemAsString: (DogBreedList? model) =>
+                                                model?.subCategoryName ?? "",
                                             // selectedItem:
                                             //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (DogBreedList? selectedItem) {
+                                            onChanged: (DogBreedList? selectedItem) {
                                               setState(() {
-                                                selectebreedvalue =
-                                                    selectedItem?.petCategoryId;
-                                                selectedbreedid =
-                                                    selectedItem?.petCategoryId;
+                                                selectebreedvalue = selectedItem?.petCategoryId;
+                                                selectedbreedid = selectedItem?.petCategoryId;
                                               });
                                               // setState(() {
                                               //   countrybool = true;
@@ -971,10 +807,8 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                               //   });
                                               // });
                                             },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
                                                 // labelText: "Select Color/Pattern",
                                                 hintText: "Choose one",
                                                 border: OutlineInputBorder(),
@@ -983,33 +817,26 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                             popupProps: PopupProps.menu(
                                               showSearchBox: true,
                                               fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
+                                              itemBuilder: (context, item, isSelected) {
                                                 return ListTile(
                                                   title: Text(
                                                     item.subCategoryName ?? "",
                                                     style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 46, 46),
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
                                                         fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                        fontWeight: FontWeight.bold),
                                                   ),
                                                 );
                                               },
                                             ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
+                                            dropdownBuilder: (context, selectedItem) {
                                               return Text(
-                                                selectedItem?.subCategoryName ??
-                                                    "",
+                                                selectedItem?.subCategoryName ?? "",
                                                 style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 95, 46, 46),
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
                                                     fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    fontWeight: FontWeight.bold),
                                               ); // Display the selected item's name
                                             },
                                           ),
@@ -1017,6 +844,118 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                       );
                                     }
                                   }),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Name of the dog ",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: TextField(
+                                  controller: Dogname,
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
+                                    ),
+                                    labelText: 'Name of the dog',
+                                    hintText: 'Eg.Bruno',
+                                    errorText: dogvalidate ? "Value Can't Be Empty" : null,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Date of Birth ",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.all(8),
+                                      width: 160.sp,
+                                      child: TextField(
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600, color: Colors.black),
+                                        onTap: () {},
+                                        controller: dateofbirth,
+                                        enabled: false,
+                                        // obscureText: true,
+                                        decoration: InputDecoration(
+                                          // suffixIcon: IconButton(
+                                          //   icon: Icon(Icons.date_range),
+                                          //   onPressed: () {
+                                          //     setState(
+                                          //       () {},
+                                          //     );
+                                          //   },
+                                          // ),
+                                          prefixIcon: const Icon(Icons.date_range),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                            borderSide:
+                                                const BorderSide(width: 1, color: Colors.green),
+                                          ),
+                                          labelText: 'Date of Birth',
+                                          errorText: datevalidate ? "Value Can't Be Empty" : null,
+                                        ),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
+                                            textStyle: TextStyle(
+                                                fontSize: 10.sp,
+                                                color: const Color.fromARGB(255, 241, 236, 236),
+                                                fontWeight: FontWeight.bold)),
+                                        onPressed: () {
+                                          selectDatePicker();
+                                        },
+                                        child: const Text(
+                                          'Pick date',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ))
+                                  ],
+                                ),
+                              ),
+
                               // Padding(
                               //   padding: EdgeInsets.all(8),
                               //   child: TextField(
@@ -1121,23 +1060,20 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                               //     }),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Color and Marking ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1149,40 +1085,28 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                   future: getColorAndMaking(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
                                     } else {
                                       // DropDownKennelName? selectedItem =
                                       //     findItemById(snapshot.data!, selectedId);
 
                                       return Container(
                                         margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
                                           child: DropdownSearch<ColorAndMaking>(
                                             items: snapshot.data!,
-                                            itemAsString:
-                                                (ColorAndMaking? model) =>
-                                                    model?.colourName ?? "",
+                                            itemAsString: (ColorAndMaking? model) =>
+                                                model?.colourName ?? "",
                                             // selectedItem:
                                             //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (ColorAndMaking? selectedItem) {
+                                            onChanged: (ColorAndMaking? selectedItem) {
                                               setState(() {
-                                                selectcolormarkingvalue =
-                                                    selectedItem?.colourId;
-                                                selectcolormakingid =
-                                                    selectedItem?.colourId;
+                                                selectcolormarkingvalue = selectedItem?.colourId;
+                                                selectcolormakingid = selectedItem?.colourId;
                                               });
                                               // setState(() {
                                               //   countrybool = true;
@@ -1202,10 +1126,8 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                               //   });
                                               // });
                                             },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
                                                 // labelText: "Select Color/Pattern",
                                                 hintText: "Choose one",
                                                 border: OutlineInputBorder(),
@@ -1214,18 +1136,14 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                             popupProps: PopupProps.menu(
                                               showSearchBox: true,
                                               fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
+                                              itemBuilder: (context, item, isSelected) {
                                                 return ListTile(
-                                                  title: Text(
-                                                      item.colourName ?? ""),
+                                                  title: Text(item.colourName ?? ""),
                                                 );
                                               },
                                             ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
-                                              return Text(selectedItem
-                                                      ?.colourName ??
+                                            dropdownBuilder: (context, selectedItem) {
+                                              return Text(selectedItem?.colourName ??
                                                   ""); // Display the selected item's name
                                             },
                                           ),
@@ -1319,23 +1237,20 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                               //     }),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Sex of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1406,15 +1321,13 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1425,21 +1338,16 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                 padding: const EdgeInsets.all(8),
                                 child: TextField(
                                   style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600),
+                                      color: Colors.black, fontWeight: FontWeight.w600),
                                   controller: counrty,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Country Bred in',
                                     hintText: 'Eg.India',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -1450,16 +1358,14 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                     Text(
                                       "Upload your dog’s best photograph ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1468,48 +1374,109 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                               ),
 
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: firstImage != null
-                                          ? FileImage(firstImage!)
-                                          : null,
+                                      foregroundImage:
+                                          firstImage != null ? FileImage(firstImage!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() => firstImage =
-                                              File(cropperFile.path));
-                                          print("justcheck$firstImage");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                firstImage = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() => firstImage =
+                                          //         File(cropperFile.path));
+                                          //     print("justcheck$firstImage");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                firstImage = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -1592,23 +1559,20 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                               // ),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Height (in inches) ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1622,16 +1586,12 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                   // obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Height (in inches)',
                                     hintText: '',
-                                    errorText: dogvalidatehight
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: dogvalidatehight ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -1642,16 +1602,14 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                     Text(
                                       "Photograph of the dog's height ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 73, 72, 72),
+                                          color: const Color.fromARGB(255, 73, 72, 72),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1659,49 +1617,136 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: secondImage != null
-                                          ? FileImage(secondImage!)
-                                          : null,
+                                      foregroundImage:
+                                          secondImage != null ? FileImage(secondImage!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() => secondImage =
-                                              File(cropperFile.path));
-                                          print("justcheck$secondImage");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                secondImage = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() => secondImage =
+                                          //         File(cropperFile.path));
+                                          //     print("justcheck$secondImage");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                secondImage = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  // ElevatedButton(
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     backgroundColor:
+                                  //         const Color.fromARGB(255, 199, 7, 7),
+                                  //   ),
+                                  //   onPressed: () async {
+                                  //     final files =
+                                  //         await imagehelper.PickImage();
+                                  //     if (files.isNotEmpty) {
+                                  //       final cropperFile =
+                                  //           await imagehelper.crop(
+                                  //               file: files.first,
+                                  //               cropStyle: CropStyle.circle);
+                                  //       if (cropperFile != null) {
+                                  //         setState(() => secondImage =
+                                  //             File(cropperFile.path));
+                                  //         print("justcheck$secondImage");
+                                  //       }
+                                  //     }
+                                  //   },
+                                  //   child: const Text(
+                                  //     'Pick Image',
+                                  //     style: TextStyle(color: Colors.white),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               // Container(
@@ -1788,16 +1833,14 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                     Text(
                                       "Photograph of the dog from one side ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1806,49 +1849,135 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                               ),
 
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: thiredImage != null
-                                          ? FileImage(thiredImage!)
-                                          : null,
+                                      foregroundImage:
+                                          thiredImage != null ? FileImage(thiredImage!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() => thiredImage =
-                                              File(cropperFile.path));
-                                          print("justcheck$thiredImage");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                thiredImage = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() => thiredImage =
+                                          //         File(cropperFile.path));
+                                          //     print("justcheck$thiredImage");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                thiredImage = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  // ElevatedButton(
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     backgroundColor:
+                                  //         const Color.fromARGB(255, 199, 7, 7),
+                                  //   ),
+                                  //   onPressed: () async {
+                                  //     final files =
+                                  //         await imagehelper.PickImage();
+                                  //     if (files.isNotEmpty) {
+                                  //       final cropperFile =
+                                  //           await imagehelper.crop(
+                                  //               file: files.first,
+                                  //               cropStyle: CropStyle.circle);
+                                  //       if (cropperFile != null) {
+                                  //         setState(() => thiredImage =
+                                  //             File(cropperFile.path));
+                                  //         print("justcheck$thiredImage");
+                                  //       }
+                                  //     }
+                                  //   },
+                                  //   child: const Text(
+                                  //     'Pick Image',
+                                  //     style: TextStyle(color: Colors.white),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               // Container(
@@ -1929,23 +2058,20 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                               //         ),
                               // ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Microchip required ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1976,8 +2102,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                 groupValue: MicroRequired,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    MicroRequired =
-                                                        value.toString();
+                                                    MicroRequired = value.toString();
                                                   });
                                                 },
                                               ),
@@ -1997,8 +2122,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                 groupValue: MicroRequired,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    MicroRequired =
-                                                        value.toString();
+                                                    MicroRequired = value.toString();
                                                   });
                                                 },
                                               ),
@@ -2018,30 +2142,25 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                 ),
                               ),
 
-                              if (widget.participate_event_id != "")
-                                EventDetails(context),
+                              if (widget.participate_event_id != "") EventDetails(context),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 20, 10, 151),
+                                        backgroundColor: const Color.fromARGB(255, 20, 10, 151),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
-                                            color: const Color.fromARGB(
-                                                255, 241, 236, 236),
+                                            color: const Color.fromARGB(255, 241, 236, 236),
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
-                                      String hight =
-                                          Dognamehight.text.toString();
+                                      String hight = Dognamehight.text.toString();
 
                                       if (firstImage.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              'Please Select Dog best photograph',
+                                          text: 'Please Select Dog best photograph',
                                         );
                                       } else {
                                         if (secondImage.toString() == "null") {
@@ -2049,23 +2168,19 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                             context: context,
                                             type: QuickAlertType.error,
                                             title: 'Oops...',
-                                            text:
-                                                'Please Select dog hight photograph',
+                                            text: 'Please Select dog hight photograph',
                                           );
                                         } else {
-                                          if (thiredImage.toString() ==
-                                              "null") {
+                                          if (thiredImage.toString() == "null") {
                                             QuickAlert.show(
                                               context: context,
                                               type: QuickAlertType.error,
                                               title: 'Oops...',
-                                              text:
-                                                  'Please Select dog one  side photograph',
+                                              text: 'Please Select dog one  side photograph',
                                             );
                                           } else {
                                             {
-                                              if (Dogname.text.toString() ==
-                                                  "") {
+                                              if (Dogname.text.toString() == "") {
                                                 QuickAlert.show(
                                                   context: context,
                                                   type: QuickAlertType.error,
@@ -2073,9 +2188,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                   text: 'Please Enter Dog Name',
                                                 );
                                               } else {
-                                                if (dateofbirth.text
-                                                        .toString() ==
-                                                    "") {
+                                                if (dateofbirth.text.toString() == "") {
                                                   QuickAlert.show(
                                                     context: context,
                                                     type: QuickAlertType.error,
@@ -2083,49 +2196,36 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                     text: 'Please Select date',
                                                   );
                                                 } else {
-                                                  if (selectedbreedid
-                                                          .toString() ==
-                                                      "null") {
+                                                  if (selectedbreedid.toString() == "null") {
                                                     QuickAlert.show(
                                                       context: context,
-                                                      type:
-                                                          QuickAlertType.error,
+                                                      type: QuickAlertType.error,
                                                       title: 'Oops...',
-                                                      text:
-                                                          'Please Select Breed',
+                                                      text: 'Please Select Breed',
                                                     );
                                                   } else {
-                                                    if (selectcolormakingid
-                                                            .toString() ==
-                                                        "null") {
+                                                    if (selectcolormakingid.toString() == "null") {
                                                       QuickAlert.show(
                                                         context: context,
-                                                        type: QuickAlertType
-                                                            .error,
+                                                        type: QuickAlertType.error,
                                                         title: 'Oops...',
-                                                        text:
-                                                            'Please Select Color and making',
+                                                        text: 'Please Select Color and making',
                                                       );
                                                     } else {
                                                       if (hight == "") {
                                                         QuickAlert.show(
                                                           context: context,
-                                                          type: QuickAlertType
-                                                              .error,
+                                                          type: QuickAlertType.error,
                                                           title: 'Oops...',
-                                                          text:
-                                                              'Please Enter height (in inches)',
+                                                          text: 'Please Enter height (in inches)',
                                                         );
                                                       } else {
-                                                        if (AddCoOwner
-                                                                .toString() ==
-                                                            "0") {
+                                                        if (AddCoOwner.toString() == "0") {
                                                           String Day = "1";
                                                           String Type = "0";
                                                           obidient.clear();
 
-                                                          if (prebigner ==
-                                                              true) {
+                                                          if (prebigner == true) {
                                                             obidient.add("1");
                                                           }
                                                           if (bigner == true) {
@@ -2147,8 +2247,7 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                           print(obidient);
 
                                                           {
-                                                            if (stallReq ==
-                                                                "0") {
+                                                            if (stallReq == "0") {
                                                               //  print("sukriya");
                                                               Day = "";
                                                               Type = "";
@@ -2158,21 +2257,14 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                             }
 
                                                             //obidient.length;
-                                                            if (obidient.length <=
-                                                                    1 &&
-                                                                widget.eventtype
-                                                                        .toString() ==
+                                                            if (obidient.length <= 1 &&
+                                                                widget.eventtype.toString() ==
                                                                     "2") {
                                                               QuickAlert.show(
-                                                                context:
-                                                                    context,
-                                                                type:
-                                                                    QuickAlertType
-                                                                        .error,
-                                                                title:
-                                                                    'Oops...',
-                                                                text:
-                                                                    'Please Select atlest 2 box',
+                                                                context: context,
+                                                                type: QuickAlertType.error,
+                                                                title: 'Oops...',
+                                                                text: 'Please Select atlest 2 box',
                                                               );
                                                             } else {
                                                               // print(
@@ -2212,13 +2304,8 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                               //       "register_with_event":
                                                               //           "1"
                                                               //     },
-                                                              uploadData(
-                                                                  obidient
-                                                                      .toString(),
-                                                                  stallReq
-                                                                      .toString(),
-                                                                  Day,
-                                                                  Type);
+                                                              uploadData(obidient.toString(),
+                                                                  stallReq.toString(), Day, Type);
                                                               //       headers: requestHeaders);
                                                               //   var data = json.decode(responce.body);
                                                               //   if (data['code'].toString() == "200") {
@@ -2237,29 +2324,22 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                             // print(data['message']);
                                                           }
                                                         } else {
-                                                          if (cowner.text
-                                                                  .toString() ==
-                                                              "") {
+                                                          if (cowner.text.toString() == "") {
                                                             QuickAlert.show(
                                                               context: context,
-                                                              type:
-                                                                  QuickAlertType
-                                                                      .error,
+                                                              type: QuickAlertType.error,
                                                               title: 'Oops...',
-                                                              text:
-                                                                  'Please Enter co owner Id',
+                                                              text: 'Please Enter co owner Id',
                                                             );
                                                           } else {
                                                             String Day = "1";
                                                             String Type = "0";
                                                             obidient.clear();
 
-                                                            if (prebigner ==
-                                                                true) {
+                                                            if (prebigner == true) {
                                                               obidient.add("1");
                                                             }
-                                                            if (bigner ==
-                                                                true) {
+                                                            if (bigner == true) {
                                                               obidient.add("2");
                                                             }
                                                             if (novic == true) {
@@ -2278,31 +2358,23 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                             print(obidient);
 
                                                             {
-                                                              if (stallReq ==
-                                                                  "0") {
+                                                              if (stallReq == "0") {
                                                                 //  print("sukriya");
                                                                 Day = "";
                                                                 Type = "";
                                                               } else {
                                                                 Day = StallDay;
-                                                                Type =
-                                                                    StallType;
+                                                                Type = StallType;
                                                               }
 
                                                               //obidient.length;
-                                                              if (obidient.length <=
-                                                                      1 &&
-                                                                  widget.eventtype
-                                                                          .toString() ==
+                                                              if (obidient.length <= 1 &&
+                                                                  widget.eventtype.toString() ==
                                                                       "2") {
                                                                 QuickAlert.show(
-                                                                  context:
-                                                                      context,
-                                                                  type:
-                                                                      QuickAlertType
-                                                                          .error,
-                                                                  title:
-                                                                      'Oops...',
+                                                                  context: context,
+                                                                  type: QuickAlertType.error,
+                                                                  title: 'Oops...',
                                                                   text:
                                                                       'Please Select atlest 2 box',
                                                                 );
@@ -2344,13 +2416,8 @@ class _UnknownDogRegistrationMoreThanSixMonthState
                                                                 //       "register_with_event":
                                                                 //           "1"
                                                                 //     },
-                                                                uploadData(
-                                                                    obidient
-                                                                        .toString(),
-                                                                    stallReq
-                                                                        .toString(),
-                                                                    Day,
-                                                                    Type);
+                                                                uploadData(obidient.toString(),
+                                                                    stallReq.toString(), Day, Type);
                                                                 //       headers: requestHeaders);
                                                                 //   var data = json.decode(responce.body);
                                                                 //   if (data['code'].toString() == "200") {

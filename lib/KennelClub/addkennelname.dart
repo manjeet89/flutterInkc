@@ -86,8 +86,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
           centerTitle: true,
         ),
         body: Padding(
-          padding:
-              const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 10),
+          padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 10),
           child: Column(
             children: [
               Padding(
@@ -98,8 +97,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4.sp)),
-                      borderSide:
-                          const BorderSide(width: 1, color: Colors.green),
+                      borderSide: const BorderSide(width: 1, color: Colors.green),
                     ),
                     labelText: 'Kennel Name',
                     hintText: 'Kennel Name',
@@ -128,9 +126,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
                           child: Text(
                             'Add second owner',
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                                fontSize: 14.sp),
+                                fontWeight: FontWeight.w500, color: Colors.black, fontSize: 14.sp),
                           ),
                         ),
                       ),
@@ -195,8 +191,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6.sp)),
-                        borderSide:
-                            const BorderSide(width: 1, color: Colors.green),
+                        borderSide: const BorderSide(width: 1, color: Colors.green),
                       ),
                       labelText: 'Second owner’s ID',
                       hintText: 'Second owner’s ID',
@@ -247,8 +242,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri =
-        "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -258,10 +252,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
 
     final responce = await http.post(Uri.parse(uri),
         headers: requestHeaders,
-        body: {
-          'kennel_club_name': First.text.toString(),
-          'second_owner_id': ""
-        });
+        body: {'kennel_club_name': First.text.toString(), 'second_owner_id': ""});
     var data = json.decode(responce.body);
 
     if (data['code'].toString() == "200") {
@@ -307,8 +298,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri =
-        "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
+    const uri = "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -318,10 +308,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
 
     final responce = await http.post(Uri.parse(uri),
         headers: requestHeaders,
-        body: {
-          'kennel_club_name': First.text.toString(),
-          'second_owner_id': string
-        });
+        body: {'kennel_club_name': First.text.toString(), 'second_owner_id': string});
     var data = json.decode(responce.body);
     if (data['code'].toString() == "200") {
       QuickAlert.show(

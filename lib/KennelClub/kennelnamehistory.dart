@@ -156,8 +156,7 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
             centerTitle: true,
           ),
           body: Padding(
-            padding: const EdgeInsets.only(
-                top: 15.0, left: 15, right: 15, bottom: 10),
+            padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 10),
             child: Column(
               children: [
                 Visibility(
@@ -168,23 +167,17 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
                       Text(
                         "SN.",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp),
+                            color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14.sp),
                       ),
                       Text(
                         "Kennel Name.",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp),
+                            color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14.sp),
                       ),
                       Text(
                         "Action.",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp),
+                            color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14.sp),
                       ),
                     ],
                   ),
@@ -208,8 +201,7 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
                                   child: Text(
                                     "You don't have History.",
                                     style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 177, 43, 10),
+                                        color: const Color.fromARGB(255, 177, 43, 10),
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w900),
                                   ),
@@ -247,32 +239,26 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         i.toString(),
                                         style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 94, 18, 18),
+                                            color: const Color.fromARGB(255, 94, 18, 18),
                                             fontWeight: FontWeight.w600,
                                             fontSize: 12.sp),
                                       ),
                                       Text(
-                                        history[position]
-                                            .kennelClubName
-                                            .toString(),
+                                        history[position].kennelClubName.toString(),
                                         style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 95, 14, 14),
+                                            color: const Color.fromARGB(255, 95, 14, 14),
                                             fontWeight: FontWeight.w600,
                                             fontSize: 12.sp),
                                       ),
                                       Text(
                                         "Certificate",
                                         style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 63, 2, 2),
+                                            color: const Color.fromARGB(255, 63, 2, 2),
                                             fontWeight: FontWeight.w600,
                                             fontSize: 12.sp),
                                       ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:inkc/main.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -8,12 +9,7 @@ import 'package:quickalert/quickalert.dart';
 import 'package:http/http.dart' as http;
 
 class INKCDetails extends StatefulWidget {
-  String image,
-      productName,
-      productfacePrice,
-      productactualPrice,
-      prductdescription,
-      productId;
+  String image, productName, productfacePrice, productactualPrice, prductdescription, productId;
   INKCDetails(
       {super.key,
       required this.image,
@@ -24,8 +20,8 @@ class INKCDetails extends StatefulWidget {
       required this.productId});
 
   @override
-  State<INKCDetails> createState() => _INKCDetailsState(image, productName,
-      productfacePrice, productactualPrice, prductdescription, productId);
+  State<INKCDetails> createState() => _INKCDetailsState(
+      image, productName, productfacePrice, productactualPrice, prductdescription, productId);
 }
 
 String userid = "";
@@ -35,11 +31,35 @@ String dateset = "";
 
 class _INKCDetailsState extends State<INKCDetails> {
   int i = 1;
-
+  bool addresscheck = false;
   _INKCDetailsState(String image, String productName, String productfacePrice,
       String productactualPrice, String prductdescription, String productId);
 
   bool showSpinner = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (addresscheck == false) checkLogin();
+  }
+
+  checkLogin() async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    String? check = sharedprefrence.getString("fulladdress");
+    print(check);
+
+    if (check != "null") {
+      setState(() {
+        addresscheck = true;
+        print(check);
+      });
+    } else {
+      setState(() {
+        addresscheck = false;
+      });
+    }
+  }
 
   RefreshCart() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
@@ -82,8 +102,7 @@ class _INKCDetailsState extends State<INKCDetails> {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: Color.fromARGB(255, 223, 39, 39)),
+                  icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 title: Text(
@@ -92,10 +111,8 @@ class _INKCDetailsState extends State<INKCDetails> {
                       shadows: const [
                         Shadow(
                           blurRadius: 10.0, // shadow blur
-                          color:
-                              Color.fromARGB(255, 223, 71, 45), // shadow color
-                          offset:
-                              Offset(2.0, 2.0), // how much shadow will be shown
+                          color: Color.fromARGB(255, 223, 71, 45), // shadow color
+                          offset: Offset(2.0, 2.0), // how much shadow will be shown
                         ),
                       ],
                       fontSize: 20.sp,
@@ -110,6 +127,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                 itemCount: 1,
                 itemBuilder: (context, position) {
                   return Card(
+                    color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30.0),
                       child: Column(
@@ -132,8 +150,8 @@ class _INKCDetailsState extends State<INKCDetails> {
                               borderRadius: BorderRadius.circular(5.sp),
                               //set border radius to 50% of square height and width
                               image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://new-demo.inkcdogs.org/${widget.image}"),
+                                image:
+                                    NetworkImage("https://new-demo.inkcdogs.org/${widget.image}"),
                                 fit: BoxFit.cover, //change image fill type
                               ),
                             ),
@@ -141,8 +159,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                           Container(
                             // width: double.infinity,
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 30),
+                              padding: const EdgeInsets.only(top: 20.0, left: 30),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,9 +169,8 @@ class _INKCDetailsState extends State<INKCDetails> {
                                     child: Text(
                                       widget.productName,
                                       maxLines: 5,
-                                      style: TextStyle(
-                                          fontSize: 20.sp,
-                                          fontWeight: FontWeight.bold),
+                                      style:
+                                          TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Padding(
@@ -184,79 +200,78 @@ class _INKCDetailsState extends State<INKCDetails> {
                                       onPressed: () async {
                                         //print("sanskar");
                                         // setState(() {
-                                        showSpinner = true;
-                                        // });
-                                        SharedPreferences sharedprefrence =
-                                            await SharedPreferences
-                                                .getInstance();
-                                        userid = sharedprefrence
-                                            .getString("Userid")!;
-                                        token =
-                                            sharedprefrence.getString("Token")!;
 
-                                        const uri =
-                                            "https://new-demo.inkcdogs.org/api/cart/add_to_cart";
-                                        Map<String, String> requestHeaders = {
-                                          //'Accept': 'application/json',
-                                          'Usertoken': token,
-                                          'Userid': userid
-                                        };
-
-                                        print('${widget.productId} - $i');
-                                        final responce = await http.post(
-                                          Uri.parse(uri),
-                                          headers: requestHeaders,
-                                          body: {
-                                            "product_id":
-                                                widget.productId.toString(),
-                                            "product_quantity": i.toString()
-                                          },
-                                        );
-
-                                        var data = json.decode(responce.body);
-                                        print(data);
-                                        if (data['code'] == 200) {
-                                          //RefreshCart();
-                                          // setState(() {
-                                          showSpinner = false;
+                                        if (addresscheck == true) {
+                                          showSpinner = true;
                                           // });
-                                          QuickAlert.show(
-                                            context: context,
-                                            type: QuickAlertType.success,
-                                            title: 'Success...',
-                                            text: 'Please Check your cart',
+                                          SharedPreferences sharedprefrence =
+                                              await SharedPreferences.getInstance();
+                                          userid = sharedprefrence.getString("Userid")!;
+                                          token = sharedprefrence.getString("Token")!;
+
+                                          const uri =
+                                              "https://new-demo.inkcdogs.org/api/cart/add_to_cart";
+                                          Map<String, String> requestHeaders = {
+                                            //'Accept': 'application/json',
+                                            'Usertoken': token,
+                                            'Userid': userid
+                                          };
+
+                                          print('${widget.productId} - $i');
+                                          final responce = await http.post(
+                                            Uri.parse(uri),
+                                            headers: requestHeaders,
+                                            body: {
+                                              "product_id": widget.productId.toString(),
+                                              "product_quantity": i.toString()
+                                            },
                                           );
 
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content:
-                                                      Text('Successfull...')));
-                                          setState(() {
-                                            RefreshCart();
-                                          });
+                                          var data = json.decode(responce.body);
+                                          print(data);
+                                          if (data['code'] == 200) {
+                                            //RefreshCart();
+                                            // setState(() {
+                                            showSpinner = false;
+                                            // });
+                                            QuickAlert.show(
+                                              context: context,
+                                              type: QuickAlertType.success,
+                                              title: 'Success...',
+                                              text: 'Please Check your cart',
+                                            );
+
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                const SnackBar(content: Text('Successfull...')));
+                                            setState(() {
+                                              navigatorKey.currentState?.pushNamed('/homeMy4');
+                                              RefreshCart();
+                                            });
+                                          } else {
+                                            QuickAlert.show(
+                                              context: context,
+                                              type: QuickAlertType.error,
+                                              title: 'Oops...',
+                                              text: 'Please login first .',
+                                            );
+
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                const SnackBar(
+                                                    content: Text('Something went wring')));
+                                          }
                                         } else {
-                                          QuickAlert.show(
-                                            context: context,
-                                            type: QuickAlertType.error,
-                                            title: 'Oops...',
-                                            text: 'Please login first .',
-                                          );
-
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      'Something went wring')));
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Please update your profile - First Name, Last Name and Full Address')));
                                         }
 
                                         // That's it to display an alert, use other properties to customize.
                                       },
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 231, 25, 25),
+                                          backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                                           textStyle: TextStyle(
                                               fontSize: 10.sp,
-                                              color: const Color.fromARGB(
-                                                  255, 241, 236, 236),
+                                              color: const Color.fromARGB(255, 241, 236, 236),
                                               fontWeight: FontWeight.bold)),
                                       child: const Text(
                                         "Add to Cart",
@@ -282,14 +297,11 @@ class _INKCDetailsState extends State<INKCDetails> {
                                 ),
                                 Ink(
                                   decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1),
+                                      border: Border.all(color: Colors.grey, width: 1),
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(
-                                          50.0)), //<-- SEE HERE
+                                      borderRadius: BorderRadius.circular(50.0)), //<-- SEE HERE
                                   child: InkWell(
-                                    borderRadius:
-                                        BorderRadius.circular(10.0.sp),
+                                    borderRadius: BorderRadius.circular(10.0.sp),
                                     onTap: () {
                                       setState(() {
                                         if (i > 1) i--;
@@ -297,8 +309,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                                       // Navigator.pop(context);
                                     },
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.all(10.0.sp),
@@ -314,20 +325,15 @@ class _INKCDetailsState extends State<INKCDetails> {
                                 ),
                                 Text(
                                   '$i',
-                                  style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold),
                                 ),
                                 Ink(
                                   decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1),
+                                      border: Border.all(color: Colors.grey, width: 1),
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(
-                                          50.0)), //<-- SEE HERE
+                                      borderRadius: BorderRadius.circular(50.0)), //<-- SEE HERE
                                   child: InkWell(
-                                    borderRadius:
-                                        BorderRadius.circular(10.0.sp),
+                                    borderRadius: BorderRadius.circular(10.0.sp),
                                     onTap: () {
                                       setState(() {
                                         if (i >= 1) i++;
@@ -335,8 +341,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                                       //  Navigator.pop(context);
                                     },
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.all(10.0.sp),

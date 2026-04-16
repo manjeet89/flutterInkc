@@ -34,13 +34,46 @@ String image = "";
 String dateset = "";
 
 class _NotificationPageState extends State<NotificationPage> {
+
+  bool addresscheck = false;
+  bool _loginCheck = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Check();
-    //FetchData();
+    if (addresscheck == false) checkLogin();
+    LoginCheck();
   }
+
+  Future<void> LoginCheck() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    if (!isLoggedIn) {
+      setState(() {
+        _loginCheck = true;
+      });
+    }
+  }
+
+  checkLogin() async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    String? check = sharedprefrence.getString("fulladdress");
+    print(check);
+
+    if (check != "null") {
+      setState(() {
+        addresscheck = true;
+        print(check);
+      });
+    } else {
+      setState(() {
+        addresscheck = false;
+      });
+    }
+  }
+  
 
   var ifDataisnotavailavle;
 
@@ -51,18 +84,6 @@ class _NotificationPageState extends State<NotificationPage> {
     print("dispose works");
   }
 
-  Check() async {
-    print("first check data");
-
-    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
-    String? check = sharedprefrence.getString("Token");
-
-    if (check.toString() == "null") {
-      Navigator.of(context, rootNavigator: true)
-          .push(MaterialPageRoute(builder: (_) => const Login()));
-    }
-    print("object with not back");
-  }
 
   List<NotificationModel> dataload = [];
   String time = "";
@@ -90,7 +111,22 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
           centerTitle: true,
         ),
-        body: Container(
+        body:  _loginCheck
+            ? Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true)
+                        .push(MaterialPageRoute(builder: (_) => const Login()));
+                    // navigatorKey.currentState?.pushNamed('/MyDogInfo');
+                  },
+                  child: const Text("Go to Login", style: TextStyle(color: Colors.white)),
+                ),
+              )
+            : Container(
           margin: EdgeInsets.only(top: 5.sp),
           child: FutureBuilder(
               future: FetchData(),
@@ -148,8 +184,7 @@ class _NotificationPageState extends State<NotificationPage> {
                       // final dateTimeObj =
                       //     DateTime.parse(dataload[position].notiCreatedOn);
 
-                      final dateTimeObj =
-                          DateTime.parse(dataload[position].notiCreatedOn);
+                      final dateTimeObj = DateTime.parse(dataload[position].notiCreatedOn);
 
                       String fdate =
                           " ${dateTimeObj.day} ${months[dateTimeObj.month - 1].substring(0, 3)} ${dateTimeObj.year}";
@@ -158,11 +193,9 @@ class _NotificationPageState extends State<NotificationPage> {
                       // String fdate =
                       //     "${days[dateTimeObj.weekday - 1].substring(0, 3)}, ${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
                       // time format
-                      String timeStamp24HR = dataload[position]
-                          .notiCreatedOn
-                          .toString(); //"2020-07-20T18:15:12";
-                      time =
-                          DateFormat.jm().format(DateTime.parse(timeStamp24HR));
+                      String timeStamp24HR =
+                          dataload[position].notiCreatedOn.toString(); //"2020-07-20T18:15:12";
+                      time = DateFormat.jm().format(DateTime.parse(timeStamp24HR));
 
                       dateset = fdate;
 
@@ -209,8 +242,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                         const Offset(150, 20),
                                         <Color>[
                                           const Color.fromARGB(255, 66, 15, 15),
-                                          const Color.fromARGB(
-                                              255, 172, 12, 12),
+                                          const Color.fromARGB(255, 172, 12, 12),
                                         ],
                                       ),
                                   ),
@@ -226,10 +258,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                           const Offset(50, 100),
                                           const Offset(150, 20),
                                           <Color>[
-                                            const Color.fromARGB(
-                                                255, 11, 8, 61),
-                                            const Color.fromARGB(
-                                                255, 24, 24, 34),
+                                            const Color.fromARGB(255, 11, 8, 61),
+                                            const Color.fromARGB(255, 24, 24, 34),
                                           ],
                                         ),
                                       fontSize: 12.sp,
@@ -278,8 +308,8 @@ class _NotificationPageState extends State<NotificationPage> {
     if (message.toString() == "Invalid user request") {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
     }
     var dataarray = data['data']['noti_record'];
 
@@ -298,15 +328,15 @@ class _NotificationPageState extends State<NotificationPage> {
         }
         return dataload;
       } else {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => const Login()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
         return dataload;
       }
     } else {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
       return dataload;
     }
   }

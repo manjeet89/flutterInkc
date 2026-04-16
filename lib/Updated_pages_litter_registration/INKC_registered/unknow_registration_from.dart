@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:inkc/Updated_pages_litter_registration/litter_puppy_registration.dart';
 import 'package:inkc/dropdownmodel/drop_down_color_and_making_list.dart';
 import 'package:inkc/image_helper.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
@@ -61,16 +60,12 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -83,8 +78,8 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
   final _firstpicker = ImagePicker();
 
   Future getfirstImage() async {
-    final pickedFilefirst = await _firstpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilefirst =
+        await _firstpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilefirst != null) {
       firstImage = File(pickedFilefirst.path);
@@ -116,8 +111,7 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -180,8 +174,7 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
       DateTime now = DateTime.now();
 
       FormData formData = FormData.fromMap({
-        'pet_image': await MultipartFile.fromFile(firstImage!.path,
-            filename: "${now.second}.jpg"),
+        'pet_image': await MultipartFile.fromFile(firstImage!.path, filename: "${now.second}.jpg"),
         'pet_gender': Gender,
         'birth_date': DOB,
         'pet_name': DogName,
@@ -196,15 +189,15 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
       print(
           "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
 
-      Response response = await dio.post(
-          'https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
-          data: formData,
-          options: Options(headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Usertoken': token,
-            'Userid': userid
-          }));
+      Response response =
+          await dio.post('https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
+              data: formData,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -219,14 +212,14 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
           title: 'Success...',
           text: 'SuccessFully Registered',
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('SuccessFully Registered')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
       } else {
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Something went wrong')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Something went wrong')));
         print('something worng');
       }
 
@@ -342,27 +335,26 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
         //           petcolordid: "",
         //         )));
       } else {
-        SharedPreferences sharedprefrence =
-            await SharedPreferences.getInstance();
+        SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
         userid = sharedprefrence.getString("Userid")!;
         token = sharedprefrence.getString("Token")!;
         Dio dio = Dio();
         DateTime now = DateTime.now();
 
         FormData formData = FormData.fromMap({
-          'stud_agreement_form': await MultipartFile.fromFile(_image!.path,
-              filename: "${now.second}.jpg"),
+          'stud_agreement_form':
+              await MultipartFile.fromFile(_image!.path, filename: "${now.second}.jpg"),
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         print(response);
 
@@ -389,8 +381,8 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
           setState(() {
             showSpinner = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Something went wrong')));
           print('something worng');
         }
       }
@@ -549,23 +541,20 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Dam's INKC Registration Number ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -584,16 +573,12 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
 
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     // labelText: "Dam's INKC Registration Number",
                                     hintText: "Dam's INKC Registration Number",
-                                    errorText: regisvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: regisvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -603,8 +588,7 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     DamString.toString(),
-                                    style: const TextStyle(
-                                        color: Colors.deepOrange),
+                                    style: const TextStyle(color: Colors.deepOrange),
                                   ),
                                 ),
                               ),
@@ -615,8 +599,7 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                     Text(
                                       "Stud agreement form ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -624,40 +607,31 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: _image != null
-                                          ? FileImage(_image!)
-                                          : null,
+                                      foregroundImage: _image != null ? FileImage(_image!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
+                                      backgroundColor: const Color.fromARGB(255, 199, 7, 7),
                                     ),
                                     onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
+                                      final files = await imagehelper.PickImage();
                                       if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
+                                        final cropperFile = await imagehelper.crop(
+                                            file: files.first, cropStyle: CropStyle.circle);
                                         if (cropperFile != null) {
-                                          setState(() =>
-                                              _image = File(cropperFile.path));
+                                          setState(() => _image = File(cropperFile.path));
                                           print("justcheck$_image");
                                         }
                                       }
@@ -670,23 +644,20 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -702,8 +673,7 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                       width: 160.sp,
                                       child: TextField(
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
+                                            color: Colors.black, fontWeight: FontWeight.w600),
                                         onTap: () {},
                                         controller: dateofbirth,
                                         enabled: false,
@@ -720,30 +690,23 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon:
-                                              const Icon(Icons.date_range),
+                                          prefixIcon: const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.sp)),
-                                            borderSide: const BorderSide(
-                                                width: 1, color: Colors.green),
+                                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                            borderSide:
+                                                const BorderSide(width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
-                                          errorText: datevalidate
-                                              ? "Value Can't Be Empty"
-                                              : null,
+                                          errorText: datevalidate ? "Value Can't Be Empty" : null,
                                         ),
                                       ),
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 231, 25, 25),
+                                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
-                                                color: const Color.fromARGB(
-                                                    255, 241, 236, 236),
+                                                color: const Color.fromARGB(255, 241, 236, 236),
                                                 fontWeight: FontWeight.bold)),
                                         onPressed: () {
                                           selectDatePicker();
@@ -758,15 +721,13 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -781,36 +742,29 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     hintText: 'Eg.India',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Number of puppies in the litter ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -823,26 +777,20 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                   maxLines: 1,
                                   enabled: true,
                                   inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9,]')),
+                                    FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
                                   ],
                                   keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          decimal: false),
+                                      const TextInputType.numberWithOptions(decimal: false),
                                   controller: numbers,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     hintText: 'Number of litter',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -850,12 +798,10 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 23, 4, 190),
+                                        backgroundColor: const Color.fromARGB(255, 23, 4, 190),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
-                                            color: const Color.fromARGB(
-                                                255, 241, 236, 236),
+                                            color: const Color.fromARGB(255, 241, 236, 236),
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
                                       String SIRE = sire.text.toString();
@@ -869,14 +815,11 @@ class _UnknowRegistrationFromState extends State<UnknowRegistrationFrom> {
                                           "$SIRE - $DAM - $DogName - $DOB - $Gender - $AddCoowner - $MICRO");
 
                                       if (numbers.text.toString().isNotEmpty &&
-                                          int.parse(numbers.text.toString()) <=
-                                              10) {
+                                          int.parse(numbers.text.toString()) <= 10) {
                                         UploadImage();
                                       } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    'Please enter puppy 0 to 10 only')));
+                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                            content: Text('Please enter puppy 0 to 10 only')));
                                       }
                                     },
                                     child: const Text(

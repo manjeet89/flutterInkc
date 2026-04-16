@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CartItem {
   String? productId;
@@ -41,17 +40,17 @@ class CartItem {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['product_id'] = this.productId;
-    data['product_name'] = this.productName;
-    data['product_charges'] = this.productCharges;
-    data['pet_id'] = this.petId;
-    data['pet_birth_age'] = this.petBirthAge;
-    data['pet_registered_as'] = this.petRegisteredAs;
-    data['product_quantity'] = this.productQuantity;
-    data['is_microchip_require'] = this.isMicrochipRequire;
-    data['is_courier_required'] = this.isCourierRequired;
-    data['cart_id'] = this.cartId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['product_id'] = productId;
+    data['product_name'] = productName;
+    data['product_charges'] = productCharges;
+    data['pet_id'] = petId;
+    data['pet_birth_age'] = petBirthAge;
+    data['pet_registered_as'] = petRegisteredAs;
+    data['product_quantity'] = productQuantity;
+    data['is_microchip_require'] = isMicrochipRequire;
+    data['is_courier_required'] = isCourierRequired;
+    data['cart_id'] = cartId;
     return data;
   }
 }
@@ -99,17 +98,17 @@ class _ViewRecieptState extends State<ViewReciept> {
     if (widget.orderdetail.toString() == "\"\"") {
       return Scaffold(
         appBar: AppBar(
-            backgroundColor: const Color(0xEBA020F0),
+            backgroundColor: const Color(0xFFFFFFFF),
             automaticallyImplyLeading: false,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  color: Color.fromARGB(255, 255, 255, 255)),
+                  color: Color.fromARGB(255, 216, 22, 22)),
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: const Text(
               "Transactions Details",
               style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: Color.fromARGB(255, 175, 21, 21),
                   fontWeight: FontWeight.w600,
                   fontSize: 18),
             )),
@@ -123,33 +122,31 @@ class _ViewRecieptState extends State<ViewReciept> {
     } else {
       Map<String, dynamic> data = jsonDecode(widget.orderdetail);
       List<dynamic> cartRecords = data['cart_data_product'];
+      // List<String, dynamic> CartTotal = data['cart_total_cost'].toString();
+      double cartship = 0;
 
-      // // Decode JSON string to a Map
-      // Map<String, dynamic> jsonData = jsonDecode(widget.orderdetail);
+      if (data['cart_total_cost']['product_charges'].toString() != "null") {
+        cartship =
+            double.parse(data['cart_total_cost']['product_charges'].toString());
+      }
 
-      // // Extract total_cost
-      // int totalCost = jsonData['cart_total_cost']['product_charges'];
-      // // double amounts = double.parse(totalCost.toString());
-      // print(totalCost.toString());
-
-      // Calculate the total price in dollars.
       double totalDollarPrice = cartRecords.fold(0, (sum, item) {
         return sum + double.parse(item['product_charges'].toString());
       });
 
       return Scaffold(
         appBar: AppBar(
-            backgroundColor: const Color(0xEBA020F0),
+            backgroundColor: const Color(0xFFFFFFFF),
             automaticallyImplyLeading: false,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  color: Color.fromARGB(255, 255, 255, 255)),
+                  color: Color.fromARGB(255, 216, 22, 22)),
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: const Text(
               "Transactions Details",
               style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: Color.fromARGB(255, 175, 21, 21),
                   fontWeight: FontWeight.w600,
                   fontSize: 18),
             )),
@@ -285,8 +282,9 @@ class _ViewRecieptState extends State<ViewReciept> {
                                                 .toString()
                                                 .replaceAll("<br>", ""),
                                             style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    235, 190, 0, 0),
+                                                color: Colors.black,
+                                                // color: Color.fromARGB(
+                                                //     235, 190, 0, 0),
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 11),
                                           ),
@@ -309,8 +307,9 @@ class _ViewRecieptState extends State<ViewReciept> {
                                             cartItem['product_quantity']
                                                 .toString(),
                                             style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    235, 190, 0, 0),
+                                                color: Colors.black,
+                                                // color: Color.fromARGB(
+                                                //     235, 190, 0, 0),
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 11),
                                           ),
@@ -332,8 +331,9 @@ class _ViewRecieptState extends State<ViewReciept> {
                                           child: Text(
                                             "INR (₹) ${cartItem['product_charges']}",
                                             style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    235, 190, 0, 0),
+                                                color: Colors.black,
+                                                // color: Color.fromARGB(
+                                                //     235, 190, 0, 0),
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 11),
                                           ),
@@ -369,10 +369,112 @@ class _ViewRecieptState extends State<ViewReciept> {
                   },
                 ),
               ),
+              if(cartship !=0)
+              Card(
+                elevation: 3,
+                color: const Color.fromARGB(255, 254, 254, 255),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.yellow,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    // borderRadius: BorderRadius.all(Radius.circular(20),),
+                    // gradient: LinearGradient(
+                    //   colors: [
+                    //     Color.fromARGB(255, 41, 29, 70),
+                    //     Color.fromARGB(255, 80, 29, 221)
+                    //   ],
+                    // ),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        //producat name
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, left: 10, bottom: 8),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: screeniWith * 0.40,
+                                    child: const Text(
+                                      maxLines: null,
+                                      "Courier / Registered / Speed Post",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          // color: Color.fromARGB(
+                                          //     235, 190, 0, 0),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 11),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, left: 10, bottom: 8),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: screeniWith * 0.10,
+                                    child: const Text(
+                                      "1",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          // color: Color.fromARGB(
+                                          //     235, 190, 0, 0),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 11),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, left: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: screeniWith * 0.15,
+                                    child: Text(
+                                      "INR (₹) ${cartship.toString().replaceAll(".0", "")}",
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          // color: Color.fromARGB(
+                                          //     235, 190, 0, 0),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 11),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        // price
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Total Price:  (₹) ${totalDollarPrice.toStringAsFixed(2)}',
+                  'Total Price:  (₹) ${cartship + double.parse(totalDollarPrice.toStringAsFixed(2))}',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

@@ -13,3 +13,5 @@
 -keepclasseswithmembers class * {
   public void onPayment*(...);
 }
+
+-keep class com.shounakmulay.sms_autofill.** { *; }

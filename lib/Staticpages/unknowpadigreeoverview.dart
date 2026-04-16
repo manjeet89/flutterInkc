@@ -32,8 +32,7 @@ class _UnKnowPadigreeOverViewState extends State {
             appBar: AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back,
-                    color: Color.fromARGB(255, 223, 39, 39)),
+                icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text(
@@ -43,8 +42,7 @@ class _UnKnowPadigreeOverViewState extends State {
                       Shadow(
                         blurRadius: 10.0, // shadow blur
                         color: Color.fromARGB(255, 223, 71, 45), // shadow color
-                        offset:
-                            Offset(2.0, 2.0), // how much shadow will be shown
+                        offset: Offset(2.0, 2.0), // how much shadow will be shown
                       ),
                     ],
                     fontSize: 18.sp,
@@ -67,8 +65,7 @@ class _UnKnowPadigreeOverViewState extends State {
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
                     },
-                    onProgressChanged:
-                        (InAppWebViewController controller, int progress) {
+                    onProgressChanged: (InAppWebViewController controller, int progress) {
                       setState(() {
                         _progress = progress / 100;
                       });

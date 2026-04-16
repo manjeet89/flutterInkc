@@ -145,8 +145,7 @@ class _KennelClubNameState extends State<KennelClubName> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back,
-                  color: Color.fromARGB(255, 223, 39, 39)),
+              icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Row(
@@ -177,8 +176,7 @@ class _KennelClubNameState extends State<KennelClubName> {
             centerTitle: true,
           ),
           body: Padding(
-            padding: const EdgeInsets.only(
-                top: 15.0, left: 15, right: 15, bottom: 10),
+            padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 10),
             child: Column(
               children: [
                 if (kennel_name.toString() == "null")
@@ -186,9 +184,7 @@ class _KennelClubNameState extends State<KennelClubName> {
                     child: Text(
                       "No Kennel Name Available.",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 15.sp),
+                          color: Colors.black, fontWeight: FontWeight.w800, fontSize: 15.sp),
                     ),
                   )
                 else
@@ -205,16 +201,12 @@ class _KennelClubNameState extends State<KennelClubName> {
                       Text(
                         "Kennel Name.",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp),
+                            color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14.sp),
                       ),
                       Text(
                         "Action.",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp),
+                            color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14.sp),
                       ),
                     ],
                   ),
@@ -296,8 +288,7 @@ class _KennelClubNameState extends State<KennelClubName> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
                                         // Text(
                                         //   i.toString(),
@@ -308,20 +299,16 @@ class _KennelClubNameState extends State<KennelClubName> {
                                         //       fontSize: 12.sp),
                                         // ),
                                         Text(
-                                          secondowner[position]
-                                              .kennelName
-                                              .toString(),
+                                          secondowner[position].kennelName.toString(),
                                           style: TextStyle(
-                                              color: const Color.fromARGB(
-                                                  255, 95, 14, 14),
+                                              color: const Color.fromARGB(255, 95, 14, 14),
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12.sp),
                                         ),
                                         Text(
                                           "Certificate",
                                           style: TextStyle(
-                                              color: const Color.fromARGB(
-                                                  255, 63, 2, 2),
+                                              color: const Color.fromARGB(255, 63, 2, 2),
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12.sp),
                                         ),
@@ -368,8 +355,7 @@ class _KennelClubNameState extends State<KennelClubName> {
             child: Row(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 50, right: 8, left: 28),
+                  padding: const EdgeInsets.only(bottom: 50, right: 8, left: 28),
                   child: DraggableFab(
                     child: FloatingActionButton.extended(
                       backgroundColor: const Color.fromARGB(255, 21, 49, 29),
@@ -379,8 +365,7 @@ class _KennelClubNameState extends State<KennelClubName> {
                         //     MaterialPageRoute(builder: (_) => AddKennelName()));
 
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const AddKennelName()));
+                            builder: (BuildContext context) => const AddKennelName()));
                       },
                       label: Text(
                         'Add Kennel Name',
@@ -396,22 +381,18 @@ class _KennelClubNameState extends State<KennelClubName> {
                     padding: const EdgeInsets.only(bottom: 50, right: 8),
                     child: DraggableFab(
                       child: FloatingActionButton.extended(
-                        backgroundColor:
-                            const Color.fromARGB(255, 231, 236, 233),
-                        foregroundColor:
-                            const Color.fromARGB(255, 247, 240, 240),
+                        backgroundColor: const Color.fromARGB(255, 231, 236, 233),
+                        foregroundColor: const Color.fromARGB(255, 247, 240, 240),
                         onPressed: () async {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const KennelNameHistre()));
+                              builder: (BuildContext context) => const KennelNameHistre()));
                           // Navigator.of(context, rootNavigator: true).push(
                           //     MaterialPageRoute(
                           //         builder: (_) => KennelNameHistre()));
                         },
                         label: Text(
                           'Kennel History',
-                          style:
-                              TextStyle(fontSize: 10.sp, color: Colors.black),
+                          style: TextStyle(fontSize: 10.sp, color: Colors.black),
                         ),
                         icon: const Icon(
                           Icons.holiday_village_outlined,

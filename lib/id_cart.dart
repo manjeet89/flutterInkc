@@ -261,8 +261,6 @@
 
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:full_screen_image/full_screen_image.dart';
-import 'package:inkc/adddoginfo.dart';
 import 'package:sizer/sizer.dart';
 
 class IdCard extends StatefulWidget {
@@ -354,488 +352,478 @@ class _IdCardState extends State<IdCard> {
         ),
         centerTitle: true,
       ),
-      body: Sizer(builder: (context, orientation, deviceType) {
-        return Center(
-          child: FlipCard(
-            key: cardKey,
-            flipOnTouch: false,
-            fill: Fill
-                .fillBack, // Fill the back side of the card to make in the same size as the front.
-            direction: FlipDirection.HORIZONTAL, // default
-            side: CardSide.FRONT,
-            front: Container(
-              margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-              width: double.infinity,
-              height: 550,
-              // decoration: BoxDecoration(
-              //   color: Colors.yellow,
-              //   borderRadius: BorderRadius.circular(16),
-              //   boxShadow: [
-              //     BoxShadow(
-              //       color: Colors.grey.withOpacity(0.5),
-              //       spreadRadius: 5,
-              //       blurRadius: 7,
-              //       offset: const Offset(0, 3),
-              //     ),
-              //   ],
-              // ),
-              decoration: BoxDecoration(
-                color: Colors.yellowAccent,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: Colors.black, // Black border color
-                  width: 4, // Border thickness
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3),
+      body: Container(
+        color: Colors.white,
+        child: Sizer(builder: (context, orientation, deviceType) {
+          return Center(
+            child: FlipCard(
+              key: cardKey,
+              flipOnTouch: false,
+              fill: Fill
+                  .fillBack, // Fill the back side of the card to make in the same size as the front.
+              direction: FlipDirection.HORIZONTAL, // default
+              side: CardSide.FRONT,
+              front: Container(
+                margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                width: double.infinity,
+                height: 550,
+                // decoration: BoxDecoration(
+                //   color: Colors.yellow,
+                //   borderRadius: BorderRadius.circular(16),
+                //   boxShadow: [
+                //     BoxShadow(
+                //       color: Colors.grey.withOpacity(0.5),
+                //       spreadRadius: 5,
+                //       blurRadius: 7,
+                //       offset: const Offset(0, 3),
+                //     ),
+                //   ],
+                // ),
+                decoration: BoxDecoration(
+                  color: Colors.yellowAccent,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.black, // Black border color
+                    width: 4, // Border thickness
                   ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 16),
-                  if (widget.image == "null")
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/adv.png'),
-                      radius: 50,
-                    )
-                  else
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://new-demo.inkcdogs.org/' + widget.image),
-                      radius: 50,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3),
                     ),
-                  const SizedBox(height: 8),
-                  Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      // FullScreenWidget(
-                      //   disposeLevel: DisposeLevel.High,
-                      //   child:
-                      InkWell(
-                        onTap: () {
-                          cardKey.currentState!.toggleCard();
-                          // _controller.toggleCard();
-                          // cardKey.currentState.toggleCard(),
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            // border: Border.all(
-                            //   color: const Color.fromARGB(255, 24, 22, 26),
-                            // ),
-                            // borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            image: DecorationImage(
-                                image: AssetImage(
-                              "assets/qrcode.png",
-                            )),
-                          ),
-                          margin: const EdgeInsets.all(12),
-                          height: 40,
-                          width: 40,
-                        ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 16),
+                    if (widget.image == "null")
+                      const CircleAvatar(
+                        backgroundImage: AssetImage('assets/images/adv.png'),
+                        radius: 50,
+                      )
+                    else
+                      CircleAvatar(
+                        backgroundImage:
+                            NetworkImage('https://new-demo.inkcdogs.org/${widget.image}'),
+                        radius: 50,
                       ),
-                      // ),
-                      Text(
-                        "click to QR code to expand",
-                        style: TextStyle(fontSize: 7),
-                      ),
-                    ],
-                  ),
-
-                  //  Text(
-                  //   widget.firstname,
-                  //   style: TextStyle(
-                  //     fontSize: 28,
-                  //     fontWeight: FontWeight.bold,
-                  //     fontFamily: 'Cursive',
-                  //   ),
-                  // ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    const SizedBox(height: 8),
+                    Column(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Center(
-                          child: Text(
-                            widget.firstname + " " + widget.lastname,
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1),
-                            textAlign: TextAlign.center,
+                        // FullScreenWidget(
+                        //   disposeLevel: DisposeLevel.High,
+                        //   child:
+                        InkWell(
+                          onTap: () {
+                            cardKey.currentState!.toggleCard();
+                            // _controller.toggleCard();
+                            // cardKey.currentState.toggleCard(),
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              // border: Border.all(
+                              //   color: const Color.fromARGB(255, 24, 22, 26),
+                              // ),
+                              // borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                "assets/qrcode.png",
+                              )),
+                            ),
+                            margin: const EdgeInsets.all(12),
+                            height: 40,
+                            width: 40,
                           ),
                         ),
-                        SizedBox(height: 8),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Personal ID :",
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                widget.userid,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(4.0),
-                        //   child: Row(
-                        //     children: [
-                        //       Text(
-                        //         "Card Valid  :",
-                        //         style: TextStyle(
-                        //             color: Colors.black54,
-                        //             fontWeight: FontWeight.bold),
-                        //       ),
-                        //       SizedBox(
-                        //         width: 15,
-                        //       ),
-                        //       Text(
-                        //         widget.card_expiry_date,
-                        //         style: TextStyle(
-                        //             color: Colors.black,
-                        //             fontWeight: FontWeight.bold),
-                        //       ),
-                        //     ],
-                        //   ),
                         // ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "E-mail ID :",
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 25,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  widget.email,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Mobile :",
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  widget.number,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Address :",
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  widget.Fulladdress,
-                                  // ", " +
-                                  // widget.district +
-                                  // ", " +
-                                  // widget.Countrygetdata +
-                                  // ", " +
-                                  // widget.Stategetdata +
-                                  // "\nPin Code / Zip Code " +
-                                  // widget.pincode,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
+                        const Text(
+                          "click to QR code to expand",
+                          style: TextStyle(fontSize: 7),
                         ),
                       ],
                     ),
-                  ),
 
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (int i = 0; i < widget.card_code.length; i++)
-                          if ((i % 2) == 0)
-                            buildBox(
-                                widget.card_code[i], widget.card_code[i + 1])
-
-                        //  else
-                        //  buildBox(widget.card_code[i], widget.card_code[i])
-                        // print(widget.card_code[i].toString());
-
-                        // Each box
-
-                        // buildBox('B', '37'),
-                        // buildBox('S', '83'),
-                        // buildBox('O', '16'),
-                        // buildBox('L', '20'),
-                        // buildBox('U', '70'),
-                        // buildBox('T', '70'),
-                        // buildBox('E', '56'),
-                      ],
-                    ),
-                  ),
-                  // const Spacer(),
-                  // Image.network(
-                  //   'https://via.placeholder.com/80', // Placeholder for QR Code
-                  //   height: 80,
-                  //   width: 80,
-                  // ),
-                  // const SizedBox(height: 16),
-                ],
-              ),
-            ),
-            back: Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
-              width: double.infinity,
-              height: 550,
-              // decoration: BoxDecoration(
-              //   color: Colors.yellow,
-              //   borderRadius: BorderRadius.circular(16),
-              //   boxShadow: [
-              //     BoxShadow(
-              //       color: Colors.grey.withOpacity(0.5),
-              //       spreadRadius: 5,
-              //       blurRadius: 7,
-              //       offset: const Offset(0, 3),
-              //     ),
-              //   ],
-              // ),
-              decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: Colors.black, // Black border color
-                  width: 4, // Border thickness
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 8),
-                  Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      // FullScreenWidget(
-                      //   disposeLevel: DisposeLevel.High,
-                      //   child:
-                      InkWell(
-                        onTap: () {
-                          cardKey.currentState!.toggleCard();
-                        },
-                        child: Container(
-                          width: double.infinity, // Set container width
-                          height: 300, // Set container height
-
-                          child: Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: Image.asset(
-                              'assets/qrcode.png', // Replace with your image asset
-                              fit: BoxFit.cover, // Adjust image scaling
+                    //  Text(
+                    //   widget.firstname,
+                    //   style: TextStyle(
+                    //     fontSize: 28,
+                    //     fontWeight: FontWeight.bold,
+                    //     fontFamily: 'Cursive',
+                    //   ),
+                    // ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text(
+                              "${widget.firstname} ${widget.lastname}",
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 1),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                        ),
-                        //  Container(
-                        //   decoration: BoxDecoration(
-                        //     // border: Border.all(
-                        //     //   color: const Color.fromARGB(255, 24, 22, 26),
-                        //     // ),
-                        //     // borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        //     image: DecorationImage(
-                        //         image: AssetImage(
-                        //       "assets/qrcode.png",
-                        //     )),
-                        //   ),
-                        //   margin: const EdgeInsets.all(12),
-                        //   height: 300,
-                        //   width: 300,
-                        // ),
+                          const SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  "Personal ID :",
+                                  style:
+                                      TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  widget.userid,
+                                  style: const TextStyle(
+                                      color: Colors.black, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(4.0),
+                          //   child: Row(
+                          //     children: [
+                          //       Text(
+                          //         "Card Valid  :",
+                          //         style: TextStyle(
+                          //             color: Colors.black54,
+                          //             fontWeight: FontWeight.bold),
+                          //       ),
+                          //       SizedBox(
+                          //         width: 15,
+                          //       ),
+                          //       Text(
+                          //         widget.card_expiry_date,
+                          //         style: TextStyle(
+                          //             color: Colors.black,
+                          //             fontWeight: FontWeight.bold),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "E-mail ID :",
+                                  style:
+                                      TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    widget.email,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  "Mobile :",
+                                  style:
+                                      TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  width: 40,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    widget.number,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Address :",
+                                  style:
+                                      TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  width: 30,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    widget.Fulladdress,
+                                    // ", " +
+                                    // widget.district +
+                                    // ", " +
+                                    // widget.Countrygetdata +
+                                    // ", " +
+                                    // widget.Stategetdata +
+                                    // "\nPin Code / Zip Code " +
+                                    // widget.pincode,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      // ),
-                    ],
-                  ),
-
-                  //  Text(
-                  //   widget.firstname,
-                  //   style: TextStyle(
-                  //     fontSize: 28,
-                  //     fontWeight: FontWeight.bold,
-                  //     fontFamily: 'Cursive',
-                  //   ),
-                  // ),
-                  const SizedBox(height: 10),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Text(
-                  //         "Instructions",
-                  //         style: TextStyle(
-                  //             fontSize: 15,
-                  //             fontWeight: FontWeight.bold,
-                  //             letterSpacing: 1),
-                  //         textAlign: TextAlign.center,
-                  //       ),
-                  //       SizedBox(height: 5),
-                  //       Padding(
-                  //         padding: const EdgeInsets.all(4.0),
-                  //         child: Row(
-                  //           children: [
-                  //             Expanded(
-                  //               child: Text(
-                  //                 "1. This card is property of AFF and must be producted on demand",
-                  //                 style: TextStyle(
-                  //                   fontSize: 12,
-                  //                     color: Colors.black54,
-                  //                     fontWeight: FontWeight.bold),
-                  //               ),
-                  //             ),
-
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       Padding(
-                  //         padding: const EdgeInsets.all(4.0),
-                  //         child: Row(
-                  //           children: [
-                  //             Expanded(
-                  //               child: Text(
-
-                  //                 "2. Loss of card must be reported immediately to AFF.",
-                  //                 style: TextStyle(
-                  //                   fontSize: 12,
-                  //                     color: Colors.black54,
-                  //                     fontWeight: FontWeight.bold),
-                  //               ),
-                  //             ),
-
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       Padding(
-                  //         padding: const EdgeInsets.all(4.0),
-                  //         child: Row(
-                  //           children: [
-                  //             Expanded(
-                  //               child: Text(
-                  //                 "3. This card is non-transferable and must be surrendered immediately on cessation of membership",
-                  //                 style: TextStyle(
-                  //                   fontSize: 12,
-                  //                     color: Colors.black54,
-                  //                     fontWeight: FontWeight.bold),
-                  //               ),
-                  //             ),
-
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       Padding(
-                  //         padding: const EdgeInsets.all(4.0),
-                  //         child: Row(
-                  //           children: [
-                  //             Expanded(
-                  //               child: Text(
-                  //                 "4. If found, please return to address mentioned at the bottom of this card.",
-                  //                 style: TextStyle(
-                  //                   fontSize: 12,
-                  //                     color: Colors.black54,
-                  //                     fontWeight: FontWeight.bold),
-                  //               ),
-                  //             ),
-
-                  //           ],
-                  //         ),
-                  //       ),
-                  Divider(
-                    color: Colors.white,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      "Note: This QR code works well for personal identification at all the offline events of the Indian National Kennel Club.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
                     ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (int i = 0; i < widget.card_code.length; i++)
+                            if ((i % 2) == 0) buildBox(widget.card_code[i], widget.card_code[i + 1])
+
+                          //  else
+                          //  buildBox(widget.card_code[i], widget.card_code[i])
+                          // print(widget.card_code[i].toString());
+
+                          // Each box
+
+                          // buildBox('B', '37'),
+                          // buildBox('S', '83'),
+                          // buildBox('O', '16'),
+                          // buildBox('L', '20'),
+                          // buildBox('U', '70'),
+                          // buildBox('T', '70'),
+                          // buildBox('E', '56'),
+                        ],
+                      ),
+                    ),
+                    // const Spacer(),
+                    // Image.network(
+                    //   'https://via.placeholder.com/80', // Placeholder for QR Code
+                    //   height: 80,
+                    //   width: 80,
+                    // ),
+                    // const SizedBox(height: 16),
+                  ],
+                ),
+              ),
+              back: Container(
+                margin: const EdgeInsets.only(left: 10, right: 10),
+                width: double.infinity,
+                height: 550,
+                // decoration: BoxDecoration(
+                //   color: Colors.yellow,
+                //   borderRadius: BorderRadius.circular(16),
+                //   boxShadow: [
+                //     BoxShadow(
+                //       color: Colors.grey.withOpacity(0.5),
+                //       spreadRadius: 5,
+                //       blurRadius: 7,
+                //       offset: const Offset(0, 3),
+                //     ),
+                //   ],
+                // ),
+                decoration: BoxDecoration(
+                  color: Colors.yellow,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.black, // Black border color
+                    width: 4, // Border thickness
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 8),
+                    Column(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        // FullScreenWidget(
+                        //   disposeLevel: DisposeLevel.High,
+                        //   child:
+                        InkWell(
+                          onTap: () {
+                            cardKey.currentState!.toggleCard();
+                          },
+                          child: SizedBox(
+                            width: 250, // Set container width
+                            height: 250, // Set container height
 
-                  //     ],
-                  //   ),
-                  // ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Image.network(
+                                'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://members.inkc.in/${widget.userid}', // Replace with your image asset
+                                fit: BoxFit.cover, // Adjust image scaling
+                              ),
+                            ),
+                          ),
+                          //  Container(
+                          //   decoration: BoxDecoration(
+                          //     // border: Border.all(
+                          //     //   color: const Color.fromARGB(255, 24, 22, 26),
+                          //     // ),
+                          //     // borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          //     image: DecorationImage(
+                          //         image: AssetImage(
+                          //       "assets/qrcode.png",
+                          //     )),
+                          //   ),
+                          //   margin: const EdgeInsets.all(12),
+                          //   height: 300,
+                          //   width: 300,
+                          // ),
+                        ),
+                        // ),
+                      ],
+                    ),
 
-                  // const SizedBox(height: 16),
-                ],
+                    //  Text(
+                    //   widget.firstname,
+                    //   style: TextStyle(
+                    //     fontSize: 28,
+                    //     fontWeight: FontWeight.bold,
+                    //     fontFamily: 'Cursive',
+                    //   ),
+                    // ),
+                    const SizedBox(height: 10),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "Instructions",
+                    //         style: TextStyle(
+                    //             fontSize: 15,
+                    //             fontWeight: FontWeight.bold,
+                    //             letterSpacing: 1),
+                    //         textAlign: TextAlign.center,
+                    //       ),
+                    //       SizedBox(height: 5),
+                    //       Padding(
+                    //         padding: const EdgeInsets.all(4.0),
+                    //         child: Row(
+                    //           children: [
+                    //             Expanded(
+                    //               child: Text(
+                    //                 "1. This card is property of AFF and must be producted on demand",
+                    //                 style: TextStyle(
+                    //                   fontSize: 12,
+                    //                     color: Colors.black54,
+                    //                     fontWeight: FontWeight.bold),
+                    //               ),
+                    //             ),
+
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       Padding(
+                    //         padding: const EdgeInsets.all(4.0),
+                    //         child: Row(
+                    //           children: [
+                    //             Expanded(
+                    //               child: Text(
+
+                    //                 "2. Loss of card must be reported immediately to AFF.",
+                    //                 style: TextStyle(
+                    //                   fontSize: 12,
+                    //                     color: Colors.black54,
+                    //                     fontWeight: FontWeight.bold),
+                    //               ),
+                    //             ),
+
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       Padding(
+                    //         padding: const EdgeInsets.all(4.0),
+                    //         child: Row(
+                    //           children: [
+                    //             Expanded(
+                    //               child: Text(
+                    //                 "3. This card is non-transferable and must be surrendered immediately on cessation of membership",
+                    //                 style: TextStyle(
+                    //                   fontSize: 12,
+                    //                     color: Colors.black54,
+                    //                     fontWeight: FontWeight.bold),
+                    //               ),
+                    //             ),
+
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       Padding(
+                    //         padding: const EdgeInsets.all(4.0),
+                    //         child: Row(
+                    //           children: [
+                    //             Expanded(
+                    //               child: Text(
+                    //                 "4. If found, please return to address mentioned at the bottom of this card.",
+                    //                 style: TextStyle(
+                    //                   fontSize: 12,
+                    //                     color: Colors.black54,
+                    //                     fontWeight: FontWeight.bold),
+                    //               ),
+                    //             ),
+
+                    //           ],
+                    //         ),
+                    //       ),
+                    const Divider(
+                      color: Colors.white,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        "Note: This QR code works well for personal identification at all the offline events of the Indian National Kennel Club.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+
+                    //     ],
+                    //   ),
+                    // ),
+
+                    // const SizedBox(height: 16),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 
@@ -862,7 +850,7 @@ class _IdCardState extends State<IdCard> {
               color: Colors.black,
             ),
           ),
-          Divider(
+          const Divider(
             color: Colors.black,
           ),
           Container(

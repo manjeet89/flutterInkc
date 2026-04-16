@@ -84,7 +84,7 @@ class _ContactUSState extends State<ContactUS> {
                       ),
                       InkWell(
                         onTap: () async {
-                          var url = Uri.parse("https://new-demo.inkcdogs.org");
+                          var url = Uri.parse("https://inkc.in");
                           if (await canLaunchUrl(url)) {
                             await launchUrl(url);
                           } else {

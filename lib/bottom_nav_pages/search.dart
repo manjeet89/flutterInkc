@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/inkcstore.dart';
+import 'package:inkc/main.dart';
 import 'package:inkc/model/cartlist.dart';
 import 'package:inkc/paymentcart/finalcart.dart';
 // import 'package:quantupi/quantupi.dart';
@@ -61,13 +62,43 @@ String pet_id_is_available = "pet_id";
 // String is_microchip_require = "is_microchip_require";
 
 class _SearchpageState extends State<Searchpage> {
+  bool addresscheck = false;
+  bool _loginCheck = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Check();
-    //RefreshCart();
-    //FetchData();
+    if (addresscheck == false) checkLogin();
+    LoginCheck();
+  }
+
+  Future<void> LoginCheck() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    if (!isLoggedIn) {
+      setState(() {
+        _loginCheck = true;
+      });
+    }
+  }
+
+  checkLogin() async {
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    String? check = sharedprefrence.getString("fulladdress");
+    print(check);
+
+    if (check != "null") {
+      setState(() {
+        addresscheck = true;
+        print(check);
+      });
+    } else {
+      setState(() {
+        addresscheck = false;
+      });
+    }
   }
 
   RefreshCart() async {
@@ -168,439 +199,430 @@ class _SearchpageState extends State<Searchpage> {
           ),
           centerTitle: true,
         ),
-        body: RefreshIndicator(
-          onRefresh: () {
-            return Future.delayed(
-              const Duration(seconds: 1),
-              () {
-                setState(() {
-                  RefreshCart();
-                });
-              },
-            );
-          },
-          child: Container(
-            margin: EdgeInsets.only(top: 5.sp),
-            child: FutureBuilder(
-                future: FetchData(),
-                builder: (context, snapshot) {
-                  if (ifDataisnotavailavle == 'False') {
-                    return Center(
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Cart is empty.",
-                                style: TextStyle(
-                                    color:
-                                        const Color.fromARGB(255, 177, 43, 10),
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const INKCStore()),
-                                      );
-                                    },
-                                    child: const Text('Go to INKC Store')),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  } else {
-                    if (snapshot.hasData) {
-                      // print(checkpage);
-                      // cart_id = "";
-                      // p_id = "";
-                      // p_name = "";
-                      // p_quantity = "";
-                      // p_charges = "";
-                      // p_is_courier_required = "";
-                      // p_pet_id = "";
-                      // p_pet_birth_age = "";
-                      // p_pet_registered_as = "";
-                      // p_is_microchip_require = "";
-
-                      // SUBTOTAL = 0;
-                      // DELEVRY = 0;
-                      // CHECKTOTAL = 0;
-                      // chareges_ship = 1;
-
-                      // cart_data_product.clear();
-                      // cart_total_cost.clear();
-                      // dataload.clear;
-                      // mainjson = null;
-                      // map = null;
-
-                      // checkpage = "second time";
-
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        addAutomaticKeepAlives: true,
-                        itemCount: dataload.length,
-                        itemBuilder: (context, position) {
-                          if (dataload[position].cartInfo.isNotEmpty) {
-                            String text = dataload[position]
-                                .cartInfo
-                                .toString()
-                                .replaceAll("{", "")
-                                .replaceAll("}", "")
-                                .replaceAll("\\", "")
-                                .replaceAll("[", "")
-                                .replaceAll("]", "");
-                            String withoutquotesLine1 =
-                                text.replaceAll("\"", "");
-                            String withoutquotesLine2 =
-                                withoutquotesLine1.replaceAll(":", ",");
-
-                            List strArr = withoutquotesLine2.split(",");
-
-                            for (int i = 0; i < strArr.length; i++) {
-                              if (strArr[i].toString() == "product_id") {
-                                // print(strArr[i + 1]);
-                                p_id = strArr[i + 1];
-
-                                // p_name = strArr[i + 1];
-                                // p_quantity = strArr[i + 1];
-                                // p_charges = strArr[i + 1];
-                                // p_is_courier_required = strArr[i + 1];
-                              }
-
-                              // if (strArr[i].toString() == "is_microchip_require") {
-                              if (strArr[i].toString() == "product_name") {
-                                if (strArr.length.toString() == "10") {
-                                  p_name = strArr[i + 1];
-                                } else {
-                                  p_name = strArr[i + 1] + strArr[i + 2];
-                                }
-                                // print(p_name
-                                //     .toString()
-                                //     .replaceAll("product_quantity", ""));
-
-                                //   }
-                                // } else {
-                                //   p_name = strArr[i + 1];
-                              }
-
-                              if (strArr[i].toString() == "product_quantity") {
-                                p_quantity = strArr[i + 1];
-                              }
-
-                              if (strArr[i].toString() == "pet_id") {
-                                p_name = strArr[i - 4] + " " + strArr[i - 3];
-                              }
-
-                              if (strArr[i].toString() == "product_charges") {
-                                p_charges = strArr[i + 1];
-                              }
-                              //total = total + total;
-
-                              // if (strArr[i].toString() == "is_courier_required") {
-                              //   p_is_courier_required = strArr[i + 1];
-                              //   if (chareges_ship ==
-                              //       int.parse(p_is_courier_required.toString())) {
-                              //     TOTAL = "50";
-                              //     DELEVRY = 50;
-                              //     CHECKTOTAL = 50;
-                              //     chareges_ship++;
-                              //     //print("CHECKTOTAL");
-                              //   }
-                              // }
-
-                              if (strArr[i].toString() == "pet_id") {
-                                p_pet_id = strArr[i + 1];
-                                // print(p_pet_id);
-                              }
-
-                              if (strArr[i].toString() == "pet_birth_age") {
-                                p_pet_birth_age = strArr[i + 1];
-                              }
-
-                              if (strArr[i].toString() == "pet_registered_as") {
-                                p_pet_registered_as = strArr[i + 1];
-                              }
-                              if (strArr[i].toString() ==
-                                  "is_microchip_require") {
-                                p_is_microchip_require = strArr[i + 1];
-                              }
-                            }
-                            // SUBTOTAL = SUBTOTAL + int.parse(p_charges);
-
-                            // if (CHECKTOTAL == 50) {
-                            //   cart_total = {
-                            //     "sub_total_cost": SUBTOTAL.toString(),
-                            //     "product_id": p_id,
-                            //     "product_name": "Courier / Registered / Speed Post",
-                            //     "product_charges": 50,
-                            //     "total_cost": SUBTOTAL + 50,
-                            //   };
-                            // } else {
-                            //   cart_total = {
-                            //     "sub_total_cost": SUBTOTAL.toString(),
-                            //     "total_cost": SUBTOTAL + 50,
-                            //   };
-                            // }
-
-                            // if (p_pet_id.isEmpty) {
-                            //   map = {
-                            //     "cart_id": dataload[position].cartId,
-                            //     "product_id": p_id,
-                            //     "product_name": p_name,
-                            //     "product_quantity": p_quantity,
-                            //     "product_charges": p_charges
-                            //   };
-                            // } else {
-                            //   map = {
-                            //     "cart_id": dataload[position].cartId,
-                            //     "product_id": p_id,
-                            //     "product_name": p_name,
-                            //     "p_pet_id": p_pet_id,
-                            //     "pet_birth_age": p_pet_birth_age,
-                            //     "pet_registered_as": p_pet_registered_as,
-                            //     "is_microchip_require": p_is_microchip_require,
-                            //     "product_quantity": p_quantity,
-                            //     "product_charges": p_charges,
-                            //   };
-                            //   // print("object check is run");
-                            // }
-                          } else {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const INKCStore()));
-                          }
-                          // cart_data_product.add(map);
-                          // print(map);
-
-                          return Card(
-                            elevation: 5,
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            margin: const EdgeInsets.all(5),
+        body: _loginCheck
+            ? Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true)
+                        .push(MaterialPageRoute(builder: (_) => const Login()));
+                    // navigatorKey.currentState?.pushNamed('/MyDogInfo');
+                  },
+                  child: const Text("Go to Login", style: TextStyle(color: Colors.white)),
+                ),
+              )
+            : RefreshIndicator(
+                onRefresh: () {
+                  return Future.delayed(
+                    const Duration(seconds: 1),
+                    () {
+                      setState(() {
+                        RefreshCart();
+                      });
+                    },
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 5.sp),
+                  child: FutureBuilder(
+                      future: FetchData(),
+                      builder: (context, snapshot) {
+                        if (ifDataisnotavailavle == 'False') {
+                          return Center(
                             child: Container(
-                              // height: 140.sp,
-                              constraints: const BoxConstraints.tightFor(),
-
-                              // width: double.infinity,
-                              decoration: BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                      5,
-                                      5,
-                                    ),
-                                  )
-                                ],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 0.3,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
-                              ),
-                              margin: const EdgeInsets.all(5),
-                              child: Row(
-                                // crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  InkWell(
-                                    // onTap: () {
-                                    //   Navigator.of(context).push(MaterialPageRoute(
-                                    //       builder: (BuildContext context) =>
-                                    //           INKCDogRegistration()));
-                                    // },
-                                    child: Container(
-                                      constraints:
-                                          const BoxConstraints.tightFor(),
-                                      margin: const EdgeInsets.only(
-                                          top: 12, left: 12, bottom: 12),
-                                      height: 100.0.sp,
-                                      width: 90.0.sp,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.sp),
-
-                                        //set border radius to 50% of square height and width
-
-                                        // image: DecorationImage(
-                                        //   image: Image.asset(
-                                        //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMq7svXemr7fVP-3Z5Qvb-TFj5LW4zscRvEGgZnVuXe0N9J6Y7iWm6adhgcxmQJPdyqpw&usqp=CAU"),
-                                        // fit: BoxFit.fill, //change image fill type
-                                      ),
-                                      child: Image.asset('assets/INKCLogo.png'),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Cart is empty.",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 177, 43, 10),
+                                          fontSize: 15.sp,
+                                          fontWeight: FontWeight.w900),
                                     ),
                                   ),
-                                  // ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 30.0, left: 15, right: 20),
-                                        child: SizedBox(
-                                          width: 150.sp,
-                                          child: Text(
-                                            p_name
-                                                .toString()
-                                                .replaceAll("<br>", " "),
-                                            maxLines: 5,
-                                            style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                    255, 19, 11, 10),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12.sp),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.black,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10)),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 15.0, left: 15, right: 20),
-                                        child: Text(
-                                          ' Quantity : $p_quantity',
-                                          style: TextStyle(
-                                              color: const Color.fromARGB(
-                                                  255, 53, 52, 52),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12.sp),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 15.0,
-                                                left: 15,
-                                                right: 20,
-                                                bottom: 20),
-                                            child: Text(
-                                              '₹  $p_charges',
-                                              style: TextStyle(
-                                                  shadows: const [
-                                                    Shadow(
-                                                      blurRadius:
-                                                          10.0, // shadow blur
-                                                      color: Color.fromARGB(
-                                                          255,
-                                                          223,
-                                                          71,
-                                                          45), // shadow color
-                                                      offset: Offset(2.0,
-                                                          2.0), // how much shadow will be shown
-                                                    ),
-                                                  ],
-                                                  color: const Color.fromARGB(
-                                                      255, 223, 71, 45),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12.sp),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 15.0,
-                                                left: 15,
-                                                right: 20,
-                                                bottom: 20),
-                                            child: ElevatedButton(
-                                              onPressed: () async {
-                                                // print(dataload[position].cartId);
-                                                Map<String, String>
-                                                    requestHeaders = {
-                                                  'Accept': 'application/json',
-                                                  'Usertoken': token,
-                                                  'Userid': userid
-                                                };
+                                          onPressed: () {
+                                            navigatorKey.currentState?.pushNamed('/INKCStore');
 
-                                                const uri =
-                                                    "https://new-demo.inkcdogs.org/api/cart/remove_cart_item";
-
-                                                final responce = await http
-                                                    .post(Uri.parse(uri),
-                                                        body: {
-                                                          "cart_id":
-                                                              dataload[position]
-                                                                  .cartId
-                                                                  .toString(),
-                                                        },
-                                                        headers:
-                                                            requestHeaders);
-
-                                                var data =
-                                                    json.decode(responce.body);
-                                                if (data['code'] == 200) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              'Succesfully Deleted')));
-
-                                                  setState(() {});
-                                                }
-
-                                                // Navigator.pushReplacement(
-                                                //     context;
-                                                //     PageRouteBuilder(
-                                                //         pageBuilder: (a; b; c) =>
-                                                //             Search()));
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      const Color.fromARGB(
-                                                          255, 231, 25, 25),
-                                                  textStyle: TextStyle(
-                                                      fontSize: 10.sp,
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              241,
-                                                              236,
-                                                              236),
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              child: const Text('Delete',
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(builder: (context) => const INKCStore()),
+                                            // );
+                                          },
+                                          child: const Text(
+                                            'Go to INKC Store',
+                                            style: TextStyle(color: Colors.white),
+                                          )),
+                                    ),
                                   ),
-                                  // Text(
-                                  //   "Show All Dogs",
-                                  //   style: TextStyle(color: Colors.black),
-                                  // )
                                 ],
                               ),
                             ),
                           );
-                        },
-                      );
-                    } else {
-                      SUBTOTAL = 0;
-                      DELEVRY = 0;
-                      CHECKTOTAL = 0;
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  }
-                }),
-          ),
-        ),
+                        } else {
+                          if (snapshot.hasData) {
+                            // print(checkpage);
+                            // cart_id = "";
+                            // p_id = "";
+                            // p_name = "";
+                            // p_quantity = "";
+                            // p_charges = "";
+                            // p_is_courier_required = "";
+                            // p_pet_id = "";
+                            // p_pet_birth_age = "";
+                            // p_pet_registered_as = "";
+                            // p_is_microchip_require = "";
+
+                            // SUBTOTAL = 0;
+                            // DELEVRY = 0;
+                            // CHECKTOTAL = 0;
+                            // chareges_ship = 1;
+
+                            // cart_data_product.clear();
+                            // cart_total_cost.clear();
+                            // dataload.clear;
+                            // mainjson = null;
+                            // map = null;
+
+                            // checkpage = "second time";
+
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              addAutomaticKeepAlives: true,
+                              itemCount: dataload.length,
+                              itemBuilder: (context, position) {
+                                if (dataload[position].cartInfo.isNotEmpty) {
+                                  String text = dataload[position]
+                                      .cartInfo
+                                      .toString()
+                                      .replaceAll("{", "")
+                                      .replaceAll("}", "")
+                                      .replaceAll("\\", "")
+                                      .replaceAll("[", "")
+                                      .replaceAll("]", "");
+                                  String withoutquotesLine1 = text.replaceAll("\"", "");
+                                  String withoutquotesLine2 =
+                                      withoutquotesLine1.replaceAll(":", ",");
+
+                                  List strArr = withoutquotesLine2.split(",");
+
+                                  for (int i = 0; i < strArr.length; i++) {
+                                    if (strArr[i].toString() == "product_id") {
+                                      // print(strArr[i + 1]);
+                                      p_id = strArr[i + 1];
+
+                                      // p_name = strArr[i + 1];
+                                      // p_quantity = strArr[i + 1];
+                                      // p_charges = strArr[i + 1];
+                                      // p_is_courier_required = strArr[i + 1];
+                                    }
+
+                                    // if (strArr[i].toString() == "is_microchip_require") {
+                                    if (strArr[i].toString() == "product_name") {
+                                      if (strArr.length.toString() == "10") {
+                                        p_name = strArr[i + 1];
+                                      } else {
+                                        p_name = strArr[i + 1] + strArr[i + 2];
+                                      }
+                                      // print(p_name
+                                      //     .toString()
+                                      //     .replaceAll("product_quantity", ""));
+
+                                      //   }
+                                      // } else {
+                                      //   p_name = strArr[i + 1];
+                                    }
+
+                                    if (strArr[i].toString() == "product_quantity") {
+                                      p_quantity = strArr[i + 1];
+                                    }
+
+                                    if (strArr[i].toString() == "pet_id") {
+                                      p_name = strArr[i - 4] + " " + strArr[i - 3];
+                                    }
+
+                                    if (strArr[i].toString() == "product_charges") {
+                                      p_charges = strArr[i + 1];
+                                    }
+                                    //total = total + total;
+
+                                    // if (strArr[i].toString() == "is_courier_required") {
+                                    //   p_is_courier_required = strArr[i + 1];
+                                    //   if (chareges_ship ==
+                                    //       int.parse(p_is_courier_required.toString())) {
+                                    //     TOTAL = "50";
+                                    //     DELEVRY = 50;
+                                    //     CHECKTOTAL = 50;
+                                    //     chareges_ship++;
+                                    //     //print("CHECKTOTAL");
+                                    //   }
+                                    // }
+
+                                    if (strArr[i].toString() == "pet_id") {
+                                      p_pet_id = strArr[i + 1];
+                                      // print(p_pet_id);
+                                    }
+
+                                    if (strArr[i].toString() == "pet_birth_age") {
+                                      p_pet_birth_age = strArr[i + 1];
+                                    }
+
+                                    if (strArr[i].toString() == "pet_registered_as") {
+                                      p_pet_registered_as = strArr[i + 1];
+                                    }
+                                    if (strArr[i].toString() == "is_microchip_require") {
+                                      p_is_microchip_require = strArr[i + 1];
+                                    }
+                                  }
+                                  // SUBTOTAL = SUBTOTAL + int.parse(p_charges);
+
+                                  // if (CHECKTOTAL == 50) {
+                                  //   cart_total = {
+                                  //     "sub_total_cost": SUBTOTAL.toString(),
+                                  //     "product_id": p_id,
+                                  //     "product_name": "Courier / Registered / Speed Post",
+                                  //     "product_charges": 50,
+                                  //     "total_cost": SUBTOTAL + 50,
+                                  //   };
+                                  // } else {
+                                  //   cart_total = {
+                                  //     "sub_total_cost": SUBTOTAL.toString(),
+                                  //     "total_cost": SUBTOTAL + 50,
+                                  //   };
+                                  // }
+
+                                  // if (p_pet_id.isEmpty) {
+                                  //   map = {
+                                  //     "cart_id": dataload[position].cartId,
+                                  //     "product_id": p_id,
+                                  //     "product_name": p_name,
+                                  //     "product_quantity": p_quantity,
+                                  //     "product_charges": p_charges
+                                  //   };
+                                  // } else {
+                                  //   map = {
+                                  //     "cart_id": dataload[position].cartId,
+                                  //     "product_id": p_id,
+                                  //     "product_name": p_name,
+                                  //     "p_pet_id": p_pet_id,
+                                  //     "pet_birth_age": p_pet_birth_age,
+                                  //     "pet_registered_as": p_pet_registered_as,
+                                  //     "is_microchip_require": p_is_microchip_require,
+                                  //     "product_quantity": p_quantity,
+                                  //     "product_charges": p_charges,
+                                  //   };
+                                  //   // print("object check is run");
+                                  // }
+                                } else {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) => const INKCStore()));
+                                }
+                                // cart_data_product.add(map);
+                                // print(map);
+
+                                return Card(
+                                  elevation: 5,
+                                  color: const Color.fromARGB(255, 255, 255, 255),
+                                  margin: const EdgeInsets.all(5),
+                                  child: Container(
+                                    // height: 140.sp,
+                                    constraints: const BoxConstraints.tightFor(),
+
+                                    // width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          blurRadius: 7,
+                                          offset: Offset(
+                                            5,
+                                            5,
+                                          ),
+                                        )
+                                      ],
+                                      border: Border.all(
+                                        color: Colors.black,
+                                        width: 0.3,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white,
+                                    ),
+                                    margin: const EdgeInsets.all(5),
+                                    child: Row(
+                                      // crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        InkWell(
+                                          // onTap: () {
+                                          //   Navigator.of(context).push(MaterialPageRoute(
+                                          //       builder: (BuildContext context) =>
+                                          //           INKCDogRegistration()));
+                                          // },
+                                          child: Container(
+                                            constraints: const BoxConstraints.tightFor(),
+                                            margin: const EdgeInsets.only(
+                                                top: 12, left: 12, bottom: 12),
+                                            height: 100.0.sp,
+                                            width: 90.0.sp,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(15.sp),
+
+                                              //set border radius to 50% of square height and width
+
+                                              // image: DecorationImage(
+                                              //   image: Image.asset(
+                                              //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMq7svXemr7fVP-3Z5Qvb-TFj5LW4zscRvEGgZnVuXe0N9J6Y7iWm6adhgcxmQJPdyqpw&usqp=CAU"),
+                                              // fit: BoxFit.fill, //change image fill type
+                                            ),
+                                            child: Image.asset('assets/INKCLogo.png'),
+                                          ),
+                                        ),
+                                        // ),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 30.0, left: 15, right: 20),
+                                              child: SizedBox(
+                                                width: 150.sp,
+                                                child: Text(
+                                                  p_name.toString().replaceAll("<br>", " "),
+                                                  maxLines: 5,
+                                                  style: TextStyle(
+                                                      color: const Color.fromARGB(255, 19, 11, 10),
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 12.sp),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 15.0, left: 15, right: 20),
+                                              child: Text(
+                                                ' Quantity : $p_quantity',
+                                                style: TextStyle(
+                                                    color: const Color.fromARGB(255, 53, 52, 52),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12.sp),
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 15.0, left: 15, right: 20, bottom: 20),
+                                                  child: Text(
+                                                    '₹  $p_charges',
+                                                    style: TextStyle(
+                                                        shadows: const [
+                                                          Shadow(
+                                                            blurRadius: 10.0, // shadow blur
+                                                            color: Color.fromARGB(
+                                                                255, 223, 71, 45), // shadow color
+                                                            offset: Offset(2.0,
+                                                                2.0), // how much shadow will be shown
+                                                          ),
+                                                        ],
+                                                        color:
+                                                            const Color.fromARGB(255, 223, 71, 45),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 12.sp),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 15.0, left: 15, right: 20, bottom: 20),
+                                                  child: ElevatedButton(
+                                                    onPressed: () async {
+                                                      // print(dataload[position].cartId);
+                                                      Map<String, String> requestHeaders = {
+                                                        'Accept': 'application/json',
+                                                        'Usertoken': token,
+                                                        'Userid': userid
+                                                      };
+
+                                                      const uri =
+                                                          "https://new-demo.inkcdogs.org/api/cart/remove_cart_item";
+
+                                                      final responce =
+                                                          await http.post(Uri.parse(uri),
+                                                              body: {
+                                                                "cart_id": dataload[position]
+                                                                    .cartId
+                                                                    .toString(),
+                                                              },
+                                                              headers: requestHeaders);
+
+                                                      var data = json.decode(responce.body);
+                                                      if (data['code'] == 200) {
+                                                        ScaffoldMessenger.of(context).showSnackBar(
+                                                            const SnackBar(
+                                                                content:
+                                                                    Text('Succesfully Deleted')));
+
+                                                        setState(() {});
+                                                      }
+
+                                                      // Navigator.pushReplacement(
+                                                      //     context;
+                                                      //     PageRouteBuilder(
+                                                      //         pageBuilder: (a; b; c) =>
+                                                      //             Search()));
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            const Color.fromARGB(255, 231, 25, 25),
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10.sp,
+                                                            color: const Color.fromARGB(
+                                                                255, 241, 236, 236),
+                                                            fontWeight: FontWeight.bold)),
+                                                    child: const Text('Delete',
+                                                        style: TextStyle(color: Colors.white)),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        // Text(
+                                        //   "Show All Dogs",
+                                        //   style: TextStyle(color: Colors.black),
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            SUBTOTAL = 0;
+                            DELEVRY = 0;
+                            CHECKTOTAL = 0;
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        }
+                      }),
+                ),
+              ),
         floatingActionButton: Visibility(
           visible: _isShow,
           child: Padding(
@@ -627,32 +649,23 @@ class _SearchpageState extends State<Searchpage> {
                       fontMemberStatus,
                       userName,
                       userEmpId;
-                  SharedPreferences sharedprefrence =
-                      await SharedPreferences.getInstance();
+                  SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
 
                   userId = sharedprefrence.getString("Userid")!;
                   empFullName = sharedprefrence.getString("EmpFullName")!;
                   empTypeId = sharedprefrence.getString("EmpTypeId")!;
                   empTypeName = sharedprefrence.getString("EmpTypeName")!;
                   phoneNumber = sharedprefrence.getString("phoneNumber")!;
-                  userVerification =
-                      sharedprefrence.getString("UserVerification")!;
+                  userVerification = sharedprefrence.getString("UserVerification")!;
                   fontUserId = sharedprefrence.getString("FontUserid")!;
-                  fontEmpFullName =
-                      sharedprefrence.getString("FontEmpFullName")!;
+                  fontEmpFullName = sharedprefrence.getString("FontEmpFullName")!;
                   fontEmpTypeId = sharedprefrence.getString("FontEmpTypeId")!;
-                  fontUserEmailId =
-                      sharedprefrence.getString("FontUserEmailId")!;
-                  fontEmpTypeName =
-                      sharedprefrence.getString("FontEmpTypeName")!;
-                  fontPhoneNumber =
-                      sharedprefrence.getString("FontPhoneNumber")!;
-                  fontUserVerification =
-                      sharedprefrence.getString("FontUserVerification")!;
-                  fontKennelClubName =
-                      sharedprefrence.getString("FontKennelClubStatus")!;
-                  fontMemberStatus =
-                      sharedprefrence.getString("FontMemberStatus")!;
+                  fontUserEmailId = sharedprefrence.getString("FontUserEmailId")!;
+                  fontEmpTypeName = sharedprefrence.getString("FontEmpTypeName")!;
+                  fontPhoneNumber = sharedprefrence.getString("FontPhoneNumber")!;
+                  fontUserVerification = sharedprefrence.getString("FontUserVerification")!;
+                  fontKennelClubName = sharedprefrence.getString("FontKennelClubStatus")!;
+                  fontMemberStatus = sharedprefrence.getString("FontMemberStatus")!;
                   userName = sharedprefrence.getString("UserName")!;
                   userEmpId = sharedprefrence.getString("UserEmpId")!;
 
@@ -695,8 +708,7 @@ class _SearchpageState extends State<Searchpage> {
                       return SizedBox(
                         height: 250.sp,
                         child: Container(
-                          margin: EdgeInsets.only(
-                              left: 20.sp, top: 20.sp, right: 50.sp),
+                          margin: EdgeInsets.only(left: 20.sp, top: 20.sp, right: 50.sp),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
@@ -705,15 +717,13 @@ class _SearchpageState extends State<Searchpage> {
                               Text(
                                 'CART TOTAL',
                                 style: TextStyle(
-                                    color:
-                                        const Color.fromARGB(255, 95, 10, 10),
+                                    color: const Color.fromARGB(255, 95, 10, 10),
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold),
                               ),
                               const Divider(),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "SubTotal",
@@ -725,8 +735,7 @@ class _SearchpageState extends State<Searchpage> {
                                   Text(
                                     '₹ $SUBTOTAL',
                                     style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 68, 16, 16),
+                                        color: const Color.fromARGB(255, 68, 16, 16),
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w700),
                                   ),
@@ -737,8 +746,7 @@ class _SearchpageState extends State<Searchpage> {
                               ),
                               const Divider(),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Shipping",
@@ -750,8 +758,7 @@ class _SearchpageState extends State<Searchpage> {
                                   Text(
                                     'Courier ₹   $DELEVRY',
                                     style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 12, 9, 56),
+                                        color: const Color.fromARGB(255, 12, 9, 56),
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w700),
                                   ),
@@ -762,8 +769,7 @@ class _SearchpageState extends State<Searchpage> {
                               ),
                               const Divider(),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Total",
@@ -775,8 +781,7 @@ class _SearchpageState extends State<Searchpage> {
                                   Text(
                                     '₹ ${SUBTOTAL + DELEVRY}',
                                     style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 68, 16, 16),
+                                        color: const Color.fromARGB(255, 68, 16, 16),
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w700),
                                   ),
@@ -789,27 +794,21 @@ class _SearchpageState extends State<Searchpage> {
                               Center(
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromARGB(
-                                          255, 80, 3, 3), // Background color
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 80, 3, 3), // Background color
                                     ),
                                     onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  FinalCartPrice(
-                                                    jsonMap: jsonMap,
-                                                    SUBTOTAL:
-                                                        SUBTOTAL.toString(),
-                                                    DELEVRY: DELEVRY.toString(),
-                                                    TOTAL: (SUBTOTAL + DELEVRY)
-                                                        .toString(),
-                                                  )));
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (BuildContext context) => FinalCartPrice(
+                                                jsonMap: jsonMap,
+                                                SUBTOTAL: SUBTOTAL.toString(),
+                                                DELEVRY: DELEVRY.toString(),
+                                                TOTAL: (SUBTOTAL + DELEVRY).toString(),
+                                              )));
                                     },
                                     child: const Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'PROCEED TO CHECKOUT      ',
@@ -886,15 +885,15 @@ class _SearchpageState extends State<Searchpage> {
     );
     var data = json.decode(responce.body);
 
-    print(data.toString() + 'check');
+    print('${data}check');
 
     var message = data['message'];
 
     if (message.toString() == "Invalid user request") {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
     }
 
     var dataarray = data['data'];
@@ -919,10 +918,8 @@ class _SearchpageState extends State<Searchpage> {
     if (data['data'].toString().isNotEmpty) {
       for (int j = 0; j < sst.length; j++) {
         if (data['data'][j]['cart_info'].toString().isNotEmpty) {
-          String text = data['data'][j]['cart_info']
-              .toString()
-              .replaceAll("{", "")
-              .replaceAll("}", "");
+          String text =
+              data['data'][j]['cart_info'].toString().replaceAll("{", "").replaceAll("}", "");
           String withoutquotesLine1 = text.replaceAll("\"", "");
           String withoutquotesLine2 = withoutquotesLine1.replaceAll(":", ",");
 
@@ -952,8 +949,7 @@ class _SearchpageState extends State<Searchpage> {
             if (strArr[i].toString() == "is_courier_required") {
               p_is_courier_required = strArr[i + 1];
 
-              if (chareges_ship ==
-                  int.parse(p_is_courier_required.toString())) {
+              if (chareges_ship == int.parse(p_is_courier_required.toString())) {
                 TOTAL = "50";
                 DELEVRY = 50;
                 CHECKTOTAL = 50;
@@ -1035,8 +1031,8 @@ class _SearchpageState extends State<Searchpage> {
     } else {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (BuildContext context) => const Login()));
       return dataload;
     }
   }

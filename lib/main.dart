@@ -3,13 +3,23 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:inkc/KennelClub/kennelclubname.dart';
+import 'package:inkc/Updated_pages_dogs_registered/single_dog_registration_process.dart';
+import 'package:inkc/Updated_pages_litter_registration/litter_registration_home_page.dart';
+import 'package:inkc/VerificationOtpController/OtpGet.dart';
+import 'package:inkc/app/routes/app_pages.dart';
+import 'package:inkc/bottom_nav_pages/bar.dart';
+import 'package:inkc/events/events.dart';
+import 'package:inkc/inkcstore.dart';
+import 'package:inkc/mydoginfo.dart';
 import 'package:inkc/myhomepage.dart';
+import 'package:inkc/profile.dart';
+import 'package:inkc/profile_update.dart';
 import 'package:lottie/lottie.dart';
 
-
-
-final navigatorKey = GlobalKey<NavigatorState>();
-
+// At the top of your main.dart file
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -24,7 +34,14 @@ void main() async {
   // await FireBaseApi().initNotification();
 
   runApp(const Splash());
-
+  // runApp(
+  //   GetMaterialApp(
+  //     title: "Application",
+  //     initialRoute: AppPages.INITIAL,
+  //     getPages: AppPages.routes,
+  //     debugShowCheckedModeBanner: false,
+  //   ),
+  // );
   configLoading();
 }
 
@@ -77,6 +94,42 @@ class Splash extends StatelessWidget {
       navigatorKey: navigatorKey,
       // initialRoute: '/',
       home: const SplashScreen(),
+      routes: {
+        '/home': (context) => MyApp(indexvalue: 0),
+        '/home4': (context) => MyApp(indexvalue: 4),
+        '/service': (context) => Barpage(),
+        '/profile': (context) => SettingsUI(),
+        '/Updateprofile': (context) => ProfileUpdates(
+            name: "", lastname: "", gender: "", dob: "", phone: "", email: "", address: "")
+        // final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+        // return ProfileUpdates(
+        //   address: args?['addresss'] ?? "",
+        //   dob: args?['dobs'] ?? "",
+        //   email: args?['emails'] ?? "",
+        //   gender: args?['genders'] ?? "",
+        //   lastname: args?['lastnames'] ?? "",
+        //   name: args?['names'] ?? "",
+        //   phone: args?['phones'] ?? "",
+        // );
+        ,
+        '/MyDogInfo': (context) => MyDogInfo(),
+        '/SingleDogRegistrationProcess': (context) => SingleDogRegistrationProcess(
+              eventname: '',
+              eventstal: "",
+              eventtype: "",
+              is_participate_with_event: "",
+              pariticaipate_for_event: "",
+              participate_event_id: "",
+              register_for_event: "",
+              register_with_event: "",
+            ),
+        '/addDog': (context) => MyDogInfo(),
+        '/litterRegis': (context) => LitterRegistrationHomePage(),
+        '/KennelClubName': (context) => KennelClubName(),
+        '/INKCStore': (context) => INKCStore(),
+        '/Events': (context) => Events(),
+      },
       // routes: {
       //   'SplashScreen': (context) => SplashScreen(),
       //   '/Events': (context) => Events(),
@@ -102,7 +155,11 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const MyApp())));
+            context,
+            MaterialPageRoute(
+                builder: (context) => MyApp(
+                      indexvalue: 0,
+                    ))));
   }
 
   @override
@@ -125,10 +182,8 @@ class _SplashScreenState extends State<SplashScreen> {
             const Center(
               child: Text(
                 "Welcome to DoggyLocker",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent),
+                style:
+                    TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blueAccent),
               ),
             )
           ],

@@ -103,16 +103,12 @@ class _SireRegistrationWithOtherClubDamUnknownState
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -125,8 +121,8 @@ class _SireRegistrationWithOtherClubDamUnknownState
   final _firstpicker = ImagePicker();
 
   Future getfirstImage() async {
-    final pickedFilefirst = await _firstpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilefirst =
+        await _firstpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilefirst != null) {
       firstImage = File(pickedFilefirst.path);
@@ -158,8 +154,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -204,8 +199,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
   String? petsubcatid;
   String? petcatid;
 
-  uploadData(
-      String obidientq, String stallReqq, String Dayq, String Typeq) async {
+  uploadData(String obidientq, String stallReqq, String Dayq, String Typeq) async {
     setState(() {
       showSpinner = true;
     });
@@ -227,8 +221,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
 
       if (_studcertificate.toString() == "null") {
         FormData formData = FormData.fromMap({
-          'pet_image': await MultipartFile.fromFile(_image!.path,
-              filename: "${now.second}.jpg"),
+          'pet_image': await MultipartFile.fromFile(_image!.path, filename: "${now.second}.jpg"),
           'sire_front_side_certificate': await MultipartFile.fromFile(
               _sirefrontsidecertificate!.path,
               filename: "${now.second}.jpg"),
@@ -283,23 +276,21 @@ class _SireRegistrationWithOtherClubDamUnknownState
             title: 'Success...',
             text: 'SuccessFully Registered',
           );
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('SuccessFully Registered')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
         } else {
           setState(() {
             showSpinner = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Something went wrong')));
           print('something worng');
         }
       } else {
         FormData formData = FormData.fromMap({
-          'stud_agreement_form': await MultipartFile.fromFile(
-              _studcertificate!.path,
-              filename: "${now.second}.jpg"),
-          'pet_image': await MultipartFile.fromFile(_image!.path,
-              filename: "${now.second}.jpg"),
+          'stud_agreement_form':
+              await MultipartFile.fromFile(_studcertificate!.path, filename: "${now.second}.jpg"),
+          'pet_image': await MultipartFile.fromFile(_image!.path, filename: "${now.second}.jpg"),
           'sire_front_side_certificate': await MultipartFile.fromFile(
               _sirefrontsidecertificate!.path,
               filename: "${now.second}.jpg"),
@@ -354,14 +345,14 @@ class _SireRegistrationWithOtherClubDamUnknownState
             title: 'Success...',
             text: 'SuccessFully Registered',
           );
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('SuccessFully Registered')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
         } else {
           setState(() {
             showSpinner = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Something went wrong')));
           print('something worng');
         }
       }
@@ -492,8 +483,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -583,23 +573,20 @@ class _SireRegistrationWithOtherClubDamUnknownState
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Sire's front side of the certificate",
+                                      "Sire's(Father's) front side of the certificate",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -608,74 +595,144 @@ class _SireRegistrationWithOtherClubDamUnknownState
                               ),
 
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage:
-                                          _sirefrontsidecertificate != null
-                                              ? FileImage(
-                                                  _sirefrontsidecertificate!)
-                                              : null,
+                                      foregroundImage: _sirefrontsidecertificate != null
+                                          ? FileImage(_sirefrontsidecertificate!)
+                                          : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _sirefrontsidecertificate =
-                                                  File(cropperFile.path));
-                                          print(
-                                              "justcheck$_sirefrontsidecertificate");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _sirefrontsidecertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _sirefrontsidecertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  // ElevatedButton(
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     backgroundColor:
+                                  //         const Color.fromARGB(255, 199, 7, 7),
+                                  //   ),
+                                  //   onPressed: () async {
+                                  //     final files =
+                                  //         await imagehelper.PickImage();
+                                  //     if (files.isNotEmpty) {
+                                  //       final cropperFile =
+                                  //           await imagehelper.crop(
+                                  //               file: files.first,
+                                  //               cropStyle: CropStyle.circle);
+                                  //       if (cropperFile != null) {
+                                  //         setState(() =>
+                                  //             _sirefrontsidecertificate =
+                                  //                 File(cropperFile.path));
+                                  //         print(
+                                  //             "justcheck$_sirefrontsidecertificate");
+                                  //       }
+                                  //     }
+                                  //   },
+                                  //   child: const Text(
+                                  //     'Pick Image',
+                                  //     style: TextStyle(color: Colors.white),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Sire's back side of the certificate",
+                                      "Sire's(Father's) back side of the certificate",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -684,66 +741,137 @@ class _SireRegistrationWithOtherClubDamUnknownState
                               ),
 
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage:
-                                          _sirebacksidecertificate != null
-                                              ? FileImage(
-                                                  _sirebacksidecertificate!)
-                                              : null,
+                                      foregroundImage: _sirebacksidecertificate != null
+                                          ? FileImage(_sirebacksidecertificate!)
+                                          : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _sirebacksidecertificate =
-                                                  File(cropperFile.path));
-                                          print(
-                                              "justcheck$_sirebacksidecertificate");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _sirebacksidecertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _sirebacksidecertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  // ElevatedButton(
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     backgroundColor:
+                                  //         const Color.fromARGB(255, 199, 7, 7),
+                                  //   ),
+                                  //   onPressed: () async {
+                                  //     final files =
+                                  //         await imagehelper.PickImage();
+                                  //     if (files.isNotEmpty) {
+                                  //       final cropperFile =
+                                  //           await imagehelper.crop(
+                                  //               file: files.first,
+                                  //               cropStyle: CropStyle.circle);
+                                  //       if (cropperFile != null) {
+                                  //         setState(() =>
+                                  //             _sirebacksidecertificate =
+                                  //                 File(cropperFile.path));
+                                  //         print(
+                                  //             "justcheck$_sirebacksidecertificate");
+                                  //       }
+                                  //     }
+                                  //   },
+                                  //   child: const Text(
+                                  //     'Pick Image',
+                                  //     style: TextStyle(color: Colors.white),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Sire's Transfer Form",
+                                      "Sire's(Father's) Transfer Form",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -752,74 +880,145 @@ class _SireRegistrationWithOtherClubDamUnknownState
                               ),
 
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage:
-                                          _Siretransferformcertificate != null
-                                              ? FileImage(
-                                                  _Siretransferformcertificate!)
-                                              : null,
+                                      foregroundImage: _Siretransferformcertificate != null
+                                          ? FileImage(_Siretransferformcertificate!)
+                                          : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _Siretransferformcertificate =
-                                                  File(cropperFile.path));
-                                          print(
-                                              "justcheck$_Siretransferformcertificate");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _Siretransferformcertificate =
+                                                    File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _Siretransferformcertificate =
+                                                    File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  // ElevatedButton(
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     backgroundColor:
+                                  //         const Color.fromARGB(255, 199, 7, 7),
+                                  //   ),
+                                  //   onPressed: () async {
+                                  //     final files =
+                                  //         await imagehelper.PickImage();
+                                  //     if (files.isNotEmpty) {
+                                  //       final cropperFile =
+                                  //           await imagehelper.crop(
+                                  //               file: files.first,
+                                  //               cropStyle: CropStyle.circle);
+                                  //       if (cropperFile != null) {
+                                  //         setState(() =>
+                                  //             _Siretransferformcertificate =
+                                  //                 File(cropperFile.path));
+                                  //         print(
+                                  //             "justcheck$_Siretransferformcertificate");
+                                  //       }
+                                  //     }
+                                  //   },
+                                  //   child: const Text(
+                                  //     'Pick Image',
+                                  //     style: TextStyle(color: Colors.white),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Stud agreement form",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -827,8 +1026,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
@@ -840,56 +1038,128 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                           : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() => _studcertificate =
-                                              File(cropperFile.path));
-                                          print("justcheck$_studcertificate");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _studcertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _studcertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  // ElevatedButton(
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     backgroundColor:
+                                  //         const Color.fromARGB(255, 199, 7, 7),
+                                  //   ),
+                                  //   onPressed: () async {
+                                  //     final files =
+                                  //         await imagehelper.PickImage();
+                                  //     if (files.isNotEmpty) {
+                                  //       final cropperFile =
+                                  //           await imagehelper.crop(
+                                  //               file: files.first,
+                                  //               cropStyle: CropStyle.circle);
+                                  //       if (cropperFile != null) {
+                                  //         setState(() => _studcertificate =
+                                  //             File(cropperFile.path));
+                                  //         print("justcheck$_studcertificate");
+                                  //       }
+                                  //     }
+                                  //   },
+                                  //   child: const Text(
+                                  //     'Pick Image',
+                                  //     style: TextStyle(color: Colors.white),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Add Co Owner ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -921,8 +1191,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                                 onChanged: (value) {
                                                   setState(() {
                                                     _isShowOff = false;
-                                                    AddCoOwner =
-                                                        value.toString();
+                                                    AddCoOwner = value.toString();
                                                   });
                                                 },
                                               ),
@@ -943,8 +1212,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                                 onChanged: (value) {
                                                   setState(() {
                                                     _isShowOff = true;
-                                                    AddCoOwner =
-                                                        value.toString();
+                                                    AddCoOwner = value.toString();
                                                   });
                                                 },
                                               ),
@@ -968,23 +1236,20 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 20.0, left: 12),
+                                        padding: const EdgeInsets.only(top: 20.0, left: 12),
                                         child: Row(
                                           children: [
                                             Text(
                                               "Co Owner ID ",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 22, 21, 21),
+                                                  color: const Color.fromARGB(255, 22, 21, 21),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 12.sp),
                                             ),
                                             Text(
                                               "*",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 231, 11, 11),
+                                                  color: const Color.fromARGB(255, 231, 11, 11),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15.sp),
                                             ),
@@ -1000,40 +1265,138 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                             filled: true,
                                             fillColor: Colors.white,
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4.sp)),
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: Colors.green),
+                                              borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                              borderSide:
+                                                  const BorderSide(width: 1, color: Colors.green),
                                             ),
                                             labelText: 'Co Owner ID',
                                             hintText: 'Co Owner ID',
-                                            errorText: dogvalidate
-                                                ? "Value Can't Be Empty"
-                                                : null,
+                                            errorText: dogvalidate ? "Value Can't Be Empty" : null,
                                           ),
                                         ),
                                       ),
                                     ],
                                   )),
+
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Breed of the dog ",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              FutureBuilder<List<DogBreedList>>(
+                                  future: getbreedlist(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
+                                    } else {
+                                      // DropDownKennelName? selectedItem =
+                                      //     findItemById(snapshot.data!, selectedId);
+
+                                      return Container(
+                                        margin: const EdgeInsets.only(
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                          child: DropdownSearch<DogBreedList>(
+                                            items: snapshot.data!,
+                                            itemAsString: (DogBreedList? model) =>
+                                                model?.subCategoryName ?? "",
+                                            // selectedItem:
+                                            //     snapshot.data![getcountry],
+                                            onChanged: (DogBreedList? selectedItem) {
+                                              setState(() {
+                                                petsubcatid = selectedItem?.petCategoryId;
+                                                petcatid = selectedItem?.petCategoryId;
+                                              });
+                                              // setState(() {
+                                              //   countrybool = true;
+                                              //   widget.Stategetdata = "";
+                                              //   widget.Districtgetdata = "";
+                                              //   getcountry = int.parse(
+                                              //           "${selectedItem?.countryId}") -
+                                              //       1;
+
+                                              //   setState(() {
+                                              //     selectebreedvalue =
+                                              //         selectedItem?.countryId;
+                                              //     selectedbreedid =
+                                              //         selectedItem?.countryId;
+
+                                              //     _changeId(selectedbreedid);
+                                              //   });
+                                              // });
+                                            },
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
+                                                // labelText: "Select Color/Pattern",
+                                                hintText: "Choose one",
+                                                border: OutlineInputBorder(),
+                                              ),
+                                            ),
+                                            popupProps: PopupProps.menu(
+                                              showSearchBox: true,
+                                              fit: FlexFit.loose,
+                                              itemBuilder: (context, item, isSelected) {
+                                                return ListTile(
+                                                  title: Text(
+                                                    item.subCategoryName ?? "",
+                                                    style: TextStyle(
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
+                                                        fontSize: 12.sp,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            dropdownBuilder: (context, selectedItem) {
+                                              return Text(
+                                                selectedItem?.subCategoryName ?? "",
+                                                style: TextStyle(
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.bold),
+                                              ); // Display the selected item's name
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  }),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Name of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1049,37 +1412,30 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Name of the dog',
                                     hintText: 'Eg.Bruno',
-                                    errorText: dogvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: dogvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1095,8 +1451,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                       width: 160.sp,
                                       child: TextField(
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
+                                            color: Colors.black, fontWeight: FontWeight.w600),
                                         onTap: () {},
                                         controller: dateofbirth,
                                         enabled: false,
@@ -1113,30 +1468,23 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon:
-                                              const Icon(Icons.date_range),
+                                          prefixIcon: const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.sp)),
-                                            borderSide: const BorderSide(
-                                                width: 1, color: Colors.green),
+                                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                            borderSide:
+                                                const BorderSide(width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
-                                          errorText: datevalidate
-                                              ? "Value Can't Be Empty"
-                                              : null,
+                                          errorText: datevalidate ? "Value Can't Be Empty" : null,
                                         ),
                                       ),
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 231, 25, 25),
+                                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
-                                                color: const Color.fromARGB(
-                                                    255, 241, 236, 236),
+                                                color: const Color.fromARGB(255, 241, 236, 236),
                                                 fontWeight: FontWeight.bold)),
                                         onPressed: () {
                                           selectDatePicker();
@@ -1152,152 +1500,20 @@ class _SireRegistrationWithOtherClubDamUnknownState
                               ),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Breed of the dog ",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13.sp),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              FutureBuilder<List<DogBreedList>>(
-                                  future: getbreedlist(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
-                                    } else {
-                                      // DropDownKennelName? selectedItem =
-                                      //     findItemById(snapshot.data!, selectedId);
-
-                                      return Container(
-                                        margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
-                                          child: DropdownSearch<DogBreedList>(
-                                            items: snapshot.data!,
-                                            itemAsString:
-                                                (DogBreedList? model) =>
-                                                    model?.subCategoryName ??
-                                                    "",
-                                            // selectedItem:
-                                            //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (DogBreedList? selectedItem) {
-                                              setState(() {
-                                                petsubcatid =
-                                                    selectedItem?.petCategoryId;
-                                                petcatid =
-                                                    selectedItem?.petCategoryId;
-                                              });
-                                              // setState(() {
-                                              //   countrybool = true;
-                                              //   widget.Stategetdata = "";
-                                              //   widget.Districtgetdata = "";
-                                              //   getcountry = int.parse(
-                                              //           "${selectedItem?.countryId}") -
-                                              //       1;
-
-                                              //   setState(() {
-                                              //     selectebreedvalue =
-                                              //         selectedItem?.countryId;
-                                              //     selectedbreedid =
-                                              //         selectedItem?.countryId;
-
-                                              //     _changeId(selectedbreedid);
-                                              //   });
-                                              // });
-                                            },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
-                                                // labelText: "Select Color/Pattern",
-                                                hintText: "Choose one",
-                                                border: OutlineInputBorder(),
-                                              ),
-                                            ),
-                                            popupProps: PopupProps.menu(
-                                              showSearchBox: true,
-                                              fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
-                                                return ListTile(
-                                                  title: Text(
-                                                    item.subCategoryName ?? "",
-                                                    style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 46, 46),
-                                                        fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
-                                              return Text(
-                                                selectedItem?.subCategoryName ??
-                                                    "",
-                                                style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 95, 46, 46),
-                                                    fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ); // Display the selected item's name
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  }),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Color and Marking ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1309,38 +1525,27 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                   future: getColorAndMaking(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
                                     } else {
                                       // DropDownKennelName? selectedItem =
                                       //     findItemById(snapshot.data!, selectedId);
 
                                       return Container(
                                         margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
                                           child: DropdownSearch<ColorAndMaking>(
                                             items: snapshot.data!,
-                                            itemAsString:
-                                                (ColorAndMaking? model) =>
-                                                    model?.colourName ?? "",
+                                            itemAsString: (ColorAndMaking? model) =>
+                                                model?.colourName ?? "",
                                             // selectedItem:
                                             //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (ColorAndMaking? selectedItem) {
+                                            onChanged: (ColorAndMaking? selectedItem) {
                                               setState(() {
-                                                selectcolormakingid =
-                                                    selectedItem?.colourId;
+                                                selectcolormakingid = selectedItem?.colourId;
                                               });
                                               // setState(() {
                                               //   countrybool = true;
@@ -1360,10 +1565,8 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                               //   });
                                               // });
                                             },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
                                                 filled: true,
 
                                                 fillColor: Colors.white,
@@ -1375,32 +1578,26 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                             popupProps: PopupProps.menu(
                                               showSearchBox: true,
                                               fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
+                                              itemBuilder: (context, item, isSelected) {
                                                 return ListTile(
                                                   title: Text(
                                                     item.colourName ?? "",
                                                     style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 46, 46),
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
                                                         fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                        fontWeight: FontWeight.bold),
                                                   ),
                                                 );
                                               },
                                             ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
+                                            dropdownBuilder: (context, selectedItem) {
                                               return Text(
                                                 selectedItem?.colourName ?? "",
                                                 style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 95, 46, 46),
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
                                                     fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    fontWeight: FontWeight.bold),
                                               ); // Display the selected item's name
                                             },
                                           ),
@@ -1494,23 +1691,20 @@ class _SireRegistrationWithOtherClubDamUnknownState
                               //       }
                               //     }),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Sex of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1581,15 +1775,13 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1604,16 +1796,12 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Country Bred in',
                                     hintText: 'Eg.India',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -1624,16 +1812,14 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                     Text(
                                       "Upload your dog’s best photograph",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1641,48 +1827,108 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: _image != null
-                                          ? FileImage(_image!)
-                                          : null,
+                                      foregroundImage: _image != null ? FileImage(_image!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _image = File(cropperFile.path));
-                                          print("justcheck$_image");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _image = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() =>
+                                          //         _image = File(cropperFile.path));
+                                          //     print("justcheck$_image");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _image = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -1764,23 +2010,20 @@ class _SireRegistrationWithOtherClubDamUnknownState
                               //         ),
                               // ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Microchip required ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1811,8 +2054,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                                 groupValue: MicroRequired,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    MicroRequired =
-                                                        value.toString();
+                                                    MicroRequired = value.toString();
                                                   });
                                                 },
                                               ),
@@ -1832,8 +2074,7 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                                 groupValue: MicroRequired,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    MicroRequired =
-                                                        value.toString();
+                                                    MicroRequired = value.toString();
                                                   });
                                                 },
                                               ),
@@ -1852,18 +2093,15 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                   ),
                                 ),
                               ),
-                              if (widget.participate_event_id != "")
-                                EventDetails(context),
+                              if (widget.participate_event_id != "") EventDetails(context),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 23, 4, 190),
+                                        backgroundColor: const Color.fromARGB(255, 23, 4, 190),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
-                                            color: const Color.fromARGB(
-                                                255, 241, 236, 236),
+                                            color: const Color.fromARGB(255, 241, 236, 236),
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
                                       String SIRE = sire.text.toString();
@@ -1874,25 +2112,19 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                       String AddCoowner = AddCoOwner.toString();
                                       String MICRO = MicroRequired.toString();
 
-                                      if (_sirefrontsidecertificate
-                                              .toString() ==
-                                          "null") {
+                                      if (_sirefrontsidecertificate.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              "Please Select dam front side certificate",
+                                          text: "Please Select dam front side certificate",
                                         );
-                                      } else if (_sirebacksidecertificate
-                                              .toString() ==
-                                          "null") {
+                                      } else if (_sirebacksidecertificate.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              "Please Select dam back side certificate",
+                                          text: "Please Select dam back side certificate",
                                         );
                                       } else if (DogName.toString() == "") {
                                         QuickAlert.show(
@@ -1915,23 +2147,19 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                           title: 'Oops...',
                                           text: 'Please Select Breed',
                                         );
-                                      } else if (selectcolormakingid
-                                              .toString() ==
-                                          "null") {
+                                      } else if (selectcolormakingid.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              'Please Select Color and making',
+                                          text: 'Please Select Color and making',
                                         );
                                       } else if (_image.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              "Please Select dog best photograph",
+                                          text: "Please Select dog best photograph",
                                         );
                                       } else if (AddCoowner.toString() == "1") {
                                         if (cowner.text.toString() == "") {
@@ -1979,14 +2207,12 @@ class _SireRegistrationWithOtherClubDamUnknownState
 
                                             //obidient.length;
                                             if (obidient.length <= 1 &&
-                                                widget.eventtype.toString() ==
-                                                    "2") {
+                                                widget.eventtype.toString() == "2") {
                                               QuickAlert.show(
                                                 context: context,
                                                 type: QuickAlertType.error,
                                                 title: 'Oops...',
-                                                text:
-                                                    'Please Select atlest 2 box',
+                                                text: 'Please Select atlest 2 box',
                                               );
                                             } else {
                                               // print(
@@ -2026,11 +2252,8 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                               //       "register_with_event":
                                               //           "1"
                                               //     },
-                                              uploadData(
-                                                  obidient.toString(),
-                                                  stallReq.toString(),
-                                                  Day,
-                                                  Type);
+                                              uploadData(obidient.toString(), stallReq.toString(),
+                                                  Day, Type);
                                               //       headers: requestHeaders);
                                               //   var data = json.decode(responce.body);
                                               //   if (data['code'].toString() == "200") {
@@ -2087,14 +2310,12 @@ class _SireRegistrationWithOtherClubDamUnknownState
 
                                           //obidient.length;
                                           if (obidient.length <= 1 &&
-                                              widget.eventtype.toString() ==
-                                                  "2") {
+                                              widget.eventtype.toString() == "2") {
                                             QuickAlert.show(
                                               context: context,
                                               type: QuickAlertType.error,
                                               title: 'Oops...',
-                                              text:
-                                                  'Please Select atlest 2 box',
+                                              text: 'Please Select atlest 2 box',
                                             );
                                           } else {
                                             // print(
@@ -2134,8 +2355,8 @@ class _SireRegistrationWithOtherClubDamUnknownState
                                             //       "register_with_event":
                                             //           "1"
                                             //     },
-                                            uploadData(obidient.toString(),
-                                                stallReq.toString(), Day, Type);
+                                            uploadData(obidient.toString(), stallReq.toString(),
+                                                Day, Type);
                                             //       headers: requestHeaders);
                                             //   var data = json.decode(responce.body);
                                             //   if (data['code'].toString() == "200") {

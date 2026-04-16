@@ -39,19 +39,15 @@ class _KennelNumberState extends State<KennelNumber> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
 
-        final birthday = DateTime(int.parse(date.year.toString()),
-            int.parse(date.month.toString()), int.parse(date.day.toString()));
+        final birthday = DateTime(int.parse(date.year.toString()), int.parse(date.month.toString()),
+            int.parse(date.day.toString()));
         final date2 = DateTime.now();
         difference = date2.difference(birthday).inDays;
         print(difference.toString());
@@ -88,8 +84,7 @@ class _KennelNumberState extends State<KennelNumber> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_dam_list"),
+      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_dam_list"),
           headers: requestHeaders);
 
       var body = json.decode(res.body);
@@ -189,8 +184,7 @@ class _KennelNumberState extends State<KennelNumber> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back,
-                    color: Color.fromARGB(255, 223, 39, 39)),
+                icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text(
@@ -199,10 +193,8 @@ class _KennelNumberState extends State<KennelNumber> {
                     shadows: [
                       Shadow(
                         blurRadius: 10.0.sp, // shadow blur
-                        color: const Color.fromARGB(
-                            255, 223, 71, 45), // shadow color
-                        offset: const Offset(
-                            2.0, 2.0), // how much shadow will be shown
+                        color: const Color.fromARGB(255, 223, 71, 45), // shadow color
+                        offset: const Offset(2.0, 2.0), // how much shadow will be shown
                       ),
                     ],
                     fontSize: 23.sp,
@@ -239,8 +231,7 @@ class _KennelNumberState extends State<KennelNumber> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(
-                          top: 25.0, left: 20, bottom: 15),
+                      padding: const EdgeInsets.only(top: 25.0, left: 20, bottom: 15),
                       child: Text(
                         "Number Of Puppies In The Litter",
                         style: TextStyle(
@@ -250,8 +241,7 @@ class _KennelNumberState extends State<KennelNumber> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          top: 5.0, left: 15, bottom: 5, right: 15),
+                      padding: const EdgeInsets.only(top: 5.0, left: 15, bottom: 5, right: 15),
                       child: TextField(
                         maxLines: 1,
                         controller: address,
@@ -259,13 +249,11 @@ class _KennelNumberState extends State<KennelNumber> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
                         ],
-                        keyboardType: const TextInputType.numberWithOptions(
-                            decimal: false),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: false),
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(4)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.green),
+                            borderSide: BorderSide(width: 1, color: Colors.green),
                           ),
                           // labelText: 'Address',
                           hintText: 'Number Of Puppies In The Litters',
@@ -284,22 +272,17 @@ class _KennelNumberState extends State<KennelNumber> {
                     ),
                     if (Nodata.toString() == "false")
                       Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5.0, left: 15, bottom: 5, right: 15),
+                        padding: const EdgeInsets.only(top: 5.0, left: 15, bottom: 5, right: 15),
                         child: TextField(
-                          style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.w600),
+                          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
                           maxLines: 1,
                           controller: avalable,
                           enabled: false,
-                          keyboardType: const TextInputType.numberWithOptions(
-                              decimal: false),
+                          keyboardType: const TextInputType.numberWithOptions(decimal: false),
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.green),
+                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(width: 1, color: Colors.green),
                             ),
                             // labelText: 'Address',
                             hintText: 'No Dog registered yet.',
@@ -314,8 +297,7 @@ class _KennelNumberState extends State<KennelNumber> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.blueGrey),
                                     borderRadius: BorderRadius.circular(5),
@@ -336,13 +318,11 @@ class _KennelNumberState extends State<KennelNumber> {
                                         return DropdownMenuItem<String>(
                                           value: e.damRegNumber.toString(),
                                           child: SizedBox(
-                                            width: double
-                                                .infinity, // Auto size based on content
+                                            width: double.infinity, // Auto size based on content
                                             child: Text(
                                               e.petName.toString(),
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 95, 46, 46),
+                                                  color: const Color.fromARGB(255, 95, 46, 46),
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -409,9 +389,8 @@ class _KennelNumberState extends State<KennelNumber> {
                           SizedBox(
                             width: 140.sp,
                             child: TextField(
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
+                              style:
+                                  const TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
                               onTap: () {},
                               controller: dateofbirth,
                               enabled: false,
@@ -427,10 +406,8 @@ class _KennelNumberState extends State<KennelNumber> {
                                 // ),
                                 prefixIcon: const Icon(Icons.date_range),
                                 border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.sp)),
-                                  borderSide: const BorderSide(
-                                      width: 1, color: Colors.green),
+                                  borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                  borderSide: const BorderSide(width: 1, color: Colors.green),
                                 ),
                                 labelText: 'Date of Birth',
                                 hintText: '',
@@ -483,27 +460,22 @@ class _KennelNumberState extends State<KennelNumber> {
                         controller: counrty,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(4.sp)),
-                            borderSide:
-                                const BorderSide(width: 1, color: Colors.green),
+                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                            borderSide: const BorderSide(width: 1, color: Colors.green),
                           ),
                           labelText: 'Country Bred in',
                           hintText: 'Eg.India',
-                          errorText:
-                              countryvalidate ? "Value Can't Be Empty" : null,
+                          errorText: countryvalidate ? "Value Can't Be Empty" : null,
                         ),
                       ),
                     ),
                     Center(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 43, 9, 168),
+                              backgroundColor: const Color.fromARGB(255, 43, 9, 168),
                               textStyle: TextStyle(
                                   fontSize: 10.sp,
-                                  color:
-                                      const Color.fromARGB(255, 241, 236, 236),
+                                  color: const Color.fromARGB(255, 241, 236, 236),
                                   fontWeight: FontWeight.bold)),
                           onPressed: () {
                             // Submit();
@@ -529,8 +501,7 @@ class _KennelNumberState extends State<KennelNumber> {
                                   print(damnumbers);
 
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          LitterRegistration(
+                                      builder: (BuildContext context) => LitterRegistration(
                                             value: address.text.toString(),
                                             dob: dateofbirth.text.toString(),
                                             // damnumber: damnumbers.toString(),

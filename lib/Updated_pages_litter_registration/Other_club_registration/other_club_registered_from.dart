@@ -12,6 +12,7 @@ import 'package:inkc/dropdownmodel/drop_down_color_and_making_list.dart';
 import 'package:inkc/image_helper.dart';
 // import 'package:myprofile_ui/pages/myprofile.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,12 +43,10 @@ class OtherClubRegisteredFromOtherClub extends StatefulWidget {
   const OtherClubRegisteredFromOtherClub({super.key});
 
   @override
-  _OtherClubRegisteredFromOtherClubState createState() =>
-      _OtherClubRegisteredFromOtherClubState();
+  _OtherClubRegisteredFromOtherClubState createState() => _OtherClubRegisteredFromOtherClubState();
 }
 
-class _OtherClubRegisteredFromOtherClubState
-    extends State<OtherClubRegisteredFromOtherClub> {
+class _OtherClubRegisteredFromOtherClubState extends State<OtherClubRegisteredFromOtherClub> {
   File? _image;
   File? _sirefrontside;
   File? _sirebackside;
@@ -72,16 +71,12 @@ class _OtherClubRegisteredFromOtherClubState
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -94,8 +89,8 @@ class _OtherClubRegisteredFromOtherClubState
   final _firstpicker = ImagePicker();
 
   Future getfirstImage() async {
-    final pickedFilefirst = await _firstpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilefirst =
+        await _firstpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilefirst != null) {
       firstImage = File(pickedFilefirst.path);
@@ -127,8 +122,7 @@ class _OtherClubRegisteredFromOtherClubState
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -191,8 +185,7 @@ class _OtherClubRegisteredFromOtherClubState
       DateTime now = DateTime.now();
 
       FormData formData = FormData.fromMap({
-        'pet_image': await MultipartFile.fromFile(firstImage!.path,
-            filename: "${now.second}.jpg"),
+        'pet_image': await MultipartFile.fromFile(firstImage!.path, filename: "${now.second}.jpg"),
         'pet_gender': Gender,
         'birth_date': DOB,
         'pet_name': DogName,
@@ -207,15 +200,15 @@ class _OtherClubRegisteredFromOtherClubState
       print(
           "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
 
-      Response response = await dio.post(
-          'https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
-          data: formData,
-          options: Options(headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Usertoken': token,
-            'Userid': userid
-          }));
+      Response response =
+          await dio.post('https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
+              data: formData,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -230,14 +223,14 @@ class _OtherClubRegisteredFromOtherClubState
           title: 'Success...',
           text: 'SuccessFully Registered',
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('SuccessFully Registered')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
       } else {
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Something went wrong')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Something went wrong')));
         print('something worng');
       }
 
@@ -339,26 +332,21 @@ class _OtherClubRegisteredFromOtherClubState
       String sireback = "";
 
       if (_image.toString() == "null") {
-        SharedPreferences sharedprefrence =
-            await SharedPreferences.getInstance();
+        SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
         userid = sharedprefrence.getString("Userid")!;
         token = sharedprefrence.getString("Token")!;
         Dio dio = Dio();
         DateTime now = DateTime.now();
 
         FormData formData = FormData.fromMap({
-          'dam_front_side_certificate': await MultipartFile.fromFile(
-              _damfrontside!.path,
-              filename: "${now.second}.jpg"),
-          'dam_back_side_certificate': await MultipartFile.fromFile(
-              _dambackside!.path,
-              filename: "${now.second}.jpg"),
-          'sire_front_side_certificate': await MultipartFile.fromFile(
-              _sirefrontside!.path,
-              filename: "${now.second}.jpg"),
-          'sire_back_side_certificate': await MultipartFile.fromFile(
-              _sirebackside!.path,
-              filename: "${now.second}.jpg"),
+          'dam_front_side_certificate':
+              await MultipartFile.fromFile(_damfrontside!.path, filename: "${now.second}.jpg"),
+          'dam_back_side_certificate':
+              await MultipartFile.fromFile(_dambackside!.path, filename: "${now.second}.jpg"),
+          'sire_front_side_certificate':
+              await MultipartFile.fromFile(_sirefrontside!.path, filename: "${now.second}.jpg"),
+          'sire_back_side_certificate':
+              await MultipartFile.fromFile(_sirebackside!.path, filename: "${now.second}.jpg"),
           if (_Siretransferformcertificate.toString() != "null")
             'other_club_transfer_form_sire': await MultipartFile.fromFile(
                 _Siretransferformcertificate!.path,
@@ -369,15 +357,15 @@ class _OtherClubRegisteredFromOtherClubState
                 filename: "${now.second}.jpg"),
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         print(response);
 
@@ -389,10 +377,8 @@ class _OtherClubRegisteredFromOtherClubState
           var sirefront = responseData['data']['sire_front_side_certificate'];
           var sireback = responseData['data']['sire_back_side_certificate'];
 
-          var siretranform =
-              responseData['data']['other_club_transfer_form_sire'];
-          var damtranform =
-              responseData['data']['other_club_transfer_form_dam'];
+          var siretranform = responseData['data']['other_club_transfer_form_sire'];
+          var damtranform = responseData['data']['other_club_transfer_form_dam'];
 
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => LitterPuppyRegistration(
@@ -415,33 +401,28 @@ class _OtherClubRegisteredFromOtherClubState
           setState(() {
             showSpinner = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Something went wrong')));
           print('something worng');
         }
       } else {
-        SharedPreferences sharedprefrence =
-            await SharedPreferences.getInstance();
+        SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
         userid = sharedprefrence.getString("Userid")!;
         token = sharedprefrence.getString("Token")!;
         Dio dio = Dio();
         DateTime now = DateTime.now();
 
         FormData formData = FormData.fromMap({
-          'stud_agreement_form': await MultipartFile.fromFile(_image!.path,
-              filename: "${now.second}.jpg"),
-          'dam_front_side_certificate': await MultipartFile.fromFile(
-              _damfrontside!.path,
-              filename: "${now.second}.jpg"),
-          'dam_back_side_certificate': await MultipartFile.fromFile(
-              _dambackside!.path,
-              filename: "${now.second}.jpg"),
-          'sire_front_side_certificate': await MultipartFile.fromFile(
-              _sirefrontside!.path,
-              filename: "${now.second}.jpg"),
-          'sire_back_side_certificate': await MultipartFile.fromFile(
-              _sirebackside!.path,
-              filename: "${now.second}.jpg"),
+          'stud_agreement_form':
+              await MultipartFile.fromFile(_image!.path, filename: "${now.second}.jpg"),
+          'dam_front_side_certificate':
+              await MultipartFile.fromFile(_damfrontside!.path, filename: "${now.second}.jpg"),
+          'dam_back_side_certificate':
+              await MultipartFile.fromFile(_dambackside!.path, filename: "${now.second}.jpg"),
+          'sire_front_side_certificate':
+              await MultipartFile.fromFile(_sirefrontside!.path, filename: "${now.second}.jpg"),
+          'sire_back_side_certificate':
+              await MultipartFile.fromFile(_sirebackside!.path, filename: "${now.second}.jpg"),
           if (_Siretransferformcertificate.toString() != "null")
             'other_club_transfer_form_sire': await MultipartFile.fromFile(
                 _Siretransferformcertificate!.path,
@@ -452,15 +433,15 @@ class _OtherClubRegisteredFromOtherClubState
                 filename: "${now.second}.jpg"),
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         print(response);
 
@@ -473,10 +454,8 @@ class _OtherClubRegisteredFromOtherClubState
           var sirefront = responseData['data']['sire_front_side_certificate'];
           var sireback = responseData['data']['sire_back_side_certificate'];
 
-          var siretranform =
-              responseData['data']['other_club_transfer_form_sire'];
-          var damtranform =
-              responseData['data']['other_club_transfer_form_dam'];
+          var siretranform = responseData['data']['other_club_transfer_form_sire'];
+          var damtranform = responseData['data']['other_club_transfer_form_dam'];
 
           print(studAgreementForm);
 
@@ -501,8 +480,8 @@ class _OtherClubRegisteredFromOtherClubState
           setState(() {
             showSpinner = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Something went wrong')));
           print('something worng');
         }
       }
@@ -612,8 +591,7 @@ class _OtherClubRegisteredFromOtherClubState
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -733,38 +711,151 @@ class _OtherClubRegisteredFromOtherClubState
                             child: CircleAvatar(
                               backgroundColor: const Color(0xEBA020F0),
                               radius: 64,
-                              foregroundImage: _sirefrontside != null
-                                  ? FileImage(_sirefrontside!)
-                                  : null,
+                              foregroundImage:
+                                  _sirefrontside != null ? FileImage(_sirefrontside!) : null,
                               child: const Text(
                                 "Select image",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 199, 7, 7),
-                            ),
-                            onPressed: () async {
-                              final files = await imagehelper.PickImage();
-                              if (files.isNotEmpty) {
-                                final cropperFile = await imagehelper.crop(
-                                    file: files.first,
-                                    cropStyle: CropStyle.circle);
-                                if (cropperFile != null) {
-                                  setState(() =>
-                                      _sirefrontside = File(cropperFile.path));
-                                  print("justcheck$_sirefrontside");
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Pick Image',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                          // ElevatedButton(
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor:
+                          //         const Color.fromARGB(255, 199, 7, 7),
+                          //   ),
+                          //   onPressed: () async {
+                          //     final files = await imagehelper.PickImage();
+                          //     if (files.isNotEmpty) {
+                          //       final cropperFile = await imagehelper.crop(
+                          //           file: files.first,
+                          //           cropStyle: CropStyle.circle);
+                          //       if (cropperFile != null) {
+                          //         setState(() =>
+                          //             _sirefrontside = File(cropperFile.path));
+                          //         print("justcheck$_sirefrontside");
+                          //       }
+                          //     }
+                          //   },
+                          //   child: const Text(
+                          //     'Pick Image',
+                          //     style: TextStyle(color: Colors.white),
+                          //   ),
+                          // ),
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                ),
+                                onPressed: () async {
+                                  final picker = ImagePicker();
+                                  final pickedFile =
+                                      await picker.pickImage(source: ImageSource.gallery);
+
+                                  if (pickedFile != null) {
+                                    final croppedFile = await ImageCropper().cropImage(
+                                      sourcePath: pickedFile.path,
+                                      aspectRatio:
+                                          const CropAspectRatio(ratioX: 1, ratioY: 1), // Fixed 4:3
+                                      compressQuality: 70,
+                                      uiSettings: [
+                                        AndroidUiSettings(
+                                          toolbarTitle: 'Crop Image',
+                                          lockAspectRatio: true, // lock to 4:3
+                                        ),
+                                        IOSUiSettings(aspectRatioLockEnabled: true),
+                                      ],
+                                    );
+
+                                    if (croppedFile != null) {
+                                      setState(() {
+                                        _sirefrontside = File(croppedFile.path);
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.photo_library,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                ),
+                                onPressed: () async {
+                                  // final picker = ImagePicker();
+                                  // final pickedFile =
+                                  //     await picker.pickImage(source: ImageSource.camera);
+
+                                  // if (pickedFile != null) {
+                                  //   final croppedFile = await ImageCropper().cropImage(
+                                  //     sourcePath: pickedFile.path,
+                                  //     aspectRatio:
+                                  //         const CropAspectRatio(ratioX: 1, ratioY: 1), // Fixed 4:3
+                                  //     compressQuality: 70,
+                                  //     uiSettings: [
+                                  //       AndroidUiSettings(
+                                  //         toolbarTitle: 'Crop Image',
+                                  //         lockAspectRatio: true, // lock to 4:3
+                                  //       ),
+                                  //       IOSUiSettings(aspectRatioLockEnabled: true),
+                                  //     ],
+                                  //   );
+
+                                  //   if (croppedFile != null) {
+                                  //     setState(() {
+                                  //       _sirefrontside = File(croppedFile.path);
+                                  //     });
+                                  //   }
+                                  // }
+
+                                  var status = await Permission.camera.status;
+
+                                  if (status.isDenied) {
+                                    // Ask permission again
+                                    status = await Permission.camera.request();
+                                  }
+
+                                  if (status.isGranted) {
+                                    final picker = ImagePicker();
+                                    final pickedFile =
+                                        await picker.pickImage(source: ImageSource.camera);
+
+                                    if (pickedFile != null) {
+                                      final croppedFile = await ImageCropper().cropImage(
+                                        sourcePath: pickedFile.path,
+                                        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+                                        compressQuality: 70,
+                                        uiSettings: [
+                                          AndroidUiSettings(
+                                            toolbarTitle: 'Crop Image',
+                                            lockAspectRatio: true,
+                                          ),
+                                          IOSUiSettings(aspectRatioLockEnabled: true),
+                                        ],
+                                      );
+
+                                      if (croppedFile != null) {
+                                        setState(() {
+                                          _sirefrontside = File(croppedFile.path);
+                                        });
+                                      }
+                                    }
+                                  } else if (status.isPermanentlyDenied) {
+                                    // User clicked "Don't ask again"
+                                    openAppSettings();
+                                  } else {
+                                    print("Camera permission denied");
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -797,38 +888,126 @@ class _OtherClubRegisteredFromOtherClubState
                             child: CircleAvatar(
                               backgroundColor: const Color(0xEBA020F0),
                               radius: 64,
-                              foregroundImage: _sirebackside != null
-                                  ? FileImage(_sirebackside!)
-                                  : null,
+                              foregroundImage:
+                                  _sirebackside != null ? FileImage(_sirebackside!) : null,
                               child: const Text(
                                 "Select image",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 199, 7, 7),
-                            ),
-                            onPressed: () async {
-                              final files = await imagehelper.PickImage();
-                              if (files.isNotEmpty) {
-                                final cropperFile = await imagehelper.crop(
-                                    file: files.first,
-                                    cropStyle: CropStyle.circle);
-                                if (cropperFile != null) {
-                                  setState(() =>
-                                      _sirebackside = File(cropperFile.path));
-                                  print("justcheck$_sirebackside");
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Pick Image',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                          // ElevatedButton(
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor:
+                          //         const Color.fromARGB(255, 199, 7, 7),
+                          //   ),
+                          //   onPressed: () async {
+                          //     final files = await imagehelper.PickImage();
+                          //     if (files.isNotEmpty) {
+                          //       final cropperFile = await imagehelper.crop(
+                          //           file: files.first,
+                          //           cropStyle: CropStyle.circle);
+                          //       if (cropperFile != null) {
+                          //         setState(() =>
+                          //             _sirebackside = File(cropperFile.path));
+                          //         print("justcheck$_sirebackside");
+                          //       }
+                          //     }
+                          //   },
+                          //   child: const Text(
+                          //     'Pick Image',
+                          //     style: TextStyle(color: Colors.white),
+                          //   ),
+                          // ),
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                ),
+                                onPressed: () async {
+                                  final picker = ImagePicker();
+                                  final pickedFile =
+                                      await picker.pickImage(source: ImageSource.gallery);
+
+                                  if (pickedFile != null) {
+                                    final croppedFile = await ImageCropper().cropImage(
+                                      sourcePath: pickedFile.path,
+                                      aspectRatio:
+                                          const CropAspectRatio(ratioX: 1, ratioY: 1), // Fixed 4:3
+                                      compressQuality: 70,
+                                      uiSettings: [
+                                        AndroidUiSettings(
+                                          toolbarTitle: 'Crop Image',
+                                          lockAspectRatio: true, // lock to 4:3
+                                        ),
+                                        IOSUiSettings(aspectRatioLockEnabled: true),
+                                      ],
+                                    );
+
+                                    if (croppedFile != null) {
+                                      setState(() {
+                                        _sirebackside = File(croppedFile.path);
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.photo_library,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                ),
+                                onPressed: () async {
+                                  var status = await Permission.camera.status;
+
+                                  if (status.isDenied) {
+                                    // Ask permission again
+                                    status = await Permission.camera.request();
+                                  }
+
+                                  if (status.isGranted) {
+                                    final picker = ImagePicker();
+                                    final pickedFile =
+                                        await picker.pickImage(source: ImageSource.camera);
+
+                                    if (pickedFile != null) {
+                                      final croppedFile = await ImageCropper().cropImage(
+                                        sourcePath: pickedFile.path,
+                                        aspectRatio: const CropAspectRatio(
+                                            ratioX: 1, ratioY: 1), // Fixed 4:3
+                                        compressQuality: 70,
+                                        uiSettings: [
+                                          AndroidUiSettings(
+                                            toolbarTitle: 'Crop Image',
+                                            lockAspectRatio: true, // lock to 4:3
+                                          ),
+                                          IOSUiSettings(aspectRatioLockEnabled: true),
+                                        ],
+                                      );
+
+                                      if (croppedFile != null) {
+                                        setState(() {
+                                          _sirebackside = File(croppedFile.path);
+                                        });
+                                      }
+                                    }
+                                  } else if (status.isPermanentlyDenied) {
+                                    // User clicked "Don't ask again"
+                                    openAppSettings();
+                                  } else {
+                                    print("Camera permission denied");
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -854,40 +1033,129 @@ class _OtherClubRegisteredFromOtherClubState
                             child: CircleAvatar(
                               backgroundColor: const Color(0xEBA020F0),
                               radius: 64,
-                              foregroundImage:
-                                  _Siretransferformcertificate != null
-                                      ? FileImage(_Siretransferformcertificate!)
-                                      : null,
+                              foregroundImage: _Siretransferformcertificate != null
+                                  ? FileImage(_Siretransferformcertificate!)
+                                  : null,
                               child: const Text(
                                 "Select image",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 199, 7, 7),
-                            ),
-                            onPressed: () async {
-                              final files = await imagehelper.PickImage();
-                              if (files.isNotEmpty) {
-                                final cropperFile = await imagehelper.crop(
-                                    file: files.first,
-                                    cropStyle: CropStyle.circle);
-                                if (cropperFile != null) {
-                                  setState(() => _Siretransferformcertificate =
-                                      File(cropperFile.path));
-                                  print(
-                                      "justcheck$_Siretransferformcertificate");
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Pick Image',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                          // ElevatedButton(
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor:
+                          //         const Color.fromARGB(255, 199, 7, 7),
+                          //   ),
+                          //   onPressed: () async {
+                          //     final files = await imagehelper.PickImage();
+                          //     if (files.isNotEmpty) {
+                          //       final cropperFile = await imagehelper.crop(
+                          //           file: files.first,
+                          //           cropStyle: CropStyle.circle);
+                          //       if (cropperFile != null) {
+                          //         setState(() => _Siretransferformcertificate =
+                          //             File(cropperFile.path));
+                          //         print(
+                          //             "justcheck$_Siretransferformcertificate");
+                          //       }
+                          //     }
+                          //   },
+                          //   child: const Text(
+                          //     'Pick Image',
+                          //     style: TextStyle(color: Colors.white),
+                          //   ),
+                          // ),
+
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                ),
+                                onPressed: () async {
+                                  final picker = ImagePicker();
+                                  final pickedFile =
+                                      await picker.pickImage(source: ImageSource.gallery);
+
+                                  if (pickedFile != null) {
+                                    final croppedFile = await ImageCropper().cropImage(
+                                      sourcePath: pickedFile.path,
+                                      aspectRatio:
+                                          const CropAspectRatio(ratioX: 1, ratioY: 1), // Fixed 4:3
+                                      compressQuality: 70,
+                                      uiSettings: [
+                                        AndroidUiSettings(
+                                          toolbarTitle: 'Crop Image',
+                                          lockAspectRatio: true, // lock to 4:3
+                                        ),
+                                        IOSUiSettings(aspectRatioLockEnabled: true),
+                                      ],
+                                    );
+
+                                    if (croppedFile != null) {
+                                      setState(() {
+                                        _Siretransferformcertificate = File(croppedFile.path);
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.photo_library,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                ),
+                                onPressed: () async {
+                                  var status = await Permission.camera.status;
+
+                                  if (status.isDenied) {
+                                    // Ask permission again
+                                    status = await Permission.camera.request();
+                                  }
+
+                                  if (status.isGranted) {
+                                    final picker = ImagePicker();
+                                    final pickedFile =
+                                        await picker.pickImage(source: ImageSource.camera);
+
+                                    if (pickedFile != null) {
+                                      final croppedFile = await ImageCropper().cropImage(
+                                        sourcePath: pickedFile.path,
+                                        aspectRatio: const CropAspectRatio(
+                                            ratioX: 1, ratioY: 1), // Fixed 4:3
+                                        compressQuality: 70,
+                                        uiSettings: [
+                                          AndroidUiSettings(
+                                            toolbarTitle: 'Crop Image',
+                                            lockAspectRatio: true, // lock to 4:3
+                                          ),
+                                          IOSUiSettings(aspectRatioLockEnabled: true),
+                                        ],
+                                      );
+
+                                      if (croppedFile != null) {
+                                        setState(() {
+                                          _Siretransferformcertificate = File(croppedFile.path);
+                                        });
+                                      }
+                                    }
+                                  } else if (status.isPermanentlyDenied) {
+                                    // User clicked "Don't ask again"
+                                    openAppSettings();
+                                  } else {
+                                    print("Camera permission denied");
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -920,38 +1188,126 @@ class _OtherClubRegisteredFromOtherClubState
                             child: CircleAvatar(
                               backgroundColor: const Color(0xEBA020F0),
                               radius: 64,
-                              foregroundImage: _damfrontside != null
-                                  ? FileImage(_damfrontside!)
-                                  : null,
+                              foregroundImage:
+                                  _damfrontside != null ? FileImage(_damfrontside!) : null,
                               child: const Text(
                                 "Select image",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 199, 7, 7),
-                            ),
-                            onPressed: () async {
-                              final files = await imagehelper.PickImage();
-                              if (files.isNotEmpty) {
-                                final cropperFile = await imagehelper.crop(
-                                    file: files.first,
-                                    cropStyle: CropStyle.circle);
-                                if (cropperFile != null) {
-                                  setState(() =>
-                                      _damfrontside = File(cropperFile.path));
-                                  print("justcheck$_damfrontside");
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Pick Image',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                          // ElevatedButton(
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor:
+                          //         const Color.fromARGB(255, 199, 7, 7),
+                          //   ),
+                          //   onPressed: () async {
+                          //     final files = await imagehelper.PickImage();
+                          //     if (files.isNotEmpty) {
+                          //       final cropperFile = await imagehelper.crop(
+                          //           file: files.first,
+                          //           cropStyle: CropStyle.circle);
+                          //       if (cropperFile != null) {
+                          //         setState(() =>
+                          //             _damfrontside = File(cropperFile.path));
+                          //         print("justcheck$_damfrontside");
+                          //       }
+                          //     }
+                          //   },
+                          //   child: const Text(
+                          //     'Pick Image',
+                          //     style: TextStyle(color: Colors.white),
+                          //   ),
+                          // ),
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                ),
+                                onPressed: () async {
+                                  final picker = ImagePicker();
+                                  final pickedFile =
+                                      await picker.pickImage(source: ImageSource.gallery);
+
+                                  if (pickedFile != null) {
+                                    final croppedFile = await ImageCropper().cropImage(
+                                      sourcePath: pickedFile.path,
+                                      aspectRatio:
+                                          const CropAspectRatio(ratioX: 1, ratioY: 1), // Fixed 4:3
+                                      compressQuality: 70,
+                                      uiSettings: [
+                                        AndroidUiSettings(
+                                          toolbarTitle: 'Crop Image',
+                                          lockAspectRatio: true, // lock to 4:3
+                                        ),
+                                        IOSUiSettings(aspectRatioLockEnabled: true),
+                                      ],
+                                    );
+
+                                    if (croppedFile != null) {
+                                      setState(() {
+                                        _damfrontside = File(croppedFile.path);
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.photo_library,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                ),
+                                onPressed: () async {
+                                  var status = await Permission.camera.status;
+
+                                  if (status.isDenied) {
+                                    // Ask permission again
+                                    status = await Permission.camera.request();
+                                  }
+
+                                  if (status.isGranted) {
+                                    final picker = ImagePicker();
+                                    final pickedFile =
+                                        await picker.pickImage(source: ImageSource.camera);
+
+                                    if (pickedFile != null) {
+                                      final croppedFile = await ImageCropper().cropImage(
+                                        sourcePath: pickedFile.path,
+                                        aspectRatio: const CropAspectRatio(
+                                            ratioX: 1, ratioY: 1), // Fixed 4:3
+                                        compressQuality: 70,
+                                        uiSettings: [
+                                          AndroidUiSettings(
+                                            toolbarTitle: 'Crop Image',
+                                            lockAspectRatio: true, // lock to 4:3
+                                          ),
+                                          IOSUiSettings(aspectRatioLockEnabled: true),
+                                        ],
+                                      );
+
+                                      if (croppedFile != null) {
+                                        setState(() {
+                                          _damfrontside = File(croppedFile.path);
+                                        });
+                                      }
+                                    }
+                                  } else if (status.isPermanentlyDenied) {
+                                    // User clicked "Don't ask again"
+                                    openAppSettings();
+                                  } else {
+                                    print("Camera permission denied");
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -984,38 +1340,127 @@ class _OtherClubRegisteredFromOtherClubState
                             child: CircleAvatar(
                               backgroundColor: const Color(0xEBA020F0),
                               radius: 64,
-                              foregroundImage: _dambackside != null
-                                  ? FileImage(_dambackside!)
-                                  : null,
+                              foregroundImage:
+                                  _dambackside != null ? FileImage(_dambackside!) : null,
                               child: const Text(
                                 "Select image",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 199, 7, 7),
-                            ),
-                            onPressed: () async {
-                              final files = await imagehelper.PickImage();
-                              if (files.isNotEmpty) {
-                                final cropperFile = await imagehelper.crop(
-                                    file: files.first,
-                                    cropStyle: CropStyle.circle);
-                                if (cropperFile != null) {
-                                  setState(() =>
-                                      _dambackside = File(cropperFile.path));
-                                  print("justcheck$_dambackside");
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Pick Image',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                          // ElevatedButton(
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor:
+                          //         const Color.fromARGB(255, 199, 7, 7),
+                          //   ),
+                          //   onPressed: () async {
+                          //     final files = await imagehelper.PickImage();
+                          //     if (files.isNotEmpty) {
+                          //       final cropperFile = await imagehelper.crop(
+                          //           file: files.first,
+                          //           cropStyle: CropStyle.circle);
+                          //       if (cropperFile != null) {
+                          //         setState(() =>
+                          //             _dambackside = File(cropperFile.path));
+                          //         print("justcheck$_dambackside");
+                          //       }
+                          //     }
+                          //   },
+                          //   child: const Text(
+                          //     'Pick Image',
+                          //     style: TextStyle(color: Colors.white),
+                          //   ),
+                          // ),
+
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                ),
+                                onPressed: () async {
+                                  final picker = ImagePicker();
+                                  final pickedFile =
+                                      await picker.pickImage(source: ImageSource.gallery);
+
+                                  if (pickedFile != null) {
+                                    final croppedFile = await ImageCropper().cropImage(
+                                      sourcePath: pickedFile.path,
+                                      aspectRatio:
+                                          const CropAspectRatio(ratioX: 1, ratioY: 1), // Fixed 4:3
+                                      compressQuality: 70,
+                                      uiSettings: [
+                                        AndroidUiSettings(
+                                          toolbarTitle: 'Crop Image',
+                                          lockAspectRatio: true, // lock to 4:3
+                                        ),
+                                        IOSUiSettings(aspectRatioLockEnabled: true),
+                                      ],
+                                    );
+
+                                    if (croppedFile != null) {
+                                      setState(() {
+                                        _dambackside = File(croppedFile.path);
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.photo_library,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                ),
+                                onPressed: () async {
+                                  var status = await Permission.camera.status;
+
+                                  if (status.isDenied) {
+                                    // Ask permission again
+                                    status = await Permission.camera.request();
+                                  }
+
+                                  if (status.isGranted) {
+                                    final picker = ImagePicker();
+                                    final pickedFile =
+                                        await picker.pickImage(source: ImageSource.camera);
+
+                                    if (pickedFile != null) {
+                                      final croppedFile = await ImageCropper().cropImage(
+                                        sourcePath: pickedFile.path,
+                                        aspectRatio: const CropAspectRatio(
+                                            ratioX: 1, ratioY: 1), // Fixed 4:3
+                                        compressQuality: 70,
+                                        uiSettings: [
+                                          AndroidUiSettings(
+                                            toolbarTitle: 'Crop Image',
+                                            lockAspectRatio: true, // lock to 4:3
+                                          ),
+                                          IOSUiSettings(aspectRatioLockEnabled: true),
+                                        ],
+                                      );
+
+                                      if (croppedFile != null) {
+                                        setState(() {
+                                          _dambackside = File(croppedFile.path);
+                                        });
+                                      }
+                                    }
+                                  } else if (status.isPermanentlyDenied) {
+                                    // User clicked "Don't ask again"
+                                    openAppSettings();
+                                  } else {
+                                    print("Camera permission denied");
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -1041,40 +1486,129 @@ class _OtherClubRegisteredFromOtherClubState
                             child: CircleAvatar(
                               backgroundColor: const Color(0xEBA020F0),
                               radius: 64,
-                              foregroundImage:
-                                  _Damtransferformcertificate != null
-                                      ? FileImage(_Damtransferformcertificate!)
-                                      : null,
+                              foregroundImage: _Damtransferformcertificate != null
+                                  ? FileImage(_Damtransferformcertificate!)
+                                  : null,
                               child: const Text(
                                 "Select image",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 199, 7, 7),
-                            ),
-                            onPressed: () async {
-                              final files = await imagehelper.PickImage();
-                              if (files.isNotEmpty) {
-                                final cropperFile = await imagehelper.crop(
-                                    file: files.first,
-                                    cropStyle: CropStyle.circle);
-                                if (cropperFile != null) {
-                                  setState(() => _Damtransferformcertificate =
-                                      File(cropperFile.path));
-                                  print(
-                                      "justcheck$_Damtransferformcertificate");
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Pick Image',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                          // ElevatedButton(
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor:
+                          //         const Color.fromARGB(255, 199, 7, 7),
+                          //   ),
+                          //   onPressed: () async {
+                          //     final files = await imagehelper.PickImage();
+                          //     if (files.isNotEmpty) {
+                          //       final cropperFile = await imagehelper.crop(
+                          //           file: files.first,
+                          //           cropStyle: CropStyle.circle);
+                          //       if (cropperFile != null) {
+                          //         setState(() => _Damtransferformcertificate =
+                          //             File(cropperFile.path));
+                          //         print(
+                          //             "justcheck$_Damtransferformcertificate");
+                          //       }
+                          //     }
+                          //   },
+                          //   child: const Text(
+                          //     'Pick Image',
+                          //     style: TextStyle(color: Colors.white),
+                          //   ),
+                          // ),
+
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                ),
+                                onPressed: () async {
+                                  final picker = ImagePicker();
+                                  final pickedFile =
+                                      await picker.pickImage(source: ImageSource.gallery);
+
+                                  if (pickedFile != null) {
+                                    final croppedFile = await ImageCropper().cropImage(
+                                      sourcePath: pickedFile.path,
+                                      aspectRatio:
+                                          const CropAspectRatio(ratioX: 1, ratioY: 1), // Fixed 4:3
+                                      compressQuality: 70,
+                                      uiSettings: [
+                                        AndroidUiSettings(
+                                          toolbarTitle: 'Crop Image',
+                                          lockAspectRatio: true, // lock to 4:3
+                                        ),
+                                        IOSUiSettings(aspectRatioLockEnabled: true),
+                                      ],
+                                    );
+
+                                    if (croppedFile != null) {
+                                      setState(() {
+                                        _Damtransferformcertificate = File(croppedFile.path);
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.photo_library,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                ),
+                                onPressed: () async {
+                                  var status = await Permission.camera.status;
+
+                                  if (status.isDenied) {
+                                    // Ask permission again
+                                    status = await Permission.camera.request();
+                                  }
+
+                                  if (status.isGranted) {
+                                    final picker = ImagePicker();
+                                    final pickedFile =
+                                        await picker.pickImage(source: ImageSource.camera);
+
+                                    if (pickedFile != null) {
+                                      final croppedFile = await ImageCropper().cropImage(
+                                        sourcePath: pickedFile.path,
+                                        aspectRatio: const CropAspectRatio(
+                                            ratioX: 1, ratioY: 1), // Fixed 4:3
+                                        compressQuality: 70,
+                                        uiSettings: [
+                                          AndroidUiSettings(
+                                            toolbarTitle: 'Crop Image',
+                                            lockAspectRatio: true, // lock to 4:3
+                                          ),
+                                          IOSUiSettings(aspectRatioLockEnabled: true),
+                                        ],
+                                      );
+
+                                      if (croppedFile != null) {
+                                        setState(() {
+                                          _Damtransferformcertificate = File(croppedFile.path);
+                                        });
+                                      }
+                                    }
+                                  } else if (status.isPermanentlyDenied) {
+                                    // User clicked "Don't ask again"
+                                    openAppSettings();
+                                  } else {
+                                    print("Camera permission denied");
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -1089,8 +1623,7 @@ class _OtherClubRegisteredFromOtherClubState
                                     Text(
                                       "Stud agreement form ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1098,69 +1631,153 @@ class _OtherClubRegisteredFromOtherClubState
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: _image != null
-                                          ? FileImage(_image!)
-                                          : null,
+                                      foregroundImage: _image != null ? FileImage(_image!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _image = File(cropperFile.path));
-                                          print("justcheck$_image");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  // ElevatedButton(
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     backgroundColor:
+                                  //         const Color.fromARGB(255, 199, 7, 7),
+                                  //   ),
+                                  //   onPressed: () async {
+                                  //     final files =
+                                  //         await imagehelper.PickImage();
+                                  //     if (files.isNotEmpty) {
+                                  //       final cropperFile =
+                                  //           await imagehelper.crop(
+                                  //               file: files.first,
+                                  //               cropStyle: CropStyle.circle);
+                                  //       if (cropperFile != null) {
+                                  //         setState(() =>
+                                  //             _image = File(cropperFile.path));
+                                  //         print("justcheck$_image");
+                                  //       }
+                                  //     }
+                                  //   },
+                                  //   child: const Text(
+                                  //     'Pick Image',
+                                  //     style: TextStyle(color: Colors.white),
+                                  //   ),
+                                  // ),
+
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _image = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          var status = await Permission.camera.status;
+
+                                          if (status.isDenied) {
+                                            // Ask permission again
+                                            status = await Permission.camera.request();
+                                          }
+
+                                          if (status.isGranted) {
+                                            final picker = ImagePicker();
+                                            final pickedFile =
+                                                await picker.pickImage(source: ImageSource.camera);
+
+                                            if (pickedFile != null) {
+                                              final croppedFile = await ImageCropper().cropImage(
+                                                sourcePath: pickedFile.path,
+                                                aspectRatio: const CropAspectRatio(
+                                                    ratioX: 1, ratioY: 1), // Fixed 4:3
+                                                compressQuality: 70,
+                                                uiSettings: [
+                                                  AndroidUiSettings(
+                                                    toolbarTitle: 'Crop Image',
+                                                    lockAspectRatio: true, // lock to 4:3
+                                                  ),
+                                                  IOSUiSettings(aspectRatioLockEnabled: true),
+                                                ],
+                                              );
+
+                                              if (croppedFile != null) {
+                                                setState(() {
+                                                  _image = File(croppedFile.path);
+                                                });
+                                              }
+                                            }
+                                          } else if (status.isPermanentlyDenied) {
+                                            // User clicked "Don't ask again"
+                                            openAppSettings();
+                                          } else {
+                                            print("Camera permission denied");
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1176,8 +1793,7 @@ class _OtherClubRegisteredFromOtherClubState
                                       width: 160.sp,
                                       child: TextField(
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
+                                            color: Colors.black, fontWeight: FontWeight.w600),
                                         onTap: () {},
                                         controller: dateofbirth,
                                         enabled: false,
@@ -1194,30 +1810,23 @@ class _OtherClubRegisteredFromOtherClubState
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon:
-                                              const Icon(Icons.date_range),
+                                          prefixIcon: const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.sp)),
-                                            borderSide: const BorderSide(
-                                                width: 1, color: Colors.green),
+                                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                            borderSide:
+                                                const BorderSide(width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
-                                          errorText: datevalidate
-                                              ? "Value Can't Be Empty"
-                                              : null,
+                                          errorText: datevalidate ? "Value Can't Be Empty" : null,
                                         ),
                                       ),
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 231, 25, 25),
+                                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
-                                                color: const Color.fromARGB(
-                                                    255, 241, 236, 236),
+                                                color: const Color.fromARGB(255, 241, 236, 236),
                                                 fontWeight: FontWeight.bold)),
                                         onPressed: () {
                                           selectDatePicker();
@@ -1232,23 +1841,20 @@ class _OtherClubRegisteredFromOtherClubState
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Breed of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1259,39 +1865,27 @@ class _OtherClubRegisteredFromOtherClubState
                                   future: getbreedlist(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
                                     } else {
                                       // DropDownKennelName? selectedItem =
                                       //     findItemById(snapshot.data!, selectedId);
 
                                       return Container(
                                         margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
                                           child: DropdownSearch<DogBreedList>(
                                             items: snapshot.data!,
-                                            itemAsString:
-                                                (DogBreedList? model) =>
-                                                    model?.subCategoryName ??
-                                                    "",
+                                            itemAsString: (DogBreedList? model) =>
+                                                model?.subCategoryName ?? "",
                                             // selectedItem:
                                             //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (DogBreedList? selectedItem) {
+                                            onChanged: (DogBreedList? selectedItem) {
                                               setState(() {
-                                                breedid =
-                                                    selectedItem?.subCatId;
+                                                breedid = selectedItem?.subCatId;
                                                 print(breedid.toString());
                                               });
                                               // setState(() {
@@ -1312,10 +1906,8 @@ class _OtherClubRegisteredFromOtherClubState
                                               //   });
                                               // });
                                             },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
                                                 // labelText: "Select Color/Pattern",
                                                 hintText: "Choose one",
                                                 border: OutlineInputBorder(),
@@ -1324,33 +1916,26 @@ class _OtherClubRegisteredFromOtherClubState
                                             popupProps: PopupProps.menu(
                                               showSearchBox: true,
                                               fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
+                                              itemBuilder: (context, item, isSelected) {
                                                 return ListTile(
                                                   title: Text(
                                                     item.subCategoryName ?? "",
                                                     style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 46, 46),
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
                                                         fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                        fontWeight: FontWeight.bold),
                                                   ),
                                                 );
                                               },
                                             ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
+                                            dropdownBuilder: (context, selectedItem) {
                                               return Text(
-                                                selectedItem?.subCategoryName ??
-                                                    "",
+                                                selectedItem?.subCategoryName ?? "",
                                                 style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 95, 46, 46),
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
                                                     fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    fontWeight: FontWeight.bold),
                                               ); // Display the selected item's name
                                             },
                                           ),
@@ -1359,15 +1944,13 @@ class _OtherClubRegisteredFromOtherClubState
                                     }
                                   }),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1382,36 +1965,29 @@ class _OtherClubRegisteredFromOtherClubState
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     hintText: 'Eg.India',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Number of puppies in the litter ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1424,26 +2000,20 @@ class _OtherClubRegisteredFromOtherClubState
                                   maxLines: 1,
                                   enabled: true,
                                   inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9,]')),
+                                    FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
                                   ],
                                   keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          decimal: false),
+                                      const TextInputType.numberWithOptions(decimal: false),
                                   controller: numbers,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     hintText: 'Number of litter',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -1451,12 +2021,10 @@ class _OtherClubRegisteredFromOtherClubState
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 23, 4, 190),
+                                        backgroundColor: const Color.fromARGB(255, 23, 4, 190),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
-                                            color: const Color.fromARGB(
-                                                255, 241, 236, 236),
+                                            color: const Color.fromARGB(255, 241, 236, 236),
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
                                       String SIRE = sire.text.toString();
@@ -1468,40 +2036,29 @@ class _OtherClubRegisteredFromOtherClubState
                                       String MICRO = MicroRequired.toString();
 
                                       if (numbers.text.toString().isNotEmpty &&
-                                          int.parse(numbers.text.toString()) <=
-                                              10) {
-                                        if (_damfrontside.toString() ==
-                                            "null") {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "Please Select Dam's KCI front side of the certificate")));
-                                        } else if (_dambackside.toString() ==
-                                            "null") {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "Please Select Dam's KCI back side of the certificate")));
-                                        } else if (_sirebackside.toString() ==
-                                            "null") {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "Please Select Sire's KCI back side of the certificate")));
-                                        } else if (_sirebackside.toString() ==
-                                            "null") {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "Please Select Sire's KCI back side of the certificate")));
+                                          int.parse(numbers.text.toString()) <= 10) {
+                                        if (_damfrontside.toString() == "null") {
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Please Select Dam's KCI front side of the certificate")));
+                                        } else if (_dambackside.toString() == "null") {
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Please Select Dam's KCI back side of the certificate")));
+                                        } else if (_sirebackside.toString() == "null") {
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Please Select Sire's KCI back side of the certificate")));
+                                        } else if (_sirebackside.toString() == "null") {
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Please Select Sire's KCI back side of the certificate")));
                                         } else {
                                           UploadImage();
                                         }
                                       } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    'Please enter puppy 0 to 10 only')));
+                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                            content: Text('Please enter puppy 0 to 10 only')));
                                       }
                                     },
                                     child: const Text(

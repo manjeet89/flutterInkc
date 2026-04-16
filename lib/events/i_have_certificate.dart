@@ -78,8 +78,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -124,16 +123,12 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -144,8 +139,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
   final _firstpicker = ImagePicker();
 
   Future getfirstImage() async {
-    final pickedFilefirst = await _firstpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilefirst =
+        await _firstpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilefirst != null) {
       firstImage = File(pickedFilefirst.path);
@@ -161,8 +156,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
   final _secondpicker = ImagePicker();
 
   Future getsecondImage() async {
-    final pickedFilesecond = await _secondpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilesecond =
+        await _secondpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilesecond != null) {
       secondImage = File(pickedFilesecond.path);
@@ -177,8 +172,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
   File? thiredImage;
   final _thiredpicker = ImagePicker();
   Future getthardImage() async {
-    final pickedFilethired = await _thiredpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilethired =
+        await _thiredpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilethired != null) {
       thiredImage = File(pickedFilethired.path);
@@ -202,12 +197,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
   var selectebreedvalue;
   var selectedbreedid;
 
-  final List<String> options = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'A longer option 4'
-  ];
+  final List<String> options = ['Option 1', 'Option 2', 'Option 3', 'A longer option 4'];
 
   Future<List<DropDownKennelName>> getkennelclub() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
@@ -223,8 +213,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/kennel_list_for_non_inkc"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/kennel_list_for_non_inkc"),
           headers: requestHeaders);
       // var data = json.decode(res.body);
       // var dataarray = data['data'];
@@ -269,8 +258,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -371,13 +359,11 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
       DateTime now = DateTime.now();
 
       FormData formData = FormData.fromMap({
-        'pet_image': await MultipartFile.fromFile(firstImage!.path,
-            filename: "${now.second}.jpg"),
-        'front_side_certificate': await MultipartFile.fromFile(
-            secondImage!.path,
-            filename: "${now.second}.jpg"),
-        'back_side_certificate': await MultipartFile.fromFile(thiredImage!.path,
-            filename: "${now.second}.jpg"),
+        'pet_image': await MultipartFile.fromFile(firstImage!.path, filename: "${now.second}.jpg"),
+        'front_side_certificate':
+            await MultipartFile.fromFile(secondImage!.path, filename: "${now.second}.jpg"),
+        'back_side_certificate':
+            await MultipartFile.fromFile(thiredImage!.path, filename: "${now.second}.jpg"),
         'event_id': widget.eventid.toString(),
         'pet_sub_category_id': Breed,
         'kennel_club_prefix': KennelId,
@@ -419,14 +405,14 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
           title: 'Success...',
           text: 'Please Check your cart',
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('SuccessFully Registered')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
       } else {
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Something went wrong')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Something went wrong')));
         //print('something worng');
       }
 
@@ -577,8 +563,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: Color.fromARGB(255, 223, 39, 39)),
+                  icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 223, 39, 39)),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 title: const Text(
@@ -587,10 +572,8 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                       shadows: [
                         Shadow(
                           blurRadius: 10.0, // shadow blur
-                          color:
-                              Color.fromARGB(255, 223, 71, 45), // shadow color
-                          offset:
-                              Offset(2.0, 2.0), // how much shadow will be shown
+                          color: Color.fromARGB(255, 223, 71, 45), // shadow color
+                          offset: Offset(2.0, 2.0), // how much shadow will be shown
                         ),
                       ],
                       fontSize: 25,
@@ -634,12 +617,10 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                       Container(
                         child: firstImage == null
                             ? Container(
-                                margin:
-                                    EdgeInsets.only(left: 60.sp, right: 60.sp),
+                                margin: EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 187, 4, 4),
+                                    backgroundColor: const Color.fromARGB(255, 187, 4, 4),
                                   ),
                                   onPressed: () async {
                                     getfirstImage();
@@ -662,21 +643,17 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               width: 4,
-                                              color: Theme.of(context)
-                                                  .scaffoldBackgroundColor),
+                                              color: Theme.of(context).scaffoldBackgroundColor),
                                           boxShadow: [
                                             BoxShadow(
                                                 spreadRadius: 2,
                                                 blurRadius: 10,
-                                                color: Colors.black
-                                                    .withOpacity(0.1),
+                                                color: Colors.black.withOpacity(0.1),
                                                 offset: const Offset(0, 10))
                                           ],
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
-                                            image: FileImage(
-                                                File(firstImage!.path)
-                                                    .absolute),
+                                            image: FileImage(File(firstImage!.path).absolute),
                                             fit: BoxFit.cover,
                                           )
                                           // image: DecorationImage(
@@ -688,8 +665,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 199, 7, 7),
+                                        backgroundColor: const Color.fromARGB(255, 199, 7, 7),
                                       ),
                                       onPressed: () async {
                                         getfirstImage();
@@ -727,12 +703,10 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                       Container(
                         child: secondImage == null
                             ? Container(
-                                margin:
-                                    EdgeInsets.only(left: 60.sp, right: 60.sp),
+                                margin: EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 197, 4, 4),
+                                    backgroundColor: const Color.fromARGB(255, 197, 4, 4),
                                   ),
                                   onPressed: () async {
                                     getsecondImage();
@@ -755,21 +729,17 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               width: 4,
-                                              color: Theme.of(context)
-                                                  .scaffoldBackgroundColor),
+                                              color: Theme.of(context).scaffoldBackgroundColor),
                                           boxShadow: [
                                             BoxShadow(
                                                 spreadRadius: 2,
                                                 blurRadius: 10,
-                                                color: Colors.black
-                                                    .withOpacity(0.1),
+                                                color: Colors.black.withOpacity(0.1),
                                                 offset: const Offset(0, 10))
                                           ],
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
-                                            image: FileImage(
-                                                File(secondImage!.path)
-                                                    .absolute),
+                                            image: FileImage(File(secondImage!.path).absolute),
                                             fit: BoxFit.cover,
                                           )
                                           // image: DecorationImage(
@@ -781,8 +751,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 199, 13, 13),
+                                        backgroundColor: const Color.fromARGB(255, 199, 13, 13),
                                       ),
                                       onPressed: () async {
                                         getsecondImage();
@@ -820,12 +789,10 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                       Container(
                         child: thiredImage == null
                             ? Container(
-                                margin:
-                                    EdgeInsets.only(left: 60.sp, right: 60.sp),
+                                margin: EdgeInsets.only(left: 60.sp, right: 60.sp),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 199, 13, 13),
+                                    backgroundColor: const Color.fromARGB(255, 199, 13, 13),
                                   ),
                                   onPressed: () async {
                                     getthardImage();
@@ -848,21 +815,17 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               width: 4,
-                                              color: Theme.of(context)
-                                                  .scaffoldBackgroundColor),
+                                              color: Theme.of(context).scaffoldBackgroundColor),
                                           boxShadow: [
                                             BoxShadow(
                                                 spreadRadius: 2,
                                                 blurRadius: 10,
-                                                color: Colors.black
-                                                    .withOpacity(0.1),
+                                                color: Colors.black.withOpacity(0.1),
                                                 offset: const Offset(0, 10))
                                           ],
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
-                                            image: FileImage(
-                                                File(thiredImage!.path)
-                                                    .absolute),
+                                            image: FileImage(File(thiredImage!.path).absolute),
                                             fit: BoxFit.cover,
                                           )
                                           // image: DecorationImage(
@@ -874,8 +837,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 187, 9, 9),
+                                        backgroundColor: const Color.fromARGB(255, 187, 9, 9),
                                       ),
                                       onPressed: () async {
                                         getthardImage();
@@ -917,8 +879,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.blueGrey),
                                     borderRadius: BorderRadius.circular(5),
@@ -937,13 +898,11 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                         return DropdownMenuItem<String>(
                                           value: e.kennelClubId.toString(),
                                           child: SizedBox(
-                                            width: double
-                                                .infinity, // Auto size based on content
+                                            width: double.infinity, // Auto size based on content
                                             child: Text(
                                               e.kennelClubName.toString(),
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 95, 46, 46),
+                                                  color: const Color.fromARGB(255, 95, 46, 46),
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -1019,29 +978,23 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                   controller: Registornumber,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Registration Number',
                                     hintText: 'Non INKC registration number',
-                                    errorText: regisvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: regisvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Sire's INKC Registration Number ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1061,30 +1014,23 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                   controller: sire,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
-                                    labelText:
-                                        "Sire's INKC Registration Number",
+                                    labelText: "Sire's INKC Registration Number",
                                     hintText: "Sire's INKC Registration Number",
-                                    errorText: regisvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: regisvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Dam's INKC Registration Number ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
@@ -1104,17 +1050,12 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                   controller: dam,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
-                                    labelText:
-                                        "Sire's INKC Registration Number",
+                                    labelText: "Sire's INKC Registration Number",
                                     hintText: "Sire's INKC Registration Number",
-                                    errorText: regisvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: regisvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -1139,23 +1080,20 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                               //   ),
                               // ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Name of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1169,37 +1107,30 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                   // obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Name of the dog',
                                     hintText: 'Eg.Bruno',
-                                    errorText: dogvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: dogvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1215,8 +1146,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       width: 160.sp,
                                       child: TextField(
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
+                                            color: Colors.black, fontWeight: FontWeight.w600),
                                         onTap: () {},
                                         controller: dateofbirth,
                                         enabled: false,
@@ -1230,30 +1160,23 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon:
-                                              const Icon(Icons.date_range),
+                                          prefixIcon: const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.sp)),
-                                            borderSide: const BorderSide(
-                                                width: 1, color: Colors.green),
+                                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                            borderSide:
+                                                const BorderSide(width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
-                                          errorText: datevalidate
-                                              ? "Value Can't Be Empty"
-                                              : null,
+                                          errorText: datevalidate ? "Value Can't Be Empty" : null,
                                         ),
                                       ),
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 231, 25, 25),
+                                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
-                                                color: const Color.fromARGB(
-                                                    255, 241, 236, 236),
+                                                color: const Color.fromARGB(255, 241, 236, 236),
                                                 fontWeight: FontWeight.bold)),
                                         onPressed: () {
                                           selectDatePicker();
@@ -1268,23 +1191,20 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Breed ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1316,13 +1236,10 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
                                           decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.blueGrey),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                            border: Border.all(color: Colors.blueGrey),
+                                            borderRadius: BorderRadius.circular(5),
                                           ),
                                           child: DropdownButtonHideUnderline(
                                             child: DropdownButton<String>(
@@ -1341,15 +1258,12 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                     width: double
                                                         .infinity, // Auto size based on content
                                                     child: Text(
-                                                      e.subCategoryName
-                                                          .toString(),
+                                                      e.subCategoryName.toString(),
                                                       style: TextStyle(
-                                                          color: const Color
-                                                              .fromARGB(
-                                                              255, 95, 46, 46),
+                                                          color:
+                                                              const Color.fromARGB(255, 95, 46, 46),
                                                           fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                          fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
                                                 );
@@ -1394,23 +1308,20 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                   }),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Color and Marking ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1424,13 +1335,10 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
                                           decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.blueGrey),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                            border: Border.all(color: Colors.blueGrey),
+                                            borderRadius: BorderRadius.circular(5),
                                           ),
                                           child: DropdownButtonHideUnderline(
                                             child: DropdownButton<String>(
@@ -1438,8 +1346,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               value: selectcolormarkingvalue,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  selectcolormarkingvalue =
-                                                      value;
+                                                  selectcolormarkingvalue = value;
                                                   selectcolormakingid = value;
                                                 });
                                               },
@@ -1452,12 +1359,10 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                     child: Text(
                                                       e.colourName.toString(),
                                                       style: TextStyle(
-                                                          color: const Color
-                                                              .fromARGB(
-                                                              255, 95, 46, 46),
+                                                          color:
+                                                              const Color.fromARGB(255, 95, 46, 46),
                                                           fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                          fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
                                                 );
@@ -1501,23 +1406,20 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     }
                                   }),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Sex of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1588,15 +1490,13 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1609,31 +1509,25 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                   controller: counrty,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Country Bred in',
                                     hintText: 'Eg.India',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               if (widget.eventstal.toString() == "1" ||
                                   widget.eventstal.toString() == "2")
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20.0, left: 12),
+                                  padding: const EdgeInsets.only(top: 20.0, left: 12),
                                   child: Row(
                                     children: [
                                       Text(
                                         "EVENT DETAILS",
                                         style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 22, 21, 21),
+                                            color: const Color.fromARGB(255, 22, 21, 21),
                                             fontWeight: FontWeight.w800,
                                             fontSize: 17.sp),
                                       ),
@@ -1650,16 +1544,14 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                       child: Text(
                                         "Class (Select at least two option.)",
                                         style: TextStyle(
-                                            color: const Color.fromARGB(
-                                                255, 22, 21, 21),
+                                            color: const Color.fromARGB(255, 22, 21, 21),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12.sp),
                                       ),
                                     ),
 
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
                                         Row(
                                           children: <Widget>[
@@ -1670,8 +1562,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               'Pre-Beginner ',
                                               style: TextStyle(fontSize: 15.0),
                                             ), //Text
-                                            const SizedBox(
-                                                width: 10), //SizedBox
+                                            const SizedBox(width: 10), //SizedBox
                                             /** Checkbox Widget **/
                                             Checkbox(
                                               value: prebigner,
@@ -1694,8 +1585,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               'Beginner ',
                                               style: TextStyle(fontSize: 15.0),
                                             ), //Text
-                                            const SizedBox(
-                                                width: 10), //SizedBox
+                                            const SizedBox(width: 10), //SizedBox
                                             /** Checkbox Widget **/
                                             Checkbox(
                                               value: bigner,
@@ -1712,11 +1602,9 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
 
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 35.0),
+                                      padding: const EdgeInsets.only(left: 35.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Row(
                                             children: <Widget>[
@@ -1725,11 +1613,9 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               ), //SizedBox
                                               const Text(
                                                 'Novice ',
-                                                style:
-                                                    TextStyle(fontSize: 15.0),
+                                                style: TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(
-                                                  width: 10), //SizedBox
+                                              const SizedBox(width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: novic,
@@ -1749,11 +1635,9 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               ), //SizedBox
                                               const Text(
                                                 'Test-A ',
-                                                style:
-                                                    TextStyle(fontSize: 15.0),
+                                                style: TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(
-                                                  width: 10), //SizedBox
+                                              const SizedBox(width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Texta,
@@ -1771,11 +1655,9 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     ),
 
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 35.0),
+                                      padding: const EdgeInsets.only(left: 35.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Row(
                                             children: <Widget>[
@@ -1784,11 +1666,9 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               ), //SizedBox
                                               const Text(
                                                 'Test-B ',
-                                                style:
-                                                    TextStyle(fontSize: 15.0),
+                                                style: TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(
-                                                  width: 10), //SizedBox
+                                              const SizedBox(width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Textb,
@@ -1808,11 +1688,9 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               ), //SizedBox
                                               const Text(
                                                 'Test-C ',
-                                                style:
-                                                    TextStyle(fontSize: 15.0),
+                                                style: TextStyle(fontSize: 15.0),
                                               ), //Text
-                                              const SizedBox(
-                                                  width: 10), //SizedBox
+                                              const SizedBox(width: 10), //SizedBox
                                               /** Checkbox Widget **/
                                               Checkbox(
                                                 value: Textc,
@@ -1922,21 +1800,18 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     child: Row(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 20.0, left: 12),
+                                      padding: const EdgeInsets.only(top: 20.0, left: 12),
                                       child: Row(
                                         children: [
                                           Text(
                                             "Do you need stall              ",
                                             style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                    255, 22, 21, 21),
+                                                color: const Color.fromARGB(255, 22, 21, 21),
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12.sp),
                                           ),
                                           Container(
-                                            margin:
-                                                const EdgeInsets.only(top: 0),
+                                            margin: const EdgeInsets.only(top: 0),
                                             // decoration: BoxDecoration(
                                             //   boxShadow: [],
                                             //   border: Border.all(
@@ -1947,8 +1822,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                             //   color: Colors.white,
                                             // ),
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 0),
+                                              padding: const EdgeInsets.only(top: 0),
                                               child: Column(
                                                 children: [
                                                   Row(
@@ -1957,27 +1831,20 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                         children: [
                                                           Radio(
                                                             value: "0",
-                                                            groupValue:
-                                                                stallReq,
+                                                            groupValue: stallReq,
                                                             onChanged: (value) {
                                                               setState(() {
-                                                                stall_day_type =
-                                                                    false;
-                                                                stallReq = value
-                                                                    .toString();
+                                                                stall_day_type = false;
+                                                                stallReq = value.toString();
                                                               });
                                                             },
                                                           ),
                                                           Text(
                                                             'No',
                                                             style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize:
-                                                                    11.sp),
+                                                                fontWeight: FontWeight.bold,
+                                                                color: Colors.black,
+                                                                fontSize: 11.sp),
                                                           )
                                                         ],
                                                       ),
@@ -1985,27 +1852,20 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                         children: [
                                                           Radio(
                                                             value: "1",
-                                                            groupValue:
-                                                                stallReq,
+                                                            groupValue: stallReq,
                                                             onChanged: (value) {
                                                               setState(() {
-                                                                stall_day_type =
-                                                                    true;
-                                                                stallReq = value
-                                                                    .toString();
+                                                                stall_day_type = true;
+                                                                stallReq = value.toString();
                                                               });
                                                             },
                                                           ),
                                                           Text(
                                                             'Yes',
                                                             style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize:
-                                                                    11.sp),
+                                                                fontWeight: FontWeight.bold,
+                                                                color: Colors.black,
+                                                                fontSize: 11.sp),
                                                           )
                                                         ],
                                                       ),
@@ -2026,21 +1886,18 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     child: Row(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 20.0, left: 12),
+                                          padding: const EdgeInsets.only(top: 20.0, left: 12),
                                           child: Row(
                                             children: [
                                               Text(
                                                 "stall Day          ",
                                                 style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 22, 21, 21),
+                                                    color: const Color.fromARGB(255, 22, 21, 21),
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 12.sp),
                                               ),
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: const EdgeInsets.all(8.0),
                                                 child: Column(
                                                   children: [
                                                     Row(
@@ -2051,83 +1908,63 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                           onChanged: (value) {
                                                             setState(() {
                                                               // _isShowOff = true;
-                                                              StallDay = value
-                                                                  .toString();
+                                                              StallDay = value.toString();
                                                             });
                                                           },
                                                         ),
                                                         Text(
                                                           'First Day',
                                                           style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.black,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.black,
                                                               fontSize: 11.sp),
                                                         )
                                                       ],
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 18.0),
+                                                      padding: const EdgeInsets.only(left: 18.0),
                                                       child: Row(
                                                         children: [
                                                           Radio(
                                                             value: "2",
-                                                            groupValue:
-                                                                StallDay,
+                                                            groupValue: StallDay,
                                                             onChanged: (value) {
                                                               setState(() {
                                                                 // _isShowOff = true;
-                                                                StallDay = value
-                                                                    .toString();
+                                                                StallDay = value.toString();
                                                               });
                                                             },
                                                           ),
                                                           Text(
                                                             'Second Day',
                                                             style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize:
-                                                                    11.sp),
+                                                                fontWeight: FontWeight.bold,
+                                                                color: Colors.black,
+                                                                fontSize: 11.sp),
                                                           )
                                                         ],
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10.0),
+                                                      padding: const EdgeInsets.only(left: 10.0),
                                                       child: Row(
                                                         children: [
                                                           Radio(
                                                             value: "3",
-                                                            groupValue:
-                                                                StallDay,
+                                                            groupValue: StallDay,
                                                             onChanged: (value) {
                                                               setState(() {
                                                                 // _isShowOff = true;
-                                                                StallDay = value
-                                                                    .toString();
+                                                                StallDay = value.toString();
                                                               });
                                                             },
                                                           ),
                                                           Text(
                                                             'Both Days',
                                                             style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize:
-                                                                    11.sp),
+                                                                fontWeight: FontWeight.bold,
+                                                                color: Colors.black,
+                                                                fontSize: 11.sp),
                                                           )
                                                         ],
                                                       ),
@@ -2146,21 +1983,18 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     child: Row(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 20.0, left: 12),
+                                          padding: const EdgeInsets.only(top: 20.0, left: 12),
                                           child: Row(
                                             children: [
                                               Text(
                                                 "Stall Type             ",
                                                 style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 22, 21, 21),
+                                                    color: const Color.fromARGB(255, 22, 21, 21),
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 12.sp),
                                               ),
                                               Container(
-                                                margin: const EdgeInsets.only(
-                                                    top: 0),
+                                                margin: const EdgeInsets.only(top: 0),
                                                 // decoration: BoxDecoration(
                                                 //   boxShadow: [],
                                                 //   border: Border.all(
@@ -2171,9 +2005,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                 //   color: Colors.white,
                                                 // ),
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 0),
+                                                  padding: const EdgeInsets.only(top: 0),
                                                   child: Column(
                                                     children: [
                                                       Row(
@@ -2182,28 +2014,20 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                             children: [
                                                               Radio(
                                                                 value: "0",
-                                                                groupValue:
-                                                                    StallType,
-                                                                onChanged:
-                                                                    (value) {
+                                                                groupValue: StallType,
+                                                                onChanged: (value) {
                                                                   setState(() {
                                                                     // _isShowOff = false;
-                                                                    StallType =
-                                                                        value
-                                                                            .toString();
+                                                                    StallType = value.toString();
                                                                   });
                                                                 },
                                                               ),
                                                               Text(
                                                                 'FAN',
                                                                 style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        11.sp),
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Colors.black,
+                                                                    fontSize: 11.sp),
                                                               )
                                                             ],
                                                           ),
@@ -2211,28 +2035,20 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                             children: [
                                                               Radio(
                                                                 value: "1",
-                                                                groupValue:
-                                                                    StallType,
-                                                                onChanged:
-                                                                    (value) {
+                                                                groupValue: StallType,
+                                                                onChanged: (value) {
                                                                   setState(() {
                                                                     // _isShowOff = true;
-                                                                    StallType =
-                                                                        value
-                                                                            .toString();
+                                                                    StallType = value.toString();
                                                                   });
                                                                 },
                                                               ),
                                                               Text(
                                                                 'AC',
                                                                 style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        11.sp),
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Colors.black,
+                                                                    fontSize: 11.sp),
                                                               )
                                                             ],
                                                           ),
@@ -2312,14 +2128,12 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                         text: 'Please Select Kennel Club',
                                       );
                                     } else {
-                                      if (Registornumber.text.toString() ==
-                                          "") {
+                                      if (Registornumber.text.toString() == "") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              'Please Enter Registration Number',
+                                          text: 'Please Enter Registration Number',
                                         );
                                       } else {
                                         if (Dogname.text.toString() == "") {
@@ -2330,8 +2144,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                             text: 'Please Enter Dog Name',
                                           );
                                         } else {
-                                          if (dateofbirth.text.toString() ==
-                                              "") {
+                                          if (dateofbirth.text.toString() == "") {
                                             QuickAlert.show(
                                               context: context,
                                               type: QuickAlertType.error,
@@ -2339,8 +2152,7 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                               text: 'Please Select date',
                                             );
                                           } else {
-                                            if (selectedbreedid.toString() ==
-                                                "null") {
+                                            if (selectedbreedid.toString() == "null") {
                                               QuickAlert.show(
                                                 context: context,
                                                 type: QuickAlertType.error,
@@ -2348,49 +2160,37 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                                 text: 'Please Select Breed',
                                               );
                                             } else {
-                                              if (selectcolormakingid
-                                                      .toString() ==
-                                                  "") {
+                                              if (selectcolormakingid.toString() == "") {
                                                 QuickAlert.show(
                                                   context: context,
                                                   type: QuickAlertType.error,
                                                   title: 'Oops...',
-                                                  text:
-                                                      'Please Select Color and Making',
+                                                  text: 'Please Select Color and Making',
                                                 );
                                               } else {
-                                                if (gender.toString() ==
-                                                    "null") {
+                                                if (gender.toString() == "null") {
                                                   QuickAlert.show(
                                                     context: context,
                                                     type: QuickAlertType.error,
                                                     title: 'Oops...',
-                                                    text:
-                                                        'Please Select gender',
+                                                    text: 'Please Select gender',
                                                   );
                                                 } else {
-                                                  if (counrty.text.toString() ==
-                                                      "") {
+                                                  if (counrty.text.toString() == "") {
                                                     QuickAlert.show(
                                                       context: context,
-                                                      type:
-                                                          QuickAlertType.error,
+                                                      type: QuickAlertType.error,
                                                       title: 'Oops...',
-                                                      text:
-                                                          'Please Enter country name',
+                                                      text: 'Please Enter country name',
                                                     );
                                                   } else {
                                                     if (obidient.length <= 1 &&
-                                                        widget.eventtype
-                                                                .toString() ==
-                                                            "2") {
+                                                        widget.eventtype.toString() == "2") {
                                                       QuickAlert.show(
                                                         context: context,
-                                                        type: QuickAlertType
-                                                            .error,
+                                                        type: QuickAlertType.error,
                                                         title: 'Oops...',
-                                                        text:
-                                                            'Please Select atlest 2 box',
+                                                        text: 'Please Select atlest 2 box',
                                                       );
                                                     } else {
                                                       uploadData();
@@ -2441,12 +2241,10 @@ class _IHaveCertificateState extends State<IHaveCertificate> {
                                     //uploadData();
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 46, 6, 155),
+                                      backgroundColor: const Color.fromARGB(255, 46, 6, 155),
                                       textStyle: TextStyle(
                                           fontSize: 10.sp,
-                                          color: const Color.fromARGB(
-                                              255, 241, 236, 236),
+                                          color: const Color.fromARGB(255, 241, 236, 236),
                                           fontWeight: FontWeight.bold)),
                                   child: const Text(
                                     'Submit',

@@ -98,8 +98,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog_second_own"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog_second_own"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -113,8 +112,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
         for (int i = 0; i < list.length; i++) {
           // if (body['data'][i]['owner_id'].toString() == userid) {
           var productMap = {
-            body['data'][i]['pet_id'].toString():
-                body['data'][i]['pet_name'].toString(),
+            body['data'][i]['pet_id'].toString(): body['data'][i]['pet_name'].toString(),
           };
           keyValueList.add(productMap);
           //print(body['data'][i]['pet_id'].toString());
@@ -123,8 +121,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
       }
 
       final ress = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog"),
           headers: requestHeaders);
 
       final bodys = json.decode(ress.body);
@@ -134,8 +131,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
       for (int i = 0; i < lists.length; i++) {
         // if (bodys['data'][i]['owner_id'].toString() == userid) {
         var productMap = {
-          bodys['data'][i]['pet_id'].toString():
-              bodys['data'][i]['pet_name'].toString(),
+          bodys['data'][i]['pet_id'].toString(): bodys['data'][i]['pet_name'].toString(),
         };
         keyValueList.add(productMap);
         print(bodys['data'][i]['pet_id'].toString());
@@ -217,10 +213,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                         shadows: const [
                           Shadow(
                             blurRadius: 10.0, // shadow blur
-                            color: Color.fromARGB(
-                                255, 223, 71, 45), // shadow color
-                            offset: Offset(
-                                2.0, 2.0), // how much shadow will be shown
+                            color: Color.fromARGB(255, 223, 71, 45), // shadow color
+                            offset: Offset(2.0, 2.0), // how much shadow will be shown
                           ),
                         ],
                         fontSize: 20.sp,
@@ -246,8 +240,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5),
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.blueGrey),
                                   borderRadius: BorderRadius.circular(5),
@@ -263,20 +256,17 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                     },
                                     hint: const Text('Select value'),
                                     items: keyValueList
-                                        .map<DropdownMenuItem<String>>(
-                                            (Map<String, String> pair) {
+                                        .map<DropdownMenuItem<String>>((Map<String, String> pair) {
                                       final String key = pair.keys.first;
                                       final String value = pair.values.first;
                                       return DropdownMenuItem<String>(
                                         value: key,
                                         child: SizedBox(
-                                          width: double
-                                              .infinity, // Auto size based on content
+                                          width: double.infinity, // Auto size based on content
                                           child: Text(
                                             value.toString(),
                                             style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                    255, 95, 46, 46),
+                                                color: const Color.fromARGB(255, 95, 46, 46),
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -599,8 +589,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                               Text(
                                 "Do you need stall              ",
                                 style: TextStyle(
-                                    color:
-                                        const Color.fromARGB(255, 22, 21, 21),
+                                    color: const Color.fromARGB(255, 22, 21, 21),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp),
                               ),
@@ -680,15 +669,13 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                         child: Row(
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
+                              padding: const EdgeInsets.only(top: 20.0, left: 12),
                               child: Row(
                                 children: [
                                   Text(
                                     "stall Day          ",
                                     style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 22, 21, 21),
+                                        color: const Color.fromARGB(255, 22, 21, 21),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12.sp),
                                   ),
@@ -718,8 +705,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                           ],
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 18.0),
+                                          padding: const EdgeInsets.only(left: 18.0),
                                           child: Row(
                                             children: [
                                               Radio(
@@ -743,8 +729,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10.0),
+                                          padding: const EdgeInsets.only(left: 10.0),
                                           child: Row(
                                             children: [
                                               Radio(
@@ -781,15 +766,13 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                         child: Row(
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 12),
+                              padding: const EdgeInsets.only(top: 20.0, left: 12),
                               child: Row(
                                 children: [
                                   Text(
                                     "Stall Type             ",
                                     style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 22, 21, 21),
+                                        color: const Color.fromARGB(255, 22, 21, 21),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12.sp),
                                   ),
@@ -818,16 +801,14 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                                     onChanged: (value) {
                                                       setState(() {
                                                         // _isShowOff = false;
-                                                        StallType =
-                                                            value.toString();
+                                                        StallType = value.toString();
                                                       });
                                                     },
                                                   ),
                                                   Text(
                                                     'FAN',
                                                     style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight: FontWeight.bold,
                                                         color: Colors.black,
                                                         fontSize: 11.sp),
                                                   )
@@ -841,16 +822,14 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                                     onChanged: (value) {
                                                       setState(() {
                                                         // _isShowOff = true;
-                                                        StallType =
-                                                            value.toString();
+                                                        StallType = value.toString();
                                                       });
                                                     },
                                                   ),
                                                   Text(
                                                     'AC',
                                                     style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight: FontWeight.bold,
                                                         color: Colors.black,
                                                         fontSize: 11.sp),
                                                   )
@@ -872,12 +851,10 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 231, 25, 25),
+                              backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                               textStyle: TextStyle(
                                   fontSize: 10.sp,
-                                  color:
-                                      const Color.fromARGB(255, 241, 236, 236),
+                                  color: const Color.fromARGB(255, 241, 236, 236),
                                   fontWeight: FontWeight.bold)),
                           onPressed: () async {
                             String Day = "1";
@@ -924,8 +901,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                               }
 
                               //obidient.length;
-                              if (obidient.length <= 1 &&
-                                  widget.eventtype.toString() == "2") {
+                              if (obidient.length <= 1 && widget.eventtype.toString() == "2") {
                                 QuickAlert.show(
                                   context: context,
                                   type: QuickAlertType.error,
@@ -938,10 +914,8 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
 
                                 SharedPreferences sharedprefrence =
                                     await SharedPreferences.getInstance();
-                                String userid =
-                                    sharedprefrence.getString("Userid")!;
-                                String token =
-                                    sharedprefrence.getString("Token")!;
+                                String userid = sharedprefrence.getString("Userid")!;
+                                String token = sharedprefrence.getString("Token")!;
 
                                 Map<String, String> requestHeaders = {
                                   // 'Accept': 'application/json',
@@ -949,8 +923,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   'Userid': userid
                                 };
 
-                                const uri =
-                                    "https://new-demo.inkcdogs.org/api/event/participate";
+                                const uri = "https://new-demo.inkcdogs.org/api/event/participate";
 
                                 final responce = await http.post(Uri.parse(uri),
                                     body: {
@@ -982,9 +955,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                           },
                           child: const Text(
                             "Submit",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
+                            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
                           )),
                     ),
                   ),

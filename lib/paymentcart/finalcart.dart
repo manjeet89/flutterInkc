@@ -39,8 +39,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
     String keyId = "rzp_live_nU6fTpMrFHPTY1";
     String keySecreste =
         "RZDbsZE5vKJT24W1Get8qHZ1"; //"RZDbsZE5vKJT24W1Get8qHZ1";  //543LAwFTauwRyw0Tw2PPBbG5
-    String basicAuth =
-        'Basic ${base64Encode(utf8.encode('$keyId:$keySecreste'))}';
+    String basicAuth = 'Basic ${base64Encode(utf8.encode('$keyId:$keySecreste'))}';
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -66,19 +65,14 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
 
   RazorpayRun(String orderid) async {
     var options = {
-      'key':
-          'rzp_live_nU6fTpMrFHPTY1', //rzp_live_nU6fTpMrFHPTY1  // rzp_test_tk6cduSzgywMwB
-      'amount': (int.parse(widget.TOTAL) * 100)
-          .toString(), //in the smallest currency sub-unit.
+      'key': 'rzp_live_nU6fTpMrFHPTY1', //rzp_live_nU6fTpMrFHPTY1  // rzp_test_tk6cduSzgywMwB
+      'amount': (int.parse(widget.TOTAL) * 100).toString(), //in the smallest currency sub-unit.
       'name': 'DoggyLocker',
       'order_id': orderid,
       //     'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
       // 'description': 'Fine T-Shirt',
       'timeout': 300, // in seconds
-      'prefill': {
-        'contact': FontPhoneNumber.toString(),
-        'email': email.text.toString()
-      }
+      'prefill': {'contact': FontPhoneNumber.toString(), 'email': email.text.toString()}
     };
     _razorpay.open(options);
   }
@@ -99,8 +93,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
     // Do something when payment succeeds
 
-    print(
-        "payment done     ${response.orderId} - ${response.paymentId} - ${response.signature}");
+    print("payment done     ${response.orderId} - ${response.paymentId} - ${response.signature}");
 
     var ordertotal = {
       'razorpay_payment_id': response.paymentId.toString(),
@@ -202,18 +195,14 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                       padding: const EdgeInsets.all(10),
                       child: TextField(
                         style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.sp),
+                            color: Colors.black, fontWeight: FontWeight.w600, fontSize: 13.sp),
                         controller: email,
 
                         // obscureText: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(4.sp)),
-                            borderSide:
-                                const BorderSide(width: 1, color: Colors.green),
+                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                            borderSide: const BorderSide(width: 1, color: Colors.green),
                           ),
                           labelText: 'Email Address',
                           hintText: 'Rajbhar',
@@ -224,19 +213,15 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                       padding: const EdgeInsets.all(10),
                       child: TextField(
                         style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.sp),
+                            color: Colors.black, fontWeight: FontWeight.w600, fontSize: 13.sp),
                         controller: address,
                         enabled: false,
                         maxLines: 4,
                         // obscureText: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(4.sp)),
-                            borderSide:
-                                const BorderSide(width: 1, color: Colors.green),
+                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                            borderSide: const BorderSide(width: 1, color: Colors.green),
                           ),
                           labelText: ' Address',
                           hintText: 'Rajbhar',
@@ -254,8 +239,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                     ),
                     const Divider(),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 28.0, right: 48, top: 10),
+                      padding: const EdgeInsets.only(left: 28.0, right: 48, top: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -307,8 +291,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                     ),
                     const Divider(),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 28.0, top: 5, right: 48),
+                      padding: const EdgeInsets.only(left: 28.0, top: 5, right: 48),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -336,8 +319,8 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
                     Center(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(
-                                255, 8, 83, 1), // Background color
+                            backgroundColor:
+                                const Color.fromARGB(255, 8, 83, 1), // Background color
                           ),
                           onPressed: () {
                             create_order_id();

@@ -24,5 +24,9 @@ class ImageHelper {
   Future<CroppedFile?> crop({
     required XFile file,
     CropStyle cropStyle = CropStyle.rectangle,
-  })async => await _imageCropper.cropImage(sourcePath: file.path,cropStyle: cropStyle,compressQuality: 100);
+  }) async =>
+      await _imageCropper.cropImage(
+        sourcePath: file.path,
+        // cropStyle: cropStyle,compressQuality: 100
+      );
 }

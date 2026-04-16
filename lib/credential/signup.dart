@@ -55,16 +55,12 @@ class _SignUpHereState extends State<SignUpHere> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -129,8 +125,7 @@ class _SignUpHereState extends State<SignUpHere> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Sign Up",
-                          style: TextStyle(
-                              fontSize: 20.sp, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -148,10 +143,8 @@ class _SignUpHereState extends State<SignUpHere> {
                                 enabled: true,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: const BorderSide(
-                                        width: 1, color: Colors.green),
+                                    borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: const BorderSide(width: 1, color: Colors.green),
                                   ),
                                   labelText: 'First Name',
                                   hintText: '',
@@ -166,10 +159,8 @@ class _SignUpHereState extends State<SignUpHere> {
                                 // obscureText: true,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(6.sp)),
-                                    borderSide: const BorderSide(
-                                        width: 1, color: Colors.green),
+                                    borderRadius: BorderRadius.all(Radius.circular(6.sp)),
+                                    borderSide: const BorderSide(width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Last Name',
                                   hintText: '',
@@ -280,10 +271,8 @@ class _SignUpHereState extends State<SignUpHere> {
                                 // obscureText: true,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: const BorderSide(
-                                        width: 1, color: Colors.green),
+                                    borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: const BorderSide(width: 1, color: Colors.green),
                                   ),
                                   labelText: 'Email Address',
                                   hintText: 'example@gmail.com',
@@ -293,15 +282,13 @@ class _SignUpHereState extends State<SignUpHere> {
                             Padding(
                               padding: const EdgeInsets.all(10),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   SizedBox(
                                     width: 150.sp,
                                     child: TextField(
                                       style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700),
+                                          color: Colors.black, fontWeight: FontWeight.w700),
                                       onTap: () {},
                                       controller: dateofbirth,
                                       enabled: false,
@@ -315,13 +302,11 @@ class _SignUpHereState extends State<SignUpHere> {
                                         //     );
                                         //   },
                                         // ),
-                                        prefixIcon:
-                                            const Icon(Icons.date_range),
+                                        prefixIcon: const Icon(Icons.date_range),
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4.sp)),
-                                          borderSide: const BorderSide(
-                                              width: 1, color: Colors.green),
+                                          borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                          borderSide:
+                                              const BorderSide(width: 1, color: Colors.green),
                                         ),
                                         labelText: 'Date of Birth',
                                         hintText: '1-1-2000',
@@ -351,21 +336,16 @@ class _SignUpHereState extends State<SignUpHere> {
                                 obscureText: passwordVisible,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4.sp)),
-                                    borderSide: const BorderSide(
-                                        width: 1, color: Colors.green),
+                                    borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                    borderSide: const BorderSide(width: 1, color: Colors.green),
                                   ),
                                   hintText: "Password",
                                   labelText: "Password",
-                                  helperText:
-                                      "Password must contain special character",
-                                  helperStyle:
-                                      const TextStyle(color: Colors.green),
+                                  helperText: "Password must contain special character",
+                                  helperStyle: const TextStyle(color: Colors.green),
                                   suffixIcon: IconButton(
-                                    icon: Icon(passwordVisible
-                                        ? Icons.visibility
-                                        : Icons.visibility_off),
+                                    icon: Icon(
+                                        passwordVisible ? Icons.visibility : Icons.visibility_off),
                                     onPressed: () {
                                       setState(
                                         () {
@@ -385,73 +365,86 @@ class _SignUpHereState extends State<SignUpHere> {
                               margin: EdgeInsets.only(bottom: 50.sp),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 63, 23, 23),
+                                  backgroundColor: const Color.fromARGB(255, 63, 23, 23),
                                   minimumSize: const Size.fromHeight(40), // NEW
                                 ),
                                 onPressed: () async {
-                                  // print(First.text);
-                                  // print(lastname.text);
-                                  // print(gender);
-                                  // print(phonenumber.text);
-                                  // print(email.text);
-                                  // print(dateofbirth.text);
-                                  // print(password.text);
-
-                                  EasyLoading.showToast('Please Wait...');
-
-                                  const uri =
-                                      "https://new-demo.inkcdogs.org/api/login/signup";
-
-                                  final responce = await http.post(
-                                    Uri.parse(uri),
-                                    body: {
-                                      "user_password": password.text,
-                                      "first_name": First.text,
-                                      "user_phone_number": phonenumber.text,
-                                      "last_name": lastname.text,
-                                      "user_birth_date": dateofbirth.text,
-                                      "gender": gender,
-                                      "user_email_id": email.text
-                                    },
-                                  );
-                                  var data = json.decode(responce.body);
-                                  print(data);
-
-                                  if (data['code'] == 200) {
-                                    print(data['message']);
+                                  if (First.text.toString().isEmpty) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content:
-                                                Text('Please verify user')));
-                                    // print(data['data']['user_id']);
-
-                                    EasyLoading.dismiss();
-
-                                    // Get.to(MyApp());
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) => VerificationOtp(
-                                    //               data['data']['user_id'],
-                                    //               data['data']
-                                    //                   ['user_phone_number:'],
-                                    //             )));
-
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(MaterialPageRoute(
-                                            builder: (_) => VerificationOtp(
-                                                userid: data['data']['user_id'],
-                                                number: data['data']
-                                                    ['user_phone_number'])));
-
-                                    // Navigator.of(context, rootNavigator: true).push(
-                                    //     MaterialPageRoute(builder: (_) => MyApp()));
+                                        const SnackBar(content: Text('Please enter First name ')));
+                                  } else if (lastname.text.toString().isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Please enter lastname ')));
+                                  } else if (phonenumber.text.toString().isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                        content: Text('Please enter phone number ')));
+                                  } else if (email.text.toString().isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Please enter email ')));
+                                  } else if (dateofbirth.text.toString().isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                        content: Text('Please select date of birth ')));
+                                  } else if (password.text.toString().isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Please enter password ')));
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content:
-                                                Text('Something went wrong')));
+                                    // print(First.text);
+                                    // print(lastname.text);
+                                    // print(gender);
+                                    // print(phonenumber.text);
+                                    // print(email.text);
+                                    // print(dateofbirth.text);
+                                    // print(password.text);
+
+                                    EasyLoading.showToast('Please Wait...');
+
+                                    const uri = "https://new-demo.inkcdogs.org/api/login/signup";
+
+                                    final responce = await http.post(
+                                      Uri.parse(uri),
+                                      body: {
+                                        "user_password": password.text,
+                                        "first_name": First.text,
+                                        "user_phone_number": phonenumber.text,
+                                        "last_name": lastname.text,
+                                        "user_birth_date": dateofbirth.text,
+                                        "gender": gender,
+                                        "user_email_id": email.text
+                                      },
+                                    );
+                                    var data = json.decode(responce.body);
+                                    print(data);
+
+                                    if (data['code'] == 200) {
+                                      print(data['message']);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Please verify user')));
+                                      // print(data['data']['user_id']);
+
+                                      EasyLoading.dismiss();
+
+                                      // Get.to(MyApp());
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => VerificationOtp(
+                                      //               data['data']['user_id'],
+                                      //               data['data']
+                                      //                   ['user_phone_number:'],
+                                      //             )));
+
+                                      Navigator.of(context, rootNavigator: true).push(
+                                          MaterialPageRoute(
+                                              builder: (_) => VerificationOtp(
+                                                  userid: data['data']['user_id'],
+                                                  number: data['data']['user_phone_number'])));
+
+                                      // Navigator.of(context, rootNavigator: true).push(
+                                      //     MaterialPageRoute(builder: (_) => MyApp()));
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Something went wrong')));
+                                    }
                                   }
                                 },
                                 child: const Text(

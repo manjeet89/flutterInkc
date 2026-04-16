@@ -163,8 +163,7 @@ class _EventsDetailsState extends State<EventsDetails> {
       'Usertoken': token,
     };
 
-    final responce =
-        await http.post(Uri.parse(uri), headers: requestHeaders, body: {
+    final responce = await http.post(Uri.parse(uri), headers: requestHeaders, body: {
       'second_owner_id': widget.Eventjudge.toString(),
     });
     var data = json.decode(responce.body);
@@ -361,8 +360,7 @@ class _EventsDetailsState extends State<EventsDetails> {
           final Latefrom = DateTime.parse(Latefromdate);
           final Lateto = DateTime.parse(Latetodate);
 
-          Latetodate =
-              "${Lateto.day} ${months[Lateto.month - 1].substring(0, 3)} ${Lateto.year}";
+          Latetodate = "${Lateto.day} ${months[Lateto.month - 1].substring(0, 3)} ${Lateto.year}";
 
           Latefromdate =
               "  ${Latefrom.day} ${months[Latefrom.month - 1].substring(0, 3)} ${Latefrom.year}";
@@ -654,13 +652,11 @@ class _EventsDetailsState extends State<EventsDetails> {
                 Text(
                   'Event Details',
                   style: TextStyle(
-                      shadows: const [ 
+                      shadows: const [
                         Shadow(
                           blurRadius: 10.0, // shadow blur
-                          color:
-                              Color.fromARGB(255, 223, 71, 45), // shadow color
-                          offset:
-                              Offset(2.0, 2.0), // how much shadow will be shown
+                          color: Color.fromARGB(255, 223, 71, 45), // shadow color
+                          offset: Offset(2.0, 2.0), // how much shadow will be shown
                         ),
                       ],
                       fontSize: 20.sp,
@@ -688,9 +684,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                           //     " " +
                           widget.EventName.toString(),
                           style: TextStyle(
-                              fontSize: 17.sp,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
+                              fontSize: 17.sp, color: Colors.black, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -753,29 +747,25 @@ class _EventsDetailsState extends State<EventsDetails> {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 231, 25, 25),
+                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                             textStyle: TextStyle(
                                 fontSize: 10.sp,
                                 color: const Color.fromARGB(255, 241, 236, 236),
                                 fontWeight: FontWeight.bold)),
                         onPressed: () async {
-                          SharedPreferences sharedprefrence =
-                              await SharedPreferences.getInstance();
+                          SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
                           String? check = sharedprefrence.getString("Token");
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) => Participatent(
                                     eventid: widget.EventId,
-                                    eventname:
-                                        "${widget.EventStuff} ${widget.EventName}",
+                                    eventname: "${widget.EventStuff} ${widget.EventName}",
                                     eventType: widget.EventType,
                                     eventstall: widget.event_stall,
                                   )));
                         },
                         child: const Text(
                           'Enter in this show',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, color: Colors.white),
+                          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
                         )),
                   ),
                 ),
@@ -798,8 +788,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                       borderRadius: BorderRadius.circular(5.sp),
                       //set border radius to 50% of square height and width
                       image: DecorationImage(
-                        image: NetworkImage(
-                            "https://new-demo.inkcdogs.org/${widget.EventImage}"),
+                        image: NetworkImage("https://new-demo.inkcdogs.org/${widget.EventImage}"),
                         fit: BoxFit.cover, //change image fill type
                       ),
                     ),
@@ -825,9 +814,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                           //     " " +
                           widget.EventName.toString(),
                           style: TextStyle(
-                              fontSize: 17.sp,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
+                              fontSize: 17.sp, color: Colors.black, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -863,7 +850,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                       FittedBox(
                         fit: BoxFit.contain,
                         child: AutoSizeText(
-                          "Judges :              ",
+                          "Judges :",
                           style: TextStyle(
                               fontSize: 13.sp,
                               color: const Color.fromARGB(255, 8, 8, 8),
@@ -879,11 +866,9 @@ class _EventsDetailsState extends State<EventsDetails> {
                                 "To Be Announced Soon",
                                 style: TextStyle(
                                     fontSize: 12.sp,
-                                    color:
-                                        const Color.fromARGB(255, 133, 13, 13),
+                                    color: const Color.fromARGB(255, 133, 13, 13),
                                     fontWeight: FontWeight.w600),
-                                maxLines:
-                                    6, // Adjust the maximum number of lines as needed
+                                maxLines: 6, // Adjust the maximum number of lines as needed
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -898,11 +883,9 @@ class _EventsDetailsState extends State<EventsDetails> {
                                 widget.Eventjudge.toString(),
                                 style: TextStyle(
                                     fontSize: 12.sp,
-                                    color:
-                                        const Color.fromARGB(255, 133, 13, 13),
+                                    color: const Color.fromARGB(255, 133, 13, 13),
                                     fontWeight: FontWeight.w600),
-                                maxLines:
-                                    6, // Adjust the maximum number of lines as needed
+                                maxLines: 6, // Adjust the maximum number of lines as needed
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -975,14 +958,12 @@ class _EventsDetailsState extends State<EventsDetails> {
                           color: Colors.white,
                           child: Center(
                             child: AutoSizeText(
-                              widget.EventAddress.toString()
-                                  .replaceAll("<br>", " "),
+                              widget.EventAddress.toString().replaceAll("<br>", " "),
                               style: TextStyle(
                                   fontSize: 13.sp,
                                   color: const Color.fromARGB(255, 133, 13, 13),
                                   fontWeight: FontWeight.w600),
-                              maxLines:
-                                  6, // Adjust the maximum number of lines as needed
+                              maxLines: 6, // Adjust the maximum number of lines as needed
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -1121,9 +1102,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                     child: Text(
                       'Details',
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w800),
+                          color: Colors.black, fontSize: 15.sp, fontWeight: FontWeight.w800),
                     ),
                   ),
                 ),
@@ -1202,14 +1181,16 @@ class _EventsDetailsState extends State<EventsDetails> {
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                          FittedBox(
-                            fit: BoxFit.contain,
-                            child: AutoSizeText(
-                              widget.EventLocation.toString(),
-                              style: TextStyle(
-                                  fontSize: 13.sp,
-                                  color: const Color.fromARGB(255, 133, 13, 13),
-                                  fontWeight: FontWeight.w600),
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: AutoSizeText(
+                                widget.EventLocation.toString(),
+                                style: TextStyle(
+                                    fontSize: 13.sp,
+                                    color: const Color.fromARGB(255, 133, 13, 13),
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
                         ],
@@ -1225,9 +1206,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                     child: Text(
                       'ORGANIZERS',
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w800),
+                          color: Colors.black, fontSize: 15.sp, fontWeight: FontWeight.w800),
                     ),
                   ),
                 ),

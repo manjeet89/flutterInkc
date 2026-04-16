@@ -44,16 +44,17 @@ class SingleDogRegistrationProcess extends StatefulWidget {
       super.key});
 
   @override
-  State<SingleDogRegistrationProcess> createState() =>
-      _SingleDogRegistrationProcessState();
+  State<SingleDogRegistrationProcess> createState() => _SingleDogRegistrationProcessState();
 }
 
-class _SingleDogRegistrationProcessState
-    extends State<SingleDogRegistrationProcess> {
+class _SingleDogRegistrationProcessState extends State<SingleDogRegistrationProcess> {
   bool parentregistrationhide = false;
   bool sixmonthold = false;
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    print(args["register_for_event"] ?? "");
     return WillPopScope(
       onWillPop: () {
         //trigger leaving and use own data
@@ -92,8 +93,7 @@ class _SingleDogRegistrationProcessState
                             "Please select ",
                             style: TextStyle(shadows: const [
                               Shadow(
-                                color: Color.fromARGB(
-                                    255, 85, 70, 218), // shadow color
+                                color: Color.fromARGB(255, 85, 70, 218), // shadow color
                               ),
                             ], fontWeight: FontWeight.bold, fontSize: 14.sp),
                           ),
@@ -101,8 +101,7 @@ class _SingleDogRegistrationProcessState
                             "Registration Process",
                             style: TextStyle(shadows: const [
                               Shadow(
-                                color: ui.Color.fromARGB(
-                                    255, 21, 20, 22), // shadow color
+                                color: ui.Color.fromARGB(255, 21, 20, 22), // shadow color
                               ),
                             ], fontWeight: FontWeight.w400, fontSize: 14.sp),
                           ),
@@ -121,8 +120,7 @@ class _SingleDogRegistrationProcessState
                           "Is your dog registered with any other club?",
                           style: TextStyle(shadows: const [
                             Shadow(
-                              color: Color.fromARGB(
-                                  255, 85, 70, 218), // shadow color
+                              color: Color.fromARGB(255, 85, 70, 218), // shadow color
                             ),
                           ], fontWeight: FontWeight.bold, fontSize: 12.sp),
                         ),
@@ -170,19 +168,27 @@ class _SingleDogRegistrationProcessState
                                     Navigator.of(context).push(MaterialPageRoute(
                                         builder: (BuildContext context) =>
                                             PedigreeDogRegistrationRegistrationWithOtherClubForm(
-                                                participate_event_id:
-                                                    widget.participate_event_id,
-                                                is_participate_with_event: widget
-                                                    .is_participate_with_event,
-                                                register_with_event:
-                                                    widget.register_with_event,
-                                                eventname: widget.eventname,
-                                                eventtype: widget.eventtype,
-                                                eventstal: widget.eventstal,
-                                                register_for_event:
-                                                    widget.register_for_event,
-                                                pariticaipate_for_event: widget
-                                                    .pariticaipate_for_event)));
+                                              participate_event_id: args["participate_event_id"],
+                                              is_participate_with_event:
+                                                  args["is_participate_with_event"],
+                                              register_with_event: args["register_with_event"],
+                                              eventname: args["eventname"],
+                                              eventtype: args["eventtype"],
+                                              eventstal: args["eventstal"],
+                                              pariticaipate_for_event:
+                                                  args["pariticaipate_for_event"],
+                                              register_for_event: args["register_for_event"],
+                                              // participate_event_id: widget.participate_event_id,
+                                              // is_participate_with_event:
+                                              //     widget.is_participate_with_event,
+                                              // register_with_event: widget.register_with_event,
+                                              // eventname: widget.eventname,
+                                              // eventtype: widget.eventtype,
+                                              // eventstal: widget.eventstal,
+                                              // register_for_event: widget.register_for_event,
+                                              // pariticaipate_for_event:
+                                              //     widget.pariticaipate_for_event
+                                            )));
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.only(top: 12),
@@ -203,16 +209,14 @@ class _SingleDogRegistrationProcessState
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20.0, left: 10),
+                                  padding: const EdgeInsets.only(top: 20.0, left: 10),
                                   child: Text(
                                     'YES',
                                     style: TextStyle(
                                         shadows: const [
                                           Shadow(
                                             // blurRadius: 5.0, // shadow blur
-                                            color: Color.fromARGB(255, 85, 70,
-                                                218), // shadow color
+                                            color: Color.fromARGB(255, 85, 70, 218), // shadow color
                                             // offset: Offset(2.0,
                                             //     2.0), // how much shadow will be shown
                                           ),
@@ -286,22 +290,17 @@ class _SingleDogRegistrationProcessState
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20.0, left: 10),
+                                  padding: const EdgeInsets.only(top: 20.0, left: 10),
                                   child: Text(
                                     'NO',
-                                    style: TextStyle(
-                                        shadows: const [
-                                          Shadow(
-                                            // blurRadius: 5.0, // shadow blur
-                                            color: ui.Color.fromARGB(
-                                                255, 3, 2, 5), // shadow color
-                                            // offset: Offset(2.0,
-                                            //     2.0), // how much shadow will be shown
-                                          ),
-                                        ],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
+                                    style: TextStyle(shadows: const [
+                                      Shadow(
+                                        // blurRadius: 5.0, // shadow blur
+                                        color: ui.Color.fromARGB(255, 3, 2, 5), // shadow color
+                                        // offset: Offset(2.0,
+                                        //     2.0), // how much shadow will be shown
+                                      ),
+                                    ], fontWeight: FontWeight.bold, fontSize: 12.sp),
                                   ),
                                 ),
                               ],
@@ -322,8 +321,7 @@ class _SingleDogRegistrationProcessState
                             "Is either parent registered?",
                             style: TextStyle(shadows: const [
                               Shadow(
-                                color: Color.fromARGB(
-                                    255, 85, 70, 218), // shadow color
+                                color: Color.fromARGB(255, 85, 70, 218), // shadow color
                               ),
                             ], fontWeight: FontWeight.bold, fontSize: 12.sp),
                           ),
@@ -363,19 +361,27 @@ class _SingleDogRegistrationProcessState
                                       Navigator.of(context).push(MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               SingleDogRegisrationEitherParaentsKnows(
-                                                  participate_event_id: widget
-                                                      .participate_event_id,
-                                                  is_participate_with_event: widget
-                                                      .is_participate_with_event,
-                                                  register_with_event: widget
-                                                      .register_with_event,
-                                                  eventname: widget.eventname,
-                                                  eventtype: widget.eventtype,
-                                                  eventstal: widget.eventstal,
-                                                  register_for_event:
-                                                      widget.register_for_event,
-                                                  pariticaipate_for_event: widget
-                                                      .pariticaipate_for_event)));
+                                                participate_event_id: args["participate_event_id"],
+                                                is_participate_with_event:
+                                                    args["is_participate_with_event"],
+                                                register_with_event: args["register_with_event"],
+                                                eventname: args["eventname"],
+                                                eventtype: args["eventtype"],
+                                                eventstal: args["eventstal"],
+                                                pariticaipate_for_event:
+                                                    args["pariticaipate_for_event"],
+                                                register_for_event: args["register_for_event"],
+                                                // participate_event_id: widget.participate_event_id,
+                                                // is_participate_with_event:
+                                                //     widget.is_participate_with_event,
+                                                // register_with_event: widget.register_with_event,
+                                                // eventname: widget.eventname,
+                                                // eventtype: widget.eventtype,
+                                                // eventstal: widget.eventstal,
+                                                // register_for_event: widget.register_for_event,
+                                                // pariticaipate_for_event:
+                                                //     widget.pariticaipate_for_event
+                                              )));
                                     },
                                     child: Container(
                                       margin: const EdgeInsets.only(top: 12),
@@ -396,16 +402,15 @@ class _SingleDogRegistrationProcessState
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 20.0, left: 10),
+                                    padding: const EdgeInsets.only(top: 20.0, left: 10),
                                     child: Text(
                                       'YES',
                                       style: TextStyle(
                                           shadows: const [
                                             Shadow(
                                               // blurRadius: 5.0, // shadow blur
-                                              color: Color.fromARGB(255, 85, 70,
-                                                  218), // shadow color
+                                              color:
+                                                  Color.fromARGB(255, 85, 70, 218), // shadow color
                                               // offset: Offset(2.0,
                                               //     2.0), // how much shadow will be shown
                                             ),
@@ -479,22 +484,17 @@ class _SingleDogRegistrationProcessState
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 20.0, left: 10),
+                                    padding: const EdgeInsets.only(top: 20.0, left: 10),
                                     child: Text(
                                       'NO',
-                                      style: TextStyle(
-                                          shadows: const [
-                                            Shadow(
-                                              // blurRadius: 5.0, // shadow blur
-                                              color: ui.Color.fromARGB(
-                                                  255, 3, 2, 5), // shadow color
-                                              // offset: Offset(2.0,
-                                              //     2.0), // how much shadow will be shown
-                                            ),
-                                          ],
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                      style: TextStyle(shadows: const [
+                                        Shadow(
+                                          // blurRadius: 5.0, // shadow blur
+                                          color: ui.Color.fromARGB(255, 3, 2, 5), // shadow color
+                                          // offset: Offset(2.0,
+                                          //     2.0), // how much shadow will be shown
+                                        ),
+                                      ], fontWeight: FontWeight.bold, fontSize: 12.sp),
                                     ),
                                   ),
                                 ],
@@ -516,8 +516,7 @@ class _SingleDogRegistrationProcessState
                             "Is your dog more than 6 months old?",
                             style: TextStyle(shadows: const [
                               Shadow(
-                                color: Color.fromARGB(
-                                    255, 85, 70, 218), // shadow color
+                                color: Color.fromARGB(255, 85, 70, 218), // shadow color
                               ),
                             ], fontWeight: FontWeight.bold, fontSize: 12.sp),
                           ),
@@ -561,19 +560,27 @@ class _SingleDogRegistrationProcessState
                                       Navigator.of(context).push(MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               UnknownDogRegistrationMoreThanSixMonth(
-                                                  participate_event_id: widget
-                                                      .participate_event_id,
-                                                  is_participate_with_event: widget
-                                                      .is_participate_with_event,
-                                                  register_with_event: widget
-                                                      .register_with_event,
-                                                  eventname: widget.eventname,
-                                                  eventtype: widget.eventtype,
-                                                  eventstal: widget.eventstal,
-                                                  register_for_event:
-                                                      widget.register_for_event,
-                                                  pariticaipate_for_event: widget
-                                                      .pariticaipate_for_event)));
+                                                participate_event_id: args["participate_event_id"],
+                                                is_participate_with_event:
+                                                    args["is_participate_with_event"],
+                                                register_with_event: args["register_with_event"],
+                                                eventname: args["eventname"],
+                                                eventtype: args["eventtype"],
+                                                eventstal: args["eventstal"],
+                                                pariticaipate_for_event:
+                                                    args["pariticaipate_for_event"],
+                                                register_for_event: args["register_for_event"],
+                                                // participate_event_id: widget.participate_event_id,
+                                                // is_participate_with_event:
+                                                //     widget.is_participate_with_event,
+                                                // register_with_event: widget.register_with_event,
+                                                // eventname: widget.eventname,
+                                                // eventtype: widget.eventtype,
+                                                // eventstal: widget.eventstal,
+                                                // register_for_event: widget.register_for_event,
+                                                // pariticaipate_for_event:
+                                                //     widget.pariticaipate_for_event
+                                              )));
                                     },
                                     child: Container(
                                       margin: const EdgeInsets.only(top: 12),
@@ -594,16 +601,15 @@ class _SingleDogRegistrationProcessState
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 20.0, left: 10),
+                                    padding: const EdgeInsets.only(top: 20.0, left: 10),
                                     child: Text(
                                       'YES',
                                       style: TextStyle(
                                           shadows: const [
                                             Shadow(
                                               // blurRadius: 5.0, // shadow blur
-                                              color: Color.fromARGB(255, 85, 70,
-                                                  218), // shadow color
+                                              color:
+                                                  Color.fromARGB(255, 85, 70, 218), // shadow color
                                               // offset: Offset(2.0,
                                               //     2.0), // how much shadow will be shown
                                             ),
@@ -655,10 +661,9 @@ class _SingleDogRegistrationProcessState
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  'Please initiate the registration process when your dog is more than 6 months old.')));
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                          content: Text(
+                                              'Please initiate the registration process when your dog is more than 6 months old.')));
                                       // SharedPreferences sharedprefrence =
                                       //     await SharedPreferences.getInstance();
                                       // String? check =
@@ -686,22 +691,17 @@ class _SingleDogRegistrationProcessState
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 20.0, left: 10),
+                                    padding: const EdgeInsets.only(top: 20.0, left: 10),
                                     child: Text(
                                       'NO',
-                                      style: TextStyle(
-                                          shadows: const [
-                                            Shadow(
-                                              // blurRadius: 5.0, // shadow blur
-                                              color: ui.Color.fromARGB(
-                                                  255, 3, 2, 5), // shadow color
-                                              // offset: Offset(2.0,
-                                              //     2.0), // how much shadow will be shown
-                                            ),
-                                          ],
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                      style: TextStyle(shadows: const [
+                                        Shadow(
+                                          // blurRadius: 5.0, // shadow blur
+                                          color: ui.Color.fromARGB(255, 3, 2, 5), // shadow color
+                                          // offset: Offset(2.0,
+                                          //     2.0), // how much shadow will be shown
+                                        ),
+                                      ], fontWeight: FontWeight.bold, fontSize: 12.sp),
                                     ),
                                   ),
                                 ],

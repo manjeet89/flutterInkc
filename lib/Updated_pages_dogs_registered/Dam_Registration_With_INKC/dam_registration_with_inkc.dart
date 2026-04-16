@@ -58,8 +58,7 @@ class DamRegistrationWithInkc extends StatefulWidget {
       super.key});
 
   @override
-  _DamRegistrationWithInkcState createState() =>
-      _DamRegistrationWithInkcState();
+  _DamRegistrationWithInkcState createState() => _DamRegistrationWithInkcState();
 }
 
 class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
@@ -100,16 +99,12 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
   DateTime date = DateTime.now();
   void selectDatePicker() async {
     DateTime? datepicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050));
+        context: context, initialDate: date, firstDate: DateTime(1950), lastDate: DateTime(2050));
 
     if (datepicker != null && datepicker != date) {
       setState(() {
         date = datepicker;
-        dateofbirth.value =
-            TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
+        dateofbirth.value = TextEditingValue(text: "${date.day}-${date.month}-${date.year}");
       });
     }
   }
@@ -122,8 +117,8 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
   final _firstpicker = ImagePicker();
 
   Future getfirstImage() async {
-    final pickedFilefirst = await _firstpicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 80);
+    final pickedFilefirst =
+        await _firstpicker.pickImage(source: ImageSource.gallery, imageQuality: 80);
 
     if (pickedFilefirst != null) {
       firstImage = File(pickedFilefirst.path);
@@ -155,8 +150,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
 
     try {
       final res = await http.post(
-          Uri.parse(
-              "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -198,8 +192,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
   bool damvalide = false;
   String? DamString;
 
-  uploadData(
-      String obidientq, String stallReqq, String Dayq, String Typeq) async {
+  uploadData(String obidientq, String stallReqq, String Dayq, String Typeq) async {
     setState(() {
       showSpinner = true;
     });
@@ -220,14 +213,11 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
       DateTime now = DateTime.now();
 
       FormData formData = FormData.fromMap({
-        'pet_image': await MultipartFile.fromFile(_image!.path,
+        'pet_image': await MultipartFile.fromFile(_image!.path, filename: "${now.second}.jpg"),
+        'sire_front_side_certificate': await MultipartFile.fromFile(_dambacksidecertificate!.path,
             filename: "${now.second}.jpg"),
-        'sire_front_side_certificate': await MultipartFile.fromFile(
-            _dambacksidecertificate!.path,
-            filename: "${now.second}.jpg"),
-        'sire_back_side_certificate': await MultipartFile.fromFile(
-            _studcertificate!.path,
-            filename: "${now.second}.jpg"),
+        'sire_back_side_certificate':
+            await MultipartFile.fromFile(_studcertificate!.path, filename: "${now.second}.jpg"),
         if (_Siretransferformcertificate.toString() != "null")
           'other_club_transfer_form_sire': await MultipartFile.fromFile(
               _Siretransferformcertificate!.path,
@@ -254,15 +244,15 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
       print(
           "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
 
-      Response response = await dio.post(
-          'https://new-demo.inkcdogs.org/api/dog/damregistrationwithINKC',
-          data: formData,
-          options: Options(headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Usertoken': token,
-            'Userid': userid
-          }));
+      Response response =
+          await dio.post('https://new-demo.inkcdogs.org/api/dog/damregistrationwithINKC',
+              data: formData,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -277,14 +267,14 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
           title: 'Success...',
           text: 'SuccessFully Registered',
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('SuccessFully Registered')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('SuccessFully Registered')));
       } else {
         setState(() {
           showSpinner = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Something went wrong')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Something went wrong')));
         print('something worng');
       }
 
@@ -339,8 +329,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -458,23 +447,20 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10.0, left: 12),
+                                padding: const EdgeInsets.only(top: 10.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Dam's INKC Registration Number ",
+                                      "Dam's (Mother's) INKC Registration Number ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -494,17 +480,13 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                     fillColor: Colors.white,
 
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     // labelText:
                                     //     "Sire's INKC Registration Number",
                                     hintText: "Dam's INKC Registration Number",
-                                    errorText: regisvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: regisvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -514,29 +496,25 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     sireString.toString(),
-                                    style: const TextStyle(
-                                        color: Colors.deepOrange),
+                                    style: const TextStyle(color: Colors.deepOrange),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Sire's KCI front side of the certificate",
+                                      "Sire's(Father's) KCI front side of the certificate",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -544,73 +522,130 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage:
-                                          _dambacksidecertificate != null
-                                              ? FileImage(
-                                                  _dambacksidecertificate!)
-                                              : null,
+                                      foregroundImage: _dambacksidecertificate != null
+                                          ? FileImage(_dambacksidecertificate!)
+                                          : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _dambacksidecertificate =
-                                                  File(cropperFile.path));
-                                          print(
-                                              "justcheck$_dambacksidecertificate");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _dambacksidecertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() =>
+                                          //         _dambacksidecertificate =
+                                          //             File(cropperFile.path));
+                                          //     print(
+                                          //         "justcheck$_dambacksidecertificate");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _dambacksidecertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Sire's KCI back side of the certificate",
+                                      "Sire's(Father's) KCI back side of the certificate",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -618,8 +653,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
@@ -631,122 +665,242 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                           : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() => _studcertificate =
-                                              File(cropperFile.path));
-                                          print("justcheck$_studcertificate");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _studcertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() => _studcertificate =
+                                          //         File(cropperFile.path));
+                                          //     print("justcheck$_studcertificate");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _studcertificate = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Sire's Transfer Form",
+                                      "Sire's(Father's) Transfer Form",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                   ],
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage:
-                                          _Siretransferformcertificate != null
-                                              ? FileImage(
-                                                  _Siretransferformcertificate!)
-                                              : null,
+                                      foregroundImage: _Siretransferformcertificate != null
+                                          ? FileImage(_Siretransferformcertificate!)
+                                          : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _Siretransferformcertificate =
-                                                  File(cropperFile.path));
-                                          print(
-                                              "justcheck$_Siretransferformcertificate");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _Siretransferformcertificate =
+                                                    File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() =>
+                                          //         _Damtransferformcertificate =
+                                          //             File(cropperFile.path));
+                                          //     print(
+                                          //         "justcheck$_Damtransferformcertificate");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _Siretransferformcertificate =
+                                                    File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Add Co Owner ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -778,8 +932,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                                 onChanged: (value) {
                                                   setState(() {
                                                     _isShowOff = false;
-                                                    AddCoOwner =
-                                                        value.toString();
+                                                    AddCoOwner = value.toString();
                                                   });
                                                 },
                                               ),
@@ -800,8 +953,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                                 onChanged: (value) {
                                                   setState(() {
                                                     _isShowOff = true;
-                                                    AddCoOwner =
-                                                        value.toString();
+                                                    AddCoOwner = value.toString();
                                                   });
                                                 },
                                               ),
@@ -825,23 +977,20 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 20.0, left: 12),
+                                        padding: const EdgeInsets.only(top: 20.0, left: 12),
                                         child: Row(
                                           children: [
                                             Text(
                                               "Co Owner ID ",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 22, 21, 21),
+                                                  color: const Color.fromARGB(255, 22, 21, 21),
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 12.sp),
+                                                  fontSize: 11.sp),
                                             ),
                                             Text(
                                               "*",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 231, 11, 11),
+                                                  color: const Color.fromARGB(255, 231, 11, 11),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15.sp),
                                             ),
@@ -857,40 +1006,136 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                             filled: true,
                                             fillColor: Colors.white,
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4.sp)),
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: Colors.green),
+                                              borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                              borderSide:
+                                                  const BorderSide(width: 1, color: Colors.green),
                                             ),
                                             labelText: 'Co Owner ID',
                                             hintText: 'Co Owner ID',
-                                            errorText: dogvalidate
-                                                ? "Value Can't Be Empty"
-                                                : null,
+                                            errorText: dogvalidate ? "Value Can't Be Empty" : null,
                                           ),
                                         ),
                                       ),
                                     ],
                                   )),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Breed of the dog ",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 22, 21, 21),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13.sp),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(255, 231, 11, 11),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              FutureBuilder<List<DogBreedList>>(
+                                  future: getbreedlist(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
+                                    } else {
+                                      // DropDownKennelName? selectedItem =
+                                      //     findItemById(snapshot.data!, selectedId);
+
+                                      return Container(
+                                        margin: const EdgeInsets.only(
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                          child: DropdownSearch<DogBreedList>(
+                                            items: snapshot.data!,
+                                            itemAsString: (DogBreedList? model) =>
+                                                model?.subCategoryName ?? "",
+                                            // selectedItem:
+                                            //     snapshot.data![getcountry],
+                                            onChanged: (DogBreedList? selectedItem) {
+                                              setState(() {
+                                                petsubcatid = selectedItem?.petCategoryId;
+                                                petcatid = selectedItem?.petCategoryId;
+                                              });
+                                              // setState(() {
+                                              //   countrybool = true;
+                                              //   widget.Stategetdata = "";
+                                              //   widget.Districtgetdata = "";
+                                              //   getcountry = int.parse(
+                                              //           "${selectedItem?.countryId}") -
+                                              //       1;
+
+                                              //   setState(() {
+                                              //     selectebreedvalue =
+                                              //         selectedItem?.countryId;
+                                              //     selectedbreedid =
+                                              //         selectedItem?.countryId;
+
+                                              //     _changeId(selectedbreedid);
+                                              //   });
+                                              // });
+                                            },
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
+                                                // labelText: "Select Color/Pattern",
+                                                hintText: "Choose one",
+                                                border: OutlineInputBorder(),
+                                              ),
+                                            ),
+                                            popupProps: PopupProps.menu(
+                                              showSearchBox: true,
+                                              fit: FlexFit.loose,
+                                              itemBuilder: (context, item, isSelected) {
+                                                return ListTile(
+                                                  title: Text(
+                                                    item.subCategoryName ?? "",
+                                                    style: TextStyle(
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
+                                                        fontSize: 11.sp,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            dropdownBuilder: (context, selectedItem) {
+                                              return Text(
+                                                selectedItem?.subCategoryName ?? "",
+                                                style: TextStyle(
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
+                                                    fontSize: 11.sp,
+                                                    fontWeight: FontWeight.bold),
+                                              ); // Display the selected item's name
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  }),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Name of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -906,37 +1151,30 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Name of the dog',
                                     hintText: 'Eg.Bruno',
-                                    errorText: dogvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: dogvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Date of Birth ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -952,8 +1190,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                       width: 160.sp,
                                       child: TextField(
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
+                                            color: Colors.black, fontWeight: FontWeight.w600),
                                         onTap: () {},
                                         controller: dateofbirth,
                                         enabled: false,
@@ -970,30 +1207,23 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                           //     );
                                           //   },
                                           // ),
-                                          prefixIcon:
-                                              const Icon(Icons.date_range),
+                                          prefixIcon: const Icon(Icons.date_range),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.sp)),
-                                            borderSide: const BorderSide(
-                                                width: 1, color: Colors.green),
+                                            borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                            borderSide:
+                                                const BorderSide(width: 1, color: Colors.green),
                                           ),
                                           labelText: 'Date of Birth',
-                                          errorText: datevalidate
-                                              ? "Value Can't Be Empty"
-                                              : null,
+                                          errorText: datevalidate ? "Value Can't Be Empty" : null,
                                         ),
                                       ),
                                     ),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 231, 25, 25),
+                                            backgroundColor: const Color.fromARGB(255, 231, 25, 25),
                                             textStyle: TextStyle(
                                                 fontSize: 10.sp,
-                                                color: const Color.fromARGB(
-                                                    255, 241, 236, 236),
+                                                color: const Color.fromARGB(255, 241, 236, 236),
                                                 fontWeight: FontWeight.bold)),
                                         onPressed: () {
                                           selectDatePicker();
@@ -1008,151 +1238,20 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Breed of the dog ",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13.sp),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              FutureBuilder<List<DogBreedList>>(
-                                  future: getbreedlist(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
-                                    } else {
-                                      // DropDownKennelName? selectedItem =
-                                      //     findItemById(snapshot.data!, selectedId);
-
-                                      return Container(
-                                        margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
-                                          child: DropdownSearch<DogBreedList>(
-                                            items: snapshot.data!,
-                                            itemAsString:
-                                                (DogBreedList? model) =>
-                                                    model?.subCategoryName ??
-                                                    "",
-                                            // selectedItem:
-                                            //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (DogBreedList? selectedItem) {
-                                              setState(() {
-                                                petsubcatid =
-                                                    selectedItem?.petCategoryId;
-                                                petcatid =
-                                                    selectedItem?.petCategoryId;
-                                              });
-                                              // setState(() {
-                                              //   countrybool = true;
-                                              //   widget.Stategetdata = "";
-                                              //   widget.Districtgetdata = "";
-                                              //   getcountry = int.parse(
-                                              //           "${selectedItem?.countryId}") -
-                                              //       1;
-
-                                              //   setState(() {
-                                              //     selectebreedvalue =
-                                              //         selectedItem?.countryId;
-                                              //     selectedbreedid =
-                                              //         selectedItem?.countryId;
-
-                                              //     _changeId(selectedbreedid);
-                                              //   });
-                                              // });
-                                            },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
-                                                // labelText: "Select Color/Pattern",
-                                                hintText: "Choose one",
-                                                border: OutlineInputBorder(),
-                                              ),
-                                            ),
-                                            popupProps: PopupProps.menu(
-                                              showSearchBox: true,
-                                              fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
-                                                return ListTile(
-                                                  title: Text(
-                                                    item.subCategoryName ?? "",
-                                                    style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 46, 46),
-                                                        fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
-                                              return Text(
-                                                selectedItem?.subCategoryName ??
-                                                    "",
-                                                style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 95, 46, 46),
-                                                    fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ); // Display the selected item's name
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  }),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Color and Marking ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1163,38 +1262,27 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                   future: getColorAndMaking(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text("Error: ${snapshot.error}"));
-                                    } else if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return const Center(
-                                          child: Text("No data found"));
+                                      return Center(child: Text("Error: ${snapshot.error}"));
+                                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                      return const Center(child: Text("No data found"));
                                     } else {
                                       // DropDownKennelName? selectedItem =
                                       //     findItemById(snapshot.data!, selectedId);
 
                                       return Container(
                                         margin: const EdgeInsets.only(
-                                            top: 8.0,
-                                            left: 8,
-                                            right: 8,
-                                            bottom: 8),
+                                            top: 8.0, left: 8, right: 8, bottom: 8),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          padding: const EdgeInsets.symmetric(horizontal: 5),
                                           child: DropdownSearch<ColorAndMaking>(
                                             items: snapshot.data!,
-                                            itemAsString:
-                                                (ColorAndMaking? model) =>
-                                                    model?.colourName ?? "",
+                                            itemAsString: (ColorAndMaking? model) =>
+                                                model?.colourName ?? "",
                                             // selectedItem:
                                             //     snapshot.data![getcountry],
-                                            onChanged:
-                                                (ColorAndMaking? selectedItem) {
+                                            onChanged: (ColorAndMaking? selectedItem) {
                                               setState(() {
-                                                selectcolormakingid =
-                                                    selectedItem?.colourId;
+                                                selectcolormakingid = selectedItem?.colourId;
                                               });
                                               // setState(() {
                                               //   countrybool = true;
@@ -1214,10 +1302,8 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                               //   });
                                               // });
                                             },
-                                            dropdownDecoratorProps:
-                                                const DropDownDecoratorProps(
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
+                                              dropdownSearchDecoration: InputDecoration(
                                                 filled: true,
 
                                                 fillColor: Colors.white,
@@ -1229,32 +1315,26 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                             popupProps: PopupProps.menu(
                                               showSearchBox: true,
                                               fit: FlexFit.loose,
-                                              itemBuilder:
-                                                  (context, item, isSelected) {
+                                              itemBuilder: (context, item, isSelected) {
                                                 return ListTile(
                                                   title: Text(
                                                     item.colourName ?? "",
                                                     style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 95, 46, 46),
-                                                        fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                        color:
+                                                            const Color.fromARGB(255, 95, 46, 46),
+                                                        fontSize: 11.sp,
+                                                        fontWeight: FontWeight.bold),
                                                   ),
                                                 );
                                               },
                                             ),
-                                            dropdownBuilder:
-                                                (context, selectedItem) {
+                                            dropdownBuilder: (context, selectedItem) {
                                               return Text(
                                                 selectedItem?.colourName ?? "",
                                                 style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 95, 46, 46),
-                                                    fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    color: const Color.fromARGB(255, 95, 46, 46),
+                                                    fontSize: 11.sp,
+                                                    fontWeight: FontWeight.bold),
                                               ); // Display the selected item's name
                                             },
                                           ),
@@ -1263,23 +1343,20 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                     }
                                   }),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Sex of the dog ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1350,15 +1427,13 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Country Bred In ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
@@ -1373,16 +1448,12 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.sp)),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.green),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.sp)),
+                                      borderSide: const BorderSide(width: 1, color: Colors.green),
                                     ),
                                     labelText: 'Country Bred in',
                                     hintText: 'Eg.India',
-                                    errorText: countryvalidate
-                                        ? "Value Can't Be Empty"
-                                        : null,
+                                    errorText: countryvalidate ? "Value Can't Be Empty" : null,
                                   ),
                                 ),
                               ),
@@ -1393,16 +1464,14 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                     Text(
                                       "Upload your dog’s best photograph",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12.sp),
+                                          fontSize: 11.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1410,69 +1479,126 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   FittedBox(
                                     fit: BoxFit.fill,
                                     child: CircleAvatar(
                                       backgroundColor: const Color(0xEBA020F0),
                                       radius: 64,
-                                      foregroundImage: _image != null
-                                          ? FileImage(_image!)
-                                          : null,
+                                      foregroundImage: _image != null ? FileImage(_image!) : null,
                                       child: const Text(
                                         "Select image",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                        style: TextStyle(fontSize: 20, color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 199, 7, 7),
-                                    ),
-                                    onPressed: () async {
-                                      final files =
-                                          await imagehelper.PickImage();
-                                      if (files.isNotEmpty) {
-                                        final cropperFile =
-                                            await imagehelper.crop(
-                                                file: files.first,
-                                                cropStyle: CropStyle.circle);
-                                        if (cropperFile != null) {
-                                          setState(() =>
-                                              _image = File(cropperFile.path));
-                                          print("justcheck$_image");
-                                        }
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Pick Image',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 199, 7, 7),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.gallery);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _image = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                          // final files =
+                                          //     await imagehelper.PickImage();
+                                          // if (files.isNotEmpty) {
+                                          //   final cropperFile =
+                                          //       await imagehelper.crop(
+                                          //           file: files.first,
+                                          //           cropStyle: CropStyle.circle);
+                                          //   if (cropperFile != null) {
+                                          //     setState(() =>
+                                          //         _image = File(cropperFile.path));
+                                          //     print("justcheck$_image");
+                                          //   }
+                                          // }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_library,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 41, 1, 202),
+                                        ),
+                                        onPressed: () async {
+                                          final picker = ImagePicker();
+                                          final pickedFile =
+                                              await picker.pickImage(source: ImageSource.camera);
+
+                                          if (pickedFile != null) {
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              aspectRatio: const CropAspectRatio(
+                                                  ratioX: 1, ratioY: 1), // Fixed 4:3
+                                              compressQuality: 70,
+                                              uiSettings: [
+                                                AndroidUiSettings(
+                                                  toolbarTitle: 'Crop Image',
+                                                  lockAspectRatio: true, // lock to 4:3
+                                                ),
+                                                IOSUiSettings(aspectRatioLockEnabled: true),
+                                              ],
+                                            );
+
+                                            if (croppedFile != null) {
+                                              setState(() {
+                                                _image = File(croppedFile.path);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20.0, left: 12),
+                                padding: const EdgeInsets.only(top: 20.0, left: 12),
                                 child: Row(
                                   children: [
                                     Text(
                                       "Microchip required ",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 22, 21, 21),
+                                          color: const Color.fromARGB(255, 22, 21, 21),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13.sp),
                                     ),
                                     Text(
                                       "*",
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 231, 11, 11),
+                                          color: const Color.fromARGB(255, 231, 11, 11),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15.sp),
                                     ),
@@ -1503,8 +1629,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                                 groupValue: MicroRequired,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    MicroRequired =
-                                                        value.toString();
+                                                    MicroRequired = value.toString();
                                                   });
                                                 },
                                               ),
@@ -1524,8 +1649,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                                 groupValue: MicroRequired,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    MicroRequired =
-                                                        value.toString();
+                                                    MicroRequired = value.toString();
                                                   });
                                                 },
                                               ),
@@ -1544,18 +1668,15 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                   ),
                                 ),
                               ),
-                              if (widget.participate_event_id != "")
-                                EventDetails(context),
+                              if (widget.participate_event_id != "") EventDetails(context),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 23, 4, 190),
+                                        backgroundColor: const Color.fromARGB(255, 23, 4, 190),
                                         textStyle: TextStyle(
                                             fontSize: 10.sp,
-                                            color: const Color.fromARGB(
-                                                255, 241, 236, 236),
+                                            color: const Color.fromARGB(255, 241, 236, 236),
                                             fontWeight: FontWeight.bold)),
                                     onPressed: () {
                                       String SIRE = sire.text.toString();
@@ -1573,24 +1694,19 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                           title: 'Oops...',
                                           text: "Please enter dam number",
                                         );
-                                      } else if (_dambacksidecertificate
-                                              .toString() ==
-                                          "null") {
+                                      } else if (_dambacksidecertificate.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              "Please Select sire front side certificate",
+                                          text: "Please Select sire front side certificate",
                                         );
-                                      } else if (_studcertificate.toString() ==
-                                          "null") {
+                                      } else if (_studcertificate.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              "Please Select sire back side certificate",
+                                          text: "Please Select sire back side certificate",
                                         );
                                       } else if (DogName.toString() == "") {
                                         QuickAlert.show(
@@ -1613,23 +1729,19 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                           title: 'Oops...',
                                           text: 'Please Select Breed',
                                         );
-                                      } else if (selectcolormakingid
-                                              .toString() ==
-                                          "null") {
+                                      } else if (selectcolormakingid.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              'Please Select Color and making',
+                                          text: 'Please Select Color and making',
                                         );
                                       } else if (_image.toString() == "null") {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.error,
                                           title: 'Oops...',
-                                          text:
-                                              "Please Select dog best photograph",
+                                          text: "Please Select dog best photograph",
                                         );
                                       } else if (AddCoowner.toString() == "1") {
                                         if (cowner.text.toString() == "") {
@@ -1677,14 +1789,12 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
 
                                             //obidient.length;
                                             if (obidient.length <= 1 &&
-                                                widget.eventtype.toString() ==
-                                                    "2") {
+                                                widget.eventtype.toString() == "2") {
                                               QuickAlert.show(
                                                 context: context,
                                                 type: QuickAlertType.error,
                                                 title: 'Oops...',
-                                                text:
-                                                    'Please Select atlest 2 box',
+                                                text: 'Please Select atlest 2 box',
                                               );
                                             } else {
                                               // print(
@@ -1724,11 +1834,8 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                               //       "register_with_event":
                                               //           "1"
                                               //     },
-                                              uploadData(
-                                                  obidient.toString(),
-                                                  stallReq.toString(),
-                                                  Day,
-                                                  Type);
+                                              uploadData(obidient.toString(), stallReq.toString(),
+                                                  Day, Type);
                                               //       headers: requestHeaders);
                                               //   var data = json.decode(responce.body);
                                               //   if (data['code'].toString() == "200") {
@@ -1785,14 +1892,12 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
 
                                           //obidient.length;
                                           if (obidient.length <= 1 &&
-                                              widget.eventtype.toString() ==
-                                                  "2") {
+                                              widget.eventtype.toString() == "2") {
                                             QuickAlert.show(
                                               context: context,
                                               type: QuickAlertType.error,
                                               title: 'Oops...',
-                                              text:
-                                                  'Please Select atlest 2 box',
+                                              text: 'Please Select atlest 2 box',
                                             );
                                           } else {
                                             // print(
@@ -1832,8 +1937,8 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                             //       "register_with_event":
                                             //           "1"
                                             //     },
-                                            uploadData(obidient.toString(),
-                                                stallReq.toString(), Day, Type);
+                                            uploadData(obidient.toString(), stallReq.toString(),
+                                                Day, Type);
                                             //       headers: requestHeaders);
                                             //   var data = json.decode(responce.body);
                                             //   if (data['code'].toString() == "200") {
@@ -1890,7 +1995,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                     style: TextStyle(
                         color: const Color.fromARGB(255, 22, 21, 21),
                         fontWeight: FontWeight.bold,
-                        fontSize: 12.sp),
+                        fontSize: 11.sp),
                   ),
                 ),
                 Row(
@@ -2062,7 +2167,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                         style: TextStyle(
                             color: const Color.fromARGB(255, 22, 21, 21),
                             fontWeight: FontWeight.bold,
-                            fontSize: 12.sp),
+                            fontSize: 11.sp),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 0),
@@ -2148,7 +2253,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 22, 21, 21),
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12.sp),
+                                fontSize: 11.sp),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -2245,7 +2350,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 22, 21, 21),
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12.sp),
+                                fontSize: 11.sp),
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 0),

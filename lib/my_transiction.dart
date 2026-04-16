@@ -5,7 +5,6 @@ import 'package:flutter/material.dart' hide CarouselController;
 import 'package:http/http.dart' as http;
 import 'package:inkc/ResponciveWidget.dart';
 import 'package:inkc/model/mytransactionmodel.dart';
-import 'package:inkc/myhomepage.dart';
 import 'package:inkc/view_reciept.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,8 +30,7 @@ class _MyTransactionsState extends State<MyTransactions> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    print(userid + "----" + token);
-
+    print("$userid----$token");
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -91,21 +89,17 @@ class _MyTransactionsState extends State<MyTransactions> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xFFFFFFFF),
+          backgroundColor: const Color(0xFFFFFFFF),
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back,
-                color: Color.fromARGB(255, 216, 22, 22)),
-            onPressed: () =>  Navigator.of(context).pop(),
+            icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 216, 22, 22)),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(
+          title: const Text(
             "Transaction",
             style: TextStyle(
-                color: Color.fromARGB(255, 175, 21, 21),
-                fontWeight: FontWeight.w600,
-                fontSize: 18),
+                color: Color.fromARGB(255, 175, 21, 21), fontWeight: FontWeight.w600, fontSize: 18),
           )),
-
       body: WillPopScope(
         onWillPop: () async {
           // Control back button behavior here
@@ -124,13 +118,11 @@ class _MyTransactionsState extends State<MyTransactions> {
             future: FetchData(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(
-                    child:
-                        Text("No transactions")); //'Error: ${snapshot.error}'
+                return const Center(child: Text("No transactions")); //'Error: ${snapshot.error}'
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(child: Text('No transaction.'));
+                return const Center(child: Text('No transaction.'));
               } else if (snapshot.hasData) {
                 return Responcivewidget(
                   mobile: Container(
@@ -141,23 +133,20 @@ class _MyTransactionsState extends State<MyTransactions> {
                         itemBuilder: (context, index) {
                           // i++;
 
-                          DateTime dateTime = DateTime.parse(
-                              dataload[index].paymentCreatedOn.toString());
+                          DateTime dateTime =
+                              DateTime.parse(dataload[index].paymentCreatedOn.toString());
 
                           // Format the date to remove time
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(dateTime);
+                          String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
 
                           // Decode JSON string to a Map
-                          Map<String, dynamic> jsonData = jsonDecode(
-                              dataload[index].orderDetails.toString());
+                          Map<String, dynamic> jsonData =
+                              jsonDecode(dataload[index].orderDetails.toString());
 
                           // Extract total_cost
-                          int totalCost =
-                              jsonData['cart_total_cost']['total_cost'];
+                          int totalCost = jsonData['cart_total_cost']['total_cost'];
 
-                          double amounts =
-                              double.parse(totalCost.toString()) ;
+                          double amounts = double.parse(totalCost.toString());
                           // print(dataload[index]
                           //     .paymentTransactionAmount
                           //     .toString());
@@ -175,8 +164,7 @@ class _MyTransactionsState extends State<MyTransactions> {
                               elevation: 8,
                               child: Container(
                                 decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
                                   // gradient: LinearGradient(
                                   //   colors: [
                                   //     Color.fromARGB(255, 41, 29, 70),
@@ -189,18 +177,15 @@ class _MyTransactionsState extends State<MyTransactions> {
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           const Padding(
                                             padding: EdgeInsets.all(4.0),
                                             child: Text(
                                               "       Date:                ",
                                               style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w700),
+                                                  color: Colors.black, fontWeight: FontWeight.w700),
                                             ),
                                           ),
                                           Padding(
@@ -208,8 +193,7 @@ class _MyTransactionsState extends State<MyTransactions> {
                                             child: Text(
                                               formattedDate,
                                               style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w700),
+                                                  color: Colors.black, fontWeight: FontWeight.w700),
                                             ),
                                           )
                                         ],
@@ -218,32 +202,26 @@ class _MyTransactionsState extends State<MyTransactions> {
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           const Padding(
                                             padding: EdgeInsets.all(4.0),
                                             child: Text(
                                               "       Amount:          ",
                                               style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w700),
+                                                  color: Colors.black, fontWeight: FontWeight.w700),
                                             ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.all(4.0),
                                             child: Text(
-                                              amounts
-                                                  .toString()
-                                                  .replaceAll(".0", ""),
+                                              amounts.toString().replaceAll(".0", ""),
                                               // dataload[index]
                                               //     .paymentTransactionAmount
                                               //     .toString(),
                                               style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w700),
+                                                  color: Colors.black, fontWeight: FontWeight.w700),
                                             ),
                                           )
                                         ],
@@ -256,19 +234,13 @@ class _MyTransactionsState extends State<MyTransactions> {
                                               backgroundColor:
                                                   const Color.fromARGB(235, 240, 91, 32),
                                               textStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 241, 236, 236),
+                                                  color: Color.fromARGB(255, 241, 236, 236),
                                                   fontWeight: FontWeight.bold)),
                                           onPressed: () async {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        ViewReciept(
-                                                            orderdetail: dataload[
-                                                                    index]
-                                                                .orderDetails
-                                                                .toString())));
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (BuildContext context) => ViewReciept(
+                                                    orderdetail:
+                                                        dataload[index].orderDetails.toString())));
                                             // SharedPreferences sharedprefrence =
                                             //     await SharedPreferences
                                             //         .getInstance();
@@ -324,8 +296,7 @@ class _MyTransactionsState extends State<MyTransactions> {
                                             "View receipt",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w800,
-                                              color: Color.fromARGB(
-                                                  255, 255, 255, 255),
+                                              color: Color.fromARGB(255, 255, 255, 255),
                                             ),
                                           )),
                                     )
@@ -363,23 +334,20 @@ class _MyTransactionsState extends State<MyTransactions> {
                     child: ListView.builder(
                         itemCount: dataload.length,
                         itemBuilder: (context, index) {
-                          DateTime dateTime = DateTime.parse(
-                              dataload[index].paymentCreatedOn.toString());
+                          DateTime dateTime =
+                              DateTime.parse(dataload[index].paymentCreatedOn.toString());
 
                           // Format the date to remove time
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(dateTime);
+                          String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
 
                           // Decode JSON string to a Map
-                          Map<String, dynamic> jsonData = jsonDecode(
-                              dataload[index].orderDetails.toString());
+                          Map<String, dynamic> jsonData =
+                              jsonDecode(dataload[index].orderDetails.toString());
 
                           // Extract total_cost
-                          int totalCost =
-                              jsonData['cart_total_cost']['total_cost'];
+                          int totalCost = jsonData['cart_total_cost']['total_cost'];
 
-                          double amounts =
-                              double.parse(totalCost.toString());
+                          double amounts = double.parse(totalCost.toString());
                           return InkWell(
                             onTap: () {},
                             child: Card(
@@ -388,29 +356,24 @@ class _MyTransactionsState extends State<MyTransactions> {
                               margin: const EdgeInsets.all(10),
                               child: Container(
                                 decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           const Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
                                               "Date: ",
                                               style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w900),
+                                                  color: Colors.black, fontWeight: FontWeight.w900),
                                             ),
                                           ),
                                           Padding(
@@ -418,8 +381,7 @@ class _MyTransactionsState extends State<MyTransactions> {
                                             child: Text(
                                               formattedDate,
                                               style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w900),
+                                                  color: Colors.black, fontWeight: FontWeight.w900),
                                             ),
                                           )
                                         ],
@@ -428,18 +390,15 @@ class _MyTransactionsState extends State<MyTransactions> {
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           const Padding(
                                             padding: EdgeInsets.all(4.0),
                                             child: Text(
                                               "Amount: ",
                                               style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w900),
+                                                  color: Colors.black, fontWeight: FontWeight.w900),
                                             ),
                                           ),
                                           Padding(
@@ -450,8 +409,7 @@ class _MyTransactionsState extends State<MyTransactions> {
                                               //     .paymentTransactionAmount
                                               //     .toString(),
                                               style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w900),
+                                                  color: Colors.black, fontWeight: FontWeight.w900),
                                             ),
                                           )
                                         ],
@@ -461,22 +419,15 @@ class _MyTransactionsState extends State<MyTransactions> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0xEBA020F0),
+                                              backgroundColor: const Color(0xEBA020F0),
                                               textStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 241, 236, 236),
+                                                  color: Color.fromARGB(255, 241, 236, 236),
                                                   fontWeight: FontWeight.bold)),
                                           onPressed: () async {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        ViewReciept(
-                                                            orderdetail: dataload[
-                                                                    index]
-                                                                .orderDetails
-                                                                .toString())));
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (BuildContext context) => ViewReciept(
+                                                    orderdetail:
+                                                        dataload[index].orderDetails.toString())));
 
                                             // print(dataload[index]
                                             //     .paymentOrderDetails
@@ -537,8 +488,7 @@ class _MyTransactionsState extends State<MyTransactions> {
                                             "Receipt",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w800,
-                                              color: Color.fromARGB(
-                                                  255, 255, 255, 255),
+                                              color: Color.fromARGB(255, 255, 255, 255),
                                             ),
                                           )),
                                     )

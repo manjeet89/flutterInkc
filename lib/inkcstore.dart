@@ -53,10 +53,9 @@ class _INKCStoreState extends State<INKCStore> {
                 style: TextStyle(
                     shadows: const [
                       Shadow(
-                        blurRadius: 10.0, // shadow blur
+                        blurRadius: 1.0, // shadow blur
                         color: Color.fromARGB(255, 223, 71, 45), // shadow color
-                        offset:
-                            Offset(2.0, 2.0), // how much shadow will be shown
+                        // offset: Offset(2.0, 2.0), // how much shadow will be shown
                       ),
                     ],
                     fontSize: 20.sp,
@@ -75,6 +74,7 @@ class _INKCStoreState extends State<INKCStore> {
                       itemCount: dataload.length,
                       itemBuilder: (context, position) {
                         return Card(
+                          color: Colors.white,
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Row(
@@ -85,8 +85,7 @@ class _INKCStoreState extends State<INKCStore> {
                                   decoration: BoxDecoration(
                                     boxShadow: const [
                                       BoxShadow(
-                                        color:
-                                            Color.fromARGB(255, 178, 177, 189),
+                                        color: Color.fromARGB(255, 178, 177, 189),
                                         blurRadius: 5,
                                         offset: Offset(
                                           5,
@@ -99,8 +98,7 @@ class _INKCStoreState extends State<INKCStore> {
                                     image: DecorationImage(
                                       image: NetworkImage(
                                           "https://new-demo.inkcdogs.org/${dataload[position].productImage}"),
-                                      fit:
-                                          BoxFit.cover, //change image fill type
+                                      fit: BoxFit.cover, //change image fill type
                                     ),
                                   ),
                                 ),
@@ -108,28 +106,23 @@ class _INKCStoreState extends State<INKCStore> {
                                   margin: const EdgeInsets.only(left: 5),
                                   width: 150.sp,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10, bottom: 5),
+                                    padding: const EdgeInsets.only(top: 10.0, left: 10, bottom: 5),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           maxLines: 5,
                                           dataload[position].productName,
                                           style: TextStyle(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w600),
+                                              fontSize: 12.sp, fontWeight: FontWeight.w600),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(5.0),
                                           child: Text(
                                             '₹ ${dataload[position].actualPrice}',
                                             style: TextStyle(
-                                              decoration:
-                                                  TextDecoration.lineThrough,
+                                              decoration: TextDecoration.lineThrough,
                                               fontSize: 12.sp,
                                               color: Colors.black87,
                                             ),
@@ -140,8 +133,7 @@ class _INKCStoreState extends State<INKCStore> {
                                           child: Text(
                                             '₹ ${dataload[position].nonMemberFee}',
                                             style: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600),
+                                                fontSize: 15.sp, fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                         Padding(
@@ -149,42 +141,27 @@ class _INKCStoreState extends State<INKCStore> {
                                           child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
                                                 backgroundColor:
-                                                    const Color.fromARGB(
-                                                        255, 231, 25, 25),
+                                                    const Color.fromARGB(255, 231, 25, 25),
                                                 textStyle: TextStyle(
                                                     fontSize: 10.sp,
-                                                    color: const Color.fromARGB(
-                                                        255, 241, 236, 236),
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                                    color: const Color.fromARGB(255, 241, 236, 236),
+                                                    fontWeight: FontWeight.bold)),
                                             onPressed: () {
                                               Navigator.of(context).push(MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      INKCDetails(
-                                                          image:
-                                                              dataload[position]
-                                                                  .productImage,
-                                                          productName:
-                                                              dataload[position]
-                                                                  .productName,
-                                                          productfacePrice:
-                                                              dataload[position]
-                                                                  .actualPrice,
-                                                          productactualPrice:
-                                                              dataload[position]
-                                                                  .nonMemberFee,
-                                                          prductdescription:
-                                                              dataload[position]
-                                                                  .productDescription,
-                                                          productId:
-                                                              dataload[position]
-                                                                  .productId)));
+                                                  builder: (BuildContext context) => INKCDetails(
+                                                      image: dataload[position].productImage,
+                                                      productName: dataload[position].productName,
+                                                      productfacePrice:
+                                                          dataload[position].actualPrice,
+                                                      productactualPrice:
+                                                          dataload[position].nonMemberFee,
+                                                      prductdescription:
+                                                          dataload[position].productDescription,
+                                                      productId: dataload[position].productId)));
                                             },
                                             child: const Text(
                                               "Details",
-                                              style: TextStyle(
-                                                  color: Colors.white),
+                                              style: TextStyle(color: Colors.white),
                                             ),
                                           ),
                                         )
