@@ -36,8 +36,18 @@ class _ChatBotPageState extends State<ChatBotPage> {
   String littercountrybredin = "";
   String numberopuppies = "";
   File? litter_stud_imagePath;
+  File? litter_dog_image;
   String? litterbreedId;
   String? litterbreedName;
+
+  // after puppy number enter
+  String damfront = "";
+  String damback = "";
+  String damfransferform = "";
+  String sirefront = "";
+  String sireback = "";
+  String sirefransferform = "";
+  String studAgreementForm = "";
 
   // dam registrered with other club
   File? litter_Dam_front_side_imagePath_other_club;
@@ -217,6 +227,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
       if (body['data']['kennel_second_owner'].toString() == "false") {
         //checkvisible = false;
+        // removeLastWidget();
+        // botReply("no kennel name");
         print("doremon");
       } else {
         List list = body['data']['kennel_second_owner'];
@@ -237,6 +249,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
       if (body['data']['kennel_info'].toString() == "false") {
         //checkvisible = false;
+        removeLastWidget();
       } else {
         // checkvisible = false;
 
@@ -506,7 +519,21 @@ class _ChatBotPageState extends State<ChatBotPage> {
         botReply("Image uploaded successfully ✅");
 
         setState(() {
-          startLitterSireRegistrationFlow();
+          botReply("Stud Agreement Form");
+          messages.add({"sender": "user_widget", "widget": "Litter_stud_image_picker"});
+          showTextInput = false; // show text field
+        });
+
+        // messages.add({"sender": "user_widget", "widget": "Registraion_Number"});
+      } else if ("litter_dogs_image" == images) {
+        litter_dog_image = File(image.path);
+        messages.add({"sender": "user", "image": image.path});
+        botReply("Image uploaded successfully ✅");
+
+        setState(() {
+          botReply("Kennel Club Name");
+          showTextInput = false; // show text field
+          messages.add({"sender": "user_widget", "widget": "Litter_kennel_name"});
         });
 
         // messages.add({"sender": "user_widget", "widget": "Registraion_Number"});
@@ -627,6 +654,189 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
     setState(() {});
   }
+
+  GetDetailLitterCertificate() async {
+    // botReply("stud agreement form " + litter_stud_imagePath.toString());
+
+    // botReply("litter_Dam_front_side_imagePath_other_club " +
+    //     litter_Dam_front_side_imagePath_other_club.toString());
+    // botReply("litter_Dam_back_side_imagePath_other_club " +
+    //     litter_Dam_back_side_imagePath_other_club.toString());
+    // botReply("litter_Dam_transfer_imagePath_other_club " +
+    //     litter_Dam_transfer_imagePath_other_club.toString());
+
+    // botReply("litter_sire_front_side_imagePath_other_club " +
+    //     litter_sire_front_side_imagePath_other_club.toString());
+    // botReply("litter_sire_back_side_imagePath_other_club " +
+    //     litter_sire_back_side_imagePath_other_club.toString());
+    // botReply("litter_sire_transfer_imagePath_other_club " +
+    //     litter_sire_transfer_imagePath_other_club.toString());
+    botReply("Please wait...");
+
+    SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+    String userid = sharedprefrence.getString("Userid")!;
+    String token = sharedprefrence.getString("Token")!;
+    Dio dio = Dio();
+    DateTime now = DateTime.now();
+
+    FormData formData = FormData.fromMap({
+      if (litter_stud_imagePath.toString() != "null")
+        'stud_agreement_form': await MultipartFile.fromFile(litter_stud_imagePath!.path,
+            filename: "${now.second}.jpg"),
+      if (litter_sire_front_side_imagePath_other_club.toString() != "null")
+        'sire_front_side_certificate': await MultipartFile.fromFile(
+            litter_sire_front_side_imagePath_other_club!.path,
+            filename: "${now.second}.jpg"),
+      if (litter_sire_back_side_imagePath_other_club.toString() != "null")
+        'sire_back_side_certificate': await MultipartFile.fromFile(
+            litter_sire_back_side_imagePath_other_club!.path,
+            filename: "${now.second}.jpg"),
+      if (litter_sire_transfer_imagePath_other_club.toString() != "null")
+        'other_club_transfer_form_sire': await MultipartFile.fromFile(
+            litter_sire_transfer_imagePath_other_club!.path,
+            filename: "${now.second}.jpg"),
+      if (litter_Dam_transfer_imagePath_other_club.toString() != "null")
+        'other_club_transfer_form_dam': await MultipartFile.fromFile(
+            litter_Dam_transfer_imagePath_other_club!.path,
+            filename: "${now.second}.jpg"),
+      if (litter_Dam_transfer_imagePath_other_club.toString() != "null")
+        'other_club_transfer_form_dam': await MultipartFile.fromFile(
+            litter_Dam_transfer_imagePath_other_club!.path,
+            filename: "${now.second}.jpg"),
+      if (litter_Dam_transfer_imagePath_other_club.toString() != "null")
+        'other_club_transfer_form_dam': await MultipartFile.fromFile(
+            litter_Dam_transfer_imagePath_other_club!.path,
+            filename: "${now.second}.jpg"),
+    });
+
+    Response response =
+        await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
+            data: formData,
+            options: Options(headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Usertoken': token,
+              'Userid': userid
+            }));
+
+    print(response);
+
+    if (response.statusCode == 200) {
+      // _image = response[]
+      var responseData = jsonDecode(response.data);
+      setState(() {
+        studAgreementForm = responseData['data']['stud_agreement_form'];
+        damfront = responseData['data']['dam_front_side_certificate'];
+        damback = responseData['data']['dam_back_side_certificate'];
+        sirefront = responseData['data']['sire_front_side_certificate'];
+        sireback = responseData['data']['sire_back_side_certificate'];
+
+        sirefransferform = responseData['data']['other_club_transfer_form_sire'];
+        damfransferform = responseData['data']['other_club_transfer_form_dam'];
+        // botReply(responseData.toString());
+      });
+
+      // var damfront = responseData['data']['dam_front_side_certificate'];
+      // var damback = responseData['data']['dam_back_side_certificate'];
+      // var damfransferform = responseData['data']['other_club_transfer_form_dam'];
+
+      // Navigator.of(context).push(MaterialPageRoute(
+      //     builder: (BuildContext context) => LitterPuppyRegistration(
+      //           sire: SIRE,
+      //           dam: "",
+      //           dob: DOB,
+      //           country: counrty.text.toString(),
+      //           puppy: numbers.text.toString(),
+      //           image: _image.toString(),
+      //           sirebackcerificate: sireback,
+      //           sirefrontcerificate: sirefront,
+      //           siretranferform: siretranferform.toString(),
+      //           damfrontcerificate: damfront,
+      //           dambackcerificate: damback,
+      //           damtranform: damfransferform,
+      //           petcolordid: breedid.toString(),
+      //           siretranform: "",
+      //         )));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Something went wrong')));
+      print('something worng');
+    }
+  }
+
+  // LitterRegistrationApi() async {
+  //   String puppyname = puppyNames.toString();
+  //   puppyname.replaceAll("[", "").replaceAll("]", "");
+
+  //   print(puppyname);
+
+  //   String colo = puppyColorIds.toString();
+  //   colo.replaceAll("[", "").replaceAll("]", "");
+
+  //   String Gend = puppyGenders.toString();
+  //   Gend.replaceAll("[", "").replaceAll("]", "");
+
+  //   // SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+  //   // String KennelName = sharedprefrence.getString("KennelName")!;
+
+  //   try {
+  //     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
+  //     String userid = sharedprefrence.getString("Userid")!;
+  //     String token = sharedprefrence.getString("Token")!;
+  //     Dio dio = Dio();
+  //     DateTime now = DateTime.now();
+
+  //     FormData formDatas = FormData.fromMap({
+  //       'pet_image': await MultipartFile.fromFile(firstImage!.path, filename: "${now.second}.jpg"),
+  //       'sire_reg_number': widget.sire,
+  //       'dam_reg_number': widget.dam.toString(),
+  //       'pet_sub_category_id': widget.petcolordid.toString(),
+  //       'pet_gender[]': Gend,
+  //       'birth_date': widget.dob.toString(),
+  //       'pet_name[]': puppyname,
+  //       'color_marking[]': colo,
+  //       'sire_front_side_certificate': widget.sirefrontcerificate.toString(),
+  //       'sire_back_side_certificate': widget.sirebackcerificate.toString(),
+  //       'kennel_name': selectedValue,
+  //       'kennel_name_pre': prifixdata, // if (widget.sirefrontcerificate.toString() != "null")
+  //       // 'sire_front_side_certificate': await MultipartFile.fromFile(
+  //       //     widget.sirefrontcerificate!.path,
+  //       //     filename: "${now.second}.jpg"),
+  //       // if (widget.sirebackcerificate.toString() != "null")
+  //       // 'sire_back_side_certificate': await MultipartFile.fromFile(
+  //       //     widget.sirebackcerificate!.path,
+  //       //     filename: "${now.second}.jpg"),
+  //       // if (widget.image.toString() != "null")
+  //       //   'stud_agreement_form': await MultipartFile.fromFile(
+  //       //       widget.image!.path,
+  //       //       filename: "${now.second}.jpg"),
+  //     });
+
+  //     Response response =
+  //         await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_new',
+  //             data: formDatas,
+  //             options: Options(headers: {
+  //               'Content-type': 'application/json',
+  //               'Accept': 'application/json',
+  //               'Usertoken': token,
+  //               'Userid': userid
+  //             }));
+
+  //     if (response.statusCode == 200) {
+  //       print(response.toString());
+
+  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Success')));
+  //     } else {
+  //       ScaffoldMessenger.of(context)
+  //           .showSnackBar(const SnackBar(content: Text('Something went wrong')));
+  //       //print('something worng');
+  //     }
+
+  //     // images = File(pickedFile.path);
+  //   } catch (e) {
+  //     print('no image  selected false');
+  //   }
+  // }
 
   //=====================
   //Color and Marking
@@ -1795,18 +2005,30 @@ class _ChatBotPageState extends State<ChatBotPage> {
     // liiter registration for cother club in dam
     if (GlobalValidations == "liiterregNumDam") {
       litter_dam_req_other_club = text;
-      botReply("Kennel Club Name");
-      showTextInput = false; // show text field
 
-      messages.add({"sender": "user_widget", "widget": "Litter_kennel_name"});
+      if (checkvisible == true) {
+        botReply("Kennel Club Name");
+        showTextInput = false; // show text field
+        messages.add({"sender": "user_widget", "widget": "Litter_kennel_name"});
+      } else {
+        botReply("Upload Front Side of the Certificate.");
+        messages.add(
+            {"sender": "user_widget", "widget": "Litter_dam_otherclub_fornt_side_image_picker"});
+      }
     }
     // liiter registration for cother club in sire
     if (GlobalValidations == "liiterregNumSire") {
       litter_sire_req_other_club = text;
-      botReply("Kennel Club Name");
-      showTextInput = false; // show text field
 
-      messages.add({"sender": "user_widget", "widget": "Litter_kennel_name_sire"});
+      if (checkvisible == true) {
+        botReply("Kennel Club Name");
+        showTextInput = false; // show text field
+        messages.add({"sender": "user_widget", "widget": "Litter_kennel_name_sire"});
+      } else {
+        botReply("Upload Front Side of the Certificate.");
+        messages.add(
+            {"sender": "user_widget", "widget": "Litter_sire_otherclub_fornt_side_image_picker"});
+      }
     }
 
     //===============
@@ -1814,9 +2036,11 @@ class _ChatBotPageState extends State<ChatBotPage> {
     //==============
     if (GlobalValidations == "littercountrybredin") {
       littercountrybredin = text;
-      botReply("Number of puppies in the litter");
-      GlobalValidations = "numberopuppies";
-      showTextInput = true;
+
+      botReply("Upload litter photograph with the mother.");
+      messages.add({"sender": "user_widget", "widget": "litter_dog_image"});
+
+      showTextInput = false;
     }
     // if (GlobalValidations == "numberopuppies") {
     //   numberopuppies = text;
@@ -1833,6 +2057,9 @@ class _ChatBotPageState extends State<ChatBotPage> {
       if (totalPuppies <= 0) {
         botReply("Please enter valid number");
         return;
+      }
+      if (totalPuppies != 0) {
+        GetDetailLitterCertificate();
       }
 
       currentPuppyIndex = 0;
@@ -2436,9 +2663,21 @@ class _ChatBotPageState extends State<ChatBotPage> {
     if (type == "litter_start_ask") {
       if (answer == "Yes") {
         setState(() {
-          botReply("Registration Number of Dam ?");
-          showTextInput = true;
-          GlobalValidations = "liiterregNumDam";
+          // if (checkvisible == true) {
+
+          //   botReply("Kennel Club Name");
+          //   showTextInput = false; // show text field
+          //   messages.add({"sender": "user_widget", "widget": "Litter_kennel_name"});
+          // } else {
+
+          botReply("Upload Front Side of the Certificate.");
+          messages.add(
+              {"sender": "user_widget", "widget": "Litter_dam_otherclub_fornt_side_image_picker"});
+          // }
+
+          // botReply("Registration Number of Dam ?");
+          // showTextInput = true;
+          // GlobalValidations = "liiterregNumDam";
         });
         // botReply("Enter Dog Name");
         // askDogRegistered();
@@ -2453,9 +2692,19 @@ class _ChatBotPageState extends State<ChatBotPage> {
     if (type == "litter_start_sire_ask") {
       if (answer == "Yes") {
         setState(() {
-          botReply("Registration Number of Sire ?");
-          showTextInput = true;
-          GlobalValidations = "liiterregNumSire";
+          // if (checkvisible == true) {
+          //   botReply("Kennel Club Name");
+          //   showTextInput = false; // show text field
+          //   messages.add({"sender": "user_widget", "widget": "Litter_kennel_name_sire"});
+          // } else {
+
+          botReply("Upload Front Side of the Certificate.");
+          messages.add(
+              {"sender": "user_widget", "widget": "Litter_sire_otherclub_fornt_side_image_picker"});
+          // }
+          // botReply("Registration Number of Sire ?");
+          // showTextInput = true;
+          // GlobalValidations = "liiterregNumSire";
         });
         // botReply("Enter Dog Name");
         // askDogRegistered();
@@ -3055,6 +3304,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
             child: const Text("Select Image"),
           );
         }
+
         if (message["widget"] == "Litter_sire_otherclub_back_side_image_picker") {
           return ElevatedButton(
             onPressed: () {
@@ -3067,6 +3317,15 @@ class _ChatBotPageState extends State<ChatBotPage> {
           return ElevatedButton(
             onPressed: () {
               pickImage("litter_sire_transfer_imagePath_other_club");
+            },
+            child: const Text("Select Image"),
+          );
+        }
+
+        if (message["widget"] == "litter_dog_image") {
+          return ElevatedButton(
+            onPressed: () {
+              pickImage("litter_dogs_image");
             },
             child: const Text("Select Image"),
           );
@@ -3312,19 +3571,22 @@ class _ChatBotPageState extends State<ChatBotPage> {
                           onChanged: (String? newValue) {
                             setState(() {
                               litterdamKennelNam_other_club = newValue;
-                              print("$newValue new values");
+                              String nameStore = newValue!;
+                              // print("$newValue new values");
 
-                              botReply("Upload Front Side of the Certificate.");
-                              messages.add({
-                                "sender": "user_widget",
-                                "widget": "Litter_dam_otherclub_fornt_side_image_picker"
-                              });
+                              removeLastWidget();
+
+                              userReply(litterdamKennelNam_other_club!);
+
+                              botReply("Number of puppies in the litter");
+                              GlobalValidations = "numberopuppies";
+                              showTextInput = true;
                             });
-                            // if (newValue != null) {
-                            //   //Handle dropdown value change
-                            //   print(newValue);
-                            //   selectedValue = newValue;
-                            // }
+                            if (newValue != null) {
+                              //Handle dropdown value change
+                              print(newValue);
+                              selectedValue = newValue;
+                            }
                           },
                           isExpanded: true,
                           items: keyValueList
@@ -3587,6 +3849,9 @@ class _ChatBotPageState extends State<ChatBotPage> {
           } else {
             // ✅ DONE
             botReply("All puppy data collected ✅");
+            botReply("Please Wait...");
+
+            // LitterRegistrationApi();
 
             print("Names: $puppyNames");
             print("Genders: $puppyGenders");

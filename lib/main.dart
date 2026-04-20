@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:inkc/KennelClub/kennelclubname.dart';
+import 'package:inkc/NewPageForLoginModule/FirstUpdateProfile.dart';
 import 'package:inkc/Updated_pages_dogs_registered/single_dog_registration_process.dart';
 import 'package:inkc/Updated_pages_litter_registration/litter_registration_home_page.dart';
 import 'package:inkc/VerificationOtpController/OtpGet.dart';
 import 'package:inkc/app/routes/app_pages.dart';
 import 'package:inkc/bottom_nav_pages/bar.dart';
+import 'package:inkc/credential/Verification.dart';
 import 'package:inkc/events/events.dart';
 import 'package:inkc/inkcstore.dart';
 import 'package:inkc/mydoginfo.dart';
@@ -96,6 +98,7 @@ class Splash extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         '/home': (context) => MyApp(indexvalue: 0),
+        '/HomeVerification': (context) => HomeVerification(),
         '/home4': (context) => MyApp(indexvalue: 4),
         '/service': (context) => Barpage(),
         '/profile': (context) => SettingsUI(),
@@ -129,6 +132,8 @@ class Splash extends StatelessWidget {
         '/KennelClubName': (context) => KennelClubName(),
         '/INKCStore': (context) => INKCStore(),
         '/Events': (context) => Events(),
+        //update profile new 
+        '/Firstupdateprofile': (context) => Firstupdateprofile(),
       },
       // routes: {
       //   'SplashScreen': (context) => SplashScreen(),

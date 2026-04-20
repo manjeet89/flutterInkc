@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inkc/animation/progress_bar_stepper.dart';
+import 'package:inkc/credential/NewLogin.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/main.dart';
 import 'package:inkc/my_transiction.dart';
@@ -68,6 +69,7 @@ class _MorePageState extends State<MorePage> {
   String? Last;
   String? phone;
   String? UserprofileImage;
+  String? UserAddress;
 
   Future getValidationData() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
@@ -76,6 +78,7 @@ class _MorePageState extends State<MorePage> {
       Last = sharedprefrence.getString("LastName");
       phone = sharedprefrence.getString("phoneNumber");
       UserprofileImage = sharedprefrence.getString("UserProfileImage");
+      UserAddress = sharedprefrence.getString("fulladdress");
     });
     // print(obtained);
   }
@@ -99,7 +102,8 @@ class _MorePageState extends State<MorePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(UserprofileImage.toString());
+    print("User images " + UserprofileImage.toString());
+    print("User Address " + UserAddress.toString());
     // SystemChrome.setSystemUIOverlayStyle(
     //   SystemUiOverlayStyle(
     //       statusBarColor: Colors.white, statusBarBrightness: Brightness.dark),
@@ -178,9 +182,9 @@ class _MorePageState extends State<MorePage> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      if (UserprofileImage == "null")
+                      if (UserprofileImage.toString() == "null")
                         Container(
-                          margin: const EdgeInsets.only(top: 5, left: 20),
+                          margin: const EdgeInsets.only(top: 5, left: 10),
                           height: 50.0.sp,
                           width: 50.0.sp,
                           child: Icon(
@@ -212,77 +216,130 @@ class _MorePageState extends State<MorePage> {
                             ),
                           ),
                         ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: InkWell(
-                          onTap: () {
-                            navigatorKey.currentState?.pushNamed('/profile');
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (BuildContext context) => const SettingsUI()));
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '$First${" "}$Last ',
-                                style: TextStyle(
-                                    fontSize: 15.sp,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '$phone',
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: Colors.black,
+                      UserAddress.toString() != "null"
+                          ? Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: InkWell(
+                                onTap: () {
+                                  navigatorKey.currentState?.pushNamed('/profile');
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (BuildContext context) => const SettingsUI()));
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '$First${" "}$Last ',
+                                      style: TextStyle(
+                                          fontSize: 15.sp,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      '$phone',
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 0.sp),
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: Ink(
-                                // decoration: BoxDecoration(
-                                //     border: Border.all(color: Colors.grey, width: 1),
-                                //     color: Colors.white,
-                                //     borderRadius:
-                                //         BorderRadius.circular(50.0)), //<-- SEE HERE
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(10.0.sp),
-                                  onTap: () {
-                                    navigatorKey.currentState?.pushNamed(
-                                      '/profile',
-                                    );
-                                    // Navigator.of(context).push(MaterialPageRoute(
-                                    //     builder: (BuildContext context) => const SettingsUI()));
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0.sp),
-                                        child: Icon(
-                                          Icons.arrow_forward_ios,
-                                          size: 15.0.sp,
-                                          color: Colors.black,
+                            )
+                          : Text(
+                              "Update your profile first",
+                              style: TextStyle(
+                                  fontSize: 15.sp,
+                                  decorationColor: Colors.black,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                      UserAddress.toString() != "null"
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 0.sp),
+                                  child: Material(
+                                    type: MaterialType.transparency,
+                                    child: Ink(
+                                      // decoration: BoxDecoration(
+                                      //     border: Border.all(color: Colors.grey, width: 1),
+                                      //     color: Colors.white,
+                                      //     borderRadius:
+                                      //         BorderRadius.circular(50.0)), //<-- SEE HERE
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(10.0.sp),
+                                        onTap: () {
+                                          navigatorKey.currentState?.pushNamed(
+                                            '/profile',
+                                          );
+                                          // Navigator.of(context).push(MaterialPageRoute(
+                                          //     builder: (BuildContext context) => const SettingsUI()));
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.all(10.0.sp),
+                                              child: Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 15.0.sp,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
+                            )
+                          : 
+                          // first update profile
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 0.sp),
+                                  child: Material(
+                                    type: MaterialType.transparency,
+                                    child: Ink(
+                                      // decoration: BoxDecoration(
+                                      //     border: Border.all(color: Colors.grey, width: 1),
+                                      //     color: Colors.white,
+                                      //     borderRadius:
+                                      //         BorderRadius.circular(50.0)), //<-- SEE HERE
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(10.0.sp),
+                                        onTap: () {
+                                          navigatorKey.currentState?.pushNamed(
+                                            '/Firstupdateprofile',
+                                          );
+                                          // Navigator.of(context).push(MaterialPageRoute(
+                                          //     builder: (BuildContext context) => const SettingsUI()));
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.all(10.0.sp),
+                                              child: Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 15.0.sp,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
@@ -319,7 +376,7 @@ class _MorePageState extends State<MorePage> {
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context, rootNavigator: true)
-                                  .push(MaterialPageRoute(builder: (_) => const Login()));
+                                  .push(MaterialPageRoute(builder: (_) => const Newlogin()));
                             },
                             child: Text(
                               "Hi there!",
@@ -340,7 +397,7 @@ class _MorePageState extends State<MorePage> {
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context, rootNavigator: true)
-                                  .push(MaterialPageRoute(builder: (_) => const Login()));
+                                  .push(MaterialPageRoute(builder: (_) => const Newlogin()));
                             },
                             child: Text(
                               "Log In",
@@ -594,7 +651,7 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
-            Padding(
+              Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: Divider(
                   height: 2,
@@ -638,10 +695,12 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
-               Padding(
-                 padding: const EdgeInsets.only(left: 20.0,right: 20),
-                 child: Divider(height: 2,),
-               ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Divider(
+                  height: 2,
+                ),
+              ),
 
               // Contact
               Row(
@@ -765,7 +824,7 @@ class _MorePageState extends State<MorePage> {
                   )
                 ],
               ),
-Padding(
+              Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: Divider(
                   height: 2,
@@ -805,7 +864,7 @@ Padding(
                   )
                 ],
               ),
-Padding(
+              Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: Divider(
                   height: 2,
@@ -932,7 +991,7 @@ Padding(
               //     )
               //   ],
               // ),
-Padding(
+              Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: Divider(
                   height: 2,
