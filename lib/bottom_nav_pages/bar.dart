@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:inkc/KennelClub/kennelclubname.dart';
 import 'package:inkc/Updated_pages_dogs_registered/single_dog_registration_process.dart';
 import 'package:inkc/Updated_pages_litter_registration/litter_registration_home_page.dart';
+import 'package:inkc/credential/NewLogin.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/events/events.dart';
 import 'package:inkc/inkcstore.dart';
@@ -112,7 +113,7 @@ class _BarpagewidegtState extends State<Barpagewidegt> {
                     ),
                     onPressed: () {
                       Navigator.of(context, rootNavigator: true)
-                          .push(MaterialPageRoute(builder: (_) => const Login()));
+                          .push(MaterialPageRoute(builder: (_) => const Newlogin()));
                       // navigatorKey.currentState?.pushNamed('/MyDogInfo');
                     },
                     child: const Text("Go to Login", style: TextStyle(color: Colors.white)),

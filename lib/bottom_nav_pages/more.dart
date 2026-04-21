@@ -86,7 +86,8 @@ class _MorePageState extends State<MorePage> {
   Checklogin() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     String? check = sharedprefrence.getString("Token");
-    print("${check}with me");
+    String? id = sharedprefrence.getString("Userid");
+    print("${check} ${id} with me");
     if (check.toString() == "null") {
       setState(() {
         _isShow = false;
@@ -210,8 +211,7 @@ class _MorePageState extends State<MorePage> {
                             borderRadius: BorderRadius.circular(50.sp),
                             //set border radius to 50% of square height and width
                             image: DecorationImage(
-                              image:
-                                  NetworkImage("https://new-demo.inkcdogs.org/$UserprofileImage"),
+                              image: NetworkImage("https://inkc.in/$UserprofileImage"),
                               fit: BoxFit.cover, //change image fill type
                             ),
                           ),
@@ -297,7 +297,7 @@ class _MorePageState extends State<MorePage> {
                                 ),
                               ],
                             )
-                          : 
+                          :
                           // first update profile
                           Row(
                               mainAxisAlignment: MainAxisAlignment.start,

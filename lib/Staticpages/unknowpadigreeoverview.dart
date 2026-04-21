@@ -60,7 +60,7 @@ class _UnKnowPadigreeOverViewState extends State {
                   InAppWebView(
                     initialUrlRequest: URLRequest(
                       url: WebUri.uri(Uri.parse(
-                          "https://new-demo.inkcdogs.org/assets/newapp/inkc-app/single-dog-registration.html")),
+                          "https://inkc.in/assets/newapp/inkc-app/single-dog-registration.html")),
                     ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
@@ -74,7 +74,7 @@ class _UnKnowPadigreeOverViewState extends State {
                   // InAppWebView(
                   //   initialUrlRequest: URLRequest(
                   //       url: Uri.parse(
-                  //           "https://new-demo.inkcdogs.org/assets/newapp/inkc-app/single-dog-registration.html")),
+                  //           "https://inkc.in/assets/newapp/inkc-app/single-dog-registration.html")),
                   //   onWebViewCreated: (InAppWebViewController controller) {
                   //     inappwebview = controller;
                   //   },

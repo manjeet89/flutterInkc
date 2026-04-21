@@ -38,7 +38,7 @@ class _MyTransactionsState extends State<MyTransactions> {
       'Userid': userid
     };
 
-    const uri = "https://new-demo.inkcdogs.org/api/user/my_transactions";
+    const uri = "https://inkc.in/api/user/my_transactions";
 
     final responce = await http.post(Uri.parse(uri), headers: requestHeaders);
     var data = json.decode(responce.body);

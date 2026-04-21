@@ -285,7 +285,7 @@ class _HomeLogin extends State<HomeLogin> {
 
                               EasyLoading.showToast('Please Wait...');
 
-                              const uri = "https://new-demo.inkcdogs.org/api/login";
+                              const uri = "https://inkc.in/api/login";
 
                               final responce = await http.post(
                                 Uri.parse(uri),

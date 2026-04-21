@@ -51,7 +51,7 @@ class _KennelNameHistreState extends State<KennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/user/kennel_details";
+    const uri = "https://inkc.in/api/user/kennel_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

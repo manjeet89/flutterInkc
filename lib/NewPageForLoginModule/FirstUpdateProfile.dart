@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inkc/main.dart';
 import 'package:inkc/profile.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:quickalert/quickalert.dart';
@@ -799,7 +800,7 @@ class _FirstupdateprofileState extends State<Firstupdateprofile> {
                                     //     "fulladdress", address.text.toString());
 
                                     // const uri =
-                                    //     "https://new-demo.inkcdogs.org/api/user/update_profile";
+                                    //     "https://inkc.in/api/user/update_profile";
 
                                     // Map<String, String> requestHeaders = {
                                     //   'Accept': 'application/json',
@@ -871,19 +872,71 @@ class _FirstupdateprofileState extends State<Firstupdateprofile> {
                                         "alternet_contact_number": " ",
                                       });
 
-                                      Response response = await dio.post(
-                                          'https://new-demo.inkcdogs.org/api/user/update_profile',
-                                          data: formData,
-                                          options: Options(headers: {
-                                            'Content-type': 'application/json',
-                                            'Accept': 'application/json',
-                                            'Usertoken': token,
-                                            'Userid': userid
-                                          }));
+                                      Response response =
+                                          await dio.post('https://inkc.in/api/user/update_profile',
+                                              data: formData,
+                                              options: Options(headers: {
+                                                'Content-type': 'application/json',
+                                                'Accept': 'application/json',
+                                                'Usertoken': token,
+                                                'Userid': userid
+                                              }));
 
                                       if (response.statusCode == 200) {
-                                        print(response.toString());
-                                        print(response.toString());
+                                        SharedPreferences prefs =
+                                            await SharedPreferences.getInstance();
+
+                                        print("1st");
+                                        SharedPreferences fulladdress =
+                                            await SharedPreferences.getInstance();
+                                        await fulladdress.setString(
+                                            "fulladdress",
+                                            address1.text.toString() +
+                                                " " +
+                                                address2.text.toString() +
+                                                " " +
+                                                valuechoose.toString() +
+                                                " " +
+                                                district.text.toString() +
+                                                " " +
+                                                state.text.toString() +
+                                                " " +
+                                                pincode.text.toString());
+
+                                        print("2t");
+                                        SharedPreferences sharedPreferences =
+                                            await SharedPreferences.getInstance();
+                                        await sharedPreferences.setString(
+                                            "First", First.text.toString());
+                                        print("3st");
+
+                                        SharedPreferences FontEmpFullName =
+                                            await SharedPreferences.getInstance();
+                                        await FontEmpFullName.setString("FontEmpFullName",
+                                            First.text.toString() + " " + lastname.text.toString());
+
+                                        print("12st");
+
+                                        SharedPreferences FontUserEmailId =
+                                            await SharedPreferences.getInstance();
+                                        await FontUserEmailId.setString(
+                                            "FontUserEmailId", email.text.toString());
+
+                                        print("21st");
+                                        SharedPreferences UserName =
+                                            await SharedPreferences.getInstance();
+                                        await UserName.setString("UserName", First.text.toString());
+
+                                        SharedPreferences LastName =
+                                            await SharedPreferences.getInstance();
+                                        await LastName.setString(
+                                            "LastName", lastname.text.toString());
+
+                                        SharedPreferences Firstname =
+                                            await SharedPreferences.getInstance();
+                                        await Firstname.setString(
+                                            "Firstname", First.text.toString());
+
                                         setState(() {
                                           showSpinner = false;
                                         });
@@ -895,6 +948,8 @@ class _FirstupdateprofileState extends State<Firstupdateprofile> {
                                         );
                                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                             content: Text('SuccessFully Registered')));
+                                        navigatorKey.currentState
+                                            ?.pushNamedAndRemoveUntil('/home', (route) => false);
                                       } else {
                                         setState(() {
                                           showSpinner = false;
@@ -934,7 +989,7 @@ class _FirstupdateprofileState extends State<Firstupdateprofile> {
     String token = sharedprefrence.getString("Token")!;
     EasyLoading.showToast('Please Wait...');
 
-    const uri = "https://new-demo.inkcdogs.org/api/user/get_city_data_from_pincode";
+    const uri = "https://inkc.in/api/user/get_city_data_from_pincode";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

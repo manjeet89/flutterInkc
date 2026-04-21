@@ -97,7 +97,7 @@ class _INKCStoreState extends State<INKCStore> {
                                     //set border radius to 50% of square height and width
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                          "https://new-demo.inkcdogs.org/${dataload[position].productImage}"),
+                                          "https://inkc.in/${dataload[position].productImage}"),
                                       fit: BoxFit.cover, //change image fill type
                                     ),
                                   ),
@@ -194,7 +194,7 @@ class _INKCStoreState extends State<INKCStore> {
   }
 
   Future<List<StoreListModel>> FetchData() async {
-    const uri = "https://new-demo.inkcdogs.org/api/home/store_list";
+    const uri = "https://inkc.in/api/home/store_list";
 
     final responce = await http.post(Uri.parse(uri));
     var data = json.decode(responce.body);

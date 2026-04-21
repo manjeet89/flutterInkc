@@ -69,7 +69,7 @@ class _KennelClubNameState extends State<KennelClubName> {
     String token = sharedprefrence.getString("Token")!;
     print("$token- $userid");
 
-    const uri = "https://new-demo.inkcdogs.org/api/user/kennel_details";
+    const uri = "https://inkc.in/api/user/kennel_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

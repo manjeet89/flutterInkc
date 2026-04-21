@@ -115,7 +115,7 @@ class _FinalCartPriceState extends State<FinalCartPrice> {
 
     print("Toal Check Data${widget.jsonMap}Ring $Orders");
 
-    const uri = "https://new-demo.inkcdogs.org/api/store/success_fullpayment";
+    const uri = "https://inkc.in/api/store/success_fullpayment";
 
     final responce = await http.post(Uri.parse(uri),
         body: {

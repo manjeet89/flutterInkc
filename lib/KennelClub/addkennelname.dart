@@ -242,7 +242,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
+    const uri = "https://inkc.in/api/dog/kennel_name_registration";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -272,7 +272,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
+    const uri = "https://inkc.in/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -298,7 +298,7 @@ class _AddKennelNameHistreState extends State<AddKennelNameHistre> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
+    const uri = "https://inkc.in/api/dog/kennel_name_registration";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

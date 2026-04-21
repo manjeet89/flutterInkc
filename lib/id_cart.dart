@@ -406,8 +406,7 @@ class _IdCardState extends State<IdCard> {
                       )
                     else
                       CircleAvatar(
-                        backgroundImage:
-                            NetworkImage('https://new-demo.inkcdogs.org/${widget.image}'),
+                        backgroundImage: NetworkImage('https://inkc.in/${widget.image}'),
                         radius: 50,
                       ),
                     const SizedBox(height: 8),

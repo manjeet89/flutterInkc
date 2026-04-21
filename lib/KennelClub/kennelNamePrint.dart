@@ -39,8 +39,7 @@ class _KennelNameShowState extends State<KennelNameShow> {
       'Usertoken': token,
       'Userid': userid
     };
-    final response = await http.get(
-        Uri.parse('https://new-demo.inkcdogs.org/api/user/kennel_details'),
+    final response = await http.get(Uri.parse('https://inkc.in/api/user/kennel_details'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {

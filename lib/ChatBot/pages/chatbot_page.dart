@@ -27,6 +27,9 @@ class _ChatBotPageState extends State<ChatBotPage> {
   //================
   String GlobalValidations = "";
 
+  // login  new User id Stored
+  String NewUserID = "";
+
   //==================
   //Litter Registration
   //================
@@ -216,8 +219,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/user/kennel_details"),
+      final res = await http.post(Uri.parse("https://inkc.in/api/user/kennel_details"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -600,7 +602,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
       'Userid': userid
     };
     final response = await http.post(
-      Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+      Uri.parse("https://inkc.in/api/dog/dog_breed_list"),
       headers: requestHeaders,
     );
 
@@ -633,7 +635,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
       'Userid': userid
     };
     final response = await http.post(
-      Uri.parse("https://new-demo.inkcdogs.org//api/dog/dog_dam_list"),
+      Uri.parse("https://inkc.in//api/dog/dog_dam_list"),
       headers: requestHeaders,
     );
 
@@ -709,15 +711,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
             filename: "${now.second}.jpg"),
     });
 
-    Response response =
-        await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_upload',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+    Response response = await dio.post('https://inkc.in/api/dog/litter_registration_upload',
+        data: formData,
+        options: Options(headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          'Usertoken': token,
+          'Userid': userid
+        }));
 
     print(response);
 
@@ -813,7 +814,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
   //     });
 
   //     Response response =
-  //         await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration_new',
+  //         await dio.post('https://inkc.in/api/dog/litter_registration_new',
   //             data: formDatas,
   //             options: Options(headers: {
   //               'Content-type': 'application/json',
@@ -860,7 +861,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
       'Userid': userid
     };
     final response = await http.post(
-      Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+      Uri.parse("https://inkc.in/api/dog/dog_color_marking_list"),
       headers: requestHeaders,
     );
 
@@ -895,7 +896,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
       'Userid': userid
     };
     final response = await http.post(
-      Uri.parse("https://new-demo.inkcdogs.org/api/dog/kennel_list_for_non_inkc"),
+      Uri.parse("https://inkc.in/api/dog/kennel_list_for_non_inkc"),
       headers: requestHeaders,
     );
 
@@ -954,15 +955,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
             'is_microchip_require': microChipyesorno == "yes" ? "1" : "0",
           });
 
-          Response response =
-              await dio.post('https://new-demo.inkcdogs.org/api/dog/non_inkc_registration',
-                  data: formData,
-                  options: Options(headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                    'Usertoken': token,
-                    'Userid': userid
-                  }));
+          Response response = await dio.post('https://inkc.in/api/dog/non_inkc_registration',
+              data: formData,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
           if (response.statusCode == 200) {
             botReply("SuccessFully Registered 🙌");
@@ -1014,15 +1014,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
             'is_microchip_require': microChipyesorno == "yes" ? "1" : "0",
           });
 
-          Response response =
-              await dio.post('https://new-demo.inkcdogs.org/api/dog/non_inkc_registration',
-                  data: formData,
-                  options: Options(headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                    'Usertoken': token,
-                    'Userid': userid
-                  }));
+          Response response = await dio.post('https://inkc.in/api/dog/non_inkc_registration',
+              data: formData,
+              options: Options(headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Usertoken': token,
+                'Userid': userid
+              }));
 
           if (response.statusCode == 200) {
             botReply("SuccessFully Registered 🙌");
@@ -1062,7 +1061,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
       }
     } else if (KennelNameForRegis != "") {
       try {
-        const uri = "https://new-demo.inkcdogs.org/api/dog/kennel_name_registration";
+        const uri = "https://inkc.in/api/dog/kennel_name_registration";
 
         Map<String, String> requestHeaders = {
           'Accept': 'application/json',
@@ -1111,15 +1110,15 @@ class _ChatBotPageState extends State<ChatBotPage> {
         print(
             "${dog_imagePath!.path + "-\n" + upload_dog_height_imagePath!.path + "-\n" + upload_one_side_imagePath!.path + "-'n" + Dog_gender + "-" + Coman_filed_date_of_birth.toString() + "-" + NameOfTheDog + "-" + coOwnerId}-$microChipyesorno-$comanfiledcolorAndMarkingId  ${Coman_filed_country_bred_in} \n ${DambreedId} - \n   ${heignt6monthold}");
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/unknown_pedigree_dog_registration',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://inkc.in/api/dog/unknown_pedigree_dog_registration',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1157,15 +1156,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
           'sire_reg_number': SIreFatherInkcRegNum,
         });
 
-        Response response =
-            await dio.post('https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
-                data: formData,
-                options: Options(headers: {
-                  'Content-type': 'application/json',
-                  'Accept': 'application/json',
-                  'Usertoken': token,
-                  'Userid': userid
-                }));
+        Response response = await dio.post('https://inkc.in/api/dog/pedigree_dog_registration',
+            data: formData,
+            options: Options(headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Usertoken': token,
+              'Userid': userid
+            }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1203,15 +1201,15 @@ class _ChatBotPageState extends State<ChatBotPage> {
           'sire_reg_number': SIreFatherInkcRegNum,
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/sire_registration_withINKC_dam_unknown',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://inkc.in/api/dog/sire_registration_withINKC_dam_unknown',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1249,15 +1247,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
           'dam_reg_number': DamMotherInkcRegNum,
         });
 
-        Response response =
-            await dio.post('https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
-                data: formData,
-                options: Options(headers: {
-                  'Content-type': 'application/json',
-                  'Accept': 'application/json',
-                  'Usertoken': token,
-                  'Userid': userid
-                }));
+        Response response = await dio.post('https://inkc.in/api/dog/pedigree_dog_registration',
+            data: formData,
+            options: Options(headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Usertoken': token,
+              'Userid': userid
+            }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1319,15 +1316,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
           'pet_category_id': DambreedId,
         });
 
-        Response response =
-            await dio.post('https://new-demo.inkcdogs.org/api/dog/bothparentregisterwithKCI',
-                data: formData,
-                options: Options(headers: {
-                  'Content-type': 'application/json',
-                  'Accept': 'application/json',
-                  'Usertoken': token,
-                  'Userid': userid
-                }));
+        Response response = await dio.post('https://inkc.in/api/dog/bothparentregisterwithKCI',
+            data: formData,
+            options: Options(headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Usertoken': token,
+              'Userid': userid
+            }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1377,15 +1373,15 @@ class _ChatBotPageState extends State<ChatBotPage> {
           'pet_category_id': DambreedId,
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/sire_register_with_other_club_dam_unknown',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://inkc.in/api/dog/sire_register_with_other_club_dam_unknown',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1437,15 +1433,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
           'pet_category_id': DambreedId,
         });
 
-        Response response =
-            await dio.post('https://new-demo.inkcdogs.org/api/dog/damregistrationwithINKC',
-                data: formData,
-                options: Options(headers: {
-                  'Content-type': 'application/json',
-                  'Accept': 'application/json',
-                  'Usertoken': token,
-                  'Userid': userid
-                }));
+        Response response = await dio.post('https://inkc.in/api/dog/damregistrationwithINKC',
+            data: formData,
+            options: Options(headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Usertoken': token,
+              'Userid': userid
+            }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1499,15 +1494,15 @@ class _ChatBotPageState extends State<ChatBotPage> {
           'pet_category_id': DambreedId,
         });
 
-        Response response = await dio.post(
-            'https://new-demo.inkcdogs.org/api/dog/dam_register_with_other_club_sire_unknown',
-            data: formData,
-            options: Options(headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json',
-              'Usertoken': token,
-              'Userid': userid
-            }));
+        Response response =
+            await dio.post('https://inkc.in/api/dog/dam_register_with_other_club_sire_unknown',
+                data: formData,
+                options: Options(headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Usertoken': token,
+                  'Userid': userid
+                }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1562,15 +1557,14 @@ class _ChatBotPageState extends State<ChatBotPage> {
           'pet_category_id': DambreedId,
         });
 
-        Response response =
-            await dio.post('https://new-demo.inkcdogs.org/api/dog/sireregistrationwithINKC',
-                data: formData,
-                options: Options(headers: {
-                  'Content-type': 'application/json',
-                  'Accept': 'application/json',
-                  'Usertoken': token,
-                  'Userid': userid
-                }));
+        Response response = await dio.post('https://inkc.in/api/dog/sireregistrationwithINKC',
+            data: formData,
+            options: Options(headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Usertoken': token,
+              'Userid': userid
+            }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -1653,10 +1647,190 @@ class _ChatBotPageState extends State<ChatBotPage> {
   }
 
   //loginModule
+
+  String getUserId(dynamic response) {
+    if (response["data"] is Map) {
+      // First API response
+      return response["data"]["user_id"].toString();
+    } else {
+      // Second API response
+      return response["data"].toString();
+    }
+  }
+
+  NumberCheckAPIModule(String number) async {
+    const uri = "https://inkc.in/api/login/new_login";
+
+    final responce = await http.post(
+      Uri.parse(uri),
+      body: {"user_phone_number": number},
+    );
+    var data = json.decode(responce.body);
+    if (data['code'] == 200) {
+      String userId = getUserId(data);
+
+      NewUserID = userId;
+      botReply("Enter your OTP");
+      GlobalValidations = "Password";
+
+      print("USER ID: $userId");
+    }
+  }
+
+  OtpCheckModule(String password) async {
+    const uri = "https://inkc.in/api/login/verification";
+
+    final responce = await http.post(
+      Uri.parse(uri),
+      body: {
+        "user_id": NewUserID,
+        "user_otp": password,
+      },
+    );
+    var data = json.decode(responce.body);
+    if (data['code'] == 200) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      print("1st");
+      if (data['data'][0]['user_address'].toString() == "null") {
+        SharedPreferences fulladdress = await SharedPreferences.getInstance();
+        await fulladdress.setString("fulladdress", "null");
+      } else {
+        SharedPreferences fulladdress = await SharedPreferences.getInstance();
+        await fulladdress.setString(
+            "fulladdress",
+            data['data'][0]['user_address'] +
+                " " +
+                data['data'][0]['user_address_2'] +
+                " " +
+                data['data'][0]['user_local'] +
+                " " +
+                data['data'][0]['user_district'] +
+                " " +
+                data['data'][0]['user_state'] +
+                " " +
+                data['data'][0]['user_pincode']);
+      }
+      print("2st");
+
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences.setString("First", data['data'][0]['first_name']);
+      print("3st");
+
+      SharedPreferences Token = await SharedPreferences.getInstance();
+      await Token.setString("Token", data['user_token']);
+      print("4st");
+
+      SharedPreferences Userid = await SharedPreferences.getInstance();
+      await Userid.setString("Userid", data['data'][0]['user_id']);
+      print("5st");
+
+      if (data['data'][0]['user_full_name'].toString() == "") {
+        SharedPreferences EmpFullName = await SharedPreferences.getInstance();
+        await EmpFullName.setString("EmpFullName", "null");
+      } else {
+        SharedPreferences EmpFullName = await SharedPreferences.getInstance();
+        await EmpFullName.setString("EmpFullName", data['data'][0]['user_full_name']);
+      }
+      print("6st");
+
+      SharedPreferences EmpTypeId = await SharedPreferences.getInstance();
+      await EmpTypeId.setString("EmpTypeId", data['data'][0]['user_employee_type']);
+      print("7st");
+
+      SharedPreferences EmpTypeName = await SharedPreferences.getInstance();
+      await EmpTypeName.setString("EmpTypeName", 'User');
+      print("8st");
+      SharedPreferences PhoneNumber = await SharedPreferences.getInstance();
+      await PhoneNumber.setString("phoneNumber", data['data'][0]['user_phone_number']);
+      print("9st");
+      SharedPreferences UserVerification = await SharedPreferences.getInstance();
+      await UserVerification.setString("UserVerification", data['data'][0]['is_verified']);
+      print("10st");
+      SharedPreferences FontUserid = await SharedPreferences.getInstance();
+      await FontUserid.setString("FontUserid", data['data'][0]['user_id']);
+      print("11st");
+      if (data['data'][0]['user_address'].toString() == "null") {
+      } else {
+        SharedPreferences FontEmpFullName = await SharedPreferences.getInstance();
+        await FontEmpFullName.setString(
+            "FontEmpFullName", data['data'][0]['first_name'] + " " + data['data'][0]['last_name']);
+      }
+      print("12st");
+      SharedPreferences FontEmpTypeId = await SharedPreferences.getInstance();
+      await FontEmpTypeId.setString("FontEmpTypeId", data['data'][0]['user_employee_type']);
+      print("13st");
+      SharedPreferences FontUserEmailId = await SharedPreferences.getInstance();
+      await FontUserEmailId.setString("FontUserEmailId", data['data'][0]['user_email_id']);
+      print("14st");
+      SharedPreferences FontEmpTypeName = await SharedPreferences.getInstance();
+      await FontEmpTypeName.setString("FontEmpTypeName", "User");
+      print("15st");
+      SharedPreferences FontPhoneNumber = await SharedPreferences.getInstance();
+      await FontPhoneNumber.setString("FontPhoneNumber", data['data'][0]['user_phone_number']);
+      print("16st");
+      SharedPreferences FontUserVerification = await SharedPreferences.getInstance();
+      await FontUserVerification.setString("FontUserVerification", data['data'][0]['is_verified']);
+      print("17st");
+      SharedPreferences FontKennelClubStatus = await SharedPreferences.getInstance();
+      await FontKennelClubStatus.setString(
+          "FontKennelClubStatus", data['data'][0]['kennel_club_status']);
+      print("18st");
+      SharedPreferences FontMemberStatus = await SharedPreferences.getInstance();
+      await FontMemberStatus.setString("FontMemberStatus", data['data'][0]['member_status']);
+      print("19st");
+      if (data['data'][0]['user_profile_image'].toString() == "null") {
+        SharedPreferences UserProfileImage = await SharedPreferences.getInstance();
+        await UserProfileImage.setString("UserProfileImage", "null");
+      } else {
+        SharedPreferences UserProfileImage = await SharedPreferences.getInstance();
+        await UserProfileImage.setString("UserProfileImage", data['data'][0]['user_profile_image']);
+      }
+      print("20st");
+      // card code with id card
+      if (data['data'][0]['card_code'].toString() == "null") {
+        SharedPreferences cardCode = await SharedPreferences.getInstance();
+        await cardCode.setString("card_code", "null");
+      } else {
+        SharedPreferences cardCode = await SharedPreferences.getInstance();
+        await cardCode.setString("card_code", data['data'][0]['card_code']);
+      }
+      print("21st");
+      SharedPreferences UserName = await SharedPreferences.getInstance();
+      await UserName.setString("UserName", data['data'][0]['first_name']);
+      print("22st");
+      SharedPreferences UserEmpId = await SharedPreferences.getInstance();
+      await UserEmpId.setString("UserEmpId", data['data'][0]['user_employee_type']);
+
+      SharedPreferences LastName = await SharedPreferences.getInstance();
+      await LastName.setString("LastName", data['data'][0]['last_name']);
+
+      SharedPreferences Firstname = await SharedPreferences.getInstance();
+      await Firstname.setString("Firstname", data['data'][0]['first_name']);
+
+      await prefs.setBool('isLoggedIn', true);
+      // Get.to(MyApp());
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => MyApp()));
+
+      WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp();
+      await FireBaseApi().initNotification();
+
+      if (data['data'][0]['user_address'] == "null") {
+        print("Null available");
+      } else {
+        print(data['data'][0]['user_address']);
+      }
+    }
+  }
+
   LoginModule(String number, String password) async {
     // EasyLoading.showToast('Please Wait...');
 
-    const uri = "https://new-demo.inkcdogs.org/api/login";
+    const uri = "https://inkc.in/api/login";
 
     final responce = await http.post(
       Uri.parse(uri),
@@ -1817,15 +1991,17 @@ class _ChatBotPageState extends State<ChatBotPage> {
         name = text;
         step++;
         PhoneNumber = text;
-        botReply("Enter your Password");
-        GlobalValidations = "Password";
+        NumberCheckAPIModule(PhoneNumber);
       } else if (GlobalValidations == "Password") {
+        print(NewUserID);
         name = text;
         step++;
         Passwwrod = text;
 
         botReply("Please Wait.....");
-        LoginModule(PhoneNumber, Passwwrod);
+        OtpCheckModule(Passwwrod);
+        // NumberCheckAPIModule(PhoneNumber, Passwwrod);
+        // LoginModule(PhoneNumber, Passwwrod);
       }
     }
 

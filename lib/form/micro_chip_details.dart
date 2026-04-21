@@ -63,8 +63,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/implemented_by_list"),
+      final res = await http.post(Uri.parse("https://inkc.in/api/dog/implemented_by_list"),
           headers: requestHeaders);
       // var data = json.decode(res.body);
       // var dataarray = data['data'];
@@ -155,15 +154,14 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
         'implemented_date': DOB,
       });
 
-      Response response =
-          await dio.post('https://new-demo.inkcdogs.org/api/dog/upload_document_microchip',
-              data: formData,
-              options: Options(headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-                'Usertoken': token,
-                'Userid': userid
-              }));
+      Response response = await dio.post('https://inkc.in/api/dog/upload_document_microchip',
+          data: formData,
+          options: Options(headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Usertoken': token,
+            'Userid': userid
+          }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -261,7 +259,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
+    const uri = "https://inkc.in/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -347,8 +345,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                 ],
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                  image:
-                                      NetworkImage("https://new-demo.inkcdogs.org/${widget.pic}"),
+                                  image: NetworkImage("https://inkc.in/${widget.pic}"),
                                   fit: BoxFit.cover, //change image fill type
                                 ),
                               ),
@@ -822,7 +819,7 @@ class _MicroChipDetailsState extends State<MicroChipDetails> {
                                                   )
                                                   // image: DecorationImage(
                                                   //   image: NetworkImage(
-                                                  //       "https://new-demo.inkcdogs.org/${image}"),
+                                                  //       "https://inkc.in/${image}"),
                                                   //   fit: BoxFit.cover, //change image fill type
                                                   // ),
                                                   ),

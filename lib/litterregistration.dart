@@ -73,15 +73,14 @@ class _LitterRegistrationState extends State<LitterRegistration> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/user/kennel_details"),
+      final res = await http.post(Uri.parse("https://inkc.in/api/user/kennel_details"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
 
       keyValueList.clear();
       products.clear();
- 
+
       if (body['data']['kennel_second_owner'].toString() == "false") {
         //checkvisible = false;
         print("doremon");
@@ -146,7 +145,7 @@ class _LitterRegistrationState extends State<LitterRegistration> {
 
   //   try {
   //     final res = await http.post(
-  //         Uri.parse("https://new-demo.inkcdogs.org/api/user/kennel_details"),
+  //         Uri.parse("https://inkc.in/api/user/kennel_details"),
   //         headers: requestHeaders);
 
   //     var body = json.decode(res.body);
@@ -222,7 +221,7 @@ class _LitterRegistrationState extends State<LitterRegistration> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/get_sire_details";
+    const uri = "https://inkc.in/api/dog/get_sire_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -297,8 +296,7 @@ class _LitterRegistrationState extends State<LitterRegistration> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+      final res = await http.post(Uri.parse("https://inkc.in/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -370,15 +368,14 @@ class _LitterRegistrationState extends State<LitterRegistration> {
         'kennel_name_pre': prifixdata,
       });
 
-      Response response =
-          await dio.post('https://new-demo.inkcdogs.org/api/dog/litter_registration',
-              data: formDatas,
-              options: Options(headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-                'Usertoken': token,
-                'Userid': userid
-              }));
+      Response response = await dio.post('https://inkc.in/api/dog/litter_registration',
+          data: formDatas,
+          options: Options(headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Usertoken': token,
+            'Userid': userid
+          }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -568,7 +565,7 @@ class _LitterRegistrationState extends State<LitterRegistration> {
                                                     )
                                                     // image: DecorationImage(
                                                     //   image: NetworkImage(
-                                                    //       "https://new-demo.inkcdogs.org/${image}"),
+                                                    //       "https://inkc.in/${image}"),
                                                     //   fit: BoxFit.cover, //change image fill type
                                                     // ),
                                                     ),

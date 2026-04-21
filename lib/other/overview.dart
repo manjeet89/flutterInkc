@@ -58,8 +58,8 @@ class _OverView extends State {
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
-                      url: WebUri.uri(Uri.parse(
-                          "https://new-demo.inkcdogs.org/assets/newapp/inkcapp2/an-overview.html")),
+                      url: WebUri.uri(
+                          Uri.parse("https://inkc.in/assets/newapp/inkcapp2/an-overview.html")),
                     ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
@@ -73,7 +73,7 @@ class _OverView extends State {
                   // InAppWebView(
                   //   initialUrlRequest: URLRequest(
                   //       url: Uri.parse(
-                  //           "https://new-demo.inkcdogs.org/assets/newapp/inkcapp2/an-overview.html")),
+                  //           "https://inkc.in/assets/newapp/inkcapp2/an-overview.html")),
                   //   onWebViewCreated: (InAppWebViewController controller) {
                   //     inappwebview = controller;
                   //   },

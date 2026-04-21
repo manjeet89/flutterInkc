@@ -21,7 +21,7 @@ class _OtpgetState extends State<Otpget> {
   }
 
   Future<void> SendMessage() async {
-    const uri = "https://new-demo.inkcdogs.org/api/login/forgotpassword";
+    const uri = "https://inkc.in/api/login/forgotpassword";
     print("Sending OTP...");
     final response = await http.post(
       Uri.parse(uri),
@@ -167,7 +167,7 @@ class _OtpgetState extends State<Otpget> {
 //   }
 
 //   Future<void> SendMessage() async {
-//     const uri = "https://new-demo.inkcdogs.org/api/login/forgotpassword";
+//     const uri = "https://inkc.in/api/login/forgotpassword";
 //     print("Sending OTP...");
 //     final response = await http.post(
 //       Uri.parse(uri),

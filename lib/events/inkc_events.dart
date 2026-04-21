@@ -39,7 +39,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
   //   print('${userid} / ${token}');
 
   //   final uri =
-  //       "https://new-demo.inkcdogs.org/api/event/obidence_class_and_price_list";
+  //       "https://inkc.in/api/event/obidence_class_and_price_list";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',
@@ -98,7 +98,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
 
     try {
       final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog_second_own"),
+          Uri.parse("https://inkc.in/api/dog/inkc_kci_registered_dog_second_own"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -120,8 +120,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
         }
       }
 
-      final ress = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog"),
+      final ress = await http.post(Uri.parse("https://inkc.in/api/dog/inkc_kci_registered_dog"),
           headers: requestHeaders);
 
       final bodys = json.decode(ress.body);
@@ -150,7 +149,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
+    const uri = "https://inkc.in/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -923,7 +922,7 @@ class _INKCEventsDropdownState extends State<INKCEventsDropdown> {
                                   'Userid': userid
                                 };
 
-                                const uri = "https://new-demo.inkcdogs.org/api/event/participate";
+                                const uri = "https://inkc.in/api/event/participate";
 
                                 final responce = await http.post(Uri.parse(uri),
                                     body: {

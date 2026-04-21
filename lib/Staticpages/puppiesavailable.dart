@@ -58,7 +58,7 @@ class _PuppiesAvailableState extends State {
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
-                      url: WebUri.uri(Uri.parse("https://new-demo.inkcdogs.org/puppies-available")),
+                      url: WebUri.uri(Uri.parse("https://inkc.in/puppies-available")),
                     ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
@@ -71,7 +71,7 @@ class _PuppiesAvailableState extends State {
                   ),
                   // InAppWebView(
                   //   initialUrlRequest: URLRequest(
-                  //       url: Uri.parse("https://new-demo.inkcdogs.org/puppies-available")),
+                  //       url: Uri.parse("https://inkc.in/puppies-available")),
                   //   onWebViewCreated: (InAppWebViewController controller) {
                   //     inappwebview = controller;
                   //   },

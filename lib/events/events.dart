@@ -24,7 +24,7 @@ class _EventsState extends State<Events> {
   String close = "";
 
   Future<List<EventsModel>> FetchData() async {
-    const uri = "https://new-demo.inkcdogs.org/api/home/event";
+    const uri = "https://inkc.in/api/home/event";
 
     final responce = await http.post(Uri.parse(uri));
     var data = json.decode(responce.body);
@@ -229,7 +229,7 @@ class _EventsState extends State<Events> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Image.network(
-                                        "https://new-demo.inkcdogs.org/${dataload[position].eventImage}"),
+                                        "https://inkc.in/${dataload[position].eventImage}"),
                                   ),
 
                                   // Container(
@@ -251,7 +251,7 @@ class _EventsState extends State<Events> {
                                   //     //set border radius to 50% of square height and width
                                   //     image: DecorationImage(
                                   //       image: NetworkImage(
-                                  //           "https://new-demo.inkcdogs.org/${dataload[position].eventImage}"),
+                                  //           "https://inkc.in/${dataload[position].eventImage}"),
                                   //       fit:
                                   //           BoxFit.cover, //change image fill type
                                   //     ),

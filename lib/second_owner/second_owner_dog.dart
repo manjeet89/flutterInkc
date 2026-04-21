@@ -36,7 +36,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
 
     // print('${userid} / ${token}');
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/inkc_kci_registered_dog_second_own";
+    const uri = "https://inkc.in/api/dog/inkc_kci_registered_dog_second_own";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -183,7 +183,7 @@ class _SecondOwnerDodState extends State<SecondOwnerDod> {
                                       //set border radius to 50% of square height and width
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                            "https://new-demo.inkcdogs.org/${dataload[position].petImage}"),
+                                            "https://inkc.in/${dataload[position].petImage}"),
                                         fit: BoxFit.cover, //change image fill type
                                       ),
                                     ),

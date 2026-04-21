@@ -154,7 +154,7 @@ class _EventsDetailsState extends State<EventsDetails> {
 
     print('$userid / $token');
 
-    const uri = "https://new-demo.inkcdogs.org/api/user/get_second_owner_id";
+    const uri = "https://inkc.in/api/user/get_second_owner_id";
 
     Map<String, String> requestHeaders = {
       // 'Content-type': 'application/json',
@@ -788,7 +788,7 @@ class _EventsDetailsState extends State<EventsDetails> {
                       borderRadius: BorderRadius.circular(5.sp),
                       //set border radius to 50% of square height and width
                       image: DecorationImage(
-                        image: NetworkImage("https://new-demo.inkcdogs.org/${widget.EventImage}"),
+                        image: NetworkImage("https://inkc.in/${widget.EventImage}"),
                         fit: BoxFit.cover, //change image fill type
                       ),
                     ),

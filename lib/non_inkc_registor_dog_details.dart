@@ -69,7 +69,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
+  //   final uri = "https://inkc.in/api/user/user_profile";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',
@@ -102,7 +102,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
+  //   final uri = "https://inkc.in/api/user/user_profile";
 
   //   Map<String, String> requestHeaders = {
   //     'Content-type': 'application/json',
@@ -203,7 +203,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list";
+    const uri = "https://inkc.in/api/dog/dog_color_marking_list";
 
     Map<String, String> requestHeaders = {'Usertoken': token, 'Userid': userid};
 
@@ -309,8 +309,7 @@ class _NonInkcDogsState extends State<NonInkcDogDetails> {
                               ],
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image:
-                                    NetworkImage("https://new-demo.inkcdogs.org/${widget.image}"),
+                                image: NetworkImage("https://inkc.in/${widget.image}"),
                                 fit: BoxFit.cover, //change image fill type
                               ),
                             ),

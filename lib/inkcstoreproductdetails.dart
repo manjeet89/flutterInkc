@@ -66,7 +66,7 @@ class _INKCDetailsState extends State<INKCDetails> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
+    const uri = "https://inkc.in/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -150,8 +150,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                               borderRadius: BorderRadius.circular(5.sp),
                               //set border radius to 50% of square height and width
                               image: DecorationImage(
-                                image:
-                                    NetworkImage("https://new-demo.inkcdogs.org/${widget.image}"),
+                                image: NetworkImage("https://inkc.in/${widget.image}"),
                                 fit: BoxFit.cover, //change image fill type
                               ),
                             ),
@@ -209,8 +208,7 @@ class _INKCDetailsState extends State<INKCDetails> {
                                           userid = sharedprefrence.getString("Userid")!;
                                           token = sharedprefrence.getString("Token")!;
 
-                                          const uri =
-                                              "https://new-demo.inkcdogs.org/api/cart/add_to_cart";
+                                          const uri = "https://inkc.in/api/cart/add_to_cart";
                                           Map<String, String> requestHeaders = {
                                             //'Accept': 'application/json',
                                             'Usertoken': token,

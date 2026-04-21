@@ -149,8 +149,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+      final res = await http.post(Uri.parse("https://inkc.in/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -244,15 +243,14 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
       print(
           "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
 
-      Response response =
-          await dio.post('https://new-demo.inkcdogs.org/api/dog/damregistrationwithINKC',
-              data: formData,
-              options: Options(headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-                'Usertoken': token,
-                'Userid': userid
-              }));
+      Response response = await dio.post('https://inkc.in/api/dog/damregistrationwithINKC',
+          data: formData,
+          options: Options(headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Usertoken': token,
+            'Userid': userid
+          }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -294,7 +292,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
+    const uri = "https://inkc.in/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -329,7 +327,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
     };
 
     try {
-      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_breed_list"),
+      final res = await http.post(Uri.parse("https://inkc.in/api/dog/dog_breed_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -368,7 +366,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/get_sire_details";
+    const uri = "https://inkc.in/api/dog/get_sire_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -1812,7 +1810,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                               // };
 
                                               // const uri =
-                                              //     "https://new-demo.inkcdogs.org/api/event/participate";
+                                              //     "https://inkc.in/api/event/participate";
 
                                               // final responce = await http.post(Uri.parse(uri),
                                               //     body: {
@@ -1915,7 +1913,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
                                             // };
 
                                             // const uri =
-                                            //     "https://new-demo.inkcdogs.org/api/event/participate";
+                                            //     "https://inkc.in/api/event/participate";
 
                                             // final responce = await http.post(Uri.parse(uri),
                                             //     body: {
@@ -2493,7 +2491,7 @@ class _DamRegistrationWithInkcState extends State<DamRegistrationWithInkc> {
           //               };
 
           //               const uri =
-          //                   "https://new-demo.inkcdogs.org/api/event/participate";
+          //                   "https://inkc.in/api/event/participate";
 
           //               final responce = await http.post(Uri.parse(uri),
           //                   body: {

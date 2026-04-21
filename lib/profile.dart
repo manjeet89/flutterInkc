@@ -58,6 +58,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? DOB;
 
   bool addresscheck = false;
+  bool cardcheck = false;
 
   checkLogin() async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
@@ -100,7 +101,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   //   var length = await images!.length();
 
-  //   var uri = Uri.parse("https://new-demo.inkcdogs.org/api/user/update_profile_image");
+  //   var uri = Uri.parse("https://inkc.in/api/user/update_profile_image");
 
   //   var request = new http.MultipartRequest("POST", uri);
 
@@ -138,7 +139,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   //   // print('${userid} / ${token}');
 
-  //   final uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
+  //   final uri = "https://inkc.in/api/user/user_profile";
 
   XFile? pickerFiles;
   final _firstpicker = ImagePicker();
@@ -161,15 +162,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
               await MultipartFile.fromFile(pickedFile.path, filename: "${now.second}.jpg"),
         });
 
-        Response response =
-            await dio.post('https://new-demo.inkcdogs.org/api/user/update_profile_image',
-                data: formData,
-                options: Options(headers: {
-                  'Content-type': 'application/json',
-                  'Accept': 'application/json',
-                  'Usertoken': token,
-                  'Userid': userid
-                }));
+        Response response = await dio.post('https://inkc.in/api/user/update_profile_image',
+            data: formData,
+            options: Options(headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Usertoken': token,
+              'Userid': userid
+            }));
 
         if (response.statusCode == 200) {
           print(response.toString());
@@ -234,7 +234,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     // print('${userid} / ${token}');
 
-    const uri = "https://new-demo.inkcdogs.org/api/user/user_profile";
+    const uri = "https://inkc.in/api/user/user_profile";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -252,6 +252,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     print(data['message']);
 
     if (data['code'].toString() == "200") {
+      print(dataarray);
       for (var jsondata in dataarray) {
         ProfileModel profileModel =
             ProfileModel(firstname: jsondata['first_name'], lastname: jsondata['last_name']);
@@ -283,9 +284,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
         }
         personalid.value = TextEditingValue(text: jsondata['user_id']);
 
-        image = jsondata['user_profile_image'];
+        image = jsondata['user_profile_image'].toString();
+        print(image);
         SharedPreferences UserProfileImage = await SharedPreferences.getInstance();
         await UserProfileImage.setString("UserProfileImage", image);
+
+        print(jsondata['card_code'].toString());
+        // card code with id card
+        if (jsondata['card_code'].toString() == "null") {
+          SharedPreferences cardCode = await SharedPreferences.getInstance();
+          await cardCode.setString("card_code", "null");
+        } else {
+          SharedPreferences cardCode = await SharedPreferences.getInstance();
+          await cardCode.setString("card_code", jsondata['card_code']);
+          setState(() {
+            cardcheck = true;
+          });
+        }
         print(image);
       }
     } else {
@@ -397,7 +412,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ],
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: NetworkImage("https://new-demo.inkcdogs.org/$image"),
+                                    image: NetworkImage("https://inkc.in/$image"),
                                     fit: BoxFit.cover, //change image fill type
                                   ),
                                 ),
@@ -506,56 +521,59 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           color: Color.fromARGB(255, 223, 71, 45),
                                           fontWeight: FontWeight.bold)),
 
-                                  onPressed: () async {
-                                    if (addresscheck == true) {
-                                      SharedPreferences sharedprefrence =
-                                          await SharedPreferences.getInstance();
-                                      String cardCode = sharedprefrence.getString("card_code")!;
+                                  onPressed: cardcheck == true
+                                      ? () async {
+                                          if (addresscheck == true) {
+                                            SharedPreferences sharedprefrence =
+                                                await SharedPreferences.getInstance();
+                                            String cardCode =
+                                                sharedprefrence.getString("card_code")!;
 
-                                      // print(card_code
-                                      //     .replaceAll("{", "")
-                                      //     .replaceAll("\"", "")
-                                      //     .replaceAll("}", "")
-                                      //     .replaceAll(",", ":"));
+                                            // print(card_code
+                                            //     .replaceAll("{", "")
+                                            //     .replaceAll("\"", "")
+                                            //     .replaceAll("}", "")
+                                            //     .replaceAll(",", ":"));
 
-                                      String value = cardCode
-                                          .replaceAll("{", "")
-                                          .replaceAll("\"", "")
-                                          .replaceAll("}", "")
-                                          .replaceAll(",", ":");
+                                            String value = cardCode
+                                                .replaceAll("{", "")
+                                                .replaceAll("\"", "")
+                                                .replaceAll("}", "")
+                                                .replaceAll(",", ":");
 
-                                      List<String> parts = value.split(':');
+                                            List<String> parts = value.split(':');
 
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (BuildContext context) => IdCard(
-                                                firstname: First.text.toString(),
-                                                lastname: MyController.text.toString(),
-                                                number: phonenumber.text,
-                                                email: email.text,
-                                                Fulladdress: address.text,
-                                                gender: gender.toString(),
-                                                dob: DOB.toString(),
-                                                image: image,
-                                                country: '',
-                                                city: '',
-                                                state: '',
-                                                Countrygetdata: '',
-                                                Stategetdata: '',
-                                                Districtgetdata: '',
-                                                pincode: '',
-                                                countryid: '',
-                                                stateid: '',
-                                                district: '',
-                                                userid: personalid.text,
-                                                card_code: parts,
-                                                card_expiry_date: '',
-                                              )));
-                                    } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                          content: Text(
-                                              'Please update your profile - First Name, Last Name and Full Address')));
-                                    }
-                                  },
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (BuildContext context) => IdCard(
+                                                      firstname: First.text.toString(),
+                                                      lastname: MyController.text.toString(),
+                                                      number: phonenumber.text,
+                                                      email: email.text,
+                                                      Fulladdress: address.text,
+                                                      gender: gender.toString(),
+                                                      dob: DOB.toString(),
+                                                      image: image,
+                                                      country: '',
+                                                      city: '',
+                                                      state: '',
+                                                      Countrygetdata: '',
+                                                      Stategetdata: '',
+                                                      Districtgetdata: '',
+                                                      pincode: '',
+                                                      countryid: '',
+                                                      stateid: '',
+                                                      district: '',
+                                                      userid: personalid.text,
+                                                      card_code: parts,
+                                                      card_expiry_date: '',
+                                                    )));
+                                          } else {
+                                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    'Please update your profile - First Name, Last Name and Full Address')));
+                                          }
+                                        }
+                                      : null,
                                   child: const Text(
                                     "ID Card",
                                     style:

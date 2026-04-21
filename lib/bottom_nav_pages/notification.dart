@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:inkc/credential/NewLogin.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/model/notificationmodel.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +35,6 @@ String image = "";
 String dateset = "";
 
 class _NotificationPageState extends State<NotificationPage> {
-
   bool addresscheck = false;
   bool _loginCheck = false;
 
@@ -73,7 +73,6 @@ class _NotificationPageState extends State<NotificationPage> {
       });
     }
   }
-  
 
   var ifDataisnotavailavle;
 
@@ -83,7 +82,6 @@ class _NotificationPageState extends State<NotificationPage> {
     super.dispose();
     print("dispose works");
   }
-
 
   List<NotificationModel> dataload = [];
   String time = "";
@@ -111,7 +109,7 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
           centerTitle: true,
         ),
-        body:  _loginCheck
+        body: _loginCheck
             ? Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -120,165 +118,166 @@ class _NotificationPageState extends State<NotificationPage> {
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true)
-                        .push(MaterialPageRoute(builder: (_) => const Login()));
+                        .push(MaterialPageRoute(builder: (_) => const Newlogin()));
                     // navigatorKey.currentState?.pushNamed('/MyDogInfo');
                   },
                   child: const Text("Go to Login", style: TextStyle(color: Colors.white)),
                 ),
               )
             : Container(
-          margin: EdgeInsets.only(top: 5.sp),
-          child: FutureBuilder(
-              future: FetchData(),
-              builder: (context, snapshot) {
-                if (ifDataisnotavailavle.toString() == "False") {
-                  return Center(
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "No Data",
-                              style: TextStyle(
-                                  color: const Color.fromARGB(255, 177, 43, 10),
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w900),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                } else if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: dataload.length,
-                    itemBuilder: (context, position) {
-                      List<String> months = [
-                        'January',
-                        'February',
-                        'March',
-                        'April',
-                        'May',
-                        'June',
-                        'July',
-                        'August',
-                        'September',
-                        'October',
-                        'November',
-                        'December'
-                      ];
-
-                      List<String> days = [
-                        'Monday',
-                        'Tuseday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday',
-                        'Sunday',
-                      ];
-
-                      // final dateTimeObj =
-                      //     DateTime.parse(dataload[position].notiCreatedOn);
-
-                      final dateTimeObj = DateTime.parse(dataload[position].notiCreatedOn);
-
-                      String fdate =
-                          " ${dateTimeObj.day} ${months[dateTimeObj.month - 1].substring(0, 3)} ${dateTimeObj.year}";
-
-                      // date format
-                      // String fdate =
-                      //     "${days[dateTimeObj.weekday - 1].substring(0, 3)}, ${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
-                      // time format
-                      String timeStamp24HR =
-                          dataload[position].notiCreatedOn.toString(); //"2020-07-20T18:15:12";
-                      time = DateFormat.jm().format(DateTime.parse(timeStamp24HR));
-
-                      dateset = fdate;
-
-                      // String time =
-                      //     "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
-                      print("$fdate $time");
-                      return Card(
-                        elevation: 10,
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        margin: const EdgeInsets.all(5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color.fromARGB(255, 255, 255, 255),
-                                Color.fromARGB(255, 255, 255, 255),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                          // decoration: const BoxDecoration(
-                          //   image: DecorationImage(
-                          //       image: NetworkImage(
-                          //           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReL_kSGg4Ux5ZiwK-mIRe6_L-Ft8GxRaaT1Q&usqp=CAU"),
-                          //       fit: BoxFit.cover),
-                          // ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  "$dateset ( $time )",
-                                  style: TextStyle(
-                                    // color: Color.fromARGB(255, 17, 17, 17),
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold,
-                                    foreground: Paint()
-                                      ..shader = ui.Gradient.linear(
-                                        const Offset(100, 140),
-                                        const Offset(150, 20),
-                                        <Color>[
-                                          const Color.fromARGB(255, 66, 15, 15),
-                                          const Color.fromARGB(255, 172, 12, 12),
-                                        ],
-                                      ),
+                margin: EdgeInsets.only(top: 5.sp),
+                child: FutureBuilder(
+                    future: FetchData(),
+                    builder: (context, snapshot) {
+                      if (ifDataisnotavailavle.toString() == "False") {
+                        return Center(
+                          child: Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "No Data",
+                                    style: TextStyle(
+                                        color: const Color.fromARGB(255, 177, 43, 10),
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w900),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Text(
-                                  dataload[position].notiMessage,
-                                  style: TextStyle(
-                                      foreground: Paint()
-                                        ..shader = ui.Gradient.linear(
-                                          const Offset(50, 100),
-                                          const Offset(150, 20),
-                                          <Color>[
-                                            const Color.fromARGB(255, 11, 8, 61),
-                                            const Color.fromARGB(255, 24, 24, 34),
-                                          ],
+                              ],
+                            ),
+                          ),
+                        );
+                      } else if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: dataload.length,
+                          itemBuilder: (context, position) {
+                            List<String> months = [
+                              'January',
+                              'February',
+                              'March',
+                              'April',
+                              'May',
+                              'June',
+                              'July',
+                              'August',
+                              'September',
+                              'October',
+                              'November',
+                              'December'
+                            ];
+
+                            List<String> days = [
+                              'Monday',
+                              'Tuseday',
+                              'Wednesday',
+                              'Thursday',
+                              'Friday',
+                              'Saturday',
+                              'Sunday',
+                            ];
+
+                            // final dateTimeObj =
+                            //     DateTime.parse(dataload[position].notiCreatedOn);
+
+                            final dateTimeObj = DateTime.parse(dataload[position].notiCreatedOn);
+
+                            String fdate =
+                                " ${dateTimeObj.day} ${months[dateTimeObj.month - 1].substring(0, 3)} ${dateTimeObj.year}";
+
+                            // date format
+                            // String fdate =
+                            //     "${days[dateTimeObj.weekday - 1].substring(0, 3)}, ${months[dateTimeObj.month - 1].substring(0, 3)}-${dateTimeObj.day}";
+                            // time format
+                            String timeStamp24HR = dataload[position]
+                                .notiCreatedOn
+                                .toString(); //"2020-07-20T18:15:12";
+                            time = DateFormat.jm().format(DateTime.parse(timeStamp24HR));
+
+                            dateset = fdate;
+
+                            // String time =
+                            //     "${(dateTimeObj.hour > 12 ? dateTimeObj.hour - 12 : dateTimeObj.hour).abs()}:${dateTimeObj.minute} ${dateTimeObj.hour >= 12 ? "PM" : "AM"}";
+                            print("$fdate $time");
+                            return Card(
+                              elevation: 10,
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                              margin: const EdgeInsets.all(5),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color.fromARGB(255, 255, 255, 255),
+                                      Color.fromARGB(255, 255, 255, 255),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                ),
+                                // decoration: const BoxDecoration(
+                                //   image: DecorationImage(
+                                //       image: NetworkImage(
+                                //           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReL_kSGg4Ux5ZiwK-mIRe6_L-Ft8GxRaaT1Q&usqp=CAU"),
+                                //       fit: BoxFit.cover),
+                                // ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        "$dateset ( $time )",
+                                        style: TextStyle(
+                                          // color: Color.fromARGB(255, 17, 17, 17),
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.bold,
+                                          foreground: Paint()
+                                            ..shader = ui.Gradient.linear(
+                                              const Offset(100, 140),
+                                              const Offset(150, 20),
+                                              <Color>[
+                                                const Color.fromARGB(255, 66, 15, 15),
+                                                const Color.fromARGB(255, 172, 12, 12),
+                                              ],
+                                            ),
                                         ),
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Text(
+                                        dataload[position].notiMessage,
+                                        style: TextStyle(
+                                            foreground: Paint()
+                                              ..shader = ui.Gradient.linear(
+                                                const Offset(50, 100),
+                                                const Offset(150, 20),
+                                                <Color>[
+                                                  const Color.fromARGB(255, 11, 8, 61),
+                                                  const Color.fromARGB(255, 24, 24, 34),
+                                                ],
+                                              ),
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
-        ),
+                            );
+                          },
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }),
+              ),
       );
     });
   }
@@ -291,7 +290,7 @@ class _NotificationPageState extends State<NotificationPage> {
 
     print('$userid / $token');
 
-    const uri = "https://new-demo.inkcdogs.org/api/notifications";
+    const uri = "https://inkc.in/api/notifications";
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',

@@ -238,7 +238,7 @@ class _ForgotPasswordChange extends State<ForgotPasswordChange> {
 
                               EasyLoading.showToast('Please Wait...');
 
-                              const uri = "https://new-demo.inkcdogs.org/api/login/forgotpassword";
+                              const uri = "https://inkc.in/api/login/forgotpassword";
 
                               final responce = await http.post(
                                 Uri.parse(uri),

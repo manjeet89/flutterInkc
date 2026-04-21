@@ -84,7 +84,7 @@ class _KennelNumberState extends State<KennelNumber> {
     };
 
     try {
-      final res = await http.post(Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_dam_list"),
+      final res = await http.post(Uri.parse("https://inkc.in/api/dog/dog_dam_list"),
           headers: requestHeaders);
 
       var body = json.decode(res.body);

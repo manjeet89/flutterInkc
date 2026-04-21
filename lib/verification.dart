@@ -195,7 +195,7 @@ class _VerificationOtpState extends State<VerificationOtp> with CodeAutoFill {
     EasyLoading.showToast('Please Wait...');
     print(textEditingController.value);
 
-    const uri = "https://new-demo.inkcdogs.org/api/login/verification";
+    const uri = "https://inkc.in/api/login/verification";
 
     final responce = await http.post(
       Uri.parse(uri),

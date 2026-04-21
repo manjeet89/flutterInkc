@@ -801,8 +801,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
                                     await fulladdress.setString(
                                         "fulladdress", address.text.toString());
 
-                                    const uri =
-                                        "https://new-demo.inkcdogs.org/api/user/update_profile";
+                                    const uri = "https://inkc.in/api/user/update_profile";
 
                                     Map<String, String> requestHeaders = {
                                       'Accept': 'application/json',
@@ -871,7 +870,7 @@ class _ProfileUpdatesState extends State<ProfileUpdates> {
     String token = sharedprefrence.getString("Token")!;
     EasyLoading.showToast('Please Wait...');
 
-    const uri = "https://new-demo.inkcdogs.org/api/user/get_city_data_from_pincode";
+    const uri = "https://inkc.in/api/user/get_city_data_from_pincode";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

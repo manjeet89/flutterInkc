@@ -75,17 +75,17 @@ class Home extends StatefulWidget {
 }
 
 final List<String> imgList = [
-  'https://new-demo.inkcdogs.org/assets/front/img/inkc/puli.jpg',
-  'https://new-demo.inkcdogs.org/assets/front/img/inkc/bi.jpg',
-  'https://new-demo.inkcdogs.org/assets/front/img/inkc/52.webp',
-  'https://new-demo.inkcdogs.org/assets/front/img/inkc/53.webp',
+  'https://inkc.in/assets/front/img/inkc/puli.jpg',
+  'https://inkc.in/assets/front/img/inkc/bi.jpg',
+  'https://inkc.in/assets/front/img/inkc/52.webp',
+  'https://inkc.in/assets/front/img/inkc/53.webp',
 ];
 
 final myItems = [
-  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/puli.jpg'),
-  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/bi.jpg'),
-  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/52.webp'),
-  Image.network('https://new-demo.inkcdogs.org/assets/front/img/inkc/53.webp'),
+  Image.network('https://inkc.in/assets/front/img/inkc/puli.jpg'),
+  Image.network('https://inkc.in/assets/front/img/inkc/bi.jpg'),
+  Image.network('https://inkc.in/assets/front/img/inkc/52.webp'),
+  Image.network('https://inkc.in/assets/front/img/inkc/53.webp'),
 ];
 
 List mydogname = [
@@ -124,14 +124,14 @@ class _HomeState extends State<Home> {
 
   // EventsCheck() async {
   //   if (istrue == false) {
-  //     final uri = "https://new-demo.inkcdogs.org/api/home/event";
+  //     final uri = "https://inkc.in/api/home/event";
   //     final responce = await http.post(Uri.parse(uri));
   //     var data = json.decode(responce.body);
   //     List dataarray = data['data'];
   //     for (int i = 0; i < dataarray.length; i++) {
   //       // print(data['data'][i]['event_image'].toString());
   //       toona.add(
-  //           "https://new-demo.inkcdogs.org/" + data['data'][i]['event_image'].toString());
+  //           "https://inkc.in/" + data['data'][i]['event_image'].toString());
   //     }
   //     setState(() {
   //       cup = toona;
@@ -313,7 +313,7 @@ class _HomeState extends State<Home> {
                         children: [
                           InkWell(
                             onTap: () async {
-                              var url = Uri.parse("https://new-demo.inkcdogs.org/studs-available");
+                              var url = Uri.parse("https://inkc.in/studs-available");
                               if (await canLaunchUrl(url)) {
                                 await launchUrl(url);
                               } else {
@@ -736,7 +736,7 @@ class _HomeState extends State<Home> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        var url = Uri.parse("https://new-demo.inkcdogs.org/puppies-available");
+                        var url = Uri.parse("https://inkc.in/puppies-available");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {

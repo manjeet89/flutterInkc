@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inkc/bottom_nav_pages/home.dart';
+import 'package:inkc/firebase_messagign/fire_base_message.dart';
 import 'package:inkc/main.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -155,18 +157,203 @@ class _HomeVerification extends State<HomeVerification> {
                               );
                               var data = json.decode(responce.body);
                               if (data['code'] == 200) {
+                                // QuickAlert.show(
+                                //   context: context,
+                                //   type: QuickAlertType.loading,
+                                //   title: 'Loading',
+                                // );
+
+                                EasyLoading.dismiss();
+
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+
+                                print("1st");
+                                if (data['data'][0]['user_address'].toString() == "null") {
+                                  SharedPreferences fulladdress =
+                                      await SharedPreferences.getInstance();
+                                  await fulladdress.setString("fulladdress", "null");
+                                } else {
+                                  SharedPreferences fulladdress =
+                                      await SharedPreferences.getInstance();
+                                  await fulladdress.setString(
+                                      "fulladdress",
+                                      data['data'][0]['user_address'] +
+                                          " " +
+                                          data['data'][0]['user_address_2'] +
+                                          " " +
+                                          data['data'][0]['user_local'] +
+                                          " " +
+                                          data['data'][0]['user_district'] +
+                                          " " +
+                                          data['data'][0]['user_state'] +
+                                          " " +
+                                          data['data'][0]['user_pincode']);
+                                }
+                                print("2st");
+
+                                SharedPreferences sharedPreferences =
+                                    await SharedPreferences.getInstance();
+                                await sharedPreferences.setString(
+                                    "First", data['data'][0]['first_name']);
+                                print("3st");
+
                                 SharedPreferences Token = await SharedPreferences.getInstance();
-                                await Token.setString("Token", "QW7J9TAG"
-                                    // data['user_token']
-                                    );
+                                await Token.setString("Token", data['user_token']);
+                                print("4st");
 
                                 SharedPreferences Userid = await SharedPreferences.getInstance();
-                                await Userid.setString("Userid", "24835"
-                                    // userId
-                                    );
+                                await Userid.setString("Userid", data['data'][0]['user_id']);
+                                print("5st");
 
+                                if (data['data'][0]['user_full_name'].toString() == "") {
+                                  SharedPreferences EmpFullName =
+                                      await SharedPreferences.getInstance();
+                                  await EmpFullName.setString("EmpFullName", "null");
+                                } else {
+                                  SharedPreferences EmpFullName =
+                                      await SharedPreferences.getInstance();
+                                  await EmpFullName.setString(
+                                      "EmpFullName", data['data'][0]['user_full_name']);
+                                }
+                                print("6st");
+
+                                SharedPreferences EmpTypeId = await SharedPreferences.getInstance();
+                                await EmpTypeId.setString(
+                                    "EmpTypeId", data['data'][0]['user_employee_type']);
+                                print("7st");
+
+                                SharedPreferences EmpTypeName =
+                                    await SharedPreferences.getInstance();
+                                await EmpTypeName.setString("EmpTypeName", 'User');
+                                print("8st");
+                                SharedPreferences PhoneNumber =
+                                    await SharedPreferences.getInstance();
+                                await PhoneNumber.setString(
+                                    "phoneNumber", data['data'][0]['user_phone_number']);
+                                print("9st");
+                                SharedPreferences UserVerification =
+                                    await SharedPreferences.getInstance();
+                                await UserVerification.setString(
+                                    "UserVerification", data['data'][0]['is_verified']);
+                                print("10st");
+                                SharedPreferences FontUserid =
+                                    await SharedPreferences.getInstance();
+                                await FontUserid.setString(
+                                    "FontUserid", data['data'][0]['user_id']);
+                                print("11st");
+                                if (data['data'][0]['user_address'].toString() == "null") {
+                                } else {
+                                  SharedPreferences FontEmpFullName =
+                                      await SharedPreferences.getInstance();
+                                  await FontEmpFullName.setString(
+                                      "FontEmpFullName",
+                                      data['data'][0]['first_name'] +
+                                          " " +
+                                          data['data'][0]['last_name']);
+                                }
+                                print("12st");
+                                SharedPreferences FontEmpTypeId =
+                                    await SharedPreferences.getInstance();
+                                await FontEmpTypeId.setString(
+                                    "FontEmpTypeId", data['data'][0]['user_employee_type']);
+                                print("13st");
+                                SharedPreferences FontUserEmailId =
+                                    await SharedPreferences.getInstance();
+                                await FontUserEmailId.setString(
+                                    "FontUserEmailId", data['data'][0]['user_email_id']);
+                                print("14st");
+                                SharedPreferences FontEmpTypeName =
+                                    await SharedPreferences.getInstance();
+                                await FontEmpTypeName.setString("FontEmpTypeName", "User");
+                                print("15st");
+                                SharedPreferences FontPhoneNumber =
+                                    await SharedPreferences.getInstance();
+                                await FontPhoneNumber.setString(
+                                    "FontPhoneNumber", data['data'][0]['user_phone_number']);
+                                print("16st");
+                                SharedPreferences FontUserVerification =
+                                    await SharedPreferences.getInstance();
+                                await FontUserVerification.setString(
+                                    "FontUserVerification", data['data'][0]['is_verified']);
+                                print("17st");
+                                SharedPreferences FontKennelClubStatus =
+                                    await SharedPreferences.getInstance();
+                                await FontKennelClubStatus.setString(
+                                    "FontKennelClubStatus", data['data'][0]['kennel_club_status']);
+                                print("18st");
+                                SharedPreferences FontMemberStatus =
+                                    await SharedPreferences.getInstance();
+                                await FontMemberStatus.setString(
+                                    "FontMemberStatus", data['data'][0]['member_status']);
+                                print("19st");
+                                if (data['data'][0]['user_profile_image'].toString() == "null") {
+                                  SharedPreferences UserProfileImage =
+                                      await SharedPreferences.getInstance();
+                                  await UserProfileImage.setString("UserProfileImage", "null");
+                                } else {
+                                  SharedPreferences UserProfileImage =
+                                      await SharedPreferences.getInstance();
+                                  await UserProfileImage.setString(
+                                      "UserProfileImage", data['data'][0]['user_profile_image']);
+                                }
+                                print("20st");
+                                // card code with id card
+                                if (data['data'][0]['card_code'].toString() == "null") {
+                                  SharedPreferences cardCode =
+                                      await SharedPreferences.getInstance();
+                                  await cardCode.setString("card_code", "null");
+                                } else {
+                                  SharedPreferences cardCode =
+                                      await SharedPreferences.getInstance();
+                                  await cardCode.setString(
+                                      "card_code", data['data'][0]['card_code']);
+                                }
+                                print("21st");
+                                SharedPreferences UserName = await SharedPreferences.getInstance();
+                                await UserName.setString("UserName", data['data'][0]['first_name']);
+                                print("22st");
+                                SharedPreferences UserEmpId = await SharedPreferences.getInstance();
+                                await UserEmpId.setString(
+                                    "UserEmpId", data['data'][0]['user_employee_type']);
+
+                                SharedPreferences LastName = await SharedPreferences.getInstance();
+                                await LastName.setString("LastName", data['data'][0]['last_name']);
+
+                                SharedPreferences Firstname = await SharedPreferences.getInstance();
+                                await Firstname.setString(
+                                    "Firstname", data['data'][0]['first_name']);
+
+                                await prefs.setBool('isLoggedIn', true);
+                                // Get.to(MyApp());
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => MyApp()));
+
+                                WidgetsFlutterBinding.ensureInitialized();
+                                await Firebase.initializeApp();
+                                await FireBaseApi().initNotification();
+
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (BuildContext context) => const MyApp()));
                                 navigatorKey.currentState
                                     ?.pushNamedAndRemoveUntil('/home', (route) => false);
+
+                                // Navigator.of(context, rootNavigator: true).push(
+                                //     MaterialPageRoute(builder: (_) => MyApp()));
+
+                                // SharedPreferences Token = await SharedPreferences.getInstance();
+                                // await Token.setString("Token", "QW7J9TAG"
+                                //     // data['user_token']
+                                //     );
+
+                                // SharedPreferences Userid = await SharedPreferences.getInstance();
+                                // await Userid.setString("Userid", "24835"
+                                //     // userId
+                                //     );
+
+                                // navigatorKey.currentState
+                                //     ?.pushNamedAndRemoveUntil('/home', (route) => false);
                               }
                             }
                           },

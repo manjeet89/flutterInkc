@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:inkc/credential/NewLogin.dart';
 import 'package:inkc/credential/login.dart';
 import 'package:inkc/inkcstore.dart';
 import 'package:inkc/main.dart';
@@ -112,7 +113,7 @@ class _SearchpageState extends State<Searchpage> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
+    const uri = "https://inkc.in/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -134,7 +135,7 @@ class _SearchpageState extends State<Searchpage> {
     // userid = sharedprefrence.getString("Userid")!;
     // token = sharedprefrence.getString("Token")!;
 
-    // final uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
+    // final uri = "https://inkc.in/api/cart/cartready";
 
     // Map<String, String> requestHeaders = {
     //   // 'Accept': 'application/json',
@@ -208,7 +209,7 @@ class _SearchpageState extends State<Searchpage> {
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true)
-                        .push(MaterialPageRoute(builder: (_) => const Login()));
+                        .push(MaterialPageRoute(builder: (_) => const Newlogin()));
                     // navigatorKey.currentState?.pushNamed('/MyDogInfo');
                   },
                   child: const Text("Go to Login", style: TextStyle(color: Colors.white)),
@@ -558,7 +559,7 @@ class _SearchpageState extends State<Searchpage> {
                                                       };
 
                                                       const uri =
-                                                          "https://new-demo.inkcdogs.org/api/cart/remove_cart_item";
+                                                          "https://inkc.in/api/cart/remove_cart_item";
 
                                                       final responce =
                                                           await http.post(Uri.parse(uri),
@@ -871,7 +872,7 @@ class _SearchpageState extends State<Searchpage> {
 
     // print(token);
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart";
+    const uri = "https://inkc.in/api/cart";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

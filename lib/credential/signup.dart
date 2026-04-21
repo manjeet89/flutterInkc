@@ -398,7 +398,7 @@ class _SignUpHereState extends State<SignUpHere> {
 
                                     EasyLoading.showToast('Please Wait...');
 
-                                    const uri = "https://new-demo.inkcdogs.org/api/login/signup";
+                                    const uri = "https://inkc.in/api/login/signup";
 
                                     final responce = await http.post(
                                       Uri.parse(uri),

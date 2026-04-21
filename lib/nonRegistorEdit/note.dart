@@ -273,7 +273,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
     // print(widget.id);
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/note_list";
+    const uri = "https://inkc.in/api/dog/note_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -374,7 +374,7 @@ class _NonRegisterNoteState extends State<NonRegisterNote> {
 
                           EasyLoading.showToast('Please Wait...');
 
-                          const uri = "https://new-demo.inkcdogs.org/api/dog/add_note";
+                          const uri = "https://inkc.in/api/dog/add_note";
 
                           Map<String, String> requestHeaders = {
                             'Accept': 'application/json',

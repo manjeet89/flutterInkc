@@ -99,8 +99,7 @@ class __PedigreeDogRegistrationFormState extends State<_PedigreeDogRegistrationF
     };
 
     try {
-      final res = await http.post(
-          Uri.parse("https://new-demo.inkcdogs.org/api/dog/dog_color_marking_list"),
+      final res = await http.post(Uri.parse("https://inkc.in/api/dog/dog_color_marking_list"),
           headers: requestHeaders);
 
       final body = json.decode(res.body);
@@ -178,15 +177,14 @@ class __PedigreeDogRegistrationFormState extends State<_PedigreeDogRegistrationF
       print(
           "${"$Gender-$DOB-$DogName-${cowner.text}-$AddCoowner-$MICRO-" + selectcolormakingid}-$DAM-$SIRE");
 
-      Response response =
-          await dio.post('https://new-demo.inkcdogs.org/api/dog/pedigree_dog_registration',
-              data: formData,
-              options: Options(headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-                'Usertoken': token,
-                'Userid': userid
-              }));
+      Response response = await dio.post('https://inkc.in/api/dog/pedigree_dog_registration',
+          data: formData,
+          options: Options(headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Usertoken': token,
+            'Userid': userid
+          }));
 
       if (response.statusCode == 200) {
         print(response.toString());
@@ -242,7 +240,7 @@ class __PedigreeDogRegistrationFormState extends State<_PedigreeDogRegistrationF
     // var lengthsecond = await secondimages!.length();
     // var lengththired = await thiredimages!.length();
 
-    // var uri = Uri.parse("https://new-demo.inkcdogs.org/api/dog/non_inkc_registration");
+    // var uri = Uri.parse("https://inkc.in/api/dog/non_inkc_registration");
 
     // var request = new http.MultipartRequest("POST", uri);
 
@@ -305,7 +303,7 @@ class __PedigreeDogRegistrationFormState extends State<_PedigreeDogRegistrationF
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart/cartready";
+    const uri = "https://inkc.in/api/cart/cartready";
 
     Map<String, String> requestHeaders = {
       // 'Accept': 'application/json',
@@ -330,7 +328,7 @@ class __PedigreeDogRegistrationFormState extends State<_PedigreeDogRegistrationF
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/get_dam_details";
+    const uri = "https://inkc.in/api/dog/get_dam_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -358,7 +356,7 @@ class __PedigreeDogRegistrationFormState extends State<_PedigreeDogRegistrationF
     String userid = sharedprefrence.getString("Userid")!;
     String token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://new-demo.inkcdogs.org/api/dog/get_sire_details";
+    const uri = "https://inkc.in/api/dog/get_sire_details";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -1044,7 +1042,7 @@ class __PedigreeDogRegistrationFormState extends State<_PedigreeDogRegistrationF
                                                   )
                                                   // image: DecorationImage(
                                                   //   image: NetworkImage(
-                                                  //       "https://new-demo.inkcdogs.org/${image}"),
+                                                  //       "https://inkc.in/${image}"),
                                                   //   fit: BoxFit.cover, //change image fill type
                                                   // ),
                                                   ),

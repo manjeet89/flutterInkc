@@ -374,7 +374,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     print("$token --- $userid");
 
-    const uri = "https://new-demo.inkcdogs.org/api/cart";
+    const uri = "https://inkc.in/api/cart";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

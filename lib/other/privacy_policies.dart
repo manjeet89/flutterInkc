@@ -58,7 +58,7 @@ class _PrivacyAndPolicies extends State {
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
-                      url: WebUri.uri(Uri.parse("https://new-demo.inkcdogs.org/privacy-policies")),
+                      url: WebUri.uri(Uri.parse("https://inkc.in/privacy-policies")),
                     ),
                     onWebViewCreated: (InAppWebViewController controller) {
                       inappwebview = controller;
@@ -73,7 +73,7 @@ class _PrivacyAndPolicies extends State {
                   // InAppWebView(
                   //   initialUrlRequest: URLRequest(
                   //       url: Uri.parse(
-                  //           "https://new-demo.inkcdogs.org/assets/newapp/inkcapp2/privacy.html")),
+                  //           "https://inkc.in/assets/newapp/inkcapp2/privacy.html")),
                   //   onWebViewCreated: (InAppWebViewController controller) {
                   //     inappwebview = controller;
                   //   },
